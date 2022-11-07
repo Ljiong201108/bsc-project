@@ -1,0 +1,21 @@
+Starting encrypt single block!
+Chiper: 1f83d9709bc92f84
+Cipher: 1f83d9709bc92f84
+Finished encrypting successfully!
+
+Starting decrypt single block!
+Plain: 12345678
+Finished decrypting successfully!
+
+Starting encrypting CBC!
+Cipher 0: ed37d45021ea6197
+Cipher 1: 51f450c18d2af31b
+Cipher 2: 7584726be1a31f1c
+Cipher 3: 48b259756dfe6e8a
+Finished testing successfully!
+Starting decrypting CBC!
+Plain 0: 1234
+Plain 1: 2345
+Plain 2: 3456
+Plain 3: 4567
+Finished decrypting successfully!

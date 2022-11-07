@@ -1,11 +1,10 @@
 .PHONY: all package run build clean
 
 ROOTFS=/home/jiong/xilinx/xilinx-zynqmp-common-v2020.2
-WORKSPACE=/home/jiong/Vitis_Tests
-SECURITY_SRC=$(WORKSPACE)/host/security/src
+WORKSPACE=/home/jiong/bsc-project
 
-COMP=/home/jiong/Vitis_Tests/componnets
-KNRL=/home/jiong/Vitis_Tests/kernels
+COMP=$(WORKSPACE)/componnets
+KNRL=$(WORKSPACE)/kernels
 
 HOST_INC=-I$(WORKSPACE)/host/common/include -I$(WORKSPACE)/host/security/include
 HOST_LIB=-lOpenCL -lpthread -lrt -lstdc++ 
