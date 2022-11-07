@@ -19,3 +19,51 @@ Plain 1: 2345
 Plain 2: 3456
 Plain 3: 4567
 Finished decrypting successfully!
+
+# KNRL_1=desSingleBlockEnc
+# KNRL_1_SRC=$(KNRL)/security/src/desSingleBlockEnc.cpp
+# KNRL_1_OUTPUT=desSingleBlockEnc.xo
+# KNRLS_OUTPUTS+=$(KNRL_1_OUTPUT)
+
+# KNRL_2=desSingleBlockDec
+# KNRL_2_SRC=$(KNRL)/security/src/desSingleBlockDec.cpp
+# KNRL_2_OUTPUT=desSingleBlockDec.xo
+# KNRLS_OUTPUTS+=$(KNRL_2_OUTPUT)
+
+# KNRL_3=desCbcEnc
+# KNRL_3_SRC=$(KNRL)/security/src/desCbcEnc.cpp
+# KNRL_3_OUTPUT=desCbcEnc.xo
+# KNRLS_OUTPUTS+=$(KNRL_3_OUTPUT)
+
+# KNRL_4=desCbcDec
+# KNRL_4_SRC=$(KNRL)/security/src/desCbcDec.cpp
+# KNRL_4_OUTPUT=desCbcDec.xo
+# KNRLS_OUTPUTS+=$(KNRL_4_OUTPUT)
+
+# KNRL_5=desCfb1Enc
+# KNRL_5_SRC=$(KNRL)/security/src/desCfb1Enc.cpp
+# KNRL_5_OUTPUT=desCfb1Enc.xo
+# KNRLS_OUTPUTS+=$(KNRL_5_OUTPUT)
+
+# KNRL_6=desCfb1Dec
+# KNRL_6_SRC=$(KNRL)/security/src/desCfb1Dec.cpp
+# KNRL_6_OUTPUT=desCfb1Dec.xo
+# KNRLS_OUTPUTS+=$(KNRL_6_OUTPUT)
+ 
+# $(KNRL_1_OUTPUT): $(KNRL_1_SRC)
+# 	v++ -c $(KNRL_FLG) -k $(KNRL_1) $(KNRL_INC) $(KNRL_1_SRC) -o $(KNRL_1_OUTPUT)
+
+# $(KNRL_2_OUTPUT): $(KNRL_2_SRC)
+# 	v++ -c $(KNRL_FLG) -k $(KNRL_2) $(KNRL_INC) $(KNRL_2_SRC) -o $(KNRL_2_OUTPUT)
+
+# $(KNRL_3_OUTPUT): $(KNRL_3_SRC)
+# 	v++ -c $(KNRL_FLG) -k $(KNRL_3) $(KNRL_INC) $(KNRL_3_SRC) -o $(KNRL_3_OUTPUT)
+
+# $(KNRL_4_OUTPUT): $(KNRL_4_SRC)
+# 	v++ -c $(KNRL_FLG) -k $(KNRL_4) $(KNRL_INC) $(KNRL_4_SRC) -o $(KNRL_4_OUTPUT)
+
+# $(KNRL_5_OUTPUT): $(KNRL_5_SRC)
+# 	v++ -c $(KNRL_FLG) -k $(KNRL_5) $(KNRL_INC) $(KNRL_5_SRC) -o $(KNRL_5_OUTPUT)
+
+# $(KNRL_6_OUTPUT): $(KNRL_6_SRC)
+# 	v++ -c $(KNRL_FLG) -k $(KNRL_6) $(KNRL_INC) $(KNRL_6_SRC) -o $(KNRL_6_OUTPUT)

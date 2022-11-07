@@ -1,7 +1,7 @@
-#include "desCbcDec.hpp"
+#include "desOfbEnc.hpp"
 
 extern "C"{
-    void desCbcDec(ap_uint<64> *cipherTextBuffer, ap_uint<64> cipherKey, ap_uint<64> initVec, ap_uint<64> *plainTextBuffer, int size){
+    void desOfbEnc(ap_uint<64> *plainTextBuffer, ap_uint<64> cipherKey, ap_uint<64> initVec, ap_uint<64> *cipherTextBuffer, int size){
 #pragma HLS dataflow
         hls::stream<ap_uint<64>> inStream;
         hls::stream<bool> inEndStream;
@@ -20,10 +20,10 @@ extern "C"{
         scale2s<64>(cipherKey, cipherKeyStream);
         scale2s<64>(initVec, initVecStream);
 
-        mm2s<64, 256>(cipherTextBuffer, size, inStream, inEndStream);
+        mm2s<64, 256>(plainTextBuffer, size, inStream, inEndStream);
 
-        xf::security::desCbcDecrypt(inStream, inEndStream, cipherKeyStream, initVecStream, outStream, outEndStream);
+        xf::security::desOfbEncrypt(inStream, inEndStream, cipherKeyStream, initVecStream, outStream, outEndStream);
 
-        s2mm<64, 256>(plainTextBuffer, outStream, outEndStream);
+        s2mm<64, 256>(cipherTextBuffer, outStream, outEndStream);
     }
 }

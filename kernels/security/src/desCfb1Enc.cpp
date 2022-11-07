@@ -19,10 +19,10 @@ extern "C"{
         scale2s<64>(cipherKey, cipherKeyStream);
         scale2s<64>(initVec, initVecStream);
 
-        mm2s<64, 3>(plainTextBuffer, size, inStream, inEndStream);
+        mm2s<64, 256>(plainTextBuffer, size, inStream, inEndStream);
 
         xf::security::desCfb1Encrypt(inStream, inEndStream, cipherKeyStream, initVecStream, outStream, outEndStream);
 
-        s2mm<64, 3>(cipherTextBuffer, outStream, outEndStream);
+        s2mm<64, 256>(cipherTextBuffer, outStream, outEndStream);
     }
 }

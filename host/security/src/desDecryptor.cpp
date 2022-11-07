@@ -1,21 +1,14 @@
 #include "desDecryptor.hpp"
-#include <vector>
 
-desDecryptor::desDecryptor(Application &app) : m_app(app){}
+void desSingleBlockDec(const std::string &binaryFileName, const uint64_t &cipher, const uint64_t &key, uint64_t &plain){
+    Application app(binaryFileName);
+    CommandQueuePointer cq_pointer;
+    KernelPointer k_pointer;
+    BufferPointer b_pointer;
 
-uint64_t desDecryptor::desSingleBlockDec(const uint64_t &cipher, const uint64_t &key){
-    Pool<CommandQueuePointer, 1> commandQueuePool;
-    CommandQueuePointer &cq_pointer=commandQueuePool.get<0>();
-
-    Pool<KernelPointer, 1> kernelPool;
-    KernelPointer &k_pointer=kernelPool.get<0>();
-
-    Pool<BufferPointer, 1> bufferPool;
-    BufferPointer &b_pointer=bufferPool.get<0>();
-
-    cq_pointer.build(m_app.getContext(), m_app.getDevice(), CL_QUEUE_PROFILING_ENABLE, &m_app.getErr());
-    k_pointer.build(m_app.getProgram(), "desSingleBlockDec", &m_app.getErr());
-    b_pointer.build(m_app.getContext(), CL_MEM_READ_WRITE, sizeof(uint64_t), (void*)0, &m_app.getErr());
+    cq_pointer.create(app.getContext(), app.getDevice(), CL_QUEUE_PROFILING_ENABLE);
+    k_pointer.create(app.getProgram(), "desSingleBlockDec");
+    b_pointer.create(app.getContext(), CL_MEM_READ_WRITE, sizeof(uint64_t), (void*)0);
 
     k_pointer->setArg(0, cipher);
     k_pointer->setArg(1, key);
@@ -29,19 +22,19 @@ uint64_t desDecryptor::desSingleBlockDec(const uint64_t &cipher, const uint64_t 
     #ifdef DEBUG
     std::cout<<"Plain: "<<std::hex<<out[0]<<std::endl;
     #endif
-    return out[0];
+    plain=out[0];
 }
 
-void desDecryptor::desCbcDec(uint64_t *cipher, const uint64_t &key, const uint64_t &iv, uint64_t *plain, uint32_t size){
-    Pool<CommandQueuePointer, 1> commandQueuePool;
-    CommandQueuePointer &cq_pointer=commandQueuePool.get<0>().create(m_app.getContext(), m_app.getDevice(), CL_QUEUE_PROFILING_ENABLE);
-
-    Pool<KernelPointer, 1> kernelPool;
-    KernelPointer &k_pointer=kernelPool.get<0>().create(m_app.getProgram(), "desCbcDec");
-
+void desCbcDec(const std::string &binaryFileName, uint64_t *cipher, const uint64_t &key, const uint64_t &iv, uint64_t *plain, uint32_t size){
+    Application app(binaryFileName);
+    CommandQueuePointer cq_pointer;
+    KernelPointer k_pointer;
     Pool<BufferPointer, 2> bufferPool;
-    BufferPointer &cipher_pointer=bufferPool.get<0>().create(m_app.getContext(), CL_MEM_READ_WRITE, size*sizeof(uint64_t), NULL);
-    BufferPointer &plain_pointer=bufferPool.get<1>().create(m_app.getContext(), CL_MEM_READ_WRITE, size*sizeof(uint64_t), NULL);
+
+    cq_pointer.create(app.getContext(), app.getDevice(), CL_QUEUE_PROFILING_ENABLE);
+    k_pointer.create(app.getProgram(), "desCbcDec");
+    BufferPointer &cipher_pointer=bufferPool.get<0>().create(app.getContext(), CL_MEM_READ_WRITE, size*sizeof(uint64_t), NULL);
+    BufferPointer &plain_pointer=bufferPool.get<1>().create(app.getContext(), CL_MEM_READ_WRITE, size*sizeof(uint64_t), NULL);
 
     k_pointer->setArg(0, *cipher_pointer);
     k_pointer->setArg(1, key);
