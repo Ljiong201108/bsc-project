@@ -15,15 +15,17 @@ extern "C"{
         hls::stream<ap_uint<128>> cipherKeyStream;
         hls::stream<ap_uint<128>> initVecStream;
 
-#pragma HLS STREAM variable = inStream depth = 16
-#pragma HLS STREAM variable = inEndStream depth = 16
-#pragma HLS STREAM variable = outStream depth = 16
-#pragma HLS STREAM variable = outEndStream depth = 16
-#pragma HLS STREAM variable = cipherKeyStream depth = 16
-#pragma HLS STREAM variable = initVecStream depth = 16
+#pragma HLS STREAM variable = inStream depth = 4
+#pragma HLS STREAM variable = inEndStream depth = 4
+#pragma HLS STREAM variable = outStream depth = 4
+#pragma HLS STREAM variable = outEndStream depth = 4
+#pragma HLS STREAM variable = cipherKeyStream depth = 4
+#pragma HLS STREAM variable = initVecStream depth = 4
 
         scale2s<128>(*cipherKey, cipherKeyStream);
         scale2s<128>(*initVec, initVecStream);
+// main:
+// #pragma HLS dataflow
 
         mm2s<128, 256>(plainTextBuffer, size, inStream, inEndStream);
 

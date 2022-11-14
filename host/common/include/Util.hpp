@@ -1,6 +1,8 @@
 #pragma once
 
 #include <iostream>
+#include <memory>
+#include <stdint.h>
 
 #define CL_HPP_CL_1_2_DEFAULT_BUILD                                    
 #define CL_HPP_TARGET_OPENCL_VERSION 120                               
@@ -109,3 +111,23 @@ struct aligned_allocator {
     }
     void deallocate(T* p, std::size_t num) { free(p); }
 };
+
+inline std::unique_ptr<uint64_t[]> arrayAlignedPadding(uint8_t *array, uint64_t sizeInByte, uint64_t alignedSizeInByte, uint64_t &newSizeInByte){
+    newSizeInByte=(sizeInByte/alignedSizeInByte+((sizeInByte%alignedSizeInByte)>0))*alignedSizeInByte;
+    std::cout<<"size in Byte is "<<sizeInByte<<std::endl;
+    std::cout<<"new size in Byte is "<<newSizeInByte<<std::endl;
+    std::unique_ptr<uint64_t[]> newArray=std::make_unique<uint64_t[]>(newSizeInByte/sizeof(uint64_t));
+    std::memcpy(newArray.get(), array, sizeInByte);
+    std::fill(newArray.get()+sizeInByte, newArray.get()+newSizeInByte, (uint8_t)(newSizeInByte-sizeInByte));
+    return newArray;
+}
+
+inline std::unique_ptr<uint64_t[]> arrayAlignedPadding(uint8_t *array, uint32_t sizeInByte, uint32_t alignedSizeInByte, uint32_t &newSizeInByte){
+    newSizeInByte=(sizeInByte/alignedSizeInByte+((sizeInByte%alignedSizeInByte)>0))*alignedSizeInByte;
+    std::cout<<"size in Byte is "<<sizeInByte<<std::endl;
+    std::cout<<"new size in Byte is "<<newSizeInByte<<std::endl;
+    std::unique_ptr<uint64_t[]> newArray=std::make_unique<uint64_t[]>(newSizeInByte/sizeof(uint64_t));
+    std::memcpy(newArray.get(), array, sizeInByte);
+    std::fill(newArray.get()+sizeInByte, newArray.get()+newSizeInByte, (uint8_t)(newSizeInByte-sizeInByte));
+    return newArray;
+}

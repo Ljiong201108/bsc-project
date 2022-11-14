@@ -172,7 +172,7 @@ LOOP_GEN:
  *
  */
 
-void genGMAC(hls::stream<ap_uint<128> >& AADStrm,
+inline void genGMAC(hls::stream<ap_uint<128> >& AADStrm,
              hls::stream<ap_uint<64> >& lenAADStrm,
              hls::stream<ap_uint<128> >& pldStrm,
              hls::stream<ap_uint<64> >& lenPldStrm,
@@ -340,7 +340,7 @@ void genGMAC(hls::stream<ap_uint<128> >& AADStrm,
  *
  */
 
-void genGMAC(hls::stream<ap_uint<128> >& AADStrm,
+inline void genGMAC(hls::stream<ap_uint<128> >& AADStrm,
              hls::stream<ap_uint<64> >& lenAADStrm,
              hls::stream<ap_uint<128> >& HStrm,
              hls::stream<ap_uint<128> >& EKY0Strm,
@@ -482,7 +482,7 @@ void gmacTop(hls::stream<ap_uint<128> >& dataStrm,
  *
  */
 
-void aes128Gmac(hls::stream<ap_uint<128> >& dataStrm,
+inline void aes128Gmac(hls::stream<ap_uint<128> >& dataStrm,
                 hls::stream<ap_uint<64> >& lenDataStrm,
                 hls::stream<ap_uint<128> >& cipherkeyStrm,
                 hls::stream<ap_uint<96> >& IVStrm,
@@ -504,7 +504,7 @@ void aes128Gmac(hls::stream<ap_uint<128> >& dataStrm,
  *
  */
 
-void aes192Gmac(hls::stream<ap_uint<128> >& dataStrm,
+inline void aes192Gmac(hls::stream<ap_uint<128> >& dataStrm,
                 hls::stream<ap_uint<64> >& lenDataStrm,
                 hls::stream<ap_uint<192> >& cipherkeyStrm,
                 hls::stream<ap_uint<96> >& IVStrm,
@@ -526,7 +526,7 @@ void aes192Gmac(hls::stream<ap_uint<128> >& dataStrm,
  *
  */
 
-void aes256Gmac(hls::stream<ap_uint<128> >& dataStrm,
+inline void aes256Gmac(hls::stream<ap_uint<128> >& dataStrm,
                 hls::stream<ap_uint<64> >& lenDataStrm,
                 hls::stream<ap_uint<256> >& cipherkeyStrm,
                 hls::stream<ap_uint<96> >& IVStrm,

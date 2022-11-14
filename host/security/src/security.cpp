@@ -2,8 +2,8 @@
 
 std::string typeToString(Type t){
     switch(t){
-        case Type::ENC: return "ENC";
-        case Type::DEC: return "DEC";
+        case Type::ENC: return "Enc";
+        case Type::DEC: return "Dec";
     }
     return "";
 }

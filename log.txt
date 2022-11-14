@@ -1,1 +1,7 @@
-cannot execute dataflow in kernel
+security:
+des & aes | enc & dec \ hash functions like gmac ...
+dataflow in kernel is not used
+only seq mode currently
+user have to build xclbin theirselves
+a xclbin that contains many kernels results in very slow execution speed in hardware emulation
+did a little modification to the library because of the non-template functions

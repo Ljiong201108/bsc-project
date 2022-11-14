@@ -30,14 +30,12 @@ void Application::read_binary_file(const std::string &xclbin_file_name){
         exit(EXIT_FAILURE);
     }
     //Loading XCL Bin into char buffer
-    #ifdef DEBUG
-    std::cout<<"INFO: Loading '"<<xclbin_file_name<<"'\n";
-    #endif
     std::ifstream bin_file(xclbin_file_name.c_str(), std::ifstream::binary);
     bin_file.seekg(0, bin_file.end);
     m_xclbinBufferSize = bin_file.tellg();
     bin_file.seekg(0, bin_file.beg);
     m_xclbinBuffer = new char[m_xclbinBufferSize];
+    std::cout<<"Size: "<<m_xclbinBufferSize<<std::endl;
     bin_file.read(m_xclbinBuffer, m_xclbinBufferSize);
 }
 
@@ -50,9 +48,6 @@ Application::Application(const std::string &binaryFileName){
 }
 
 Application::~Application(){
-    #ifdef DEBUG
-    std::cout<<"INFO: Deconstructing Application with xclbin '"<<xclbin_file_name<<"'\n";
-    #endif
     delete[] m_xclbinBuffer;
 }
 

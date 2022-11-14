@@ -8,6 +8,7 @@ std::string methodToString(Method m){
         case Method::Cfb8: return "Cfb8";
         case Method::Cfb128: return "Cfb128";
         case Method::Ofb: return "Ofb";
+        case Method::Ecb: return "Ecb";
     }
     return "";
 }
