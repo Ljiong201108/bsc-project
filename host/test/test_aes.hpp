@@ -2,7 +2,6 @@
 
 namespace testAes{
 
-std::string binaryFilename="test.xclbin";
 uint64_t key[]={0x66666666, 0x77777777}, iv[]={0x11111111, 0x22222222};
 
 inline void testAes128CbcEnc(){
@@ -10,7 +9,7 @@ inline void testAes128CbcEnc(){
 
     uint64_t plain[4]={0x1234, 0x2345, 0x3456, 0x4567}, cipher[4];
     
-    aes::aesCbc<Type::ENC, aes::KeyLength::U128>(binaryFilename, plain, key, iv, cipher, 2);
+    aes::aesCbc<Type::ENC, aes::KeyLength::U128>(plain, key, iv, cipher, 2);
     for(int i=0;i<4;i++) std::cout<<"Cipher "<<i<<": "<<std::hex<<cipher[i]<<std::endl;
 
     std::cout<<"Finished testing successfully!"<<std::endl;
@@ -20,7 +19,7 @@ inline void testAes128CbcDec(){
     std::cout<<"Starting testing aes128CbcDec!"<<std::endl;
 
     uint64_t cipher[4]={0x64c72ec93ec821bb, 0xad30d791c12265fa, 0x7aabe371b4d4d1ea, 0x8b891f95b33b50c5}, newPlain[4];
-    aes::aesCbc<Type::DEC, aes::KeyLength::U128>(binaryFilename, cipher, key, iv, newPlain, 2);
+    aes::aesCbc<Type::DEC, aes::KeyLength::U128>(cipher, key, iv, newPlain, 2);
     for(int i=0;i<4;i++) std::cout<<"Plain "<<i<<": "<<std::hex<<newPlain[i]<<std::endl;
 
     std::cout<<"Finished testing successfully!"<<std::endl;
@@ -45,7 +44,7 @@ inline void testAes128CcmEnc(){
     uint64_t numBlockAD[1]={1};
     uint64_t nonce=0x0034567890ABCDEF;
     
-    aes::aesCcm<Type::ENC, aes::KeyLength::U128>(binaryFilename, in, key, nonce, ad, out, tag, numBlockIn, numBlockAD, 1);
+    aes::aesCcm<Type::ENC, aes::KeyLength::U128>(in, key, nonce, ad, out, tag, numBlockIn, numBlockAD, 1);
     for(int i=0;i<4;i++) std::cout<<"Cipher "<<i<<": "<<std::hex<<out[i]<<std::endl;
     for(int i=0;i<2;i++) std::cout<<"Tag "<<i<<": "<<std::hex<<tag[i]<<std::endl;
 
@@ -71,7 +70,7 @@ inline void testAes128CcmDec(){
     uint64_t numBlockAD[1]={1};
     uint64_t nonce=0x0034567890ABCDEF;
     
-    aes::aesCcm<Type::DEC, aes::KeyLength::U128>(binaryFilename, in, key, nonce, ad, out, tag, numBlockIn, numBlockAD, 1);
+    aes::aesCcm<Type::DEC, aes::KeyLength::U128>(in, key, nonce, ad, out, tag, numBlockIn, numBlockAD, 1);
     for(int i=0;i<4;i++) std::cout<<"Plain "<<i<<": "<<std::hex<<out[i]<<std::endl;
     for(int i=0;i<2;i++) std::cout<<"Tag "<<i<<": "<<std::hex<<tag[i]<<std::endl;
 
@@ -97,7 +96,7 @@ inline void testAes128GcmEnc(){
     uint64_t numBlockAD[1]={1};
     uint64_t IV[2]={0x1234567890ABCDEF, 0x1234567890ABCDEF};
     
-    aes::aesGcm<Type::ENC, aes::KeyLength::U128>(binaryFilename, in, key, IV, ad, out, tag, numBlockIn, numBlockAD, 1);
+    aes::aesGcm<Type::ENC, aes::KeyLength::U128>(in, key, IV, ad, out, tag, numBlockIn, numBlockAD, 1);
     for(int i=0;i<4;i++) std::cout<<"Cipher "<<i<<": "<<std::hex<<out[i]<<std::endl;
     for(int i=0;i<2;i++) std::cout<<"Tag "<<i<<": "<<std::hex<<tag[i]<<std::endl;
 
@@ -123,7 +122,7 @@ inline void testAes128GcmDec(){
     uint64_t numBlockAD[1]={1};
     uint64_t IV[2]={0x1234567890ABCDEF, 0x1234567890ABCDEF};
     
-    aes::aesGcm<Type::DEC, aes::KeyLength::U128>(binaryFilename, in, key, IV, ad, out, tag, numBlockIn, numBlockAD, 1);
+    aes::aesGcm<Type::DEC, aes::KeyLength::U128>(in, key, IV, ad, out, tag, numBlockIn, numBlockAD, 1);
     for(int i=0;i<4;i++) std::cout<<"Plain "<<i<<": "<<std::hex<<out[i]<<std::endl;
     for(int i=0;i<2;i++) std::cout<<"Tag "<<i<<": "<<std::hex<<tag[i]<<std::endl;
 

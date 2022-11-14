@@ -29,7 +29,7 @@ PAKG_FLG=$(KNRL_FLG)
 # package/launch_sw_emu.sh -forward-port 1440 22
 
 host: $(HOST_SRC)
-	$(CXX) $(HOST_SRC) $(HOST_INC) $(HOST_LIB) -o $(HOST_OUTPUT) $(HOST_FLG)
+	g++ $(HOST_SRC) $(HOST_INC) $(HOST_LIB) -o $(HOST_OUTPUT) $(HOST_FLG)
 
 kernel: $(patsubst %, kernels/%.xo, $(KNRL_NEEDED))
 

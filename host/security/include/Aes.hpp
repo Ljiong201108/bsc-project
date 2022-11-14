@@ -23,8 +23,8 @@ std::string keyLengthToString(KeyLength k);
 
 namespace internal{
 template<Type T, KeyLength K, Method M>
-void aesWithIV(std::string &binaryFileName, uint64_t *in, uint64_t *key, uint64_t *iv, uint64_t *out, uint32_t size){
-    Application app(binaryFileName);
+void aesWithIV(uint64_t *in, uint64_t *key, uint64_t *iv, uint64_t *out, uint32_t size){
+    Application &app=Application::getInstance();
     CommandQueuePointer cqPointer;
     KernelPointer kPointer;
     Pool<BufferPointer, 4> bufferPool;
@@ -61,8 +61,8 @@ void aesWithIV(std::string &binaryFileName, uint64_t *in, uint64_t *key, uint64_
 }
 
 template<Type T, KeyLength K, Method M>
-void aesWithoutIV(std::string &binaryFileName, uint64_t *in, uint64_t *key, uint64_t *out, uint32_t size){
-    Application app(binaryFileName);
+void aesWithoutIV(uint64_t *in, uint64_t *key, uint64_t *out, uint32_t size){
+    Application &app=Application::getInstance();
     CommandQueuePointer cqPointer;
     KernelPointer kPointer;
     Pool<BufferPointer, 3> bufferPool;
@@ -95,8 +95,8 @@ void aesWithoutIV(std::string &binaryFileName, uint64_t *in, uint64_t *key, uint
 }
 
 template<Type T, KeyLength K>
-void aesCcm(std::string &binaryFileName, uint64_t *in, uint64_t *key, uint64_t nonce, uint64_t *ad, uint64_t *out, uint64_t *tag, uint64_t *numBlockIn, uint64_t *numBlockAD, uint64_t numMessage){
-    Application app(binaryFileName);
+void aesCcm(uint64_t *in, uint64_t *key, uint64_t nonce, uint64_t *ad, uint64_t *out, uint64_t *tag, uint64_t *numBlockIn, uint64_t *numBlockAD, uint64_t numMessage){
+    Application &app=Application::getInstance();
     CommandQueuePointer cqPointer;
     KernelPointer kPointer;
     Pool<BufferPointer, 8> bufferPool;
@@ -153,8 +153,8 @@ void aesCcm(std::string &binaryFileName, uint64_t *in, uint64_t *key, uint64_t n
 }
 
 template<Type T, KeyLength K>
-void aesGcm(std::string &binaryFileName, uint64_t *in, uint64_t *key, uint64_t *IV, uint64_t *ad, uint64_t *out, uint64_t *tag, uint64_t *numBlockIn, uint64_t *numBlockAD, uint64_t numMessage){
-    Application app(binaryFileName);
+void aesGcm(uint64_t *in, uint64_t *key, uint64_t *IV, uint64_t *ad, uint64_t *out, uint64_t *tag, uint64_t *numBlockIn, uint64_t *numBlockAD, uint64_t numMessage){
+    Application &app=Application::getInstance();
     CommandQueuePointer cqPointer;
     KernelPointer kPointer;
     Pool<BufferPointer, 8> bufferPool;
@@ -212,37 +212,37 @@ void aesGcm(std::string &binaryFileName, uint64_t *in, uint64_t *key, uint64_t *
 } //end namespace internal
 
 template<Type T, KeyLength K>
-void aesCbc(std::string &binaryFileName, uint64_t *in, uint64_t *key, uint64_t *iv, uint64_t *out, uint32_t size){
-    aes::internal::aesWithIV<T, K, aes::Method::Cbc>(binaryFileName, in, key, iv, out, size);
+void aesCbc(uint64_t *in, uint64_t *key, uint64_t *iv, uint64_t *out, uint32_t size){
+    aes::internal::aesWithIV<T, K, aes::Method::Cbc>(in, key, iv, out, size);
 }
 
 template<Type T, KeyLength K>
-void aesCfb1(std::string &binaryFileName, uint64_t *in, uint64_t *key, uint64_t *iv, uint64_t *out, uint32_t size){
-    aes::internal::aesWithIV<T, K, aes::Method::Cfb1>(binaryFileName, in, key, iv, out, size);
+void aesCfb1(uint64_t *in, uint64_t *key, uint64_t *iv, uint64_t *out, uint32_t size){
+    aes::internal::aesWithIV<T, K, aes::Method::Cfb1>(in, key, iv, out, size);
 }
 
 template<Type T, KeyLength K>
-void aesCfb8(std::string &binaryFileName, uint64_t *in, uint64_t *key, uint64_t *iv, uint64_t *out, uint32_t size){
-    aes::internal::aesWithIV<T, K, aes::Method::Cfb8>(binaryFileName, in, key, iv, out, size);
+void aesCfb8(uint64_t *in, uint64_t *key, uint64_t *iv, uint64_t *out, uint32_t size){
+    aes::internal::aesWithIV<T, K, aes::Method::Cfb8>(in, key, iv, out, size);
 }
 
 template<Type T, KeyLength K>
-void aesCfb128(std::string &binaryFileName, uint64_t *in, uint64_t *key, uint64_t *iv, uint64_t *out, uint32_t size){
-    aes::internal::aesWithIV<T, K, aes::Method::Cfb128>(binaryFileName, in, key, iv, out, size);
+void aesCfb128(uint64_t *in, uint64_t *key, uint64_t *iv, uint64_t *out, uint32_t size){
+    aes::internal::aesWithIV<T, K, aes::Method::Cfb128>(in, key, iv, out, size);
 }
 
 template<Type T, KeyLength K>
-void aesEcb(std::string &binaryFileName, uint64_t *in, uint64_t *key, uint64_t *out, uint32_t size){
-    aes::internal::aesWithoutIV<T, K, aes::Method::Ecb>(binaryFileName, in, key, out, size);
+void aesEcb(uint64_t *in, uint64_t *key, uint64_t *out, uint32_t size){
+    aes::internal::aesWithoutIV<T, K, aes::Method::Ecb>(in, key, out, size);
 }
 
 template<Type T, KeyLength K>
-void aesCcm(std::string &binaryFileName, uint64_t *in, uint64_t *key, uint64_t nonce, uint64_t *ad, uint64_t *out, uint64_t *tag, uint64_t *numBlockIn, uint64_t *numBlockAD, uint64_t numMessage){
-    aes::internal::aesCcm<T, K>(binaryFileName, in, key, nonce, ad, out, tag, numBlockIn, numBlockAD, numMessage);
+void aesCcm(uint64_t *in, uint64_t *key, uint64_t nonce, uint64_t *ad, uint64_t *out, uint64_t *tag, uint64_t *numBlockIn, uint64_t *numBlockAD, uint64_t numMessage){
+    aes::internal::aesCcm<T, K>(in, key, nonce, ad, out, tag, numBlockIn, numBlockAD, numMessage);
 }
 
 template<Type T, KeyLength K>
-void aesGcm(std::string &binaryFileName, uint64_t *in, uint64_t *key, uint64_t *IV, uint64_t *ad, uint64_t *out, uint64_t *tag, uint64_t *numBlockIn, uint64_t *numBlockAD, uint64_t numMessage){
-    aes::internal::aesGcm<T, K>(binaryFileName, in, key, IV, ad, out, tag, numBlockIn, numBlockAD, numMessage);
+void aesGcm(uint64_t *in, uint64_t *key, uint64_t *IV, uint64_t *ad, uint64_t *out, uint64_t *tag, uint64_t *numBlockIn, uint64_t *numBlockAD, uint64_t numMessage){
+    aes::internal::aesGcm<T, K>(in, key, IV, ad, out, tag, numBlockIn, numBlockAD, numMessage);
 }
 } //end namespace aes

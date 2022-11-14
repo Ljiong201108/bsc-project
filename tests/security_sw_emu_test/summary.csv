@@ -1,6 +1,6 @@
 Profile Summary
-Generated on: 2022-11-14 11:36:19
-Msec since Epoch: 1668422179052
+Generated on: 2022-11-14 23:59:16
+Msec since Epoch: 1668466756286
 Profiled application: app
 Target platform: Xilinx
 Tool version: 2021.1
@@ -13,55 +13,67 @@ Flow mode: Software Emulation
 
 OpenCL API Calls
 API Name,Number Of Calls,Total Time (ms),Minimum Time (ms),Average Time (ms),Maximum Time (ms),
-clCreateBuffer,8,0.463086,0.027762,0.0578857,0.118253,
-clCreateCommandQueue,2,0.017438,0.005598,0.008719,0.01184,
-clCreateContext,2,0.390429,0.170319,0.195215,0.22011,
-clCreateKernel,2,8.25371,4.09105,4.12685,4.16265,
-clCreateProgramWithBinary,2,177.713,86.3064,88.8563,91.4061,
-clEnqueueMapBuffer,8,0.617265,0.026164,0.0771581,0.354813,
-clEnqueueMigrateMemObjects,4,0.054374,0.004928,0.0135935,0.021853,
-clEnqueueTask,2,0.456191,0.182721,0.228096,0.27347,
-clFinish,2,10.343,2.63313,5.17151,7.70989,
-clGetDeviceIDs,4,0.009174,0.001022,0.0022935,0.003703,
-clGetExtensionFunctionAddress,2,0.036712,0.003522,0.018356,0.03319,
-clGetExtensionFunctionAddressForPlatform,2,0.014656,0.001616,0.007328,0.01304,
-clGetPlatformInfo,8,0.011589,0.000718,0.00144863,0.002767,
-clReleaseCommandQueue,2,0.007837,0.003385,0.0039185,0.004452,
-clReleaseContext,2,3.55348,1.1343,1.77674,2.41918,
-clReleaseDevice,8,0.0169,0.001059,0.0021125,0.003501,
-clReleaseKernel,2,0.543128,0.221206,0.271564,0.321922,
-clReleaseMemObject,24,0.031541,0.000714,0.00131421,0.002976,
-clReleaseProgram,2,0.676973,0.016058,0.338487,0.660915,
-clRetainDevice,8,0.014318,0.000632,0.00178975,0.004444,
-clRetainMemObject,16,0.021161,0.000606,0.00132256,0.003624,
-clSetKernelArg,10,0.03016,0.000924,0.003016,0.007744,
+clCreateBuffer,24,1.33126,0.048046,0.0554691,0.117724,
+clCreateCommandQueue,4,0.023966,0.003655,0.0059915,0.01223,
+clCreateContext,1,0.25371,0.25371,0.25371,0.25371,
+clCreateKernel,4,16.0625,3.92288,4.01564,4.21086,
+clCreateProgramWithBinary,1,70.548,70.548,70.548,70.548,
+clEnqueueMapBuffer,24,1.30344,0.025934,0.05431,0.34928,
+clEnqueueMigrateMemObjects,8,0.093003,0.004098,0.0116254,0.022018,
+clEnqueueTask,4,1.32948,0.217215,0.33237,0.430531,
+clFinish,4,62.4357,7.15166,15.6089,24.3429,
+clGetDeviceIDs,2,0.005618,0.00163,0.002809,0.003988,
+clGetExtensionFunctionAddress,2,0.019956,0.003664,0.009978,0.016292,
+clGetExtensionFunctionAddressForPlatform,2,0.005726,0.001726,0.002863,0.004,
+clGetPlatformInfo,6,0.008589,0.000893,0.0014315,0.002813,
+clReleaseCommandQueue,4,0.021018,0.003351,0.0052545,0.006167,
+clReleaseContext,1,2.50888,2.50888,2.50888,2.50888,
+clReleaseDevice,4,0.009946,0.001214,0.0024865,0.003886,
+clReleaseKernel,4,1.65227,0.327613,0.413067,0.558212,
+clReleaseMemObject,72,0.074315,0.000429,0.00103215,0.008496,
+clReleaseProgram,1,0.742294,0.742294,0.742294,0.742294,
+clRetainDevice,4,0.008034,0.000804,0.0020085,0.00474,
+clRetainMemObject,48,0.047685,0.0006,0.000993437,0.00343,
+clSetKernelArg,28,0.052875,0.00086,0.00188839,0.00724,
 
 Kernel Execution
 Kernel,Number Of Enqueues,Total Time (ms),Minimum Time (ms),Average Time (ms),Maximum Time (ms),
-aes128CbcDec,1,7.5695,7.5695,7.5695,7.5695,
-aes128CbcEnc,1,2.38029,2.38029,2.38029,2.38029,
+aes128CbcDec,1,6.89154,6.89154,6.89154,6.89154,
+aes128CbcEnc,1,6.81133,6.81133,6.81133,6.81133,
+aes128CcmDec,1,23.3762,23.3762,23.3762,23.3762,
+aes128CcmEnc,1,23.9251,23.9251,23.9251,23.9251,
 
 Top Kernel Execution
 Kernel Instance Address,Kernel,Context ID,Command Queue ID,Device,Start Time (ms),Duration (ms),Global Work Size,Local Work Size,
-94115843982144,aes128CbcDec,1,1,xilinx:pcie-hw-em:7v3:1.0-0,213.96,7.5695,1:1:1,1:1:1,
-94115844496896,aes128CbcEnc,0,0,xilinx:pcie-hw-em:7v3:1.0-0,108.77,2.38029,1:1:1,1:1:1,
+94202977889664,aes128CcmEnc,0,2,xilinx:pcie-hw-em:7v3:1.0-0,113.469,23.9251,1:1:1,1:1:1,
+94202977734688,aes128CcmDec,0,3,xilinx:pcie-hw-em:7v3:1.0-0,143.707,23.3762,1:1:1,1:1:1,
+94202977964800,aes128CbcDec,0,1,xilinx:pcie-hw-em:7v3:1.0-0,100.614,6.89154,1:1:1,1:1:1,
+94202977964800,aes128CbcEnc,0,0,xilinx:pcie-hw-em:7v3:1.0-0,88.3907,6.81133,1:1:1,1:1:1,
 
 Top Memory Writes: Host to Global Memory
 Buffer Address,Context ID,Command Queue ID,Start Time (ms),Duration (ms),Buffer Size (KB),Writing Rate(MB/s),
-8192,0,0,108.463,N/A,0.064,N/A,
-8192,1,1,213.728,N/A,0.064,N/A,
-12288,0,0,108.712,N/A,0.096,N/A,
-12288,1,1,213.933,N/A,0.096,N/A,
+4096,0,2,112.889,N/A,0.088,N/A,
+4096,0,1,100.215,N/A,0.064,N/A,
+4096,0,3,143.269,N/A,0.088,N/A,
+8192,0,0,88.1749,N/A,0.064,N/A,
+20480,0,3,143.588,N/A,0.136,N/A,
+20480,0,2,113.354,N/A,0.136,N/A,
+8192,0,1,100.518,N/A,0.096,N/A,
+12288,0,0,88.3289,N/A,0.096,N/A,
 
 Top Memory Reads: Host to Global Memory
 Buffer Address,Context ID,Command Queue ID,Start Time (ms),Duration (ms),Buffer Size (KB),Reading Rate(MB/s),
-12288,0,0,111.199,N/A,0.032,N/A,
-12288,1,1,221.586,N/A,0.032,N/A,
+12288,0,2,137.448,N/A,0.048,N/A,
+12288,0,3,167.137,N/A,0.048,N/A,
+8192,0,1,107.54,N/A,0.032,N/A,
+12288,0,0,95.2467,N/A,0.032,N/A,
 
 Compute Unit Utilization
 Device,Compute Unit,Kernel,Global Work Size,Local Work Size,Number Of Calls,Dataflow Execution,Max Overlapping Executions,Dataflow Acceleration,Total Time (ms),Minimum Time (ms),Average Time (ms),Maximum Time (ms),Clock Frequency (MHz),
-xilinx:pcie-hw-em:7v3:1.0-0,aes128CbcDec_1,aes128CbcDec,1:1:1,1:1:1,1,No,0,1.000000x,7.51583,7.51583,7.51583,7.51583,300,
-xilinx:pcie-hw-em:7v3:1.0-0,aes128CbcEnc_1,aes128CbcEnc,1:1:1,1:1:1,1,No,0,1.000000x,2.30588,2.30588,2.30588,2.30588,300,
+xilinx:pcie-hw-em:7v3:1.0-0,aes128CbcDec_1,aes128CbcDec,1:1:1,1:1:1,1,No,0,1.000000x,6.83239,6.83239,6.83239,6.83239,300,
+xilinx:pcie-hw-em:7v3:1.0-0,aes128CbcEnc_1,aes128CbcEnc,1:1:1,1:1:1,1,No,0,1.000000x,6.738,6.738,6.738,6.738,300,
+xilinx:pcie-hw-em:7v3:1.0-0,aes128CcmDec_1,aes128CcmDec,1:1:1,1:1:1,1,No,0,1.000000x,23.3151,23.3151,23.3151,23.3151,300,
+xilinx:pcie-hw-em:7v3:1.0-0,aes128CcmEnc_1,aes128CcmEnc,1:1:1,1:1:1,1,No,0,1.000000x,23.8664,23.8664,23.8664,23.8664,300,
 
 
 
@@ -73,9 +85,11 @@ xilinx:pcie-hw-em:7v3:1.0-0,aes128CbcEnc_1,aes128CbcEnc,1:1:1,1:1:1,1,No,0,1.000
 
 Guidance Parameters
 Parameter,Element,Value,
-DEVICE_EXEC_TIME,xilinx:pcie-hw-em:7v3:1.0-0,112.759,
+DEVICE_EXEC_TIME,xilinx:pcie-hw-em:7v3:1.0-0,78.6925,
 CU_CALLS,xilinx:pcie-hw-em:7v3:1.0-0|aes128CbcDec_1,1,
 CU_CALLS,xilinx:pcie-hw-em:7v3:1.0-0|aes128CbcEnc_1,1,
+CU_CALLS,xilinx:pcie-hw-em:7v3:1.0-0|aes128CcmDec_1,1,
+CU_CALLS,xilinx:pcie-hw-em:7v3:1.0-0|aes128CcmEnc_1,1,
 MEMORY_USAGE,xilinx:pcie-hw-em:7v3:1.0-0|DDR[0],1,
 PLRAM_DEVICE,all,1,
 HBM_DEVICE,all,0,
@@ -87,23 +101,17 @@ PORT_BIT_WIDTH,aes128ccmdec_1/m_axi_gmem,128,
 PORT_BIT_WIDTH,aes128ccmenc_1/m_axi_gmem,128,
 PORT_BIT_WIDTH,aes128gcmdec_1/m_axi_gmem,128,
 PORT_BIT_WIDTH,aes128gcmenc_1/m_axi_gmem,128,
-PORT_BIT_WIDTH,aes128cbcdec_1/m_axi_gmem,128,
-PORT_BIT_WIDTH,aes128cbcenc_1/m_axi_gmem,128,
-PORT_BIT_WIDTH,aes128ccmdec_1/m_axi_gmem,128,
-PORT_BIT_WIDTH,aes128ccmenc_1/m_axi_gmem,128,
-PORT_BIT_WIDTH,aes128gcmdec_1/m_axi_gmem,128,
-PORT_BIT_WIDTH,aes128gcmenc_1/m_axi_gmem,128,
-KERNEL_COUNT,aes128CbcDec,2,
-KERNEL_COUNT,aes128CbcEnc,2,
-KERNEL_COUNT,aes128CcmDec,2,
-KERNEL_COUNT,aes128CcmEnc,2,
-KERNEL_COUNT,aes128GcmDec,2,
-KERNEL_COUNT,aes128GcmEnc,2,
+KERNEL_COUNT,aes128CbcDec,1,
+KERNEL_COUNT,aes128CbcEnc,1,
+KERNEL_COUNT,aes128CcmDec,1,
+KERNEL_COUNT,aes128CcmEnc,1,
+KERNEL_COUNT,aes128GcmDec,1,
+KERNEL_COUNT,aes128GcmEnc,1,
 TRACE_MEMORY,all,NA,
 MEMORY_TYPE_BIT_WIDTH,xilinx:pcie-hw-em:7v3:1.0-0|HBM,256,
 MEMORY_TYPE_BIT_WIDTH,xilinx:pcie-hw-em:7v3:1.0-0|DDR,512,
 MEMORY_TYPE_BIT_WIDTH,xilinx:pcie-hw-em:7v3:1.0-0|PLRAM,512,
-APPLICATION_RUN_TIME_MS,all,224.517,
+APPLICATION_RUN_TIME_MS,all,173.654,
 XRT_INI_SETTING,profile,1,Profiling (deprecated)
 XRT_INI_SETTING,opencl_summary,0,Generation of OpenCL summary report
 XRT_INI_SETTING,opencl_device_counter,1,Hardware counters added to OpenCL summary file

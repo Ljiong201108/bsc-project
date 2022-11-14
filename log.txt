@@ -1,14 +1,266 @@
+27.10.2022
+discuss directly build hls -> bitstream using tcl, current problem is how to transfer data to bitstream??? (Maybe XRT)
+
+take a look at the gzip demo and the provided lib in the data compression. The designed flow roughly is:
+1. App class stores the configuration of the executable
+2. Base -> OCLHost/XrtHost class init the environment for OpenCL
+3. App class controls the Base/Host class to execute
+
+also some disadvantageous:
+1. many options configurured via #Define during the compile time
+2. the kernels of demos are compiled seprately
+3. the helper class are too specific only for one library e.g. buffers in gzipOCLHost
+
+28.10.2022
+take a closer look at the L2 kernels and their connections. (What is SRL?)
+
+Some detailed discoveries:
+1. in OLAP mode, "enbytes = compressEngineOverlap(in, out + outIdx, m_InputSize, 0, 1, 0, 15, &checksum);" in gzipBase.cpp, cu index is always 0
+2. level(1), strategy(0) and window_bits(15) are never used
+
+gzip execution modes:
+
+# compress SEQ = copy the original file into fpga -> execute compress -> copy the compressed file back to host
+
+# compress OLAP = divide the original file into chunks(1024 * 1024 Bytes by default) -> execute the sub-progress like pipeline:
+
+ts = time slice
+wd = write data
+cd = compress data 
+rd = read data
+
+* | ts 1 | ts 2 | ts 3 | ts 4 | ts 5 | ...
+* | wd 1 | wd 2 | wd 3 | ...
+*	  		 | cd 1 | cd 2 | cd 3 | ...
+* 							| rd 1 | rd 2 | rd 3 | ...
+
+(but their code contains much other details after this progress, I don't understand what they really want to do...)
+
+# decompress SEQ = copy the original file into a data writer from host memory -> convert to AXI stream -> decompress in free running kernel -> result is also AXI stream -> data reader convert the AXI stream to host memory
+
+----------------------------------------------------------------------------------------------------------------
+[Kernel usage from gzip/zlib Demo]: gzip: xilDecompress 				/home/jiong/Vitis_Libraries/data_compression/L2/src/zlib_decompress.cpp xilGzipMM2S					  /home/jiong/Vitis_Libraries/data_compression/L2/tests/src/gzip_dm_mm2s.cpp xilGzipS2MM					  /home/jiong/Vitis_Libraries/data_compression/L2/tests/src/gzip_dm_s2mm.cpp xilGzipCompBlock			/home/jiong/Vitis_Libraries/data_compression/L2/src/gzip_compress_multicore_mm.cpp
+
+Kernel Specs: 
+  # Compress
+	kernel: xilGzipCompBlock, num: 1  {xilGzipCompBlock_1}
+	
+  # Decompress
+	kernel: xilDecompress, num: 1  {xilDecompress_1}
+	kernel: xilGzipMM2S, num: 1  {xilGzipMM2S_1}
+	kernel: xilGzipS2MM, num: 1  {xilGzipS2MM_1}
+Stream Specs: 
+	xilGzipMM2S_1.outStream => xilDecompress_1.inaxistreamd
+	xilDecompress_1.outaxistreamd => xilGzipS2MM_1.inStream
+
+-D: 
+NUM_CORES=4           xilGzipCompBlock
+PARALLEL_BLOCK=1      ??s2mm number of parallel processed blocks
+MULTIPLE_BYTES=8      xilDecompress(mainly) xilGzipMM2S xilGzipS2MM
+GZIP_MODE=1           /home/jiong/Vitis_Libraries/data_compression/L2/tests/src/zlib_compress.cpp
+LL_MODEL=true         xilDecompress, low latency model
+
+----------------------------------------------------------------------------------------------------------------
+
+[Illustration of kernel xilGzipCompBlock (/home/jiong/Vitis_Libraries/data_compression/L2/src/gzip_compress_multicore_mm.cpp)]
+
+Configuration:
+GMEM_DWIDTH       64
+GMEM_BURST_SIZE   128
+NUM_CORES         8
+BLOCKSIZE_IN_KB   32
+
+Components: 
+mm2Stream                 /home/jiong/Vitis_Libraries/data_compression/L1/include/hw/mm2s.hpp
+gzipMulticoreCompression  /home/jiong/Vitis_Libraries/data_compression/L1/include/hw/zlib_compress.hpp
+stream2MM                 /home/jiong/Vitis_Libraries/data_compression/L1/include/hw/s2mm.hpp   
+
+*                                 	 ----mm2Stream----                                                  ----gzipMulticoreCompression----                                                 ----stream2MM----   
+*                                 	 |   mm2Stream   |                                                  |   gzipMulticoreCompression   |                                                 |   stream2MM   |   
+*  [const ap_uint<GMEM_DWIDTH>* in] >>>  mm2Stream  >>> hls::stream<ap_uint<GMEM_DWIDTH> > mm2sStream  >>>  gzipMulticoreCompression  >>> hls::stream<ap_uint<GMEM_DWIDTH> > outStream  >>>  stream2MM  >>> (ap_uint<GMEM_DWIDTH>* out)   
+*                                 	 |   mm2Stream   |                                                  |   gzipMulticoreCompression   |                                                 |   stream2MM   |   
+*  [uint32_t input_size]            >>>  mm2Stream  >>> hls::stream<ap_uint<32> > checksumInitStream   >>>  gzipMulticoreCompression  >>> hls::stream<bool> outEos                      >>>  stream2MM  >>> (uint32_t* compressd_size)     
+*                                 	 |   mm2Stream   |                                                  |   gzipMulticoreCompression   |                                                 |   stream2MM   | 
+*  [bool checksumType]              >>>  mm2Stream  >>> hls::stream<uint32_t> mm2sSizeStream           >>>  gzipMulticoreCompression  >>> hls::stream<uint32_t> outSizeStream           >>>  stream2MM  >>> (uint32_t* checksumData) 
+*                                 	 |   mm2Stream   |                                                  |   gzipMulticoreCompression   |                                                 |   stream2MM   | 
+*  [uint32_t* checksumData]         >>>  mm2Stream  >>> hls::stream<ap_uint<2> > checksumTypeStream    >>>  gzipMulticoreCompression  >>> hls::stream<ap_uint<32> > checksumOutStream   >>>  stream2MM   | 
+*  (with initial value)           	 |   mm2Stream   |                                                  |   gzipMulticoreCompression   |                                                 |   stream2MM   |
+*                                 	 ----mm2Stream----                                                  ----gzipMulticoreCompression----                                                 ----stream2MM----
+
+----------------------------------------------------------------------------------------------------------------
+
+[Illustration of decompress kernel flow]
+
+# xilGzipMM2S (/home/jiong/Vitis_Libraries/data_compression/L2/tests/src/gzip_dm_mm2s.cpp)
+
+Configuration:
+c_inStreamDwidth 		16
+INPUT_BYTES 				MULTIPLE_BYTES
+MULTIPLE_BYTES			defined from outside
+uintMemWidth_t			ap_uint<INPUT_BYTES * 8>
+
+Components:
+mm2sSimple					<int DATAWIDTH{INPUT_BYTES * 8}> 
+streamDownsizer			<class SIZE_DT{uint32_t}, int IN_WIDTH{INPUT_BYTES * 8}, int OUT_WIDTH{c_inStreamDwidth}>	
+streamDataDm2kSync	<int STREAMDWIDTH{c_inStreamDwidth}>
+
+mm2sSimple					convert data in memory into hls stream 				/home/jiong/Vitis_Libraries/data_compression/L1/include/hw/mm2s.hpp
+streamDownsizer			convert hls stream's unit into smaller one	 	/home/jiong/Vitis_Libraries/data_compression/L1/include/hw/stream_downsizer.hpp
+streamDataDm2kSync	convert hls stream into axi stream 						/home/jiong/Vitis_Libraries/data_compression/L2/tests/src/gzip_dm_mm2s.cpp
+
+*													----mm2sSimple----																																		----streamDownsizer----																																----streamDataDm2kSync----	
+* 												|   mm2sSimple   |																																		|   streamDownsizer   |																																|   streamDataDm2kSync   |		
+* [uintMemWidth_t* in]	 >>>  mm2sSimple  >>>		hls::stream<ap_axiu<c_inStreamDwidth, 0, 0, 0> > inHlsStream	 >>>  streamDownsizer  >>>	hls::stream<ap_uint<c_inStreamDwidth> > outdownstream			 >>>  streamDataDm2kSync  >>>		(hls::stream<ap_axiu<c_inStreamDwidth, 0, 0, 0> >& outStream)		
+* 												|   mm2sSimple   |																																		|   streamDownsizer   |																																|   streamDataDm2kSync   |			
+* [uint32_t inputSize]	 >>>  mm2sSimple   |		[uint32_t inputSize]																			  	 >>>  streamDownsizer   |		[uint32_t inputSize]																			 >>>  streamDataDm2kSync   |				
+* 												|   mm2sSimple   |																																		|   streamDownsizer   |																																|   streamDataDm2kSync   |				
+* 											  |   mm2sSimple   |																																		|   streamDownsizer   |		[uint32_t last]																	 					 >>>  streamDataDm2kSync   |			
+* 												|   mm2sSimple   |																																		|   streamDownsizer   |																																|   streamDataDm2kSync   |					
+*													----mm2sSimple----																																		----streamDownsizer----																																----streamDataDm2kSync----					
+
+# xilDecompress (/home/jiong/Vitis_Libraries/data_compression/L2/src/zlib_decompress.cpp)
+
+Configuration:
+DECODER_TYPE 					c_fullDecoder
+LL_MODEL 							false
+LZ_MAX_OFFSET_LIMIT 	32768
+LOW_OFFSET 						10
+c_historySize   			LZ_MAX_OFFSET_LIMIT
+
+Components:
+inflateMultiByte		<int DECODER{DECODER_TYPE}, int PARALLEL_BYTES{MULTIPLE_BYTES}, int FILE_FORMAT{xf::compression::FileFormat::BOTH}, bool LOW_LATENCY = false{LL_MODEL}, int HISTORY_SIZE = (32 * 1024){c_historySize}>
+
+inflateMultiByte		/home/jiong/Vitis_Libraries/data_compression/L1/include/hw/inflate.hpp
+
+* 																										----inflateMultiByte----	
+*  																										|		inflateMultiByte	 |   
+* hls::stream<ap_axiu<16, 0, 0, 0> >& inaxistreamd	 >>>  inflateMultiByte  >>> 	hls::stream<ap_axiu<MULTIPLE_BYTES * 8, 0, 0, 0> >& outaxistreamd
+* 																										|		inflateMultiByte	 |
+* 																										----inflateMultiByte----	
+
+# xilGzipS2MM (/home/jiong/Vitis_Libraries/data_compression/L2/tests/src/gzip_dm_s2mm.cpp)
+
+
+
+----------------------------------------------------------------------------------------------------------------
+
+[gzip file format (RFC 1952)]
+
++---+
+|   |			represents one byte
++---+
+
+*																						(if FLG.FEXTRA set)														(if FLG.FNAME set)														(if FLG.FCOMMENT set)										(if FLG.FHCRC set)
++---+---+---+---+---+---+---+---+---+---+  	+---+---+=================================+		+=========================================+		+===================================+		+---+---+
+|ID1|ID2|CM |FLG|     MTIME     |XFL|OS |  	| XLEN  |...XLEN bytes of "extra field"...|		|...original file name, zero-terminated...|		|...file comment, zero-terminated...|		| CRC16 |
++---+---+---+---+---+---+---+---+---+---+  	+---+---+=================================+		+=========================================+		+===================================+		+---+---+
+
++=======================+
+|...compressed blocks...| (more-->)
++=======================+
+
++---+---+---+---+---+---+---+---+
+|     CRC32     |     ISIZE     |
++---+---+---+---+---+---+---+---+
+
+ID1 (IDentification 1)
+ID2 (IDentification 2)
+	These have the fixed values ID1 = 31 (0x1f, \037), ID2 = 139 (0x8b, \213), to identify the file as being in gzip format.
+
+CM (Compression Method)
+	This identifies the compression method used in the file.  CM = 0-7 are reserved.  CM = 8 denotes the "deflate" compression method, which is the one customarily used by gzip and which is documented elsewhere.
+
+FLG (FLaGs)
+	This flag byte is divided into individual bits as follows:
+	bit 0   FTEXT				the file is probably ASCII text
+	bit 1   FHCRC				a CRC16 for the gzip header is present
+	bit 2   FEXTRA			optional extra fields are present
+	bit 3   FNAME				an original file name is present
+	bit 4   FCOMMENT
+	bit 5   reserved
+	bit 6   reserved
+	bit 7   reserved
+
+MTIME (Modification TIME)
+
+XFL (eXtra FLags)
+	XFL = 2 - compressor used maximum compression, slowest algorithm
+	XFL = 4 - compressor used fastest algorithm
+
+OS (Operating System)
+	0 - FAT filesystem (MS-DOS, OS/2, NT/Win32)
+	1 - Amiga
+	2 - VMS (or OpenVMS)
+	3 - Unix
+	4 - VM/CMS
+	5 - Atari TOS
+	6 - HPFS filesystem (OS/2, NT)
+	7 - Macintosh
+	8 - Z-System
+	9 - CP/M
+	10 - TOPS-20
+	11 - NTFS filesystem (NT)
+	12 - QDOS
+	13 - Acorn RISCOS
+	255 - unknown
+
+ISIZE (Input SIZE)
+	This contains the size of the original (uncompressed) input data modulo 2^32.
+
+compressed block format:
+
+3 bits header:
+BFINAL	1		if is the last block 
+BTYPE		2		00: FULL 01: FIXED 10: DYNAMIC 11: RESERVED 
+
+rest: https://calmarius.net/index.php?lang=en&page=programming%2Fzlib_deflate_quick_reference
+
+https://stackoverflow.com/questions/63607160/how-to-find-the-end-of-a-deflate-block
+
+do
+	read block header from input stream.
+	if stored with no compression
+		skip any remaining bits in current partially processed byte
+		read LEN and NLEN (see next section)
+		copy LEN bytes of data to output
+	otherwise
+		if compressed with dynamic Huffman codes
+			read representation of code trees
+		loop (until end of block code recognized)
+			decode literal/length value from input stream
+			if value < 256
+				copy value (literal byte) to output stream
+			otherwise
+				if value = end of block (256)
+					break from loop
+				otherwise (value = 257..285)
+					decode distance from input stream
+					move backwards distance bytes in the output stream, and copy length bytes from this position to the output stream.
+		end loop
+while not last block
+
+last block: 0xffff000001
+
+01 			0b00000001 -> BFINAL = 1 BTYPE = 00 -> skip any remaining bits in current partially processed byte
+00 00 	LEN
+ff ff 	NLEN
+
+12.11.2022
 security:
 des & aes | enc & dec \ hash functions like gmac ...
 renewed the api
-dataflow in kernel is currently not used, because the kernel has to be configured by user
+dataflow in kernel is currently not used, because the kernel has to be configured by me
 only seq mode currently
-user have to build xclbin theirselves
+user do not have to build xclbin theirselves
 a xclbin that contains many kernels results in very slow execution speed in hardware emulation
 did a little modification to the library(gmac) because of the non-template functions
 hash functions like gmac need to be done later
 
 data compression:
-target? file or memory
+target? memory
 plan: reuse their commpn lib 
-free running kernel has to be configured by user. How to deal with that?
+free running kernel has to be configured by me.
+
+14.11.2022
+since the xclbin file need to be configured by me, I made the Application class into a singleton(only contains one instance during the runtime)
+

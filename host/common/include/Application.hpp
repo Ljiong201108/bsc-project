@@ -8,6 +8,8 @@
 
 #include "Util.hpp"
 
+const std::string xclbinFileName="test.xclbin";
+
 class Application{
 private:
     cl_int m_err;
@@ -16,9 +18,14 @@ private:
     cl::Program m_program;
     unsigned m_xclbinBufferSize;
     char *m_xclbinBuffer;
+
+    Application(const std::string &binaryFileName);
     
 public:
-    Application(const std::string &binaryFileName);
+    Application(const Application&)=delete;
+    Application& operator=(const Application&)=delete;
+
+    static Application& getInstance();
     ~Application();
 
     //getters

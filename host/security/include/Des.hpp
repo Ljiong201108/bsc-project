@@ -15,8 +15,8 @@ std::string methodToString(Method m);
 
 namespace internal{
 template<Type T, Method M>
-void desWithIV(const std::string &binaryFileName, uint64_t *in, const uint64_t &key, const uint64_t &iv, uint64_t *out, uint32_t size){
-    Application app(binaryFileName);
+void desWithIV(uint64_t *in, const uint64_t &key, const uint64_t &iv, uint64_t *out, uint32_t size){
+    Application &app=Application::getInstance();
     CommandQueuePointer cqPointer;
     KernelPointer kPointer;
     Pool<BufferPointer, 2> bufferPool;
@@ -49,8 +49,8 @@ void desWithIV(const std::string &binaryFileName, uint64_t *in, const uint64_t &
 }
 
 template<Type T, Method M>
-void desWithoutIV(const std::string &binaryFileName, uint64_t *in, const uint64_t &key, uint64_t *out, uint32_t size){
-    Application app(binaryFileName);
+void desWithoutIV(uint64_t *in, const uint64_t &key, uint64_t *out, uint32_t size){
+    Application &app=Application::getInstance();
     CommandQueuePointer cqPointer;
     KernelPointer kPointer;
     Pool<BufferPointer, 2> bufferPool;
@@ -84,33 +84,33 @@ void desWithoutIV(const std::string &binaryFileName, uint64_t *in, const uint64_
 
 //Cbc, Cfb1, Cfb8, Cfb128, Ofb, Ecb
 template<Type T>
-void desCbc(const std::string &binaryFileName, uint64_t *in, const uint64_t &key, const uint64_t &iv, uint64_t *out, uint32_t size){
-    des::internal::desWithIV<T, Method::Cbc>(binaryFileName, in, key, iv, out, size);
+void desCbc(uint64_t *in, const uint64_t &key, const uint64_t &iv, uint64_t *out, uint32_t size){
+    des::internal::desWithIV<T, Method::Cbc>(in, key, iv, out, size);
 }
 
 template<Type T>
-void desCfb1(const std::string &binaryFileName, uint64_t *in, const uint64_t &key, const uint64_t &iv, uint64_t *out, uint32_t size){
-    des::internal::desWithIV<T, Method::Cfb1>(binaryFileName, in, key, iv, out, size);
+void desCfb1(uint64_t *in, const uint64_t &key, const uint64_t &iv, uint64_t *out, uint32_t size){
+    des::internal::desWithIV<T, Method::Cfb1>(in, key, iv, out, size);
 }
 
 template<Type T>
-void desCfb8(const std::string &binaryFileName, uint64_t *in, const uint64_t &key, const uint64_t &iv, uint64_t *out, uint32_t size){
-    des::internal::desWithIV<T, Method::Cfb8>(binaryFileName, in, key, iv, out, size);
+void desCfb8(uint64_t *in, const uint64_t &key, const uint64_t &iv, uint64_t *out, uint32_t size){
+    des::internal::desWithIV<T, Method::Cfb8>(in, key, iv, out, size);
 }
 
 template<Type T>
-void desCfb128(const std::string &binaryFileName, uint64_t *in, const uint64_t &key, const uint64_t &iv, uint64_t *out, uint32_t size){
-    des::internal::desWithIV<T, Method::Cfb128>(binaryFileName, in, key, iv, out, size);
+void desCfb128(uint64_t *in, const uint64_t &key, const uint64_t &iv, uint64_t *out, uint32_t size){
+    des::internal::desWithIV<T, Method::Cfb128>(in, key, iv, out, size);
 }
 
 template<Type T>
-void desEcb(const std::string &binaryFileName, uint64_t *in, const uint64_t &key, uint64_t *out, uint32_t size){
-    des::internal::desWithoutIV<T, Method::Ecb>(binaryFileName, in, key, out, size);
+void desEcb(uint64_t *in, const uint64_t &key, uint64_t *out, uint32_t size){
+    des::internal::desWithoutIV<T, Method::Ecb>(in, key, out, size);
 }
 
 template<Type T>
-void desOfb(const std::string &binaryFileName, uint64_t *in, const uint64_t &key, const uint64_t &iv, uint64_t *out, uint32_t size){
-    des::internal::desWithIV<T, Method::Ofb>(binaryFileName, in, key, iv, out, size);
+void desOfb(uint64_t *in, const uint64_t &key, const uint64_t &iv, uint64_t *out, uint32_t size){
+    des::internal::desWithIV<T, Method::Ofb>(in, key, iv, out, size);
 }
 
 } //end namespace des
