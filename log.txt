@@ -1,7 +1,13 @@
 security:
 des & aes | enc & dec \ hash functions like gmac ...
-dataflow in kernel is not used
+renewed the api
+dataflow in kernel is currently not used
 only seq mode currently
 user have to build xclbin theirselves
 a xclbin that contains many kernels results in very slow execution speed in hardware emulation
-did a little modification to the library because of the non-template functions
+did a little modification to the library(gmac) because of the non-template functions
+hash functions like gmac need to be done later
+
+data compression:
+target? file or memory
+plan: reuse their commpn lib 

@@ -1,11 +1,11 @@
 #include "Des.hpp"
 
-namespace des_test{
+namespace testDes{
 
 std::string binaryFilename="test.xclbin";
 uint64_t key=0x66666666, iv=0x11111111;
 
-inline void test_desCbc(){
+inline void testDesCbc(){
     std::cout<<"Starting testing desCbc!"<<std::endl;
 
     uint64_t plain[4]={0x1234, 0x2345, 0x3456, 0x4567}, cipher[4];
@@ -20,7 +20,7 @@ inline void test_desCbc(){
     std::cout<<"Finished testing successfully!"<<std::endl;
 }
 
-inline void test_desCfb1(){
+inline void testDesCfb1(){
     std::cout<<"Starting testing desCfb1!"<<std::endl;
 
     uint64_t plain[4]={0x1234, 0x2345, 0x3456, 0x4567}, cipher[4];
@@ -35,7 +35,7 @@ inline void test_desCfb1(){
     std::cout<<"Finished testing successfully!"<<std::endl;
 }
 
-inline void test_desCfb8(){
+inline void testDesCfb8(){
     std::cout<<"Starting testing desCfb8!"<<std::endl;
 
     uint64_t plain[4]={0x1234, 0x2345, 0x3456, 0x4567}, cipher[4];
@@ -50,7 +50,7 @@ inline void test_desCfb8(){
     std::cout<<"Finished testing successfully!"<<std::endl;
 }
 
-inline void test_desCfb128(){
+inline void testDesCfb128(){
     std::cout<<"Starting testing desCfb128!"<<std::endl;
 
     uint64_t plain[4]={0x1234, 0x2345, 0x3456, 0x4567}, cipher[4];
@@ -65,7 +65,7 @@ inline void test_desCfb128(){
     std::cout<<"Finished testing successfully!"<<std::endl;
 }
 
-inline void test_desEcb(){
+inline void testDesEcb(){
     std::cout<<"Starting testing desEcb!"<<std::endl;
 
     uint64_t plain[4]={0x1234, 0x2345, 0x3456, 0x4567}, cipher[4];
@@ -80,7 +80,7 @@ inline void test_desEcb(){
     std::cout<<"Finished testing successfully!"<<std::endl;
 }
 
-inline void test_desOfb(){
+inline void testDesOfb(){
     std::cout<<"Starting testing desOfb!"<<std::endl;
 
     uint64_t plain[4]={0x1234, 0x2345, 0x3456, 0x4567}, cipher[4];

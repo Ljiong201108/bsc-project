@@ -1,11 +1,11 @@
 #include "Aes.hpp"
 
-namespace test_aes{
+namespace testAes{
 
 std::string binaryFilename="test.xclbin";
 uint64_t key[]={0x66666666, 0x77777777}, iv[]={0x11111111, 0x22222222};
 
-inline void test_aes128CbcEnc(){
+inline void testAes128CbcEnc(){
     std::cout<<"Starting testing aes128CbcEnc!"<<std::endl;
 
     uint64_t plain[4]={0x1234, 0x2345, 0x3456, 0x4567}, cipher[4];
@@ -16,7 +16,7 @@ inline void test_aes128CbcEnc(){
     std::cout<<"Finished testing successfully!"<<std::endl;
 }
 
-inline void test_aes128CbcDec(){
+inline void testAes128CbcDec(){
     std::cout<<"Starting testing aes128CbcDec!"<<std::endl;
 
     uint64_t cipher[4]={0x64c72ec93ec821bb, 0xad30d791c12265fa, 0x7aabe371b4d4d1ea, 0x8b891f95b33b50c5}, newPlain[4];
@@ -34,7 +34,7 @@ inline void test_aes128CbcDec(){
     Tag: 0: ed84c51e60668ea
     Tag: 1: 9358bf6b9a63a6e2
 */
-inline void test_aes128CcmEnc(){
+inline void testAes128CcmEnc(){
     std::cout<<"Starting testing aes128CcmEnc!"<<std::endl;
 
     uint64_t in[4]={0x1111222233334444, 0x2222333344445555, 0x3333444455556666, 0x4444555566667777};
@@ -60,7 +60,7 @@ inline void test_aes128CcmEnc(){
     Tag 0: ed84c51e60668ea
     Tag 1: 9358bf6b9a63a6e2
 */
-inline void test_aes128CcmDec(){
+inline void testAes128CcmDec(){
     std::cout<<"Starting testing aes128CcmEnc!"<<std::endl;
 
     uint64_t in[4]={0x3bb758a3a7d440b9, 0xc078ea81dd472387, 0xb147999cced4c140, 0xa074feb12365996d};
@@ -86,7 +86,7 @@ inline void test_aes128CcmDec(){
     Tag 0: 888677e3343bc461
     Tag 1: cf1ec55cceeb9ad1
 */
-inline void test_aes128GcmEnc(){
+inline void testAes128GcmEnc(){
     std::cout<<"Starting testing aes128GcmEnc!"<<std::endl;
 
     uint64_t in[4]={0x1111222233334444, 0x2222333344445555, 0x3333444455556666, 0x4444555566667777};
@@ -112,7 +112,7 @@ inline void test_aes128GcmEnc(){
     Tag 0: 888677e3343bc461
     Tag 1: cf1ec55cceeb9ad1
 */
-inline void test_aes128GcmDec(){
+inline void testAes128GcmDec(){
     std::cout<<"Starting testing aes128GcmEnc!"<<std::endl;
 
     uint64_t in[4]={0xd985a8df8a9ac90e, 0x4b3eeb3b2a2a532d, 0xf141b6600b0efecb, 0x992e5710609c6865};
