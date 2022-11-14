@@ -245,6 +245,9 @@ last block: 0xffff000001
 00 00 	LEN
 ff ff 	NLEN
 
+10.11.2022
+finish all the kernels for enc / dec part
+
 12.11.2022
 security:
 des & aes | enc & dec \ hash functions like gmac ...
