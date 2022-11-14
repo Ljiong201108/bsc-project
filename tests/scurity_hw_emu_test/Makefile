@@ -7,7 +7,7 @@ COMP=$(WORKSPACE)/componnets
 KNRL=$(WORKSPACE)/kernels
 HOST=$(WORKSPACE)/host
 
-HOST_INC=-I$(HOST)/common/include -I$(HOST)/security/include -I./
+HOST_INC=-I$(HOST)/common/include -I$(HOST)/security/include -I./ -I/home/jiong/bsc-project/host/test
 HOST_FLG=-Wall -g -std=c++17 -lOpenCL -lpthread -lrt -lstdc++ 
 HOST_SRC=$(TEST_NAME)/host.cpp $(wildcard $(HOST)/common/src/*.cpp) $(wildcard $(HOST)/security/src/*.cpp)
 HOST_OUTPUT=$(TEST_NAME)/app
