@@ -8,7 +8,7 @@
 
 #include "Util.hpp"
 
-const std::string xclbinFileName="test.xclbin";
+const std::string xclbinFileName="fpga.xclbin";
 
 class Application{
 private:

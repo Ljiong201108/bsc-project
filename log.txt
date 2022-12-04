@@ -267,3 +267,7 @@ free running kernel has to be configured by me.
 14.11.2022
 since the xclbin file need to be configured by me, I made the Application class into a singleton(only contains one instance during the runtime)
 
+19.11.2022
+TODO: reorder the API of security 
+add host output to figure out how the flow works
+copy the data compression library to my repository and modify the include path of them(hpp files)

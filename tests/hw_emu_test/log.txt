@@ -1,0 +1,1903 @@
+g++ host.cpp /home/jiong/bsc-project/host/common/src/BufferPointer.cpp /home/jiong/bsc-project/host/common/src/KernelPointer.cpp /home/jiong/bsc-project/host/common/src/CommandQueuePointer.cpp /home/jiong/bsc-project/host/common/src/Application.cpp /home/jiong/bsc-project/host/security/src/security.cpp /home/jiong/bsc-project/host/security/src/Aes.cpp /home/jiong/bsc-project/host/security/src/Des.cpp /home/jiong/bsc-project/host/data_compression/src/gzipCompress.cpp -I/home/jiong/bsc-project/host/common/include -I/home/jiong/bsc-project/host/security/include -I/home/jiong/bsc-project/host/test -I/home/jiong/bsc-project/host/data_compression/include -I/opt/xilinx/xrt/include  -o app -Wall -g -std=c++1y -L/opt/xilinx/xrt/lib/ -lpthread -lrt -lstdc++ -lOpenCL
+v++ -c -k  aes192CcmEnc -I/home/jiong/bsc-project/componnets/common/include -I/home/jiong/bsc-project/componnets/security/include -I/home/jiong/bsc-project/kernels/security/include -I/home/jiong/bsc-project/componnets/data_compression/include -I/home/jiong/bsc-project/kernels/data_compression/include /home/jiong/bsc-project/kernels/security/src/aes192CcmEnc.cpp -o kernels/security/aes192CcmEnc.xo -t sw_emu --config config.cfg -g
+Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ compile can be found at:
+	Reports: /home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes192CcmEnc
+	Log files: /home/jiong/bsc-project/tests/sw_emu_test/_x/logs/aes192CcmEnc
+Running Dispatch Server on port:40619
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes192CcmEnc.xo.compile_summary, at Wed Nov 30 14:05:19 2022
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Wed Nov 30 14:05:19 2022
+Running Rule Check Server on port:35467
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes192CcmEnc/v++_compile_aes192CcmEnc_guidance.html', at Wed Nov 30 14:05:22 2022
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
+INFO: [v++ 74-74] Compiler Version string: 2020.2
+INFO: [v++ 60-585] Compiling for software emulation target
+INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [v++ 60-242] Creating kernel: 'aes192CcmEnc'
+WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
+INFO: [v++ 60-594] Finished kernel compilation
+INFO: [v++ 60-586] Created kernels/security/aes192CcmEnc.xo
+INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
+    vitis_analyzer /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes192CcmEnc.xo.compile_summary 
+INFO: [v++ 60-791] Total elapsed time: 0h 1m 45s
+INFO: [v++ 60-1653] Closing dispatch client.
+v++ -c -k  desEcbEnc -I/home/jiong/bsc-project/componnets/common/include -I/home/jiong/bsc-project/componnets/security/include -I/home/jiong/bsc-project/kernels/security/include -I/home/jiong/bsc-project/componnets/data_compression/include -I/home/jiong/bsc-project/kernels/data_compression/include /home/jiong/bsc-project/kernels/security/src/desEcbEnc.cpp -o kernels/security/desEcbEnc.xo -t sw_emu --config config.cfg -g
+Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ compile can be found at:
+	Reports: /home/jiong/bsc-project/tests/sw_emu_test/_x/reports/desEcbEnc
+	Log files: /home/jiong/bsc-project/tests/sw_emu_test/_x/logs/desEcbEnc
+Running Dispatch Server on port:35733
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/desEcbEnc.xo.compile_summary, at Wed Nov 30 14:07:06 2022
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Wed Nov 30 14:07:06 2022
+Running Rule Check Server on port:44717
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/tests/sw_emu_test/_x/reports/desEcbEnc/v++_compile_desEcbEnc_guidance.html', at Wed Nov 30 14:07:08 2022
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
+INFO: [v++ 74-74] Compiler Version string: 2020.2
+INFO: [v++ 60-585] Compiling for software emulation target
+INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [v++ 60-242] Creating kernel: 'desEcbEnc'
+WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
+INFO: [v++ 60-594] Finished kernel compilation
+INFO: [v++ 60-586] Created kernels/security/desEcbEnc.xo
+INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
+    vitis_analyzer /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/desEcbEnc.xo.compile_summary 
+INFO: [v++ 60-791] Total elapsed time: 0h 0m 49s
+INFO: [v++ 60-1653] Closing dispatch client.
+v++ -c -k  desCfb128Dec -I/home/jiong/bsc-project/componnets/common/include -I/home/jiong/bsc-project/componnets/security/include -I/home/jiong/bsc-project/kernels/security/include -I/home/jiong/bsc-project/componnets/data_compression/include -I/home/jiong/bsc-project/kernels/data_compression/include /home/jiong/bsc-project/kernels/security/src/desCfb128Dec.cpp -o kernels/security/desCfb128Dec.xo -t sw_emu --config config.cfg -g
+Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ compile can be found at:
+	Reports: /home/jiong/bsc-project/tests/sw_emu_test/_x/reports/desCfb128Dec
+	Log files: /home/jiong/bsc-project/tests/sw_emu_test/_x/logs/desCfb128Dec
+Running Dispatch Server on port:37721
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/desCfb128Dec.xo.compile_summary, at Wed Nov 30 14:07:58 2022
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Wed Nov 30 14:07:58 2022
+Running Rule Check Server on port:35883
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/tests/sw_emu_test/_x/reports/desCfb128Dec/v++_compile_desCfb128Dec_guidance.html', at Wed Nov 30 14:07:59 2022
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
+INFO: [v++ 74-74] Compiler Version string: 2020.2
+INFO: [v++ 60-585] Compiling for software emulation target
+INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [v++ 60-242] Creating kernel: 'desCfb128Dec'
+WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
+INFO: [v++ 60-594] Finished kernel compilation
+INFO: [v++ 60-586] Created kernels/security/desCfb128Dec.xo
+INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
+    vitis_analyzer /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/desCfb128Dec.xo.compile_summary 
+INFO: [v++ 60-791] Total elapsed time: 0h 0m 47s
+INFO: [v++ 60-1653] Closing dispatch client.
+v++ -c -k  aes256Cfb8Dec -I/home/jiong/bsc-project/componnets/common/include -I/home/jiong/bsc-project/componnets/security/include -I/home/jiong/bsc-project/kernels/security/include -I/home/jiong/bsc-project/componnets/data_compression/include -I/home/jiong/bsc-project/kernels/data_compression/include /home/jiong/bsc-project/kernels/security/src/aes256Cfb8Dec.cpp -o kernels/security/aes256Cfb8Dec.xo -t sw_emu --config config.cfg -g
+Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ compile can be found at:
+	Reports: /home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes256Cfb8Dec
+	Log files: /home/jiong/bsc-project/tests/sw_emu_test/_x/logs/aes256Cfb8Dec
+Running Dispatch Server on port:41609
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes256Cfb8Dec.xo.compile_summary, at Wed Nov 30 14:08:50 2022
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Wed Nov 30 14:08:50 2022
+Running Rule Check Server on port:39721
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes256Cfb8Dec/v++_compile_aes256Cfb8Dec_guidance.html', at Wed Nov 30 14:08:54 2022
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
+INFO: [v++ 74-74] Compiler Version string: 2020.2
+INFO: [v++ 60-585] Compiling for software emulation target
+INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [v++ 60-242] Creating kernel: 'aes256Cfb8Dec'
+WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
+INFO: [v++ 60-594] Finished kernel compilation
+INFO: [v++ 60-586] Created kernels/security/aes256Cfb8Dec.xo
+INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
+    vitis_analyzer /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes256Cfb8Dec.xo.compile_summary 
+INFO: [v++ 60-791] Total elapsed time: 0h 1m 3s
+INFO: [v++ 60-1653] Closing dispatch client.
+v++ -c -k  aes128CcmDec -I/home/jiong/bsc-project/componnets/common/include -I/home/jiong/bsc-project/componnets/security/include -I/home/jiong/bsc-project/kernels/security/include -I/home/jiong/bsc-project/componnets/data_compression/include -I/home/jiong/bsc-project/kernels/data_compression/include /home/jiong/bsc-project/kernels/security/src/aes128CcmDec.cpp -o kernels/security/aes128CcmDec.xo -t sw_emu --config config.cfg -g
+Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ compile can be found at:
+	Reports: /home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes128CcmDec
+	Log files: /home/jiong/bsc-project/tests/sw_emu_test/_x/logs/aes128CcmDec
+Running Dispatch Server on port:44539
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes128CcmDec.xo.compile_summary, at Wed Nov 30 14:09:59 2022
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Wed Nov 30 14:09:59 2022
+Running Rule Check Server on port:34369
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes128CcmDec/v++_compile_aes128CcmDec_guidance.html', at Wed Nov 30 14:10:02 2022
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
+INFO: [v++ 74-74] Compiler Version string: 2020.2
+INFO: [v++ 60-585] Compiling for software emulation target
+INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [v++ 60-242] Creating kernel: 'aes128CcmDec'
+WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
+INFO: [v++ 60-594] Finished kernel compilation
+INFO: [v++ 60-586] Created kernels/security/aes128CcmDec.xo
+INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
+    vitis_analyzer /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes128CcmDec.xo.compile_summary 
+INFO: [v++ 60-791] Total elapsed time: 0h 1m 54s
+INFO: [v++ 60-1653] Closing dispatch client.
+v++ -c -k  desCfb8Dec -I/home/jiong/bsc-project/componnets/common/include -I/home/jiong/bsc-project/componnets/security/include -I/home/jiong/bsc-project/kernels/security/include -I/home/jiong/bsc-project/componnets/data_compression/include -I/home/jiong/bsc-project/kernels/data_compression/include /home/jiong/bsc-project/kernels/security/src/desCfb8Dec.cpp -o kernels/security/desCfb8Dec.xo -t sw_emu --config config.cfg -g
+Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ compile can be found at:
+	Reports: /home/jiong/bsc-project/tests/sw_emu_test/_x/reports/desCfb8Dec
+	Log files: /home/jiong/bsc-project/tests/sw_emu_test/_x/logs/desCfb8Dec
+Running Dispatch Server on port:37875
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/desCfb8Dec.xo.compile_summary, at Wed Nov 30 14:11:55 2022
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Wed Nov 30 14:11:56 2022
+Running Rule Check Server on port:46057
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/tests/sw_emu_test/_x/reports/desCfb8Dec/v++_compile_desCfb8Dec_guidance.html', at Wed Nov 30 14:11:59 2022
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
+INFO: [v++ 74-74] Compiler Version string: 2020.2
+INFO: [v++ 60-585] Compiling for software emulation target
+INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [v++ 60-242] Creating kernel: 'desCfb8Dec'
+WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
+INFO: [v++ 60-594] Finished kernel compilation
+INFO: [v++ 60-586] Created kernels/security/desCfb8Dec.xo
+INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
+    vitis_analyzer /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/desCfb8Dec.xo.compile_summary 
+INFO: [v++ 60-791] Total elapsed time: 0h 0m 50s
+INFO: [v++ 60-1653] Closing dispatch client.
+v++ -c -k  aes128Cfb8Enc -I/home/jiong/bsc-project/componnets/common/include -I/home/jiong/bsc-project/componnets/security/include -I/home/jiong/bsc-project/kernels/security/include -I/home/jiong/bsc-project/componnets/data_compression/include -I/home/jiong/bsc-project/kernels/data_compression/include /home/jiong/bsc-project/kernels/security/src/aes128Cfb8Enc.cpp -o kernels/security/aes128Cfb8Enc.xo -t sw_emu --config config.cfg -g
+Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ compile can be found at:
+	Reports: /home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes128Cfb8Enc
+	Log files: /home/jiong/bsc-project/tests/sw_emu_test/_x/logs/aes128Cfb8Enc
+Running Dispatch Server on port:40887
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes128Cfb8Enc.xo.compile_summary, at Wed Nov 30 14:12:48 2022
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Wed Nov 30 14:12:48 2022
+Running Rule Check Server on port:33099
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes128Cfb8Enc/v++_compile_aes128Cfb8Enc_guidance.html', at Wed Nov 30 14:12:50 2022
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
+INFO: [v++ 74-74] Compiler Version string: 2020.2
+INFO: [v++ 60-585] Compiling for software emulation target
+INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [v++ 60-242] Creating kernel: 'aes128Cfb8Enc'
+WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
+INFO: [v++ 60-594] Finished kernel compilation
+INFO: [v++ 60-586] Created kernels/security/aes128Cfb8Enc.xo
+INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
+    vitis_analyzer /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes128Cfb8Enc.xo.compile_summary 
+INFO: [v++ 60-791] Total elapsed time: 0h 0m 54s
+INFO: [v++ 60-1653] Closing dispatch client.
+v++ -c -k  aes128Cfb128Dec -I/home/jiong/bsc-project/componnets/common/include -I/home/jiong/bsc-project/componnets/security/include -I/home/jiong/bsc-project/kernels/security/include -I/home/jiong/bsc-project/componnets/data_compression/include -I/home/jiong/bsc-project/kernels/data_compression/include /home/jiong/bsc-project/kernels/security/src/aes128Cfb128Dec.cpp -o kernels/security/aes128Cfb128Dec.xo -t sw_emu --config config.cfg -g
+Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ compile can be found at:
+	Reports: /home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes128Cfb128Dec
+	Log files: /home/jiong/bsc-project/tests/sw_emu_test/_x/logs/aes128Cfb128Dec
+Running Dispatch Server on port:46227
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes128Cfb128Dec.xo.compile_summary, at Wed Nov 30 14:13:45 2022
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Wed Nov 30 14:13:45 2022
+Running Rule Check Server on port:34947
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes128Cfb128Dec/v++_compile_aes128Cfb128Dec_guidance.html', at Wed Nov 30 14:13:47 2022
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
+INFO: [v++ 74-74] Compiler Version string: 2020.2
+INFO: [v++ 60-585] Compiling for software emulation target
+INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [v++ 60-242] Creating kernel: 'aes128Cfb128Dec'
+WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
+INFO: [v++ 60-594] Finished kernel compilation
+INFO: [v++ 60-586] Created kernels/security/aes128Cfb128Dec.xo
+INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
+    vitis_analyzer /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes128Cfb128Dec.xo.compile_summary 
+INFO: [v++ 60-791] Total elapsed time: 0h 0m 48s
+INFO: [v++ 60-1653] Closing dispatch client.
+v++ -c -k  aes128GcmEnc -I/home/jiong/bsc-project/componnets/common/include -I/home/jiong/bsc-project/componnets/security/include -I/home/jiong/bsc-project/kernels/security/include -I/home/jiong/bsc-project/componnets/data_compression/include -I/home/jiong/bsc-project/kernels/data_compression/include /home/jiong/bsc-project/kernels/security/src/aes128GcmEnc.cpp -o kernels/security/aes128GcmEnc.xo -t sw_emu --config config.cfg -g
+Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ compile can be found at:
+	Reports: /home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes128GcmEnc
+	Log files: /home/jiong/bsc-project/tests/sw_emu_test/_x/logs/aes128GcmEnc
+Running Dispatch Server on port:43385
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes128GcmEnc.xo.compile_summary, at Wed Nov 30 14:14:37 2022
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Wed Nov 30 14:14:37 2022
+Running Rule Check Server on port:40833
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes128GcmEnc/v++_compile_aes128GcmEnc_guidance.html', at Wed Nov 30 14:14:40 2022
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
+INFO: [v++ 74-74] Compiler Version string: 2020.2
+INFO: [v++ 60-585] Compiling for software emulation target
+INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [v++ 60-242] Creating kernel: 'aes128GcmEnc'
+WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
+INFO: [v++ 60-594] Finished kernel compilation
+INFO: [v++ 60-586] Created kernels/security/aes128GcmEnc.xo
+INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
+    vitis_analyzer /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes128GcmEnc.xo.compile_summary 
+INFO: [v++ 60-791] Total elapsed time: 0h 1m 26s
+INFO: [v++ 60-1653] Closing dispatch client.
+v++ -c -k  aes128OfbEnc -I/home/jiong/bsc-project/componnets/common/include -I/home/jiong/bsc-project/componnets/security/include -I/home/jiong/bsc-project/kernels/security/include -I/home/jiong/bsc-project/componnets/data_compression/include -I/home/jiong/bsc-project/kernels/data_compression/include /home/jiong/bsc-project/kernels/security/src/aes128OfbEnc.cpp -o kernels/security/aes128OfbEnc.xo -t sw_emu --config config.cfg -g
+Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ compile can be found at:
+	Reports: /home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes128OfbEnc
+	Log files: /home/jiong/bsc-project/tests/sw_emu_test/_x/logs/aes128OfbEnc
+Running Dispatch Server on port:38285
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes128OfbEnc.xo.compile_summary, at Wed Nov 30 14:16:06 2022
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Wed Nov 30 14:16:06 2022
+Running Rule Check Server on port:36957
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes128OfbEnc/v++_compile_aes128OfbEnc_guidance.html', at Wed Nov 30 14:16:08 2022
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
+INFO: [v++ 74-74] Compiler Version string: 2020.2
+INFO: [v++ 60-585] Compiling for software emulation target
+INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [v++ 60-242] Creating kernel: 'aes128OfbEnc'
+WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
+INFO: [v++ 60-594] Finished kernel compilation
+INFO: [v++ 60-586] Created kernels/security/aes128OfbEnc.xo
+INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
+    vitis_analyzer /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes128OfbEnc.xo.compile_summary 
+INFO: [v++ 60-791] Total elapsed time: 0h 0m 41s
+INFO: [v++ 60-1653] Closing dispatch client.
+v++ -c -k  aes192EcbEnc -I/home/jiong/bsc-project/componnets/common/include -I/home/jiong/bsc-project/componnets/security/include -I/home/jiong/bsc-project/kernels/security/include -I/home/jiong/bsc-project/componnets/data_compression/include -I/home/jiong/bsc-project/kernels/data_compression/include /home/jiong/bsc-project/kernels/security/src/aes192EcbEnc.cpp -o kernels/security/aes192EcbEnc.xo -t sw_emu --config config.cfg -g
+Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ compile can be found at:
+	Reports: /home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes192EcbEnc
+	Log files: /home/jiong/bsc-project/tests/sw_emu_test/_x/logs/aes192EcbEnc
+Running Dispatch Server on port:46635
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes192EcbEnc.xo.compile_summary, at Wed Nov 30 14:16:50 2022
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Wed Nov 30 14:16:50 2022
+Running Rule Check Server on port:35853
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes192EcbEnc/v++_compile_aes192EcbEnc_guidance.html', at Wed Nov 30 14:16:51 2022
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
+INFO: [v++ 74-74] Compiler Version string: 2020.2
+INFO: [v++ 60-585] Compiling for software emulation target
+INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [v++ 60-242] Creating kernel: 'aes192EcbEnc'
+WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
+INFO: [v++ 60-594] Finished kernel compilation
+INFO: [v++ 60-586] Created kernels/security/aes192EcbEnc.xo
+INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
+    vitis_analyzer /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes192EcbEnc.xo.compile_summary 
+INFO: [v++ 60-791] Total elapsed time: 0h 0m 52s
+INFO: [v++ 60-1653] Closing dispatch client.
+v++ -c -k  desCbcDec -I/home/jiong/bsc-project/componnets/common/include -I/home/jiong/bsc-project/componnets/security/include -I/home/jiong/bsc-project/kernels/security/include -I/home/jiong/bsc-project/componnets/data_compression/include -I/home/jiong/bsc-project/kernels/data_compression/include /home/jiong/bsc-project/kernels/security/src/desCbcDec.cpp -o kernels/security/desCbcDec.xo -t sw_emu --config config.cfg -g
+Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ compile can be found at:
+	Reports: /home/jiong/bsc-project/tests/sw_emu_test/_x/reports/desCbcDec
+	Log files: /home/jiong/bsc-project/tests/sw_emu_test/_x/logs/desCbcDec
+Running Dispatch Server on port:33399
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/desCbcDec.xo.compile_summary, at Wed Nov 30 14:17:44 2022
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Wed Nov 30 14:17:44 2022
+Running Rule Check Server on port:40151
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/tests/sw_emu_test/_x/reports/desCbcDec/v++_compile_desCbcDec_guidance.html', at Wed Nov 30 14:17:48 2022
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
+INFO: [v++ 74-74] Compiler Version string: 2020.2
+INFO: [v++ 60-585] Compiling for software emulation target
+INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [v++ 60-242] Creating kernel: 'desCbcDec'
+WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
+INFO: [v++ 60-594] Finished kernel compilation
+INFO: [v++ 60-586] Created kernels/security/desCbcDec.xo
+INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
+    vitis_analyzer /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/desCbcDec.xo.compile_summary 
+INFO: [v++ 60-791] Total elapsed time: 0h 0m 55s
+INFO: [v++ 60-1653] Closing dispatch client.
+v++ -c -k  aes192OfbDec -I/home/jiong/bsc-project/componnets/common/include -I/home/jiong/bsc-project/componnets/security/include -I/home/jiong/bsc-project/kernels/security/include -I/home/jiong/bsc-project/componnets/data_compression/include -I/home/jiong/bsc-project/kernels/data_compression/include /home/jiong/bsc-project/kernels/security/src/aes192OfbDec.cpp -o kernels/security/aes192OfbDec.xo -t sw_emu --config config.cfg -g
+Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ compile can be found at:
+	Reports: /home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes192OfbDec
+	Log files: /home/jiong/bsc-project/tests/sw_emu_test/_x/logs/aes192OfbDec
+Running Dispatch Server on port:37081
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes192OfbDec.xo.compile_summary, at Wed Nov 30 14:18:45 2022
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Wed Nov 30 14:18:45 2022
+Running Rule Check Server on port:33929
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes192OfbDec/v++_compile_aes192OfbDec_guidance.html', at Wed Nov 30 14:18:48 2022
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
+INFO: [v++ 74-74] Compiler Version string: 2020.2
+INFO: [v++ 60-585] Compiling for software emulation target
+INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [v++ 60-242] Creating kernel: 'aes192OfbDec'
+WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
+INFO: [v++ 60-594] Finished kernel compilation
+INFO: [v++ 60-586] Created kernels/security/aes192OfbDec.xo
+INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
+    vitis_analyzer /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes192OfbDec.xo.compile_summary 
+INFO: [v++ 60-791] Total elapsed time: 0h 0m 50s
+INFO: [v++ 60-1653] Closing dispatch client.
+v++ -c -k  desOfbEnc -I/home/jiong/bsc-project/componnets/common/include -I/home/jiong/bsc-project/componnets/security/include -I/home/jiong/bsc-project/kernels/security/include -I/home/jiong/bsc-project/componnets/data_compression/include -I/home/jiong/bsc-project/kernels/data_compression/include /home/jiong/bsc-project/kernels/security/src/desOfbEnc.cpp -o kernels/security/desOfbEnc.xo -t sw_emu --config config.cfg -g
+Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ compile can be found at:
+	Reports: /home/jiong/bsc-project/tests/sw_emu_test/_x/reports/desOfbEnc
+	Log files: /home/jiong/bsc-project/tests/sw_emu_test/_x/logs/desOfbEnc
+Running Dispatch Server on port:37567
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/desOfbEnc.xo.compile_summary, at Wed Nov 30 14:19:40 2022
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Wed Nov 30 14:19:40 2022
+Running Rule Check Server on port:46139
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/tests/sw_emu_test/_x/reports/desOfbEnc/v++_compile_desOfbEnc_guidance.html', at Wed Nov 30 14:19:44 2022
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
+INFO: [v++ 74-74] Compiler Version string: 2020.2
+INFO: [v++ 60-585] Compiling for software emulation target
+INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [v++ 60-242] Creating kernel: 'desOfbEnc'
+WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
+INFO: [v++ 60-594] Finished kernel compilation
+INFO: [v++ 60-586] Created kernels/security/desOfbEnc.xo
+INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
+    vitis_analyzer /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/desOfbEnc.xo.compile_summary 
+INFO: [v++ 60-791] Total elapsed time: 0h 0m 43s
+INFO: [v++ 60-1653] Closing dispatch client.
+v++ -c -k  aes256Cfb8Enc -I/home/jiong/bsc-project/componnets/common/include -I/home/jiong/bsc-project/componnets/security/include -I/home/jiong/bsc-project/kernels/security/include -I/home/jiong/bsc-project/componnets/data_compression/include -I/home/jiong/bsc-project/kernels/data_compression/include /home/jiong/bsc-project/kernels/security/src/aes256Cfb8Enc.cpp -o kernels/security/aes256Cfb8Enc.xo -t sw_emu --config config.cfg -g
+Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ compile can be found at:
+	Reports: /home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes256Cfb8Enc
+	Log files: /home/jiong/bsc-project/tests/sw_emu_test/_x/logs/aes256Cfb8Enc
+Running Dispatch Server on port:39525
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes256Cfb8Enc.xo.compile_summary, at Wed Nov 30 14:20:28 2022
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Wed Nov 30 14:20:28 2022
+Running Rule Check Server on port:39329
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes256Cfb8Enc/v++_compile_aes256Cfb8Enc_guidance.html', at Wed Nov 30 14:20:32 2022
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
+INFO: [v++ 74-74] Compiler Version string: 2020.2
+INFO: [v++ 60-585] Compiling for software emulation target
+INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [v++ 60-242] Creating kernel: 'aes256Cfb8Enc'
+WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
+INFO: [v++ 60-594] Finished kernel compilation
+INFO: [v++ 60-586] Created kernels/security/aes256Cfb8Enc.xo
+INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
+    vitis_analyzer /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes256Cfb8Enc.xo.compile_summary 
+INFO: [v++ 60-791] Total elapsed time: 0h 0m 54s
+INFO: [v++ 60-1653] Closing dispatch client.
+v++ -c -k  desCbcEnc -I/home/jiong/bsc-project/componnets/common/include -I/home/jiong/bsc-project/componnets/security/include -I/home/jiong/bsc-project/kernels/security/include -I/home/jiong/bsc-project/componnets/data_compression/include -I/home/jiong/bsc-project/kernels/data_compression/include /home/jiong/bsc-project/kernels/security/src/desCbcEnc.cpp -o kernels/security/desCbcEnc.xo -t sw_emu --config config.cfg -g
+Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ compile can be found at:
+	Reports: /home/jiong/bsc-project/tests/sw_emu_test/_x/reports/desCbcEnc
+	Log files: /home/jiong/bsc-project/tests/sw_emu_test/_x/logs/desCbcEnc
+Running Dispatch Server on port:33085
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/desCbcEnc.xo.compile_summary, at Wed Nov 30 14:21:29 2022
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Wed Nov 30 14:21:29 2022
+Running Rule Check Server on port:38943
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/tests/sw_emu_test/_x/reports/desCbcEnc/v++_compile_desCbcEnc_guidance.html', at Wed Nov 30 14:21:32 2022
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
+INFO: [v++ 74-74] Compiler Version string: 2020.2
+INFO: [v++ 60-585] Compiling for software emulation target
+INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [v++ 60-242] Creating kernel: 'desCbcEnc'
+WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
+INFO: [v++ 60-594] Finished kernel compilation
+INFO: [v++ 60-586] Created kernels/security/desCbcEnc.xo
+INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
+    vitis_analyzer /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/desCbcEnc.xo.compile_summary 
+INFO: [v++ 60-791] Total elapsed time: 0h 0m 54s
+INFO: [v++ 60-1653] Closing dispatch client.
+v++ -c -k  aes192Cfb128Dec -I/home/jiong/bsc-project/componnets/common/include -I/home/jiong/bsc-project/componnets/security/include -I/home/jiong/bsc-project/kernels/security/include -I/home/jiong/bsc-project/componnets/data_compression/include -I/home/jiong/bsc-project/kernels/data_compression/include /home/jiong/bsc-project/kernels/security/src/aes192Cfb128Dec.cpp -o kernels/security/aes192Cfb128Dec.xo -t sw_emu --config config.cfg -g
+Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ compile can be found at:
+	Reports: /home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes192Cfb128Dec
+	Log files: /home/jiong/bsc-project/tests/sw_emu_test/_x/logs/aes192Cfb128Dec
+Running Dispatch Server on port:39687
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes192Cfb128Dec.xo.compile_summary, at Wed Nov 30 14:22:29 2022
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Wed Nov 30 14:22:29 2022
+Running Rule Check Server on port:33967
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes192Cfb128Dec/v++_compile_aes192Cfb128Dec_guidance.html', at Wed Nov 30 14:22:32 2022
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
+INFO: [v++ 74-74] Compiler Version string: 2020.2
+INFO: [v++ 60-585] Compiling for software emulation target
+INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [v++ 60-242] Creating kernel: 'aes192Cfb128Dec'
+WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
+INFO: [v++ 60-594] Finished kernel compilation
+INFO: [v++ 60-586] Created kernels/security/aes192Cfb128Dec.xo
+INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
+    vitis_analyzer /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes192Cfb128Dec.xo.compile_summary 
+INFO: [v++ 60-791] Total elapsed time: 0h 0m 59s
+INFO: [v++ 60-1653] Closing dispatch client.
+v++ -c -k  aes192GcmDec -I/home/jiong/bsc-project/componnets/common/include -I/home/jiong/bsc-project/componnets/security/include -I/home/jiong/bsc-project/kernels/security/include -I/home/jiong/bsc-project/componnets/data_compression/include -I/home/jiong/bsc-project/kernels/data_compression/include /home/jiong/bsc-project/kernels/security/src/aes192GcmDec.cpp -o kernels/security/aes192GcmDec.xo -t sw_emu --config config.cfg -g
+Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ compile can be found at:
+	Reports: /home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes192GcmDec
+	Log files: /home/jiong/bsc-project/tests/sw_emu_test/_x/logs/aes192GcmDec
+Running Dispatch Server on port:42491
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes192GcmDec.xo.compile_summary, at Wed Nov 30 14:23:34 2022
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Wed Nov 30 14:23:34 2022
+Running Rule Check Server on port:34477
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes192GcmDec/v++_compile_aes192GcmDec_guidance.html', at Wed Nov 30 14:23:37 2022
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
+INFO: [v++ 74-74] Compiler Version string: 2020.2
+INFO: [v++ 60-585] Compiling for software emulation target
+INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [v++ 60-242] Creating kernel: 'aes192GcmDec'
+WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
+INFO: [v++ 60-594] Finished kernel compilation
+INFO: [v++ 60-586] Created kernels/security/aes192GcmDec.xo
+INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
+    vitis_analyzer /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes192GcmDec.xo.compile_summary 
+INFO: [v++ 60-791] Total elapsed time: 0h 1m 30s
+INFO: [v++ 60-1653] Closing dispatch client.
+v++ -c -k  aes128CbcDec -I/home/jiong/bsc-project/componnets/common/include -I/home/jiong/bsc-project/componnets/security/include -I/home/jiong/bsc-project/kernels/security/include -I/home/jiong/bsc-project/componnets/data_compression/include -I/home/jiong/bsc-project/kernels/data_compression/include /home/jiong/bsc-project/kernels/security/src/aes128CbcDec.cpp -o kernels/security/aes128CbcDec.xo -t sw_emu --config config.cfg -g
+Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ compile can be found at:
+	Reports: /home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes128CbcDec
+	Log files: /home/jiong/bsc-project/tests/sw_emu_test/_x/logs/aes128CbcDec
+Running Dispatch Server on port:45571
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes128CbcDec.xo.compile_summary, at Wed Nov 30 14:25:08 2022
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Wed Nov 30 14:25:08 2022
+Running Rule Check Server on port:37191
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes128CbcDec/v++_compile_aes128CbcDec_guidance.html', at Wed Nov 30 14:25:11 2022
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
+INFO: [v++ 74-74] Compiler Version string: 2020.2
+INFO: [v++ 60-585] Compiling for software emulation target
+INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [v++ 60-242] Creating kernel: 'aes128CbcDec'
+WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
+INFO: [v++ 60-594] Finished kernel compilation
+INFO: [v++ 60-586] Created kernels/security/aes128CbcDec.xo
+INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
+    vitis_analyzer /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes128CbcDec.xo.compile_summary 
+INFO: [v++ 60-791] Total elapsed time: 0h 0m 55s
+INFO: [v++ 60-1653] Closing dispatch client.
+v++ -c -k  aes256EcbEnc -I/home/jiong/bsc-project/componnets/common/include -I/home/jiong/bsc-project/componnets/security/include -I/home/jiong/bsc-project/kernels/security/include -I/home/jiong/bsc-project/componnets/data_compression/include -I/home/jiong/bsc-project/kernels/data_compression/include /home/jiong/bsc-project/kernels/security/src/aes256EcbEnc.cpp -o kernels/security/aes256EcbEnc.xo -t sw_emu --config config.cfg -g
+Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ compile can be found at:
+	Reports: /home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes256EcbEnc
+	Log files: /home/jiong/bsc-project/tests/sw_emu_test/_x/logs/aes256EcbEnc
+Running Dispatch Server on port:34817
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes256EcbEnc.xo.compile_summary, at Wed Nov 30 14:26:08 2022
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Wed Nov 30 14:26:08 2022
+Running Rule Check Server on port:40047
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes256EcbEnc/v++_compile_aes256EcbEnc_guidance.html', at Wed Nov 30 14:26:12 2022
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
+INFO: [v++ 74-74] Compiler Version string: 2020.2
+INFO: [v++ 60-585] Compiling for software emulation target
+INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [v++ 60-242] Creating kernel: 'aes256EcbEnc'
+WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
+INFO: [v++ 60-594] Finished kernel compilation
+INFO: [v++ 60-586] Created kernels/security/aes256EcbEnc.xo
+INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
+    vitis_analyzer /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes256EcbEnc.xo.compile_summary 
+INFO: [v++ 60-791] Total elapsed time: 0h 0m 51s
+INFO: [v++ 60-1653] Closing dispatch client.
+v++ -c -k  aes192Cfb8Dec -I/home/jiong/bsc-project/componnets/common/include -I/home/jiong/bsc-project/componnets/security/include -I/home/jiong/bsc-project/kernels/security/include -I/home/jiong/bsc-project/componnets/data_compression/include -I/home/jiong/bsc-project/kernels/data_compression/include /home/jiong/bsc-project/kernels/security/src/aes192Cfb8Dec.cpp -o kernels/security/aes192Cfb8Dec.xo -t sw_emu --config config.cfg -g
+Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ compile can be found at:
+	Reports: /home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes192Cfb8Dec
+	Log files: /home/jiong/bsc-project/tests/sw_emu_test/_x/logs/aes192Cfb8Dec
+Running Dispatch Server on port:46671
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes192Cfb8Dec.xo.compile_summary, at Wed Nov 30 14:27:05 2022
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Wed Nov 30 14:27:05 2022
+Running Rule Check Server on port:46161
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes192Cfb8Dec/v++_compile_aes192Cfb8Dec_guidance.html', at Wed Nov 30 14:27:08 2022
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
+INFO: [v++ 74-74] Compiler Version string: 2020.2
+INFO: [v++ 60-585] Compiling for software emulation target
+INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [v++ 60-242] Creating kernel: 'aes192Cfb8Dec'
+WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
+INFO: [v++ 60-594] Finished kernel compilation
+INFO: [v++ 60-586] Created kernels/security/aes192Cfb8Dec.xo
+INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
+    vitis_analyzer /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes192Cfb8Dec.xo.compile_summary 
+INFO: [v++ 60-791] Total elapsed time: 0h 1m 2s
+INFO: [v++ 60-1653] Closing dispatch client.
+v++ -c -k  aes128CbcEnc -I/home/jiong/bsc-project/componnets/common/include -I/home/jiong/bsc-project/componnets/security/include -I/home/jiong/bsc-project/kernels/security/include -I/home/jiong/bsc-project/componnets/data_compression/include -I/home/jiong/bsc-project/kernels/data_compression/include /home/jiong/bsc-project/kernels/security/src/aes128CbcEnc.cpp -o kernels/security/aes128CbcEnc.xo -t sw_emu --config config.cfg -g
+Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ compile can be found at:
+	Reports: /home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes128CbcEnc
+	Log files: /home/jiong/bsc-project/tests/sw_emu_test/_x/logs/aes128CbcEnc
+Running Dispatch Server on port:37045
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes128CbcEnc.xo.compile_summary, at Wed Nov 30 14:28:12 2022
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Wed Nov 30 14:28:12 2022
+Running Rule Check Server on port:45509
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes128CbcEnc/v++_compile_aes128CbcEnc_guidance.html', at Wed Nov 30 14:28:16 2022
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
+INFO: [v++ 74-74] Compiler Version string: 2020.2
+INFO: [v++ 60-585] Compiling for software emulation target
+INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [v++ 60-242] Creating kernel: 'aes128CbcEnc'
+WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
+INFO: [v++ 60-594] Finished kernel compilation
+INFO: [v++ 60-586] Created kernels/security/aes128CbcEnc.xo
+INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
+    vitis_analyzer /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes128CbcEnc.xo.compile_summary 
+INFO: [v++ 60-791] Total elapsed time: 0h 0m 52s
+INFO: [v++ 60-1653] Closing dispatch client.
+v++ -c -k  aes256OfbEnc -I/home/jiong/bsc-project/componnets/common/include -I/home/jiong/bsc-project/componnets/security/include -I/home/jiong/bsc-project/kernels/security/include -I/home/jiong/bsc-project/componnets/data_compression/include -I/home/jiong/bsc-project/kernels/data_compression/include /home/jiong/bsc-project/kernels/security/src/aes256OfbEnc.cpp -o kernels/security/aes256OfbEnc.xo -t sw_emu --config config.cfg -g
+Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ compile can be found at:
+	Reports: /home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes256OfbEnc
+	Log files: /home/jiong/bsc-project/tests/sw_emu_test/_x/logs/aes256OfbEnc
+Running Dispatch Server on port:42397
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes256OfbEnc.xo.compile_summary, at Wed Nov 30 14:29:10 2022
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Wed Nov 30 14:29:10 2022
+Running Rule Check Server on port:35647
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes256OfbEnc/v++_compile_aes256OfbEnc_guidance.html', at Wed Nov 30 14:29:14 2022
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
+INFO: [v++ 74-74] Compiler Version string: 2020.2
+INFO: [v++ 60-585] Compiling for software emulation target
+INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [v++ 60-242] Creating kernel: 'aes256OfbEnc'
+WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
+INFO: [v++ 60-594] Finished kernel compilation
+INFO: [v++ 60-586] Created kernels/security/aes256OfbEnc.xo
+INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
+    vitis_analyzer /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes256OfbEnc.xo.compile_summary 
+INFO: [v++ 60-791] Total elapsed time: 0h 0m 58s
+INFO: [v++ 60-1653] Closing dispatch client.
+v++ -c -k  aes192OfbEnc -I/home/jiong/bsc-project/componnets/common/include -I/home/jiong/bsc-project/componnets/security/include -I/home/jiong/bsc-project/kernels/security/include -I/home/jiong/bsc-project/componnets/data_compression/include -I/home/jiong/bsc-project/kernels/data_compression/include /home/jiong/bsc-project/kernels/security/src/aes192OfbEnc.cpp -o kernels/security/aes192OfbEnc.xo -t sw_emu --config config.cfg -g
+Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ compile can be found at:
+	Reports: /home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes192OfbEnc
+	Log files: /home/jiong/bsc-project/tests/sw_emu_test/_x/logs/aes192OfbEnc
+Running Dispatch Server on port:36619
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes192OfbEnc.xo.compile_summary, at Wed Nov 30 14:30:14 2022
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Wed Nov 30 14:30:14 2022
+Running Rule Check Server on port:42255
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes192OfbEnc/v++_compile_aes192OfbEnc_guidance.html', at Wed Nov 30 14:30:17 2022
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
+INFO: [v++ 74-74] Compiler Version string: 2020.2
+INFO: [v++ 60-585] Compiling for software emulation target
+INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [v++ 60-242] Creating kernel: 'aes192OfbEnc'
+WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
+INFO: [v++ 60-594] Finished kernel compilation
+INFO: [v++ 60-586] Created kernels/security/aes192OfbEnc.xo
+INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
+    vitis_analyzer /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes192OfbEnc.xo.compile_summary 
+INFO: [v++ 60-791] Total elapsed time: 0h 0m 55s
+INFO: [v++ 60-1653] Closing dispatch client.
+v++ -c -k  aes192CcmDec -I/home/jiong/bsc-project/componnets/common/include -I/home/jiong/bsc-project/componnets/security/include -I/home/jiong/bsc-project/kernels/security/include -I/home/jiong/bsc-project/componnets/data_compression/include -I/home/jiong/bsc-project/kernels/data_compression/include /home/jiong/bsc-project/kernels/security/src/aes192CcmDec.cpp -o kernels/security/aes192CcmDec.xo -t sw_emu --config config.cfg -g
+Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ compile can be found at:
+	Reports: /home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes192CcmDec
+	Log files: /home/jiong/bsc-project/tests/sw_emu_test/_x/logs/aes192CcmDec
+Running Dispatch Server on port:35181
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes192CcmDec.xo.compile_summary, at Wed Nov 30 14:31:14 2022
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Wed Nov 30 14:31:14 2022
+Running Rule Check Server on port:38063
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes192CcmDec/v++_compile_aes192CcmDec_guidance.html', at Wed Nov 30 14:31:18 2022
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
+INFO: [v++ 74-74] Compiler Version string: 2020.2
+INFO: [v++ 60-585] Compiling for software emulation target
+INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [v++ 60-242] Creating kernel: 'aes192CcmDec'
+WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
+INFO: [v++ 60-594] Finished kernel compilation
+INFO: [v++ 60-586] Created kernels/security/aes192CcmDec.xo
+INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
+    vitis_analyzer /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes192CcmDec.xo.compile_summary 
+INFO: [v++ 60-791] Total elapsed time: 0h 1m 37s
+INFO: [v++ 60-1653] Closing dispatch client.
+v++ -c -k  aes256Cfb1Dec -I/home/jiong/bsc-project/componnets/common/include -I/home/jiong/bsc-project/componnets/security/include -I/home/jiong/bsc-project/kernels/security/include -I/home/jiong/bsc-project/componnets/data_compression/include -I/home/jiong/bsc-project/kernels/data_compression/include /home/jiong/bsc-project/kernels/security/src/aes256Cfb1Dec.cpp -o kernels/security/aes256Cfb1Dec.xo -t sw_emu --config config.cfg -g
+Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ compile can be found at:
+	Reports: /home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes256Cfb1Dec
+	Log files: /home/jiong/bsc-project/tests/sw_emu_test/_x/logs/aes256Cfb1Dec
+Running Dispatch Server on port:33693
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes256Cfb1Dec.xo.compile_summary, at Wed Nov 30 14:32:57 2022
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Wed Nov 30 14:32:57 2022
+Running Rule Check Server on port:46547
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes256Cfb1Dec/v++_compile_aes256Cfb1Dec_guidance.html', at Wed Nov 30 14:33:01 2022
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
+INFO: [v++ 74-74] Compiler Version string: 2020.2
+INFO: [v++ 60-585] Compiling for software emulation target
+INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [v++ 60-242] Creating kernel: 'aes256Cfb1Dec'
+WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
+INFO: [v++ 60-594] Finished kernel compilation
+INFO: [v++ 60-586] Created kernels/security/aes256Cfb1Dec.xo
+INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
+    vitis_analyzer /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes256Cfb1Dec.xo.compile_summary 
+INFO: [v++ 60-791] Total elapsed time: 0h 1m 3s
+INFO: [v++ 60-1653] Closing dispatch client.
+v++ -c -k  aes128GcmDec -I/home/jiong/bsc-project/componnets/common/include -I/home/jiong/bsc-project/componnets/security/include -I/home/jiong/bsc-project/kernels/security/include -I/home/jiong/bsc-project/componnets/data_compression/include -I/home/jiong/bsc-project/kernels/data_compression/include /home/jiong/bsc-project/kernels/security/src/aes128GcmDec.cpp -o kernels/security/aes128GcmDec.xo -t sw_emu --config config.cfg -g
+Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ compile can be found at:
+	Reports: /home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes128GcmDec
+	Log files: /home/jiong/bsc-project/tests/sw_emu_test/_x/logs/aes128GcmDec
+Running Dispatch Server on port:40499
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes128GcmDec.xo.compile_summary, at Wed Nov 30 14:34:05 2022
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Wed Nov 30 14:34:05 2022
+Running Rule Check Server on port:38851
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes128GcmDec/v++_compile_aes128GcmDec_guidance.html', at Wed Nov 30 14:34:09 2022
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
+INFO: [v++ 74-74] Compiler Version string: 2020.2
+INFO: [v++ 60-585] Compiling for software emulation target
+INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [v++ 60-242] Creating kernel: 'aes128GcmDec'
+WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
+INFO: [v++ 60-594] Finished kernel compilation
+INFO: [v++ 60-586] Created kernels/security/aes128GcmDec.xo
+INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
+    vitis_analyzer /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes128GcmDec.xo.compile_summary 
+INFO: [v++ 60-791] Total elapsed time: 0h 1m 29s
+INFO: [v++ 60-1653] Closing dispatch client.
+v++ -c -k  aes192CbcDec -I/home/jiong/bsc-project/componnets/common/include -I/home/jiong/bsc-project/componnets/security/include -I/home/jiong/bsc-project/kernels/security/include -I/home/jiong/bsc-project/componnets/data_compression/include -I/home/jiong/bsc-project/kernels/data_compression/include /home/jiong/bsc-project/kernels/security/src/aes192CbcDec.cpp -o kernels/security/aes192CbcDec.xo -t sw_emu --config config.cfg -g
+Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ compile can be found at:
+	Reports: /home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes192CbcDec
+	Log files: /home/jiong/bsc-project/tests/sw_emu_test/_x/logs/aes192CbcDec
+Running Dispatch Server on port:46841
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes192CbcDec.xo.compile_summary, at Wed Nov 30 14:35:41 2022
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Wed Nov 30 14:35:41 2022
+Running Rule Check Server on port:43443
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes192CbcDec/v++_compile_aes192CbcDec_guidance.html', at Wed Nov 30 14:35:44 2022
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
+INFO: [v++ 74-74] Compiler Version string: 2020.2
+INFO: [v++ 60-585] Compiling for software emulation target
+INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [v++ 60-242] Creating kernel: 'aes192CbcDec'
+WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
+INFO: [v++ 60-594] Finished kernel compilation
+INFO: [v++ 60-586] Created kernels/security/aes192CbcDec.xo
+INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
+    vitis_analyzer /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes192CbcDec.xo.compile_summary 
+INFO: [v++ 60-791] Total elapsed time: 0h 1m 0s
+INFO: [v++ 60-1653] Closing dispatch client.
+v++ -c -k  desCfb1Dec -I/home/jiong/bsc-project/componnets/common/include -I/home/jiong/bsc-project/componnets/security/include -I/home/jiong/bsc-project/kernels/security/include -I/home/jiong/bsc-project/componnets/data_compression/include -I/home/jiong/bsc-project/kernels/data_compression/include /home/jiong/bsc-project/kernels/security/src/desCfb1Dec.cpp -o kernels/security/desCfb1Dec.xo -t sw_emu --config config.cfg -g
+Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ compile can be found at:
+	Reports: /home/jiong/bsc-project/tests/sw_emu_test/_x/reports/desCfb1Dec
+	Log files: /home/jiong/bsc-project/tests/sw_emu_test/_x/logs/desCfb1Dec
+Running Dispatch Server on port:44535
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/desCfb1Dec.xo.compile_summary, at Wed Nov 30 14:36:47 2022
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Wed Nov 30 14:36:47 2022
+Running Rule Check Server on port:37281
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/tests/sw_emu_test/_x/reports/desCfb1Dec/v++_compile_desCfb1Dec_guidance.html', at Wed Nov 30 14:36:50 2022
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
+INFO: [v++ 74-74] Compiler Version string: 2020.2
+INFO: [v++ 60-585] Compiling for software emulation target
+INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [v++ 60-242] Creating kernel: 'desCfb1Dec'
+WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
+INFO: [v++ 60-594] Finished kernel compilation
+INFO: [v++ 60-586] Created kernels/security/desCfb1Dec.xo
+INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
+    vitis_analyzer /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/desCfb1Dec.xo.compile_summary 
+INFO: [v++ 60-791] Total elapsed time: 0h 0m 53s
+INFO: [v++ 60-1653] Closing dispatch client.
+v++ -c -k  aes256CbcEnc -I/home/jiong/bsc-project/componnets/common/include -I/home/jiong/bsc-project/componnets/security/include -I/home/jiong/bsc-project/kernels/security/include -I/home/jiong/bsc-project/componnets/data_compression/include -I/home/jiong/bsc-project/kernels/data_compression/include /home/jiong/bsc-project/kernels/security/src/aes256CbcEnc.cpp -o kernels/security/aes256CbcEnc.xo -t sw_emu --config config.cfg -g
+Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ compile can be found at:
+	Reports: /home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes256CbcEnc
+	Log files: /home/jiong/bsc-project/tests/sw_emu_test/_x/logs/aes256CbcEnc
+Running Dispatch Server on port:37431
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes256CbcEnc.xo.compile_summary, at Wed Nov 30 14:37:46 2022
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Wed Nov 30 14:37:46 2022
+Running Rule Check Server on port:41195
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes256CbcEnc/v++_compile_aes256CbcEnc_guidance.html', at Wed Nov 30 14:37:49 2022
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
+INFO: [v++ 74-74] Compiler Version string: 2020.2
+INFO: [v++ 60-585] Compiling for software emulation target
+INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [v++ 60-242] Creating kernel: 'aes256CbcEnc'
+WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
+INFO: [v++ 60-594] Finished kernel compilation
+INFO: [v++ 60-586] Created kernels/security/aes256CbcEnc.xo
+INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
+    vitis_analyzer /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes256CbcEnc.xo.compile_summary 
+INFO: [v++ 60-791] Total elapsed time: 0h 0m 46s
+INFO: [v++ 60-1653] Closing dispatch client.
+v++ -c -k  aes128OfbDec -I/home/jiong/bsc-project/componnets/common/include -I/home/jiong/bsc-project/componnets/security/include -I/home/jiong/bsc-project/kernels/security/include -I/home/jiong/bsc-project/componnets/data_compression/include -I/home/jiong/bsc-project/kernels/data_compression/include /home/jiong/bsc-project/kernels/security/src/aes128OfbDec.cpp -o kernels/security/aes128OfbDec.xo -t sw_emu --config config.cfg -g
+Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ compile can be found at:
+	Reports: /home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes128OfbDec
+	Log files: /home/jiong/bsc-project/tests/sw_emu_test/_x/logs/aes128OfbDec
+Running Dispatch Server on port:46371
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes128OfbDec.xo.compile_summary, at Wed Nov 30 14:38:37 2022
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Wed Nov 30 14:38:37 2022
+Running Rule Check Server on port:39427
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes128OfbDec/v++_compile_aes128OfbDec_guidance.html', at Wed Nov 30 14:38:41 2022
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
+INFO: [v++ 74-74] Compiler Version string: 2020.2
+INFO: [v++ 60-585] Compiling for software emulation target
+INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [v++ 60-242] Creating kernel: 'aes128OfbDec'
+WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
+INFO: [v++ 60-594] Finished kernel compilation
+INFO: [v++ 60-586] Created kernels/security/aes128OfbDec.xo
+INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
+    vitis_analyzer /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes128OfbDec.xo.compile_summary 
+INFO: [v++ 60-791] Total elapsed time: 0h 0m 55s
+INFO: [v++ 60-1653] Closing dispatch client.
+v++ -c -k  desCfb128Enc -I/home/jiong/bsc-project/componnets/common/include -I/home/jiong/bsc-project/componnets/security/include -I/home/jiong/bsc-project/kernels/security/include -I/home/jiong/bsc-project/componnets/data_compression/include -I/home/jiong/bsc-project/kernels/data_compression/include /home/jiong/bsc-project/kernels/security/src/desCfb128Enc.cpp -o kernels/security/desCfb128Enc.xo -t sw_emu --config config.cfg -g
+Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ compile can be found at:
+	Reports: /home/jiong/bsc-project/tests/sw_emu_test/_x/reports/desCfb128Enc
+	Log files: /home/jiong/bsc-project/tests/sw_emu_test/_x/logs/desCfb128Enc
+Running Dispatch Server on port:46269
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/desCfb128Enc.xo.compile_summary, at Wed Nov 30 14:39:38 2022
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Wed Nov 30 14:39:38 2022
+Running Rule Check Server on port:33471
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/tests/sw_emu_test/_x/reports/desCfb128Enc/v++_compile_desCfb128Enc_guidance.html', at Wed Nov 30 14:39:41 2022
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
+INFO: [v++ 74-74] Compiler Version string: 2020.2
+INFO: [v++ 60-585] Compiling for software emulation target
+INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [v++ 60-242] Creating kernel: 'desCfb128Enc'
+WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
+INFO: [v++ 60-594] Finished kernel compilation
+INFO: [v++ 60-586] Created kernels/security/desCfb128Enc.xo
+INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
+    vitis_analyzer /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/desCfb128Enc.xo.compile_summary 
+INFO: [v++ 60-791] Total elapsed time: 0h 0m 58s
+INFO: [v++ 60-1653] Closing dispatch client.
+v++ -c -k  aes192CbcEnc -I/home/jiong/bsc-project/componnets/common/include -I/home/jiong/bsc-project/componnets/security/include -I/home/jiong/bsc-project/kernels/security/include -I/home/jiong/bsc-project/componnets/data_compression/include -I/home/jiong/bsc-project/kernels/data_compression/include /home/jiong/bsc-project/kernels/security/src/aes192CbcEnc.cpp -o kernels/security/aes192CbcEnc.xo -t sw_emu --config config.cfg -g
+Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ compile can be found at:
+	Reports: /home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes192CbcEnc
+	Log files: /home/jiong/bsc-project/tests/sw_emu_test/_x/logs/aes192CbcEnc
+Running Dispatch Server on port:46525
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes192CbcEnc.xo.compile_summary, at Wed Nov 30 14:40:42 2022
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Wed Nov 30 14:40:42 2022
+Running Rule Check Server on port:46759
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes192CbcEnc/v++_compile_aes192CbcEnc_guidance.html', at Wed Nov 30 14:40:45 2022
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
+INFO: [v++ 74-74] Compiler Version string: 2020.2
+INFO: [v++ 60-585] Compiling for software emulation target
+INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [v++ 60-242] Creating kernel: 'aes192CbcEnc'
+WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
+INFO: [v++ 60-594] Finished kernel compilation
+INFO: [v++ 60-586] Created kernels/security/aes192CbcEnc.xo
+INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
+    vitis_analyzer /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes192CbcEnc.xo.compile_summary 
+INFO: [v++ 60-791] Total elapsed time: 0h 1m 0s
+INFO: [v++ 60-1653] Closing dispatch client.
+v++ -c -k  aes256Cfb128Enc -I/home/jiong/bsc-project/componnets/common/include -I/home/jiong/bsc-project/componnets/security/include -I/home/jiong/bsc-project/kernels/security/include -I/home/jiong/bsc-project/componnets/data_compression/include -I/home/jiong/bsc-project/kernels/data_compression/include /home/jiong/bsc-project/kernels/security/src/aes256Cfb128Enc.cpp -o kernels/security/aes256Cfb128Enc.xo -t sw_emu --config config.cfg -g
+Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ compile can be found at:
+	Reports: /home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes256Cfb128Enc
+	Log files: /home/jiong/bsc-project/tests/sw_emu_test/_x/logs/aes256Cfb128Enc
+Running Dispatch Server on port:43493
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes256Cfb128Enc.xo.compile_summary, at Wed Nov 30 14:41:46 2022
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Wed Nov 30 14:41:46 2022
+Running Rule Check Server on port:45269
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes256Cfb128Enc/v++_compile_aes256Cfb128Enc_guidance.html', at Wed Nov 30 14:41:50 2022
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
+INFO: [v++ 74-74] Compiler Version string: 2020.2
+INFO: [v++ 60-585] Compiling for software emulation target
+INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [v++ 60-242] Creating kernel: 'aes256Cfb128Enc'
+WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
+INFO: [v++ 60-594] Finished kernel compilation
+INFO: [v++ 60-586] Created kernels/security/aes256Cfb128Enc.xo
+INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
+    vitis_analyzer /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes256Cfb128Enc.xo.compile_summary 
+INFO: [v++ 60-791] Total elapsed time: 0h 0m 56s
+INFO: [v++ 60-1653] Closing dispatch client.
+v++ -c -k  aes256CtrDec -I/home/jiong/bsc-project/componnets/common/include -I/home/jiong/bsc-project/componnets/security/include -I/home/jiong/bsc-project/kernels/security/include -I/home/jiong/bsc-project/componnets/data_compression/include -I/home/jiong/bsc-project/kernels/data_compression/include /home/jiong/bsc-project/kernels/security/src/aes256CtrDec.cpp -o kernels/security/aes256CtrDec.xo -t sw_emu --config config.cfg -g
+Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ compile can be found at:
+	Reports: /home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes256CtrDec
+	Log files: /home/jiong/bsc-project/tests/sw_emu_test/_x/logs/aes256CtrDec
+Running Dispatch Server on port:41635
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes256CtrDec.xo.compile_summary, at Wed Nov 30 14:42:48 2022
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Wed Nov 30 14:42:48 2022
+Running Rule Check Server on port:44147
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes256CtrDec/v++_compile_aes256CtrDec_guidance.html', at Wed Nov 30 14:42:51 2022
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
+INFO: [v++ 74-74] Compiler Version string: 2020.2
+INFO: [v++ 60-585] Compiling for software emulation target
+INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [v++ 60-242] Creating kernel: 'aes256CtrDec'
+WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
+INFO: [v++ 60-594] Finished kernel compilation
+INFO: [v++ 60-586] Created kernels/security/aes256CtrDec.xo
+INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
+    vitis_analyzer /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes256CtrDec.xo.compile_summary 
+INFO: [v++ 60-791] Total elapsed time: 0h 1m 7s
+INFO: [v++ 60-1653] Closing dispatch client.
+v++ -c -k  desCfb1Enc -I/home/jiong/bsc-project/componnets/common/include -I/home/jiong/bsc-project/componnets/security/include -I/home/jiong/bsc-project/kernels/security/include -I/home/jiong/bsc-project/componnets/data_compression/include -I/home/jiong/bsc-project/kernels/data_compression/include /home/jiong/bsc-project/kernels/security/src/desCfb1Enc.cpp -o kernels/security/desCfb1Enc.xo -t sw_emu --config config.cfg -g
+Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ compile can be found at:
+	Reports: /home/jiong/bsc-project/tests/sw_emu_test/_x/reports/desCfb1Enc
+	Log files: /home/jiong/bsc-project/tests/sw_emu_test/_x/logs/desCfb1Enc
+Running Dispatch Server on port:44161
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/desCfb1Enc.xo.compile_summary, at Wed Nov 30 14:44:01 2022
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Wed Nov 30 14:44:01 2022
+Running Rule Check Server on port:45661
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/tests/sw_emu_test/_x/reports/desCfb1Enc/v++_compile_desCfb1Enc_guidance.html', at Wed Nov 30 14:44:04 2022
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
+INFO: [v++ 74-74] Compiler Version string: 2020.2
+INFO: [v++ 60-585] Compiling for software emulation target
+INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [v++ 60-242] Creating kernel: 'desCfb1Enc'
+WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
+INFO: [v++ 60-594] Finished kernel compilation
+INFO: [v++ 60-586] Created kernels/security/desCfb1Enc.xo
+INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
+    vitis_analyzer /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/desCfb1Enc.xo.compile_summary 
+INFO: [v++ 60-791] Total elapsed time: 0h 0m 57s
+INFO: [v++ 60-1653] Closing dispatch client.
+v++ -c -k  aes256GcmDec -I/home/jiong/bsc-project/componnets/common/include -I/home/jiong/bsc-project/componnets/security/include -I/home/jiong/bsc-project/kernels/security/include -I/home/jiong/bsc-project/componnets/data_compression/include -I/home/jiong/bsc-project/kernels/data_compression/include /home/jiong/bsc-project/kernels/security/src/aes256GcmDec.cpp -o kernels/security/aes256GcmDec.xo -t sw_emu --config config.cfg -g
+Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ compile can be found at:
+	Reports: /home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes256GcmDec
+	Log files: /home/jiong/bsc-project/tests/sw_emu_test/_x/logs/aes256GcmDec
+Running Dispatch Server on port:45547
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes256GcmDec.xo.compile_summary, at Wed Nov 30 14:45:03 2022
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Wed Nov 30 14:45:03 2022
+Running Rule Check Server on port:37263
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes256GcmDec/v++_compile_aes256GcmDec_guidance.html', at Wed Nov 30 14:45:06 2022
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
+INFO: [v++ 74-74] Compiler Version string: 2020.2
+INFO: [v++ 60-585] Compiling for software emulation target
+INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [v++ 60-242] Creating kernel: 'aes256GcmDec'
+WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
+INFO: [v++ 60-594] Finished kernel compilation
+INFO: [v++ 60-586] Created kernels/security/aes256GcmDec.xo
+INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
+    vitis_analyzer /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes256GcmDec.xo.compile_summary 
+INFO: [v++ 60-791] Total elapsed time: 0h 1m 28s
+INFO: [v++ 60-1653] Closing dispatch client.
+v++ -c -k  desCfb8Enc -I/home/jiong/bsc-project/componnets/common/include -I/home/jiong/bsc-project/componnets/security/include -I/home/jiong/bsc-project/kernels/security/include -I/home/jiong/bsc-project/componnets/data_compression/include -I/home/jiong/bsc-project/kernels/data_compression/include /home/jiong/bsc-project/kernels/security/src/desCfb8Enc.cpp -o kernels/security/desCfb8Enc.xo -t sw_emu --config config.cfg -g
+Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ compile can be found at:
+	Reports: /home/jiong/bsc-project/tests/sw_emu_test/_x/reports/desCfb8Enc
+	Log files: /home/jiong/bsc-project/tests/sw_emu_test/_x/logs/desCfb8Enc
+Running Dispatch Server on port:43875
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/desCfb8Enc.xo.compile_summary, at Wed Nov 30 14:46:37 2022
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Wed Nov 30 14:46:37 2022
+Running Rule Check Server on port:36285
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/tests/sw_emu_test/_x/reports/desCfb8Enc/v++_compile_desCfb8Enc_guidance.html', at Wed Nov 30 14:46:40 2022
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
+INFO: [v++ 74-74] Compiler Version string: 2020.2
+INFO: [v++ 60-585] Compiling for software emulation target
+INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [v++ 60-242] Creating kernel: 'desCfb8Enc'
+WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
+INFO: [v++ 60-594] Finished kernel compilation
+INFO: [v++ 60-586] Created kernels/security/desCfb8Enc.xo
+INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
+    vitis_analyzer /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/desCfb8Enc.xo.compile_summary 
+INFO: [v++ 60-791] Total elapsed time: 0h 1m 0s
+INFO: [v++ 60-1653] Closing dispatch client.
+v++ -c -k  aes128Cfb1Dec -I/home/jiong/bsc-project/componnets/common/include -I/home/jiong/bsc-project/componnets/security/include -I/home/jiong/bsc-project/kernels/security/include -I/home/jiong/bsc-project/componnets/data_compression/include -I/home/jiong/bsc-project/kernels/data_compression/include /home/jiong/bsc-project/kernels/security/src/aes128Cfb1Dec.cpp -o kernels/security/aes128Cfb1Dec.xo -t sw_emu --config config.cfg -g
+Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ compile can be found at:
+	Reports: /home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes128Cfb1Dec
+	Log files: /home/jiong/bsc-project/tests/sw_emu_test/_x/logs/aes128Cfb1Dec
+Running Dispatch Server on port:45601
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes128Cfb1Dec.xo.compile_summary, at Wed Nov 30 14:47:43 2022
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Wed Nov 30 14:47:43 2022
+Running Rule Check Server on port:44015
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes128Cfb1Dec/v++_compile_aes128Cfb1Dec_guidance.html', at Wed Nov 30 14:47:46 2022
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
+INFO: [v++ 74-74] Compiler Version string: 2020.2
+INFO: [v++ 60-585] Compiling for software emulation target
+INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [v++ 60-242] Creating kernel: 'aes128Cfb1Dec'
+WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
+INFO: [v++ 60-594] Finished kernel compilation
+INFO: [v++ 60-586] Created kernels/security/aes128Cfb1Dec.xo
+INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
+    vitis_analyzer /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes128Cfb1Dec.xo.compile_summary 
+INFO: [v++ 60-791] Total elapsed time: 0h 1m 10s
+INFO: [v++ 60-1653] Closing dispatch client.
+v++ -c -k  desEcbDec -I/home/jiong/bsc-project/componnets/common/include -I/home/jiong/bsc-project/componnets/security/include -I/home/jiong/bsc-project/kernels/security/include -I/home/jiong/bsc-project/componnets/data_compression/include -I/home/jiong/bsc-project/kernels/data_compression/include /home/jiong/bsc-project/kernels/security/src/desEcbDec.cpp -o kernels/security/desEcbDec.xo -t sw_emu --config config.cfg -g
+Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ compile can be found at:
+	Reports: /home/jiong/bsc-project/tests/sw_emu_test/_x/reports/desEcbDec
+	Log files: /home/jiong/bsc-project/tests/sw_emu_test/_x/logs/desEcbDec
+Running Dispatch Server on port:41951
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/desEcbDec.xo.compile_summary, at Wed Nov 30 14:48:59 2022
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Wed Nov 30 14:48:59 2022
+Running Rule Check Server on port:46431
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/tests/sw_emu_test/_x/reports/desEcbDec/v++_compile_desEcbDec_guidance.html', at Wed Nov 30 14:49:02 2022
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
+INFO: [v++ 74-74] Compiler Version string: 2020.2
+INFO: [v++ 60-585] Compiling for software emulation target
+INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [v++ 60-242] Creating kernel: 'desEcbDec'
+WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
+INFO: [v++ 60-594] Finished kernel compilation
+INFO: [v++ 60-586] Created kernels/security/desEcbDec.xo
+INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
+    vitis_analyzer /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/desEcbDec.xo.compile_summary 
+INFO: [v++ 60-791] Total elapsed time: 0h 0m 56s
+INFO: [v++ 60-1653] Closing dispatch client.
+v++ -c -k  desOfbDec -I/home/jiong/bsc-project/componnets/common/include -I/home/jiong/bsc-project/componnets/security/include -I/home/jiong/bsc-project/kernels/security/include -I/home/jiong/bsc-project/componnets/data_compression/include -I/home/jiong/bsc-project/kernels/data_compression/include /home/jiong/bsc-project/kernels/security/src/desOfbDec.cpp -o kernels/security/desOfbDec.xo -t sw_emu --config config.cfg -g
+Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ compile can be found at:
+	Reports: /home/jiong/bsc-project/tests/sw_emu_test/_x/reports/desOfbDec
+	Log files: /home/jiong/bsc-project/tests/sw_emu_test/_x/logs/desOfbDec
+Running Dispatch Server on port:39999
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/desOfbDec.xo.compile_summary, at Wed Nov 30 14:50:00 2022
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Wed Nov 30 14:50:00 2022
+Running Rule Check Server on port:34233
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/tests/sw_emu_test/_x/reports/desOfbDec/v++_compile_desOfbDec_guidance.html', at Wed Nov 30 14:50:03 2022
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
+INFO: [v++ 74-74] Compiler Version string: 2020.2
+INFO: [v++ 60-585] Compiling for software emulation target
+INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [v++ 60-242] Creating kernel: 'desOfbDec'
+WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
+INFO: [v++ 60-594] Finished kernel compilation
+INFO: [v++ 60-586] Created kernels/security/desOfbDec.xo
+INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
+    vitis_analyzer /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/desOfbDec.xo.compile_summary 
+INFO: [v++ 60-791] Total elapsed time: 0h 0m 57s
+INFO: [v++ 60-1653] Closing dispatch client.
+v++ -c -k  aes128Cfb128Enc -I/home/jiong/bsc-project/componnets/common/include -I/home/jiong/bsc-project/componnets/security/include -I/home/jiong/bsc-project/kernels/security/include -I/home/jiong/bsc-project/componnets/data_compression/include -I/home/jiong/bsc-project/kernels/data_compression/include /home/jiong/bsc-project/kernels/security/src/aes128Cfb128Enc.cpp -o kernels/security/aes128Cfb128Enc.xo -t sw_emu --config config.cfg -g
+Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ compile can be found at:
+	Reports: /home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes128Cfb128Enc
+	Log files: /home/jiong/bsc-project/tests/sw_emu_test/_x/logs/aes128Cfb128Enc
+Running Dispatch Server on port:34091
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes128Cfb128Enc.xo.compile_summary, at Wed Nov 30 14:51:03 2022
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Wed Nov 30 14:51:03 2022
+Running Rule Check Server on port:41851
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes128Cfb128Enc/v++_compile_aes128Cfb128Enc_guidance.html', at Wed Nov 30 14:51:06 2022
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
+INFO: [v++ 74-74] Compiler Version string: 2020.2
+INFO: [v++ 60-585] Compiling for software emulation target
+INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [v++ 60-242] Creating kernel: 'aes128Cfb128Enc'
+WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
+INFO: [v++ 60-594] Finished kernel compilation
+INFO: [v++ 60-586] Created kernels/security/aes128Cfb128Enc.xo
+INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
+    vitis_analyzer /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes128Cfb128Enc.xo.compile_summary 
+INFO: [v++ 60-791] Total elapsed time: 0h 0m 59s
+INFO: [v++ 60-1653] Closing dispatch client.
+v++ -c -k  aes128CtrDec -I/home/jiong/bsc-project/componnets/common/include -I/home/jiong/bsc-project/componnets/security/include -I/home/jiong/bsc-project/kernels/security/include -I/home/jiong/bsc-project/componnets/data_compression/include -I/home/jiong/bsc-project/kernels/data_compression/include /home/jiong/bsc-project/kernels/security/src/aes128CtrDec.cpp -o kernels/security/aes128CtrDec.xo -t sw_emu --config config.cfg -g
+Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ compile can be found at:
+	Reports: /home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes128CtrDec
+	Log files: /home/jiong/bsc-project/tests/sw_emu_test/_x/logs/aes128CtrDec
+Running Dispatch Server on port:42615
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes128CtrDec.xo.compile_summary, at Wed Nov 30 14:52:07 2022
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Wed Nov 30 14:52:07 2022
+Running Rule Check Server on port:45529
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes128CtrDec/v++_compile_aes128CtrDec_guidance.html', at Wed Nov 30 14:52:11 2022
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
+INFO: [v++ 74-74] Compiler Version string: 2020.2
+INFO: [v++ 60-585] Compiling for software emulation target
+INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [v++ 60-242] Creating kernel: 'aes128CtrDec'
+WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
+INFO: [v++ 60-594] Finished kernel compilation
+INFO: [v++ 60-586] Created kernels/security/aes128CtrDec.xo
+INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
+    vitis_analyzer /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes128CtrDec.xo.compile_summary 
+INFO: [v++ 60-791] Total elapsed time: 0h 1m 4s
+INFO: [v++ 60-1653] Closing dispatch client.
+v++ -c -k  aes128CcmEnc -I/home/jiong/bsc-project/componnets/common/include -I/home/jiong/bsc-project/componnets/security/include -I/home/jiong/bsc-project/kernels/security/include -I/home/jiong/bsc-project/componnets/data_compression/include -I/home/jiong/bsc-project/kernels/data_compression/include /home/jiong/bsc-project/kernels/security/src/aes128CcmEnc.cpp -o kernels/security/aes128CcmEnc.xo -t sw_emu --config config.cfg -g
+Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ compile can be found at:
+	Reports: /home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes128CcmEnc
+	Log files: /home/jiong/bsc-project/tests/sw_emu_test/_x/logs/aes128CcmEnc
+Running Dispatch Server on port:43699
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes128CcmEnc.xo.compile_summary, at Wed Nov 30 14:53:17 2022
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Wed Nov 30 14:53:17 2022
+Running Rule Check Server on port:34467
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes128CcmEnc/v++_compile_aes128CcmEnc_guidance.html', at Wed Nov 30 14:53:21 2022
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
+INFO: [v++ 74-74] Compiler Version string: 2020.2
+INFO: [v++ 60-585] Compiling for software emulation target
+INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [v++ 60-242] Creating kernel: 'aes128CcmEnc'
+WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
+INFO: [v++ 60-594] Finished kernel compilation
+INFO: [v++ 60-586] Created kernels/security/aes128CcmEnc.xo
+INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
+    vitis_analyzer /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes128CcmEnc.xo.compile_summary 
+INFO: [v++ 60-791] Total elapsed time: 0h 1m 57s
+INFO: [v++ 60-1653] Closing dispatch client.
+v++ -c -k  aes192Cfb1Dec -I/home/jiong/bsc-project/componnets/common/include -I/home/jiong/bsc-project/componnets/security/include -I/home/jiong/bsc-project/kernels/security/include -I/home/jiong/bsc-project/componnets/data_compression/include -I/home/jiong/bsc-project/kernels/data_compression/include /home/jiong/bsc-project/kernels/security/src/aes192Cfb1Dec.cpp -o kernels/security/aes192Cfb1Dec.xo -t sw_emu --config config.cfg -g
+Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ compile can be found at:
+	Reports: /home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes192Cfb1Dec
+	Log files: /home/jiong/bsc-project/tests/sw_emu_test/_x/logs/aes192Cfb1Dec
+Running Dispatch Server on port:42579
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes192Cfb1Dec.xo.compile_summary, at Wed Nov 30 14:55:20 2022
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Wed Nov 30 14:55:20 2022
+Running Rule Check Server on port:45013
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes192Cfb1Dec/v++_compile_aes192Cfb1Dec_guidance.html', at Wed Nov 30 14:55:23 2022
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
+INFO: [v++ 74-74] Compiler Version string: 2020.2
+INFO: [v++ 60-585] Compiling for software emulation target
+INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [v++ 60-242] Creating kernel: 'aes192Cfb1Dec'
+WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
+INFO: [v++ 60-594] Finished kernel compilation
+INFO: [v++ 60-586] Created kernels/security/aes192Cfb1Dec.xo
+INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
+    vitis_analyzer /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes192Cfb1Dec.xo.compile_summary 
+INFO: [v++ 60-791] Total elapsed time: 0h 1m 14s
+INFO: [v++ 60-1653] Closing dispatch client.
+v++ -c -k  aes256CtrEnc -I/home/jiong/bsc-project/componnets/common/include -I/home/jiong/bsc-project/componnets/security/include -I/home/jiong/bsc-project/kernels/security/include -I/home/jiong/bsc-project/componnets/data_compression/include -I/home/jiong/bsc-project/kernels/data_compression/include /home/jiong/bsc-project/kernels/security/src/aes256CtrEnc.cpp -o kernels/security/aes256CtrEnc.xo -t sw_emu --config config.cfg -g
+Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ compile can be found at:
+	Reports: /home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes256CtrEnc
+	Log files: /home/jiong/bsc-project/tests/sw_emu_test/_x/logs/aes256CtrEnc
+Running Dispatch Server on port:35801
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes256CtrEnc.xo.compile_summary, at Wed Nov 30 14:56:39 2022
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Wed Nov 30 14:56:39 2022
+Running Rule Check Server on port:41359
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes256CtrEnc/v++_compile_aes256CtrEnc_guidance.html', at Wed Nov 30 14:56:43 2022
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
+INFO: [v++ 74-74] Compiler Version string: 2020.2
+INFO: [v++ 60-585] Compiling for software emulation target
+INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [v++ 60-242] Creating kernel: 'aes256CtrEnc'
+WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
+INFO: [v++ 60-594] Finished kernel compilation
+INFO: [v++ 60-586] Created kernels/security/aes256CtrEnc.xo
+INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
+    vitis_analyzer /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes256CtrEnc.xo.compile_summary 
+INFO: [v++ 60-791] Total elapsed time: 0h 1m 5s
+INFO: [v++ 60-1653] Closing dispatch client.
+v++ -c -k  aes192Cfb128Enc -I/home/jiong/bsc-project/componnets/common/include -I/home/jiong/bsc-project/componnets/security/include -I/home/jiong/bsc-project/kernels/security/include -I/home/jiong/bsc-project/componnets/data_compression/include -I/home/jiong/bsc-project/kernels/data_compression/include /home/jiong/bsc-project/kernels/security/src/aes192Cfb128Enc.cpp -o kernels/security/aes192Cfb128Enc.xo -t sw_emu --config config.cfg -g
+Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ compile can be found at:
+	Reports: /home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes192Cfb128Enc
+	Log files: /home/jiong/bsc-project/tests/sw_emu_test/_x/logs/aes192Cfb128Enc
+Running Dispatch Server on port:35063
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes192Cfb128Enc.xo.compile_summary, at Wed Nov 30 14:57:50 2022
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Wed Nov 30 14:57:50 2022
+Running Rule Check Server on port:38229
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes192Cfb128Enc/v++_compile_aes192Cfb128Enc_guidance.html', at Wed Nov 30 14:57:53 2022
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
+INFO: [v++ 74-74] Compiler Version string: 2020.2
+INFO: [v++ 60-585] Compiling for software emulation target
+INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [v++ 60-242] Creating kernel: 'aes192Cfb128Enc'
+WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
+INFO: [v++ 60-594] Finished kernel compilation
+INFO: [v++ 60-586] Created kernels/security/aes192Cfb128Enc.xo
+INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
+    vitis_analyzer /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes192Cfb128Enc.xo.compile_summary 
+INFO: [v++ 60-791] Total elapsed time: 0h 0m 49s
+INFO: [v++ 60-1653] Closing dispatch client.
+v++ -c -k  aes192EcbDec -I/home/jiong/bsc-project/componnets/common/include -I/home/jiong/bsc-project/componnets/security/include -I/home/jiong/bsc-project/kernels/security/include -I/home/jiong/bsc-project/componnets/data_compression/include -I/home/jiong/bsc-project/kernels/data_compression/include /home/jiong/bsc-project/kernels/security/src/aes192EcbDec.cpp -o kernels/security/aes192EcbDec.xo -t sw_emu --config config.cfg -g
+Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ compile can be found at:
+	Reports: /home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes192EcbDec
+	Log files: /home/jiong/bsc-project/tests/sw_emu_test/_x/logs/aes192EcbDec
+Running Dispatch Server on port:42617
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes192EcbDec.xo.compile_summary, at Wed Nov 30 14:58:45 2022
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Wed Nov 30 14:58:45 2022
+Running Rule Check Server on port:35207
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes192EcbDec/v++_compile_aes192EcbDec_guidance.html', at Wed Nov 30 14:58:48 2022
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
+INFO: [v++ 74-74] Compiler Version string: 2020.2
+INFO: [v++ 60-585] Compiling for software emulation target
+INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [v++ 60-242] Creating kernel: 'aes192EcbDec'
+WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
+INFO: [v++ 60-594] Finished kernel compilation
+INFO: [v++ 60-586] Created kernels/security/aes192EcbDec.xo
+INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
+    vitis_analyzer /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes192EcbDec.xo.compile_summary 
+INFO: [v++ 60-791] Total elapsed time: 0h 0m 58s
+INFO: [v++ 60-1653] Closing dispatch client.
+v++ -c -k  aes256Cfb1Enc -I/home/jiong/bsc-project/componnets/common/include -I/home/jiong/bsc-project/componnets/security/include -I/home/jiong/bsc-project/kernels/security/include -I/home/jiong/bsc-project/componnets/data_compression/include -I/home/jiong/bsc-project/kernels/data_compression/include /home/jiong/bsc-project/kernels/security/src/aes256Cfb1Enc.cpp -o kernels/security/aes256Cfb1Enc.xo -t sw_emu --config config.cfg -g
+Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ compile can be found at:
+	Reports: /home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes256Cfb1Enc
+	Log files: /home/jiong/bsc-project/tests/sw_emu_test/_x/logs/aes256Cfb1Enc
+Running Dispatch Server on port:32903
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes256Cfb1Enc.xo.compile_summary, at Wed Nov 30 14:59:49 2022
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Wed Nov 30 14:59:49 2022
+Running Rule Check Server on port:46083
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes256Cfb1Enc/v++_compile_aes256Cfb1Enc_guidance.html', at Wed Nov 30 14:59:52 2022
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
+INFO: [v++ 74-74] Compiler Version string: 2020.2
+INFO: [v++ 60-585] Compiling for software emulation target
+INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [v++ 60-242] Creating kernel: 'aes256Cfb1Enc'
+WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
+INFO: [v++ 60-594] Finished kernel compilation
+INFO: [v++ 60-586] Created kernels/security/aes256Cfb1Enc.xo
+INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
+    vitis_analyzer /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes256Cfb1Enc.xo.compile_summary 
+INFO: [v++ 60-791] Total elapsed time: 0h 1m 11s
+INFO: [v++ 60-1653] Closing dispatch client.
+v++ -c -k  aes128EcbDec -I/home/jiong/bsc-project/componnets/common/include -I/home/jiong/bsc-project/componnets/security/include -I/home/jiong/bsc-project/kernels/security/include -I/home/jiong/bsc-project/componnets/data_compression/include -I/home/jiong/bsc-project/kernels/data_compression/include /home/jiong/bsc-project/kernels/security/src/aes128EcbDec.cpp -o kernels/security/aes128EcbDec.xo -t sw_emu --config config.cfg -g
+Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ compile can be found at:
+	Reports: /home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes128EcbDec
+	Log files: /home/jiong/bsc-project/tests/sw_emu_test/_x/logs/aes128EcbDec
+Running Dispatch Server on port:44105
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes128EcbDec.xo.compile_summary, at Wed Nov 30 15:01:05 2022
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Wed Nov 30 15:01:05 2022
+Running Rule Check Server on port:37739
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes128EcbDec/v++_compile_aes128EcbDec_guidance.html', at Wed Nov 30 15:01:09 2022
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
+INFO: [v++ 74-74] Compiler Version string: 2020.2
+INFO: [v++ 60-585] Compiling for software emulation target
+INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [v++ 60-242] Creating kernel: 'aes128EcbDec'
+WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
+INFO: [v++ 60-594] Finished kernel compilation
+INFO: [v++ 60-586] Created kernels/security/aes128EcbDec.xo
+INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
+    vitis_analyzer /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes128EcbDec.xo.compile_summary 
+INFO: [v++ 60-791] Total elapsed time: 0h 0m 58s
+INFO: [v++ 60-1653] Closing dispatch client.
+v++ -c -k  aes256CcmEnc -I/home/jiong/bsc-project/componnets/common/include -I/home/jiong/bsc-project/componnets/security/include -I/home/jiong/bsc-project/kernels/security/include -I/home/jiong/bsc-project/componnets/data_compression/include -I/home/jiong/bsc-project/kernels/data_compression/include /home/jiong/bsc-project/kernels/security/src/aes256CcmEnc.cpp -o kernels/security/aes256CcmEnc.xo -t sw_emu --config config.cfg -g
+Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ compile can be found at:
+	Reports: /home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes256CcmEnc
+	Log files: /home/jiong/bsc-project/tests/sw_emu_test/_x/logs/aes256CcmEnc
+Running Dispatch Server on port:37097
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes256CcmEnc.xo.compile_summary, at Wed Nov 30 15:02:09 2022
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Wed Nov 30 15:02:09 2022
+Running Rule Check Server on port:35641
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes256CcmEnc/v++_compile_aes256CcmEnc_guidance.html', at Wed Nov 30 15:02:13 2022
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
+INFO: [v++ 74-74] Compiler Version string: 2020.2
+INFO: [v++ 60-585] Compiling for software emulation target
+INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [v++ 60-242] Creating kernel: 'aes256CcmEnc'
+WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
+INFO: [v++ 60-594] Finished kernel compilation
+INFO: [v++ 60-586] Created kernels/security/aes256CcmEnc.xo
+INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
+    vitis_analyzer /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes256CcmEnc.xo.compile_summary 
+INFO: [v++ 60-791] Total elapsed time: 0h 1m 48s
+INFO: [v++ 60-1653] Closing dispatch client.
+v++ -c -k  aes128Cfb8Dec -I/home/jiong/bsc-project/componnets/common/include -I/home/jiong/bsc-project/componnets/security/include -I/home/jiong/bsc-project/kernels/security/include -I/home/jiong/bsc-project/componnets/data_compression/include -I/home/jiong/bsc-project/kernels/data_compression/include /home/jiong/bsc-project/kernels/security/src/aes128Cfb8Dec.cpp -o kernels/security/aes128Cfb8Dec.xo -t sw_emu --config config.cfg -g
+Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ compile can be found at:
+	Reports: /home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes128Cfb8Dec
+	Log files: /home/jiong/bsc-project/tests/sw_emu_test/_x/logs/aes128Cfb8Dec
+Running Dispatch Server on port:44593
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes128Cfb8Dec.xo.compile_summary, at Wed Nov 30 15:04:03 2022
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Wed Nov 30 15:04:03 2022
+Running Rule Check Server on port:46361
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes128Cfb8Dec/v++_compile_aes128Cfb8Dec_guidance.html', at Wed Nov 30 15:04:05 2022
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
+INFO: [v++ 74-74] Compiler Version string: 2020.2
+INFO: [v++ 60-585] Compiling for software emulation target
+INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [v++ 60-242] Creating kernel: 'aes128Cfb8Dec'
+WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
+INFO: [v++ 60-594] Finished kernel compilation
+INFO: [v++ 60-586] Created kernels/security/aes128Cfb8Dec.xo
+INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
+    vitis_analyzer /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes128Cfb8Dec.xo.compile_summary 
+INFO: [v++ 60-791] Total elapsed time: 0h 0m 55s
+INFO: [v++ 60-1653] Closing dispatch client.
+v++ -c -k  aes192CtrDec -I/home/jiong/bsc-project/componnets/common/include -I/home/jiong/bsc-project/componnets/security/include -I/home/jiong/bsc-project/kernels/security/include -I/home/jiong/bsc-project/componnets/data_compression/include -I/home/jiong/bsc-project/kernels/data_compression/include /home/jiong/bsc-project/kernels/security/src/aes192CtrDec.cpp -o kernels/security/aes192CtrDec.xo -t sw_emu --config config.cfg -g
+Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ compile can be found at:
+	Reports: /home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes192CtrDec
+	Log files: /home/jiong/bsc-project/tests/sw_emu_test/_x/logs/aes192CtrDec
+Running Dispatch Server on port:38993
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes192CtrDec.xo.compile_summary, at Wed Nov 30 15:05:03 2022
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Wed Nov 30 15:05:03 2022
+Running Rule Check Server on port:36513
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes192CtrDec/v++_compile_aes192CtrDec_guidance.html', at Wed Nov 30 15:05:07 2022
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
+INFO: [v++ 74-74] Compiler Version string: 2020.2
+INFO: [v++ 60-585] Compiling for software emulation target
+INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [v++ 60-242] Creating kernel: 'aes192CtrDec'
+WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
+INFO: [v++ 60-594] Finished kernel compilation
+INFO: [v++ 60-586] Created kernels/security/aes192CtrDec.xo
+INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
+    vitis_analyzer /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes192CtrDec.xo.compile_summary 
+INFO: [v++ 60-791] Total elapsed time: 0h 1m 8s
+INFO: [v++ 60-1653] Closing dispatch client.
+v++ -c -k  aes256CbcDec -I/home/jiong/bsc-project/componnets/common/include -I/home/jiong/bsc-project/componnets/security/include -I/home/jiong/bsc-project/kernels/security/include -I/home/jiong/bsc-project/componnets/data_compression/include -I/home/jiong/bsc-project/kernels/data_compression/include /home/jiong/bsc-project/kernels/security/src/aes256CbcDec.cpp -o kernels/security/aes256CbcDec.xo -t sw_emu --config config.cfg -g
+Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ compile can be found at:
+	Reports: /home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes256CbcDec
+	Log files: /home/jiong/bsc-project/tests/sw_emu_test/_x/logs/aes256CbcDec
+Running Dispatch Server on port:40249
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes256CbcDec.xo.compile_summary, at Wed Nov 30 15:06:17 2022
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Wed Nov 30 15:06:17 2022
+Running Rule Check Server on port:39087
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes256CbcDec/v++_compile_aes256CbcDec_guidance.html', at Wed Nov 30 15:06:21 2022
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
+INFO: [v++ 74-74] Compiler Version string: 2020.2
+INFO: [v++ 60-585] Compiling for software emulation target
+INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [v++ 60-242] Creating kernel: 'aes256CbcDec'
+WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
+INFO: [v++ 60-594] Finished kernel compilation
+INFO: [v++ 60-586] Created kernels/security/aes256CbcDec.xo
+INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
+    vitis_analyzer /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes256CbcDec.xo.compile_summary 
+INFO: [v++ 60-791] Total elapsed time: 0h 0m 59s
+INFO: [v++ 60-1653] Closing dispatch client.
+v++ -c -k  aes128CtrEnc -I/home/jiong/bsc-project/componnets/common/include -I/home/jiong/bsc-project/componnets/security/include -I/home/jiong/bsc-project/kernels/security/include -I/home/jiong/bsc-project/componnets/data_compression/include -I/home/jiong/bsc-project/kernels/data_compression/include /home/jiong/bsc-project/kernels/security/src/aes128CtrEnc.cpp -o kernels/security/aes128CtrEnc.xo -t sw_emu --config config.cfg -g
+Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ compile can be found at:
+	Reports: /home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes128CtrEnc
+	Log files: /home/jiong/bsc-project/tests/sw_emu_test/_x/logs/aes128CtrEnc
+Running Dispatch Server on port:37109
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes128CtrEnc.xo.compile_summary, at Wed Nov 30 15:07:22 2022
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Wed Nov 30 15:07:22 2022
+Running Rule Check Server on port:37679
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes128CtrEnc/v++_compile_aes128CtrEnc_guidance.html', at Wed Nov 30 15:07:25 2022
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
+INFO: [v++ 74-74] Compiler Version string: 2020.2
+INFO: [v++ 60-585] Compiling for software emulation target
+INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [v++ 60-242] Creating kernel: 'aes128CtrEnc'
+WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
+INFO: [v++ 60-594] Finished kernel compilation
+INFO: [v++ 60-586] Created kernels/security/aes128CtrEnc.xo
+INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
+    vitis_analyzer /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes128CtrEnc.xo.compile_summary 
+INFO: [v++ 60-791] Total elapsed time: 0h 1m 7s
+INFO: [v++ 60-1653] Closing dispatch client.
+v++ -c -k  aes128Cfb1Enc -I/home/jiong/bsc-project/componnets/common/include -I/home/jiong/bsc-project/componnets/security/include -I/home/jiong/bsc-project/kernels/security/include -I/home/jiong/bsc-project/componnets/data_compression/include -I/home/jiong/bsc-project/kernels/data_compression/include /home/jiong/bsc-project/kernels/security/src/aes128Cfb1Enc.cpp -o kernels/security/aes128Cfb1Enc.xo -t sw_emu --config config.cfg -g
+Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ compile can be found at:
+	Reports: /home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes128Cfb1Enc
+	Log files: /home/jiong/bsc-project/tests/sw_emu_test/_x/logs/aes128Cfb1Enc
+Running Dispatch Server on port:38273
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes128Cfb1Enc.xo.compile_summary, at Wed Nov 30 15:08:35 2022
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Wed Nov 30 15:08:35 2022
+Running Rule Check Server on port:45449
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes128Cfb1Enc/v++_compile_aes128Cfb1Enc_guidance.html', at Wed Nov 30 15:08:38 2022
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
+INFO: [v++ 74-74] Compiler Version string: 2020.2
+INFO: [v++ 60-585] Compiling for software emulation target
+INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [v++ 60-242] Creating kernel: 'aes128Cfb1Enc'
+WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
+INFO: [v++ 60-594] Finished kernel compilation
+INFO: [v++ 60-586] Created kernels/security/aes128Cfb1Enc.xo
+INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
+    vitis_analyzer /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes128Cfb1Enc.xo.compile_summary 
+INFO: [v++ 60-791] Total elapsed time: 0h 1m 11s
+INFO: [v++ 60-1653] Closing dispatch client.
+v++ -c -k  aes256GcmEnc -I/home/jiong/bsc-project/componnets/common/include -I/home/jiong/bsc-project/componnets/security/include -I/home/jiong/bsc-project/kernels/security/include -I/home/jiong/bsc-project/componnets/data_compression/include -I/home/jiong/bsc-project/kernels/data_compression/include /home/jiong/bsc-project/kernels/security/src/aes256GcmEnc.cpp -o kernels/security/aes256GcmEnc.xo -t sw_emu --config config.cfg -g
+Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ compile can be found at:
+	Reports: /home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes256GcmEnc
+	Log files: /home/jiong/bsc-project/tests/sw_emu_test/_x/logs/aes256GcmEnc
+Running Dispatch Server on port:35271
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes256GcmEnc.xo.compile_summary, at Wed Nov 30 15:09:51 2022
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Wed Nov 30 15:09:51 2022
+Running Rule Check Server on port:42357
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes256GcmEnc/v++_compile_aes256GcmEnc_guidance.html', at Wed Nov 30 15:09:54 2022
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
+INFO: [v++ 74-74] Compiler Version string: 2020.2
+INFO: [v++ 60-585] Compiling for software emulation target
+INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [v++ 60-242] Creating kernel: 'aes256GcmEnc'
+WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
+INFO: [v++ 60-594] Finished kernel compilation
+INFO: [v++ 60-586] Created kernels/security/aes256GcmEnc.xo
+INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
+    vitis_analyzer /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes256GcmEnc.xo.compile_summary 
+INFO: [v++ 60-791] Total elapsed time: 0h 1m 28s
+INFO: [v++ 60-1653] Closing dispatch client.
+v++ -c -k  aes256OfbDec -I/home/jiong/bsc-project/componnets/common/include -I/home/jiong/bsc-project/componnets/security/include -I/home/jiong/bsc-project/kernels/security/include -I/home/jiong/bsc-project/componnets/data_compression/include -I/home/jiong/bsc-project/kernels/data_compression/include /home/jiong/bsc-project/kernels/security/src/aes256OfbDec.cpp -o kernels/security/aes256OfbDec.xo -t sw_emu --config config.cfg -g
+Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ compile can be found at:
+	Reports: /home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes256OfbDec
+	Log files: /home/jiong/bsc-project/tests/sw_emu_test/_x/logs/aes256OfbDec
+Running Dispatch Server on port:33417
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes256OfbDec.xo.compile_summary, at Wed Nov 30 15:11:24 2022
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Wed Nov 30 15:11:24 2022
+Running Rule Check Server on port:37641
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes256OfbDec/v++_compile_aes256OfbDec_guidance.html', at Wed Nov 30 15:11:27 2022
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
+INFO: [v++ 74-74] Compiler Version string: 2020.2
+INFO: [v++ 60-585] Compiling for software emulation target
+INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [v++ 60-242] Creating kernel: 'aes256OfbDec'
+WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
+INFO: [v++ 60-594] Finished kernel compilation
+INFO: [v++ 60-586] Created kernels/security/aes256OfbDec.xo
+INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
+    vitis_analyzer /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes256OfbDec.xo.compile_summary 
+INFO: [v++ 60-791] Total elapsed time: 0h 0m 59s
+INFO: [v++ 60-1653] Closing dispatch client.
+v++ -c -k  aes192GcmEnc -I/home/jiong/bsc-project/componnets/common/include -I/home/jiong/bsc-project/componnets/security/include -I/home/jiong/bsc-project/kernels/security/include -I/home/jiong/bsc-project/componnets/data_compression/include -I/home/jiong/bsc-project/kernels/data_compression/include /home/jiong/bsc-project/kernels/security/src/aes192GcmEnc.cpp -o kernels/security/aes192GcmEnc.xo -t sw_emu --config config.cfg -g
+Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ compile can be found at:
+	Reports: /home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes192GcmEnc
+	Log files: /home/jiong/bsc-project/tests/sw_emu_test/_x/logs/aes192GcmEnc
+Running Dispatch Server on port:42123
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes192GcmEnc.xo.compile_summary, at Wed Nov 30 15:12:28 2022
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Wed Nov 30 15:12:28 2022
+Running Rule Check Server on port:44831
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes192GcmEnc/v++_compile_aes192GcmEnc_guidance.html', at Wed Nov 30 15:12:32 2022
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
+INFO: [v++ 74-74] Compiler Version string: 2020.2
+INFO: [v++ 60-585] Compiling for software emulation target
+INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [v++ 60-242] Creating kernel: 'aes192GcmEnc'
+WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
+INFO: [v++ 60-594] Finished kernel compilation
+INFO: [v++ 60-586] Created kernels/security/aes192GcmEnc.xo
+INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
+    vitis_analyzer /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes192GcmEnc.xo.compile_summary 
+INFO: [v++ 60-791] Total elapsed time: 0h 1m 32s
+INFO: [v++ 60-1653] Closing dispatch client.
+v++ -c -k  aes128EcbEnc -I/home/jiong/bsc-project/componnets/common/include -I/home/jiong/bsc-project/componnets/security/include -I/home/jiong/bsc-project/kernels/security/include -I/home/jiong/bsc-project/componnets/data_compression/include -I/home/jiong/bsc-project/kernels/data_compression/include /home/jiong/bsc-project/kernels/security/src/aes128EcbEnc.cpp -o kernels/security/aes128EcbEnc.xo -t sw_emu --config config.cfg -g
+Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ compile can be found at:
+	Reports: /home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes128EcbEnc
+	Log files: /home/jiong/bsc-project/tests/sw_emu_test/_x/logs/aes128EcbEnc
+Running Dispatch Server on port:45619
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes128EcbEnc.xo.compile_summary, at Wed Nov 30 15:14:05 2022
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Wed Nov 30 15:14:05 2022
+Running Rule Check Server on port:40763
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes128EcbEnc/v++_compile_aes128EcbEnc_guidance.html', at Wed Nov 30 15:14:08 2022
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
+INFO: [v++ 74-74] Compiler Version string: 2020.2
+INFO: [v++ 60-585] Compiling for software emulation target
+INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [v++ 60-242] Creating kernel: 'aes128EcbEnc'
+WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
+INFO: [v++ 60-594] Finished kernel compilation
+INFO: [v++ 60-586] Created kernels/security/aes128EcbEnc.xo
+INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
+    vitis_analyzer /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes128EcbEnc.xo.compile_summary 
+INFO: [v++ 60-791] Total elapsed time: 0h 0m 54s
+INFO: [v++ 60-1653] Closing dispatch client.
+v++ -c -k  aes256CcmDec -I/home/jiong/bsc-project/componnets/common/include -I/home/jiong/bsc-project/componnets/security/include -I/home/jiong/bsc-project/kernels/security/include -I/home/jiong/bsc-project/componnets/data_compression/include -I/home/jiong/bsc-project/kernels/data_compression/include /home/jiong/bsc-project/kernels/security/src/aes256CcmDec.cpp -o kernels/security/aes256CcmDec.xo -t sw_emu --config config.cfg -g
+Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ compile can be found at:
+	Reports: /home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes256CcmDec
+	Log files: /home/jiong/bsc-project/tests/sw_emu_test/_x/logs/aes256CcmDec
+Running Dispatch Server on port:46703
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes256CcmDec.xo.compile_summary, at Wed Nov 30 15:15:03 2022
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Wed Nov 30 15:15:03 2022
+Running Rule Check Server on port:43859
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes256CcmDec/v++_compile_aes256CcmDec_guidance.html', at Wed Nov 30 15:15:06 2022
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
+INFO: [v++ 74-74] Compiler Version string: 2020.2
+INFO: [v++ 60-585] Compiling for software emulation target
+INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [v++ 60-242] Creating kernel: 'aes256CcmDec'
+WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
+INFO: [v++ 60-594] Finished kernel compilation
+INFO: [v++ 60-586] Created kernels/security/aes256CcmDec.xo
+INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
+    vitis_analyzer /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes256CcmDec.xo.compile_summary 
+INFO: [v++ 60-791] Total elapsed time: 0h 1m 52s
+INFO: [v++ 60-1653] Closing dispatch client.
+v++ -c -k  aes192CtrEnc -I/home/jiong/bsc-project/componnets/common/include -I/home/jiong/bsc-project/componnets/security/include -I/home/jiong/bsc-project/kernels/security/include -I/home/jiong/bsc-project/componnets/data_compression/include -I/home/jiong/bsc-project/kernels/data_compression/include /home/jiong/bsc-project/kernels/security/src/aes192CtrEnc.cpp -o kernels/security/aes192CtrEnc.xo -t sw_emu --config config.cfg -g
+Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ compile can be found at:
+	Reports: /home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes192CtrEnc
+	Log files: /home/jiong/bsc-project/tests/sw_emu_test/_x/logs/aes192CtrEnc
+Running Dispatch Server on port:33475
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes192CtrEnc.xo.compile_summary, at Wed Nov 30 15:17:01 2022
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Wed Nov 30 15:17:01 2022
+Running Rule Check Server on port:36133
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes192CtrEnc/v++_compile_aes192CtrEnc_guidance.html', at Wed Nov 30 15:17:03 2022
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
+INFO: [v++ 74-74] Compiler Version string: 2020.2
+INFO: [v++ 60-585] Compiling for software emulation target
+INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [v++ 60-242] Creating kernel: 'aes192CtrEnc'
+WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
+INFO: [v++ 60-594] Finished kernel compilation
+INFO: [v++ 60-586] Created kernels/security/aes192CtrEnc.xo
+INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
+    vitis_analyzer /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes192CtrEnc.xo.compile_summary 
+INFO: [v++ 60-791] Total elapsed time: 0h 1m 3s
+INFO: [v++ 60-1653] Closing dispatch client.
+v++ -c -k  aes256EcbDec -I/home/jiong/bsc-project/componnets/common/include -I/home/jiong/bsc-project/componnets/security/include -I/home/jiong/bsc-project/kernels/security/include -I/home/jiong/bsc-project/componnets/data_compression/include -I/home/jiong/bsc-project/kernels/data_compression/include /home/jiong/bsc-project/kernels/security/src/aes256EcbDec.cpp -o kernels/security/aes256EcbDec.xo -t sw_emu --config config.cfg -g
+Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ compile can be found at:
+	Reports: /home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes256EcbDec
+	Log files: /home/jiong/bsc-project/tests/sw_emu_test/_x/logs/aes256EcbDec
+Running Dispatch Server on port:42913
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes256EcbDec.xo.compile_summary, at Wed Nov 30 15:18:09 2022
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Wed Nov 30 15:18:09 2022
+Running Rule Check Server on port:34459
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes256EcbDec/v++_compile_aes256EcbDec_guidance.html', at Wed Nov 30 15:18:12 2022
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
+INFO: [v++ 74-74] Compiler Version string: 2020.2
+INFO: [v++ 60-585] Compiling for software emulation target
+INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [v++ 60-242] Creating kernel: 'aes256EcbDec'
+WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
+INFO: [v++ 60-594] Finished kernel compilation
+INFO: [v++ 60-586] Created kernels/security/aes256EcbDec.xo
+INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
+    vitis_analyzer /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes256EcbDec.xo.compile_summary 
+INFO: [v++ 60-791] Total elapsed time: 0h 1m 0s
+INFO: [v++ 60-1653] Closing dispatch client.
+v++ -c -k  aes192Cfb1Enc -I/home/jiong/bsc-project/componnets/common/include -I/home/jiong/bsc-project/componnets/security/include -I/home/jiong/bsc-project/kernels/security/include -I/home/jiong/bsc-project/componnets/data_compression/include -I/home/jiong/bsc-project/kernels/data_compression/include /home/jiong/bsc-project/kernels/security/src/aes192Cfb1Enc.cpp -o kernels/security/aes192Cfb1Enc.xo -t sw_emu --config config.cfg -g
+Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ compile can be found at:
+	Reports: /home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes192Cfb1Enc
+	Log files: /home/jiong/bsc-project/tests/sw_emu_test/_x/logs/aes192Cfb1Enc
+Running Dispatch Server on port:38907
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes192Cfb1Enc.xo.compile_summary, at Wed Nov 30 15:19:15 2022
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Wed Nov 30 15:19:15 2022
+Running Rule Check Server on port:36469
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes192Cfb1Enc/v++_compile_aes192Cfb1Enc_guidance.html', at Wed Nov 30 15:19:18 2022
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
+INFO: [v++ 74-74] Compiler Version string: 2020.2
+INFO: [v++ 60-585] Compiling for software emulation target
+INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [v++ 60-242] Creating kernel: 'aes192Cfb1Enc'
+WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
+INFO: [v++ 60-594] Finished kernel compilation
+INFO: [v++ 60-586] Created kernels/security/aes192Cfb1Enc.xo
+INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
+    vitis_analyzer /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes192Cfb1Enc.xo.compile_summary 
+INFO: [v++ 60-791] Total elapsed time: 0h 1m 7s
+INFO: [v++ 60-1653] Closing dispatch client.
+v++ -c -k  aes256Cfb128Dec -I/home/jiong/bsc-project/componnets/common/include -I/home/jiong/bsc-project/componnets/security/include -I/home/jiong/bsc-project/kernels/security/include -I/home/jiong/bsc-project/componnets/data_compression/include -I/home/jiong/bsc-project/kernels/data_compression/include /home/jiong/bsc-project/kernels/security/src/aes256Cfb128Dec.cpp -o kernels/security/aes256Cfb128Dec.xo -t sw_emu --config config.cfg -g
+Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ compile can be found at:
+	Reports: /home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes256Cfb128Dec
+	Log files: /home/jiong/bsc-project/tests/sw_emu_test/_x/logs/aes256Cfb128Dec
+Running Dispatch Server on port:33807
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes256Cfb128Dec.xo.compile_summary, at Wed Nov 30 15:20:28 2022
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Wed Nov 30 15:20:28 2022
+Running Rule Check Server on port:39179
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes256Cfb128Dec/v++_compile_aes256Cfb128Dec_guidance.html', at Wed Nov 30 15:20:31 2022
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
+INFO: [v++ 74-74] Compiler Version string: 2020.2
+INFO: [v++ 60-585] Compiling for software emulation target
+INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [v++ 60-242] Creating kernel: 'aes256Cfb128Dec'
+WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
+INFO: [v++ 60-594] Finished kernel compilation
+INFO: [v++ 60-586] Created kernels/security/aes256Cfb128Dec.xo
+INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
+    vitis_analyzer /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes256Cfb128Dec.xo.compile_summary 
+INFO: [v++ 60-791] Total elapsed time: 0h 0m 54s
+INFO: [v++ 60-1653] Closing dispatch client.
+v++ -c -k  aes192Cfb8Enc -I/home/jiong/bsc-project/componnets/common/include -I/home/jiong/bsc-project/componnets/security/include -I/home/jiong/bsc-project/kernels/security/include -I/home/jiong/bsc-project/componnets/data_compression/include -I/home/jiong/bsc-project/kernels/data_compression/include /home/jiong/bsc-project/kernels/security/src/aes192Cfb8Enc.cpp -o kernels/security/aes192Cfb8Enc.xo -t sw_emu --config config.cfg -g
+Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ compile can be found at:
+	Reports: /home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes192Cfb8Enc
+	Log files: /home/jiong/bsc-project/tests/sw_emu_test/_x/logs/aes192Cfb8Enc
+Running Dispatch Server on port:44043
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes192Cfb8Enc.xo.compile_summary, at Wed Nov 30 15:21:27 2022
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Wed Nov 30 15:21:27 2022
+Running Rule Check Server on port:45053
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/tests/sw_emu_test/_x/reports/aes192Cfb8Enc/v++_compile_aes192Cfb8Enc_guidance.html', at Wed Nov 30 15:21:30 2022
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
+INFO: [v++ 74-74] Compiler Version string: 2020.2
+INFO: [v++ 60-585] Compiling for software emulation target
+INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [v++ 60-242] Creating kernel: 'aes192Cfb8Enc'
+WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
+INFO: [v++ 60-594] Finished kernel compilation
+INFO: [v++ 60-586] Created kernels/security/aes192Cfb8Enc.xo
+INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
+    vitis_analyzer /home/jiong/bsc-project/tests/sw_emu_test/kernels/security/aes192Cfb8Enc.xo.compile_summary 
+INFO: [v++ 60-791] Total elapsed time: 0h 1m 2s
+INFO: [v++ 60-1653] Closing dispatch client.
+v++ -c -k  xilGzipCompBlock -I/home/jiong/bsc-project/componnets/common/include -I/home/jiong/bsc-project/componnets/security/include -I/home/jiong/bsc-project/kernels/security/include -I/home/jiong/bsc-project/componnets/data_compression/include -I/home/jiong/bsc-project/kernels/data_compression/include /home/jiong/bsc-project/kernels/data_compression/src/xilGzipCompBlock.cpp -o kernels/data_compression/xilGzipCompBlock.xo -t sw_emu --config config.cfg -g
+Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ compile can be found at:
+	Reports: /home/jiong/bsc-project/tests/sw_emu_test/_x/reports/xilGzipCompBlock
+	Log files: /home/jiong/bsc-project/tests/sw_emu_test/_x/logs/xilGzipCompBlock
+Running Dispatch Server on port:43377
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/tests/sw_emu_test/kernels/data_compression/xilGzipCompBlock.xo.compile_summary, at Wed Nov 30 15:22:35 2022
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Wed Nov 30 15:22:35 2022
+Running Rule Check Server on port:36901
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/tests/sw_emu_test/_x/reports/xilGzipCompBlock/v++_compile_xilGzipCompBlock_guidance.html', at Wed Nov 30 15:22:38 2022
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
+INFO: [v++ 74-74] Compiler Version string: 2020.2
+INFO: [v++ 60-585] Compiling for software emulation target
+INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [v++ 60-242] Creating kernel: 'xilGzipCompBlock'
+WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
+INFO: [v++ 60-594] Finished kernel compilation
+INFO: [v++ 60-586] Created kernels/data_compression/xilGzipCompBlock.xo
+INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
+    vitis_analyzer /home/jiong/bsc-project/tests/sw_emu_test/kernels/data_compression/xilGzipCompBlock.xo.compile_summary 
+INFO: [v++ 60-791] Total elapsed time: 0h 2m 15s
+INFO: [v++ 60-1653] Closing dispatch client.
+v++ -l kernels/security/aes192CcmEnc.xo kernels/security/desEcbEnc.xo kernels/security/desCfb128Dec.xo kernels/security/aes256Cfb8Dec.xo kernels/security/aes128CcmDec.xo kernels/security/desCfb8Dec.xo kernels/security/aes128Cfb8Enc.xo kernels/security/aes128Cfb128Dec.xo kernels/security/aes128GcmEnc.xo kernels/security/aes128OfbEnc.xo kernels/security/aes192EcbEnc.xo kernels/security/desCbcDec.xo kernels/security/aes192OfbDec.xo kernels/security/desOfbEnc.xo kernels/security/aes256Cfb8Enc.xo kernels/security/desCbcEnc.xo kernels/security/aes192Cfb128Dec.xo kernels/security/aes192GcmDec.xo kernels/security/aes128CbcDec.xo kernels/security/aes256EcbEnc.xo kernels/security/aes192Cfb8Dec.xo kernels/security/aes128CbcEnc.xo kernels/security/aes256OfbEnc.xo kernels/security/aes192OfbEnc.xo kernels/security/aes192CcmDec.xo kernels/security/aes256Cfb1Dec.xo kernels/security/aes128GcmDec.xo kernels/security/aes192CbcDec.xo kernels/security/desCfb1Dec.xo kernels/security/aes256CbcEnc.xo kernels/security/aes128OfbDec.xo kernels/security/desCfb128Enc.xo kernels/security/aes192CbcEnc.xo kernels/security/aes256Cfb128Enc.xo kernels/security/aes256CtrDec.xo kernels/security/desCfb1Enc.xo kernels/security/aes256GcmDec.xo kernels/security/desCfb8Enc.xo kernels/security/aes128Cfb1Dec.xo kernels/security/desEcbDec.xo kernels/security/desOfbDec.xo kernels/security/aes128Cfb128Enc.xo kernels/security/aes128CtrDec.xo kernels/security/aes128CcmEnc.xo kernels/security/aes192Cfb1Dec.xo kernels/security/aes256CtrEnc.xo kernels/security/aes192Cfb128Enc.xo kernels/security/aes192EcbDec.xo kernels/security/aes256Cfb1Enc.xo kernels/security/aes128EcbDec.xo kernels/security/aes256CcmEnc.xo kernels/security/aes128Cfb8Dec.xo kernels/security/aes192CtrDec.xo kernels/security/aes256CbcDec.xo kernels/security/aes128CtrEnc.xo kernels/security/aes128Cfb1Enc.xo kernels/security/aes256GcmEnc.xo kernels/security/aes256OfbDec.xo kernels/security/aes192GcmEnc.xo kernels/security/aes128EcbEnc.xo kernels/security/aes256CcmDec.xo kernels/security/aes192CtrEnc.xo kernels/security/aes256EcbDec.xo kernels/security/aes192Cfb1Enc.xo kernels/security/aes256Cfb128Dec.xo kernels/security/aes192Cfb8Enc.xo kernels/data_compression/xilGzipCompBlock.xo -o fpga.xclbin -I/home/jiong/bsc-project/componnets/common/include -I/home/jiong/bsc-project/componnets/security/include -I/home/jiong/bsc-project/kernels/security/include -I/home/jiong/bsc-project/componnets/data_compression/include -I/home/jiong/bsc-project/kernels/data_compression/include -t sw_emu --config config.cfg -g
+Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ link can be found at:
+	Reports: /home/jiong/bsc-project/tests/sw_emu_test/_x/reports/link
+	Log files: /home/jiong/bsc-project/tests/sw_emu_test/_x/logs/link
+Running Dispatch Server on port:45723
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/tests/sw_emu_test/fpga.xclbin.link_summary, at Wed Nov 30 15:24:56 2022
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Wed Nov 30 15:24:56 2022
+Running Rule Check Server on port:44357
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/tests/sw_emu_test/_x/reports/link/v++_link_fpga_guidance.html', at Wed Nov 30 15:24:59 2022
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
+INFO: [v++ 74-74] Compiler Version string: 2020.2
+INFO: [v++ 60-629] Linking for software emulation target
+INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+ERROR: [v++ 60-397] Max number of compute units in binary 'fpga' exceeded. The target platform only supports 60 compute units in a binary.
+ERROR: [v++ 60-601] Problem encountered while creating a compute unit. Failed to add Compute Unit.
+
+ERROR: [v++ 60-628] Kernel link setup failed to complete
+ERROR: [v++ 60-703] Failed to finish linking
+INFO: [v++ 60-1653] Closing dispatch client.
