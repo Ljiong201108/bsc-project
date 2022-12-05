@@ -15,13 +15,13 @@
  *
  */
 
-#include "xilDecompressMM.hpp"
+#include "xilGzipZlibDecompressMM.hpp"
 
 const int c_historySize = LZ_MAX_OFFSET_LIMIT;
 
 extern "C" {
 
-void xilDecompressMM(const ap_uint<GMEM_DWIDTH>* in,
+void xilGzipZlibDecompressMM(const ap_uint<GMEM_DWIDTH>* in,
                    ap_uint<GMEM_DWIDTH>* out,
                    uint32_t* encodedSize,
                    uint32_t inputSize) {

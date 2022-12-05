@@ -22,7 +22,7 @@
  * This file is part of Vitis Data Compression Library.
  */
 
-#include "xilGzipS2MM.hpp"
+#include "xilGzipZlibS2MM.hpp"
 
 const int kGMemBurstSize = 512;
 
@@ -112,7 +112,7 @@ void gzipS2MM(uintMemWidth_t* out,
 }
 
 extern "C" {
-void xilGzipS2MM(uintMemWidth_t* out,
+void xilGzipZlibS2MM(uintMemWidth_t* out,
                  uint32_t* encoded_size,
                  uint32_t* status_flag,
                  uint32_t read_block_size,

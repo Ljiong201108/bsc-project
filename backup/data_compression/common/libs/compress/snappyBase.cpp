@@ -15,7 +15,7 @@
  *
  */
 #include "snappyBase.hpp"
-#include "xxhash.h"
+// #include "xxhash.h"
 
 uint8_t snappyBase::writeHeader(uint8_t* out) {
     int fileIdx = 0;

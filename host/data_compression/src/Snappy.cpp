@@ -1,175 +1,47 @@
-/*
- * (c) Copyright 2019-2021 Xilinx, Inc. All rights reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
- */
-#include "snappyOCLHost.hpp"
-#include "xxhash.h"
+#include "Snappy.hpp"
 
-int fd_p2p_c_in = 0;
+namespace dataCompression{
+namespace internal{
+uint8_t writeHeader(uint8_t* out){
+    int fileIdx = 0;
 
-constexpr uint32_t roundoff(uint32_t x, uint32_t y) {
-    return ((x - 1) / (y) + 1);
+    // Snappy Stream Identifier
+    out[fileIdx++] = 0xff;
+    out[fileIdx++] = 0x06;
+    out[fileIdx++] = 0x00;
+    out[fileIdx++] = 0x00;
+    out[fileIdx++] = 0x73;
+    out[fileIdx++] = 0x4e;
+    out[fileIdx++] = 0x61;
+    out[fileIdx++] = 0x50;
+    out[fileIdx++] = 0x70;
+    out[fileIdx++] = 0x59;
+
+    return fileIdx;
 }
 
-// Constructor
-snappyOCLHost::snappyOCLHost(
-    enum State flow, const std::string& binaryFileName, uint8_t device_id, uint32_t block_size_kb, bool enable_p2p)
-    : m_xclbin(binaryFileName), m_enableP2P(enable_p2p), m_deviceId(device_id), m_flow(flow) {
-    m_BlockSizeInKb = block_size_kb;
-
-    h_buf_in.resize(HOST_BUFFER_SIZE);
-    h_buf_out.resize(HOST_BUFFER_SIZE);
-    h_blksize.resize(MAX_NUMBER_BLOCKS);
-    h_compressSize.resize(MAX_NUMBER_BLOCKS);
-
-    m_compressSize.reserve(MAX_NUMBER_BLOCKS);
-    m_blkSize.reserve(MAX_NUMBER_BLOCKS);
-
-    // unsigned fileBufSize;
-    // The get_xil_devices will return vector of Xilinx Devices
-    std::vector<cl::Device> devices = xcl::get_xil_devices();
-    cl::Device device = devices[m_deviceId];
-
-    // Creating Context and Command Queue for selected Device
-    m_context = new cl::Context(device);
-    m_q = new cl::CommandQueue(*m_context, device, CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE | CL_QUEUE_PROFILING_ENABLE);
-    std::string device_name = device.getInfo<CL_DEVICE_NAME>();
-    std::cout << "Found Device=" << device_name.c_str() << std::endl;
-
-    // import_binary() command will find the OpenCL binary file created using the
-    // v++ compiler load into OpenCL Binary and return as Binaries
-    // OpenCL and it can contain many functions which can be executed on the
-    // device.
-    auto fileBuf = xcl::read_binary_file(m_xclbin);
-    cl::Program::Binaries bins{{fileBuf.data(), fileBuf.size()}};
-
-    m_program = new cl::Program(*m_context, {device}, bins);
-    if (m_flow == COMPRESS || m_flow == BOTH) {
-#ifdef SNAPPY_STREAM
-        // Create Compress kernels
-        compress_kernel_snappy = new cl::Kernel(*m_program, compress_kernel_names[1].c_str());
-        // Create Compress datamover kernels
-        compress_data_mover_kernel = new cl::Kernel(*m_program, compress_dm_kernel_names.c_str());
-#else
-        compress_kernel_snappy = new cl::Kernel(*m_program, compress_kernel_names[0].c_str());
-#endif
-    }
-    if (m_flow == DECOMPRESS || m_flow == BOTH) {
-#ifdef SNAPPY_STREAM
-        // Create Decompress kernels
-        decompress_kernel_snappy = new cl::Kernel(*m_program, decompress_kernel_names[1].c_str());
-        // Create Decompress datamover kernels
-        decompress_data_mover_kernel = new cl::Kernel(*m_program, decompress_dm_kernel_names.c_str());
-#else
-        decompress_kernel_snappy = new cl::Kernel(*m_program, decompress_kernel_names[0].c_str());
-#endif
-    }
+uint8_t readHeader(uint8_t* in){
+    uint8_t fileIdx = 0;
+    uint8_t header_byte = 10;
+    fileIdx = header_byte;
+    return fileIdx;
 }
 
-// Destructor
-snappyOCLHost::~snappyOCLHost() {
-    if (compress_kernel_snappy != nullptr) {
-        delete compress_kernel_snappy;
-        compress_kernel_snappy = nullptr;
-    }
+uint64_t snappyCompressEngineMM(uint8_t* in, uint8_t* out, uint64_t input_size){
+    KernelPointer compress_kernel_snappy;
+    CommandQueuePointer m_q;
+    BufferPointer buffer_input, buffer_output, buffer_compressed_size, buffer_block_size;
+    compress_kernel_snappy.create(Application::getInstance().getProgram(), "xilSnappyCompressMM:{xilSnappyCompressMM_1}");
+    m_q.create(Application::getInstance().getContext(), Application::getInstance().getDevice(), CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE | CL_QUEUE_PROFILING_ENABLE);
 
-    if (compress_data_mover_kernel != nullptr) {
-        delete compress_data_mover_kernel;
-        compress_data_mover_kernel = nullptr;
-    }
+    std::vector<uint8_t, aligned_allocator<uint8_t> > h_buf_in(HOST_BUFFER_SIZE);
+    std::vector<uint8_t, aligned_allocator<uint8_t> > h_buf_out(HOST_BUFFER_SIZE);
+    std::vector<uint32_t, aligned_allocator<uint32_t> > h_compressSize(MAX_NUMBER_BLOCKS);
+    std::vector<uint32_t, aligned_allocator<uint32_t> > h_blksize(MAX_NUMBER_BLOCKS);
 
-    if (decompress_kernel_snappy != nullptr) {
-        delete decompress_kernel_snappy;
-        decompress_kernel_snappy = nullptr;
-    }
-
-    if (decompress_data_mover_kernel != nullptr) {
-        delete decompress_data_mover_kernel;
-        decompress_data_mover_kernel = nullptr;
-    }
-
-    delete (m_program);
-    delete (m_q);
-    delete (m_context);
-}
-
-// Driving compress API, includes header processing and calling core compress engine
-uint64_t snappyOCLHost::xilCompress(uint8_t* in, uint8_t* out, size_t input_size) {
-    m_InputSize = input_size;
-    // Snappy header
-    int headerBytes = (int)writeHeader(out);
-    out += headerBytes;
-    uint64_t enbytes;
-
-    if (m_enableProfile) {
-        total_start = std::chrono::high_resolution_clock::now();
-    }
-// Snappy multiple/single cu sequential version
-#ifdef SNAPPY_STREAM
-    enbytes = compressEngineStreamSeq(in, out, m_InputSize);
-#else
-    enbytes = compressEngineSeq(in, out, m_InputSize);
-#endif
-    if (m_enableProfile) {
-        total_end = std::chrono::high_resolution_clock::now();
-        auto total_time_ns = std::chrono::duration<double, std::nano>(total_end - total_start);
-        float throughput_in_mbps_1 = (float)input_size * 1000 / total_time_ns.count();
-        std::cout << std::fixed << std::setprecision(2) << throughput_in_mbps_1;
-    }
-    enbytes += headerBytes;
-    return enbytes;
-}
-
-// Driving decompress API, includes header processing and calling core decompress engine
-uint64_t snappyOCLHost::xilDecompress(uint8_t* in, uint8_t* out, size_t input_size) {
-#ifdef SNAPPY_STREAM
-    m_InputSize = input_size;
-#else
-    uint8_t headerBytes = readHeader(in);
-    in += headerBytes;
-    m_InputSize = input_size - headerBytes;
-#endif
-    uint64_t debytes;
-
-    if (m_enableProfile) {
-        total_start = std::chrono::high_resolution_clock::now();
-    }
-#ifdef SNAPPY_STREAM
-    // Decompression Engine multiple cus.
-    debytes = decompressEngineStreamSeq(in, out, m_InputSize);
-#else
-    // Decompression Engine multiple cus.
-    debytes = decompressEngineSeq(in, out, m_InputSize);
-#endif
-
-    if (m_enableProfile) {
-        total_end = std::chrono::high_resolution_clock::now();
-        auto total_time_ns = std::chrono::duration<double, std::nano>(total_end - total_start);
-        float throughput_in_mbps_1 = (float)input_size * 1000 / total_time_ns.count();
-        std::cout << std::fixed << std::setprecision(2) << throughput_in_mbps_1;
-    }
-
-    return debytes;
-}
-
-// Core compress engine API
-uint64_t snappyOCLHost::compressEngineSeq(uint8_t* in, uint8_t* out, size_t input_size) {
     uint32_t block_size_in_kb = BLOCK_SIZE_IN_KB;
     uint32_t block_size_in_bytes = block_size_in_kb * 1024;
 
-    std::chrono::duration<double, std::nano> kernel_time_ns_1(0);
     // Keeps track of output buffer index
     uint64_t outIdx = 0;
 
@@ -244,19 +116,11 @@ uint64_t snappyOCLHost::compressEngineSeq(uint8_t* in, uint8_t* out, size_t inpu
             // Calculate chunks size in bytes for device buffer creation
             bufSize_in_bytes_cu = ((hostChunk_cu - 1) / BLOCK_SIZE_IN_KB + 1) * BLOCK_SIZE_IN_KB;
         }
-        buffer_input =
-            new cl::Buffer(*m_context, CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, bufSize_in_bytes_cu, h_buf_in.data());
 
-        buffer_output =
-            new cl::Buffer(*m_context, CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, bufSize_in_bytes_cu, h_buf_out.data());
-
-        buffer_compressed_size = new cl::Buffer(*m_context, CL_MEM_USE_HOST_PTR | CL_MEM_WRITE_ONLY,
-                                                sizeof(uint32_t) * total_blocks_cu, h_compressSize.data());
-
-        buffer_block_size = new cl::Buffer(*m_context, CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY,
-                                           sizeof(uint32_t) * total_blocks_cu, h_blksize.data());
-
-        // Device buffer allocation
+        buffer_input.create(Application::getInstance().getContext(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, bufSize_in_bytes_cu, h_buf_in.data());
+        buffer_output.create(Application::getInstance().getContext(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, bufSize_in_bytes_cu, h_buf_out.data());
+        buffer_compressed_size.create(Application::getInstance().getContext(), CL_MEM_USE_HOST_PTR | CL_MEM_WRITE_ONLY, sizeof(uint32_t) * total_blocks_cu, h_compressSize.data());
+        buffer_block_size.create(Application::getInstance().getContext(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, sizeof(uint32_t) * total_blocks_cu, h_blksize.data());
 
         int narg = 0;
         compress_kernel_snappy->setArg(narg++, *(buffer_input));
@@ -274,26 +138,13 @@ uint64_t snappyOCLHost::compressEngineSeq(uint8_t* in, uint8_t* out, size_t inpu
         m_q->enqueueMigrateMemObjects(inBufVec, 0 /* 0 means from host*/);
         m_q->finish();
 
-        // Measure kernel execution time
-        if (!m_enableProfile) {
-            kernel_start = std::chrono::high_resolution_clock::now();
-        }
         // Fire kernel execution
         m_q->enqueueTask(*compress_kernel_snappy);
         // wait till kernels complete
         m_q->finish();
 
-        if (!m_enableProfile) {
-            kernel_end = std::chrono::high_resolution_clock::now();
-            auto duration = std::chrono::duration<double, std::nano>(kernel_end - kernel_start);
-            kernel_time_ns_1 += duration;
-        }
-        // Setup output buffer vectors
-        std::vector<cl::Memory> outBufVec;
-        outBufVec.push_back(*(buffer_output));
-        outBufVec.push_back(*(buffer_compressed_size));
         // Migrate memory - Map device to host buffers
-        m_q->enqueueMigrateMemObjects(outBufVec, CL_MIGRATE_MEM_OBJECT_HOST);
+        m_q->enqueueMigrateMemObjects({*(buffer_output), *(buffer_compressed_size)}, CL_MIGRATE_MEM_OBJECT_HOST);
         m_q->finish();
         for (int cuCopy = 0; cuCopy < compute_cu; cuCopy++) {
             // Copy data into out buffer
@@ -346,40 +197,37 @@ uint64_t snappyOCLHost::compressEngineSeq(uint8_t* in, uint8_t* out, size_t inpu
             }     // End of chunk (block by block) copy to output buffer
         }         // End of CU loop - Each CU/chunk block by block copy
                   // Buffer deleted
-        delete (buffer_input);
-        delete (buffer_output);
-        delete (buffer_compressed_size);
-        delete (buffer_block_size);
-    }
-    if (!m_enableProfile) {
-        float throughput_in_mbps_1 = (float)input_size * 1000 / kernel_time_ns_1.count();
-        std::cout << std::fixed << std::setprecision(2) << throughput_in_mbps_1;
     }
     return outIdx;
-} // End of compress
+}
 
-uint64_t snappyOCLHost::compressEngineStreamSeq(uint8_t* in, uint8_t* out, size_t input_size) {
-    uint32_t host_buffer_size = m_BlockSizeInKb * 1024;
+uint64_t snappyCompressEngineStream(uint8_t* in, uint8_t* out, size_t input_size){
+    cl::Kernel *compress_kernel_snappy = new cl::Kernel(Application::getInstance().getProgram(), "xilSnappyCompressStream:{xilSnappyCompressStream_1}");
+    cl::Kernel *compress_data_mover_kernel = new cl::Kernel(Application::getInstance().getProgram(), "xilCompressDatamover:{xilCompressDatamover_1}");
+    cl::CommandQueue *m_q = new cl::CommandQueue(Application::getInstance().getContext(), Application::getInstance().getDevice(), CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE | CL_QUEUE_PROFILING_ENABLE);
+
+    uint32_t host_buffer_size = BLOCK_SIZE_IN_KB * 1024;
     uint32_t total_block_count = (input_size - 1) / host_buffer_size + 1;
 
     // output buffer index
     uint64_t outIdx = 0;
     // Index calculation
-    h_buf_in.resize(host_buffer_size);  // * total_block_count);
-    h_buf_out.resize(host_buffer_size); // * total_block_count);
-    h_compressSize.resize(1);
+    std::vector<uint8_t, aligned_allocator<uint8_t> > h_buf_in(host_buffer_size);
+    std::vector<uint8_t, aligned_allocator<uint8_t> > h_buf_out(host_buffer_size);
+    std::vector<uint32_t, aligned_allocator<uint32_t> > h_compressSize(1);
+    // h_buf_in.resize(host_buffer_size);  // * total_block_count);
+    // h_buf_out.resize(host_buffer_size); // * total_block_count);
+    // h_compressSize.resize(1);
 
     // device buffer allocation
-    buffer_input =
-        new cl::Buffer(*m_context, CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, host_buffer_size, h_buf_in.data());
+    cl::Buffer *buffer_input =
+        new cl::Buffer(Application::getInstance().getContext(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, host_buffer_size, h_buf_in.data());
 
-    buffer_output =
-        new cl::Buffer(*m_context, CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, host_buffer_size, h_buf_out.data());
+    cl::Buffer *buffer_output =
+        new cl::Buffer(Application::getInstance().getContext(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, host_buffer_size, h_buf_out.data());
 
-    buffer_compressed_size =
-        new cl::Buffer(*m_context, CL_MEM_USE_HOST_PTR | CL_MEM_WRITE_ONLY, sizeof(uint32_t), h_compressSize.data());
-
-    std::chrono::duration<double, std::nano> kernel_time_ns_1(0);
+    cl::Buffer *buffer_compressed_size =
+        new cl::Buffer(Application::getInstance().getContext(), CL_MEM_USE_HOST_PTR | CL_MEM_WRITE_ONLY, sizeof(uint32_t), h_compressSize.data());
 
     // copy input to input buffer
     // std::memcpy(h_buf_in.data(), in, input_size);
@@ -403,20 +251,12 @@ uint64_t snappyOCLHost::compressEngineStreamSeq(uint8_t* in, uint8_t* out, size_
         // Migrate Memory - Map host to device buffers
         m_q->enqueueMigrateMemObjects({*(buffer_input)}, 0);
         m_q->finish();
-        // Measure kernel execution time
-        if (!m_enableProfile) {
-            kernel_start = std::chrono::high_resolution_clock::now();
-        }
+        
         // enqueue the kernels and wait for them to finish
         m_q->enqueueTask(*compress_data_mover_kernel);
         m_q->enqueueTask(*compress_kernel_snappy);
         m_q->finish();
 
-        if (!m_enableProfile) {
-            kernel_end = std::chrono::high_resolution_clock::now();
-            auto duration = std::chrono::duration<double, std::nano>(kernel_end - kernel_start);
-            kernel_time_ns_1 += duration;
-        }
         // Setup output buffer vectors
         std::vector<cl::Memory> outBufVec;
         outBufVec.push_back(*buffer_output);
@@ -460,10 +300,7 @@ uint64_t snappyOCLHost::compressEngineStreamSeq(uint8_t* in, uint8_t* out, size_
             outIdx += c_input_size;
         }
     }
-    if (!m_enableProfile) {
-        float throughput_in_mbps_1 = (float)input_size * 1000 / kernel_time_ns_1.count();
-        std::cout << std::fixed << std::setprecision(2) << throughput_in_mbps_1;
-    }
+    
     // Free CL buffers
     delete (buffer_input);
     delete (buffer_output);
@@ -471,35 +308,37 @@ uint64_t snappyOCLHost::compressEngineStreamSeq(uint8_t* in, uint8_t* out, size_
 
     return outIdx;
 
-} // End of compress
+}
 
-// Core decompress engine API
+uint64_t snappyDecompressEngineMM(uint8_t* in, uint8_t* out, size_t input_size){
+    KernelPointer decompress_kernel_snappy;
+    CommandQueuePointer m_q;
+    BufferPointer buffer_input, buffer_output, buffer_block_size, buffer_compressed_size;
+    decompress_kernel_snappy.create(Application::getInstance().getProgram(), "xilSnappyDecompressMM:{xilSnappyDecompressMM_1}");
+    m_q.create(Application::getInstance().getContext(), Application::getInstance().getDevice(), CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE | CL_QUEUE_PROFILING_ENABLE);
 
-uint64_t snappyOCLHost::decompressEngineSeq(uint8_t* in, uint8_t* out, size_t input_size) {
-    std::chrono::duration<double, std::nano> kernel_time_ns_1(0);
+    std::vector<uint8_t, aligned_allocator<uint8_t> > h_buf_in(HOST_BUFFER_SIZE);
+    std::vector<uint8_t, aligned_allocator<uint8_t> > h_buf_out(HOST_BUFFER_SIZE);
+    std::vector<uint32_t, aligned_allocator<uint32_t> > h_compressSize(MAX_NUMBER_BLOCKS);
+    std::vector<uint32_t, aligned_allocator<uint32_t> > h_blksize(MAX_NUMBER_BLOCKS);
+    std::vector<uint32_t> m_blkSize(MAX_NUMBER_BLOCKS);
+    std::vector<uint32_t> m_compressSize(MAX_NUMBER_BLOCKS);
+
     uint32_t buf_size = BLOCK_SIZE_IN_KB * 1024;
     uint32_t blocksPerChunk = HOST_BUFFER_SIZE / buf_size;
     uint32_t host_buffer_size = ((HOST_BUFFER_SIZE - 1) / BLOCK_SIZE_IN_KB + 1) * BLOCK_SIZE_IN_KB;
 
-    // Allocate global buffers
-    // Device buffer allocation
-    buffer_input =
-        new cl::Buffer(*m_context, CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, host_buffer_size, h_buf_in.data());
-
-    buffer_output =
-        new cl::Buffer(*m_context, CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, host_buffer_size, h_buf_out.data());
-
-    buffer_block_size = new cl::Buffer(*m_context, CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY,
-                                       sizeof(uint32_t) * blocksPerChunk, h_blksize.data());
-
-    buffer_compressed_size = new cl::Buffer(*m_context, CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY,
-                                            sizeof(uint32_t) * blocksPerChunk, h_compressSize.data());
+    buffer_input.create(Application::getInstance().getContext(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, host_buffer_size, h_buf_in.data());
+    buffer_output.create(Application::getInstance().getContext(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, host_buffer_size, h_buf_out.data());
+    buffer_block_size.create(Application::getInstance().getContext(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, sizeof(uint32_t) * blocksPerChunk, h_blksize.data());
+    buffer_compressed_size.create(Application::getInstance().getContext(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, sizeof(uint32_t) * blocksPerChunk, h_compressSize.data());
+                                        
     uint32_t narg = 0;
     decompress_kernel_snappy->setArg(narg++, *(buffer_input));
     decompress_kernel_snappy->setArg(narg++, *(buffer_output));
     decompress_kernel_snappy->setArg(narg++, *(buffer_block_size));
     decompress_kernel_snappy->setArg(narg++, *(buffer_compressed_size));
-    decompress_kernel_snappy->setArg(narg++, m_BlockSizeInKb);
+    decompress_kernel_snappy->setArg(narg++, (uint32_t)BLOCK_SIZE_IN_KB);
     decompress_kernel_snappy->setArg(narg++, blocksPerChunk);
     uint32_t chunk_size = 0;
     uint8_t chunk_idx = 0;
@@ -515,7 +354,7 @@ uint64_t snappyOCLHost::decompressEngineSeq(uint8_t* in, uint8_t* out, size_t in
     bool blkDecomExist = false;
     uint32_t blkUnComp = 0;
     // Maximum allowed outbuffer size, if it exceeds then exit
-    uint32_t c_max_outbuf = input_size * m_maxCR;
+    uint32_t c_max_outbuf = input_size * 20; //(20=m_maxCR by default)
     // Go over overall input size
     for (uint32_t idxSize = 0; idxSize < input_size; idxSize += stride_cidsize, chunk_cntr++) {
         // Chunk identifier
@@ -596,29 +435,15 @@ uint64_t snappyOCLHost::decompressEngineSeq(uint8_t* in, uint8_t* out, size_t in
             // In case of left over set kernel arg to no blocks
             decompress_kernel_snappy->setArg(5, block_cntr);
             // For big files go ahead do it here
-            std::vector<cl::Memory> inBufVec;
-            inBufVec.push_back(*(buffer_input));
-            inBufVec.push_back(*(buffer_block_size));
-            inBufVec.push_back(*(buffer_compressed_size));
             // Migrate memory - Map host to device buffers
-            m_q->enqueueMigrateMemObjects(inBufVec, 0 /*0 means from host*/);
+            m_q->enqueueMigrateMemObjects({*(buffer_input), *(buffer_block_size), *(buffer_compressed_size)}, 0 /*0 means from host*/);
             m_q->finish();
 
-            if (!m_enableProfile) {
-                // Measure kernel execution time
-                kernel_start = std::chrono::high_resolution_clock::now();
-            }
             m_q->enqueueTask(*decompress_kernel_snappy);
             m_q->finish();
-            if (!m_enableProfile) {
-                kernel_end = std::chrono::high_resolution_clock::now();
-                auto duration = std::chrono::duration<double, std::nano>(kernel_end - kernel_start);
-                kernel_time_ns_1 += duration;
-            }
-            std::vector<cl::Memory> outBufVec;
-            outBufVec.push_back(*(buffer_output));
+
             // Migrate memory - Map device to host buffers
-            m_q->enqueueMigrateMemObjects(outBufVec, CL_MIGRATE_MEM_OBJECT_HOST);
+            m_q->enqueueMigrateMemObjects({*(buffer_output)}, CL_MIGRATE_MEM_OBJECT_HOST);
             m_q->finish();
             bufIdx = 0;
             // copy output
@@ -661,27 +486,16 @@ uint64_t snappyOCLHost::decompressEngineSeq(uint8_t* in, uint8_t* out, size_t in
         // In case of left over set kernel arg to no blocks
         decompress_kernel_snappy->setArg(5, block_cntr);
 
-        std::vector<cl::Memory> inBufVec;
-        inBufVec.push_back(*(buffer_input));
-        inBufVec.push_back(*(buffer_block_size));
-        inBufVec.push_back(*(buffer_compressed_size));
-
         // Migrate memory - Map host to device buffers
-        m_q->enqueueMigrateMemObjects(inBufVec, 0 /*0 means from host*/);
+        m_q->enqueueMigrateMemObjects({*(buffer_input), *(buffer_block_size), *(buffer_compressed_size)}, 0 /*0 means from host*/);
         m_q->finish();
-        // Measure kernel execution time
-        auto kernel_start = std::chrono::high_resolution_clock::now();
+        
         // Kernel invocation
         m_q->enqueueTask(*decompress_kernel_snappy);
         m_q->finish();
-        auto kernel_end = std::chrono::high_resolution_clock::now();
-        auto duration = std::chrono::duration<double, std::nano>(kernel_end - kernel_start);
-        kernel_time_ns_1 += duration;
 
-        std::vector<cl::Memory> outBufVec;
-        outBufVec.push_back(*(buffer_output));
         // Migrate memory - Map device to host buffers
-        m_q->enqueueMigrateMemObjects(outBufVec, CL_MIGRATE_MEM_OBJECT_HOST);
+        m_q->enqueueMigrateMemObjects({*(buffer_output)}, CL_MIGRATE_MEM_OBJECT_HOST);
         m_q->finish();
         bufIdx = 0;
         // copy output
@@ -714,56 +528,32 @@ uint64_t snappyOCLHost::decompressEngineSeq(uint8_t* in, uint8_t* out, size_t in
     if (output_idx == 0 && blkUnComp != 0) {
         output_idx = blkUnComp;
     }
-    if (!m_enableProfile) {
-        float kernel_throughput_in_mbps_1 = (float)output_idx * 1000 / kernel_time_ns_1.count();
-        std::cout << std::fixed << std::setprecision(2) << kernel_throughput_in_mbps_1;
-    }
-    delete (buffer_input);
-    delete (buffer_output);
-    delete (buffer_block_size);
-    delete (buffer_compressed_size);
 
     return output_idx;
+}
 
-} // End of decompress
+uint64_t snappyDecompressEngineStream(uint8_t* in, uint8_t* out, size_t input_size){
+    
+    cl::Kernel *decompress_kernel_snappy = new cl::Kernel(Application::getInstance().getProgram(), "xilSnappyDecompressStream:{xilSnappyDecompressStream_1}");
+    cl::Kernel *decompress_data_mover_kernel = new cl::Kernel(Application::getInstance().getProgram(), "xilDecompressDatamover:{xilDecompressDatamover_1}");
+    cl::CommandQueue *m_q = new cl::CommandQueue(Application::getInstance().getContext(), Application::getInstance().getDevice(), CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE | CL_QUEUE_PROFILING_ENABLE);
 
-uint64_t snappyOCLHost::decompressEngineStreamSeq(uint8_t* in, uint8_t* out, size_t input_size) {
-#ifdef DISABLE_FREE_RUNNING_KERNEL
-#undef FREE_RUNNING_KERNEL
-#endif
-    cl_mem_ext_ptr_t p2pInExt;
-    char* p2pPtr = NULL;
-    uint32_t inputSize4KMultiple = 0;
-    if (m_enableP2P) {
-        // roundoff inputSize to 4K
-        inputSize4KMultiple = roundoff(input_size, RESIDUE_4K) * RESIDUE_4K;
-        // DDR buffer exyensions
-        p2pInExt.flags = XCL_MEM_EXT_P2P_BUFFER;
-        p2pInExt.obj = nullptr;
-        p2pInExt.param = NULL;
-    }
-    std::vector<uint32_t, aligned_allocator<uint32_t> > decompressSize;
-    uint32_t outputSize = (input_size * m_maxCR) + 16;
-    cl::Buffer* bufferOutputSize;
+    uint32_t outputSize = (input_size * 20) + 16; //m_maxCR
+    // cl::Buffer* bufferOutputSize;
     // Index calculation
-    h_buf_in.resize(input_size);
-    h_buf_out.resize(outputSize);
-    h_buf_decompressSize.resize(sizeof(uint32_t));
+    // h_buf_in.resize(input_size);
+    // h_buf_out.resize(outputSize);
+    // h_buf_decompressSize.resize(sizeof(uint32_t));
+    std::vector<uint8_t, aligned_allocator<uint8_t> > h_buf_in(input_size);
+    std::vector<uint8_t, aligned_allocator<uint8_t> > h_buf_out(outputSize);
+    std::vector<uint32_t, aligned_allocator<uint32_t> > h_buf_decompressSize(1);
 
-    std::chrono::duration<double, std::nano> kernel_time_ns_1(0);
-
-    if (!m_enableP2P) std::memcpy(h_buf_in.data(), in, input_size);
+    std::memcpy(h_buf_in.data(), in, input_size);
 
     // Device buffer allocation
-    if (m_enableP2P) {
-        buffer_input =
-            new cl::Buffer(*m_context, CL_MEM_READ_ONLY | CL_MEM_EXT_PTR_XILINX, inputSize4KMultiple, &p2pInExt);
-        p2pPtr = (char*)m_q->enqueueMapBuffer(*(buffer_input), CL_TRUE, CL_MAP_READ, 0, inputSize4KMultiple);
-    } else {
-        buffer_input = new cl::Buffer(*m_context, CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, input_size, h_buf_in.data());
-    }
-    buffer_output = new cl::Buffer(*m_context, CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, outputSize, h_buf_out.data());
-    bufferOutputSize = new cl::Buffer(*m_context, CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, sizeof(uint32_t),
+    cl::Buffer *buffer_input = new cl::Buffer(Application::getInstance().getContext(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, input_size, h_buf_in.data());
+    cl::Buffer *buffer_output = new cl::Buffer(Application::getInstance().getContext(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, outputSize, h_buf_out.data());
+    cl::Buffer *bufferOutputSize = new cl::Buffer(Application::getInstance().getContext(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, sizeof(uint32_t),
                                       h_buf_decompressSize.data());
 
     uint32_t inputSize_32t = uint32_t(input_size);
@@ -773,36 +563,18 @@ uint64_t snappyOCLHost::decompressEngineStreamSeq(uint8_t* in, uint8_t* out, siz
     decompress_data_mover_kernel->setArg(narg++, *(buffer_output));
     decompress_data_mover_kernel->setArg(narg++, inputSize_32t);
     decompress_data_mover_kernel->setArg(narg, *(bufferOutputSize));
-#ifndef FREE_RUNNING_KERNEL
-#ifndef DISABLE_FREE_RUNNING_KERNEL
+
     decompress_kernel_snappy->setArg(3, inputSize_32t);
-#endif
-#endif
-    if (!m_enableP2P) {
-        // Migrate Memory - Map host to device buffers
-        m_q->enqueueMigrateMemObjects({*(buffer_input), *(bufferOutputSize), *(buffer_output)}, 0);
-        m_q->finish();
-    }
 
-    if (m_enableP2P) {
-        int ret = read(fd_p2p_c_in, p2pPtr, inputSize4KMultiple);
-        if (ret == -1)
-            std::cout << "P2P: compress(): read() failed, err: " << ret << ", line: " << __LINE__ << std::endl;
-    }
+    // Migrate Memory - Map host to device buffers
+    m_q->enqueueMigrateMemObjects({*(buffer_input), *(bufferOutputSize), *(buffer_output)}, 0);
+    m_q->finish();
 
-    // Measure kernel execution time
-    if (!m_enableProfile) {
-        kernel_start = std::chrono::high_resolution_clock::now();
-    }
     // enqueue the kernels and wait for them to finish
     m_q->enqueueTask(*decompress_data_mover_kernel);
-#ifndef FREE_RUNNING_KERNEL
     m_q->enqueueTask(*decompress_kernel_snappy);
-#endif
     m_q->finish();
-    if (!m_enableProfile) {
-        kernel_end = std::chrono::high_resolution_clock::now();
-    }
+    
     // Migrate memory - Map device to host buffers
     m_q->enqueueMigrateMemObjects({*(buffer_output), *(bufferOutputSize)}, CL_MIGRATE_MEM_OBJECT_HOST);
     m_q->finish();
@@ -810,12 +582,6 @@ uint64_t snappyOCLHost::decompressEngineStreamSeq(uint8_t* in, uint8_t* out, siz
     uint32_t uncompressedSize = h_buf_decompressSize[0];
     std::memcpy(out, h_buf_out.data(), uncompressedSize);
 
-    if (!m_enableProfile) {
-        auto duration = std::chrono::duration<double, std::nano>(kernel_end - kernel_start);
-        kernel_time_ns_1 += duration;
-        float throughput_in_mbps_1 = (float)uncompressedSize * 1000 / kernel_time_ns_1.count();
-        std::cout << std::fixed << std::setprecision(2) << throughput_in_mbps_1;
-    }
     delete buffer_input;
     buffer_input = nullptr;
     delete buffer_output;
@@ -824,4 +590,53 @@ uint64_t snappyOCLHost::decompressEngineStreamSeq(uint8_t* in, uint8_t* out, siz
     h_buf_out.clear();
 
     return uncompressedSize;
-} // End of decompress
+}
+
+uint64_t snappyCompressMM(uint8_t* in, uint8_t* out, uint64_t input_size){
+    std::cout<<"Before Snappy Compress: "<<std::endl;
+    hexdump(in, input_size);
+
+    uint32_t outIdx=writeHeader(out);
+    uint64_t enbytes=snappyCompressEngineMM(in, out+outIdx, input_size);
+    outIdx+=enbytes;
+    std::cout<<"After Snappy Compress: "<<std::endl;
+    hexdump(out, outIdx);
+    return outIdx;
+}
+
+uint64_t snappyCompressStream(uint8_t* in, uint8_t* out, uint64_t input_size){
+    std::cout<<"Before Snappy Compress: "<<std::endl;
+    hexdump(in, input_size);
+
+    uint32_t outIdx=writeHeader(out);
+    uint64_t enbytes=snappyCompressEngineStream(in, out+outIdx, input_size);
+    outIdx+=enbytes;
+    std::cout<<"After Snappy Compress: "<<std::endl;
+    hexdump(out, outIdx);
+    return outIdx;
+}
+
+uint64_t snappyDecompressMM(uint8_t* in, uint8_t* out, uint64_t input_size){
+    std::cout<<"Before Snappy Decompress: "<<std::endl;
+    hexdump(in, input_size);
+
+    uint8_t headerBytes = readHeader(in);
+    uint64_t debytes = snappyDecompressEngineMM(in+headerBytes, out, input_size-headerBytes);
+
+    std::cout<<"After Snappy Decompress: "<<std::endl;
+    hexdump(out, debytes);
+    return debytes;
+}
+
+uint64_t snappyDecompressStream(uint8_t* in, uint8_t* out, uint64_t input_size){
+    std::cout<<"Before Snappy Decompress: "<<std::endl;
+    hexdump(in, input_size);
+
+    uint64_t debytes = snappyDecompressEngineStream(in, out, input_size);
+
+    std::cout<<"After Snappy Decompress: "<<std::endl;
+    hexdump(out, debytes);
+    return debytes;
+}
+} //internal
+} //dataCompression

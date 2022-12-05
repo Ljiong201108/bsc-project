@@ -15,12 +15,12 @@
  *
  */
 
-#include "xilDecompressStream.hpp"
+#include "xilGzipZlibDecompressStream.hpp"
 
 const int c_historySize = LZ_MAX_OFFSET_LIMIT;
 
 extern "C" {
-void xilDecompressStream(hls::stream<ap_axiu<16, 0, 0, 0> >& inaxistreamd,
+void xilGzipZlibDecompressStream(hls::stream<ap_axiu<16, 0, 0, 0> >& inaxistreamd,
                    hls::stream<ap_axiu<MULTIPLE_BYTES * 8, 0, 0, 0> >& outaxistreamd) {
 #ifdef FREE_RUNNING_KERNEL
 #pragma HLS interface ap_ctrl_none port = return

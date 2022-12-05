@@ -57,7 +57,7 @@ extern "C" {
  *
  */
 
-void xilGzipS2MM(uintMemWidth_t* out,
+void xilGzipZlibS2MM(uintMemWidth_t* out,
                  uint32_t* encoded_size,
                  uint32_t* status_flag,
                  uint32_t read_block_size,

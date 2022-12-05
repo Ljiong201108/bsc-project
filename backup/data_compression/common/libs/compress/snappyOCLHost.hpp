@@ -132,10 +132,10 @@ class snappyOCLHost : public snappyBase {
     std::vector<uint32_t> m_blkSize;
     std::vector<uint32_t> m_compressSize;
     // Kernel names
-    std::vector<std::string> compress_kernel_names = {"xilSnappyCompress", "xilSnappyCompressStream"};
-    std::string compress_dm_kernel_names = "xilCompDatamover";
-    std::vector<std::string> decompress_kernel_names = {"xilSnappyDecompress", "xilSnappyDecompressStream"};
-    std::string decompress_dm_kernel_names = "xilDecompDatamover";
+    std::vector<std::string> compress_kernel_names = {"xilSnappyCompressMM", "xilSnappyCompressStream"};
+    std::string compress_dm_kernel_names = "xilCompressDatamover";
+    std::vector<std::string> decompress_kernel_names = {"xilSnappyDecompressMM", "xilSnappyDecompressStream"};
+    std::string decompress_dm_kernel_names = "xilDecompressDatamover";
 };
 
 #endif // _XFCOMPRESSION_SNAPPY_OCL_HPP_

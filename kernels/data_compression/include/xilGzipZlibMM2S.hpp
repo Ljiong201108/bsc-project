@@ -65,7 +65,7 @@ extern "C" {
  *
  */
 
-void xilGzipMM2S(uintMemWidth_t* in,
+void xilGzipZlibMM2S(uintMemWidth_t* in,
                  uint32_t inputSize,
                  uint32_t last,
                  hls::stream<ap_axiu<c_inStreamDwidth, 0, 0, 0> >& outStream);

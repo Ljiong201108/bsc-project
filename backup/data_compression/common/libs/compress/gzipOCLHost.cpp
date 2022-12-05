@@ -1946,7 +1946,7 @@ size_t gzipOCLHost::compressEngineOverlap(uint8_t* in,
 // This version of compression does sequential execution between kernel an dhost
 size_t gzipOCLHost::compressEngineSeq(
     uint8_t* in, uint8_t* out, size_t input_size, int level, int strategy, int window_bits, uint32_t* checksum) {
-    std::cout<<"1949 Begin size_t gzipOCLHost::compressEngineSeq(uint8_t* in, uint8_t* out, size_t input_size, int level, int strategy, int window_bits, uint32_t* checksum)"<<std::endl;
+    // std::cout<<"1949 Begin size_t gzipOCLHost::compressEngineSeq(uint8_t* in, uint8_t* out, size_t input_size, int level, int strategy, int window_bits, uint32_t* checksum)"<<std::endl;
     cl_int err;
 #ifdef GZIP_STREAM
     std::cout<<"1952 GZIP_STREAM set"<<std::endl;
@@ -2141,8 +2141,9 @@ size_t gzipOCLHost::compressEngineSeq(
         if (checksum_type) m_checksum = ~m_checksum;
 
         *checksum = m_checksum;
+        std::cout<<"2144 checksum: "<<std::hex<<*checksum<<std::dec<<std::endl;
     }
-    std::cout<<"2145 End size_t gzipOCLHost::compressEngineSeq(uint8_t* in, uint8_t* out, size_t input_size, int level, int strategy, int window_bits, uint32_t* checksum)"<<std::endl;
+    std::cout<<"2146 End size_t gzipOCLHost::compressEngineSeq(uint8_t* in, uint8_t* out, size_t input_size, int level, int strategy, int window_bits, uint32_t* checksum)"<<std::endl;
     return enbytes;
 
 } // Sequential end

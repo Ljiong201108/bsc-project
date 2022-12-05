@@ -21,7 +21,7 @@
  * This file is part of Vitis Data Compression Library.
  */
 
-#include "xilGzipCompBlock.hpp"
+#include "xilGzipZlibCompressMM.hpp"
 
 extern "C" {
 /**
@@ -33,7 +33,7 @@ extern "C" {
  * @param input_size input size
  */
 
-void xilGzipCompBlock(const ap_uint<GMEM_DWIDTH>* in,
+void xilGzipZlibCompressMM(const ap_uint<GMEM_DWIDTH>* in,
                       ap_uint<GMEM_DWIDTH>* out,
                       uint32_t* compressd_size,
                       uint32_t* checksumData,

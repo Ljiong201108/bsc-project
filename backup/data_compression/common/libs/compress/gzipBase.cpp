@@ -20,6 +20,10 @@ constexpr auto DEFLATE_METHOD = 8;
 size_t gzipBase::writeHeader(uint8_t* out) {
     size_t outIdx = 0;
     if (m_isZlib) {
+        std::cout<<"23 m_windowbits: "<<m_windowbits<<std::endl;
+        std::cout<<"24 m_level: "<<m_level<<std::endl;
+        std::cout<<"25 m_strategy: "<<m_strategy<<std::endl;
+
         // Compression method
         uint8_t CM = DEFLATE_METHOD;
 
@@ -39,6 +43,10 @@ size_t gzipBase::writeHeader(uint8_t* out) {
             m_level = 2;
         else
             m_level = 3;
+
+        std::cout<<"47 m_windowbits: "<<m_windowbits<<std::endl;
+        std::cout<<"48 m_level: "<<m_level<<std::endl;
+        std::cout<<"49 m_strategy: "<<m_strategy<<std::endl;
 
         // CreatE FLG header based on level
         // Strategy information
@@ -77,8 +85,9 @@ size_t gzipBase::writeFooter(uint8_t* out, size_t compressSize, uint32_t checksu
     } else {
         struct stat istat;
         stat(m_inFileName.c_str(), &istat);
-        std::cout<<"80 fileName = "<<m_inFileName<<std::endl;
         unsigned long ifile_size = istat.st_size;
+        std::cout<<"89 fileName = "<<m_inFileName<<std::endl;
+        std::cout<<"90 ifile_size = "<<ifile_size<<std::endl;
         out[outIdx++] = checksum;
         out[outIdx++] = checksum >> 8;
         out[outIdx++] = checksum >> 16;
@@ -93,18 +102,18 @@ size_t gzipBase::writeFooter(uint8_t* out, size_t compressSize, uint32_t checksu
 }
 
 uint64_t gzipBase::xilCompress(uint8_t* in, uint8_t* out, uint64_t input_size) {
-    std::cout<<"95 Begin uint64_t gzipBase::xilCompress(uint8_t* in, uint8_t* out, uint64_t input_size)"<<std::endl;
+    // std::cout<<"95 Begin uint64_t gzipBase::xilCompress(uint8_t* in, uint8_t* out, uint64_t input_size)"<<std::endl;
     m_InputSize = input_size;
-    std::cout<<"97 is_freeRunKernel = "<<is_freeRunKernel()<<std::endl;
-    std::cout<<"98 input_size = "<<input_size<<std::endl;
+    // std::cout<<"97 is_freeRunKernel = "<<is_freeRunKernel()<<std::endl;
+    // std::cout<<"98 input_size = "<<input_size<<std::endl;
     size_t outIdx = 0;
 
-    std::cout<<"101 outIdx = "<<outIdx<<std::endl;
+    // std::cout<<"101 outIdx = "<<outIdx<<std::endl;
     // GZip Header
     outIdx = (this->is_freeRunKernel()) ? outIdx : writeHeader(out);
 
-    std::cout<<"105 outIdx = "<<outIdx<<std::endl;
-    std::cout<<"hexdump out"<<std::endl;
+    // std::cout<<"105 outIdx = "<<outIdx<<std::endl;
+    // std::cout<<"hexdump out"<<std::endl;
     hexdump(out, outIdx);
 
     uint64_t enbytes = 0;

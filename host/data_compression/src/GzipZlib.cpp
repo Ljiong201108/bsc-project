@@ -1,8 +1,8 @@
-#include "Gzip.hpp"
+#include "GzipZlib.hpp"
 
 namespace dataCompression{
 namespace internal{
-uint32_t writeGzipHeader(uint8_t* out){
+uint32_t writeGzipHeader(uint8_t *out){
 	uint32_t outIdx = 0;
 	long int magic_headers = 0x0000000008088B1F;
 	std::memcpy(out + outIdx, &magic_headers, 8);
@@ -15,8 +15,8 @@ uint32_t writeGzipHeader(uint8_t* out){
 	return outIdx;
 }
 
-uint32_t writeGzipFooter(uint8_t* out, uint32_t compressSize, uint32_t checksum, const std::string &fileName, uint32_t fileSize) {
-	uint32_t outIdx = compressSize;
+uint32_t writeGzipFooter(uint8_t *out, uint32_t idxAfterCompress, uint32_t checksum, const std::string &fileName, uint32_t fileSize) {
+	uint32_t outIdx = idxAfterCompress;
 
 	out[outIdx++] = checksum;
 	out[outIdx++] = checksum >> 8;
@@ -30,50 +30,130 @@ uint32_t writeGzipFooter(uint8_t* out, uint32_t compressSize, uint32_t checksum,
 	return outIdx;
 }
 
-bool readGzipHeader(uint8_t* in) {
-	uint8_t hidx = 0;
-	if (in[hidx++] == 0x1F && in[hidx++] == 0x8B) {
-		// Check for magic header
-		// Check if method is deflate or not
-		if (in[hidx++] != 0x08) {
-			std::cerr << "\n";
-			std::cerr << "Deflate Header Check Fails" << std::endl;
-			return 0;
-		}
+uint32_t writeZlibHeader(uint8_t *out){
+	uint32_t outIdx = 0;
+	uint32_t m_windowbits=15;
+	uint32_t m_level=1;
+	uint32_t m_strategy=0;
 
-		// Check if the FLAG has correct value
-		// Supported file name or no file name
-		// 0x00: No File Name
-		// 0x08: File Name
-		if (in[hidx] != 0 && in[hidx] != 0x08) {
-			std::cerr << "\n";
-			std::cerr << "Deflate -n option check failed" << std::endl;
-			return 0;
-		}
-		hidx++;
+	// Compression method
+	uint8_t CM = DEFLATE_METHOD;
 
-		// Skip time stamp bytes
-		// time stamp contains 4 bytes
-		hidx += 4;
+	// Compression Window information
+	uint8_t CINFO = m_windowbits - 8;
 
-		// One extra 0  ending byte
-		hidx += 1;
+	// Create CMF header
+	uint16_t header = (CINFO << 4);
+	header |= CM;
+	header <<= 8;
 
-		// Check the operating system code
-		// for Unix its 3
-		uint8_t oscode_in = in[hidx];
-		std::vector<uint8_t> oscodes{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13};
-		bool ochck = std::find(oscodes.cbegin(), oscodes.cend(), oscode_in) == oscodes.cend();
-		if (ochck) {
-			std::cerr << "\n";
-			std::cerr << "GZip header mismatch: OS code is unknown" << std::endl;
-			return 0;
-		}
-	}
-	return true;
+	if (m_level < 2 || m_strategy > 2)
+		m_level = 0;
+	else if (m_level < 6)
+		m_level = 1;
+	else if (m_level == 6)
+		m_level = 2;
+	else
+		m_level = 3;
+
+	std::cout<<"47 m_windowbits: "<<m_windowbits<<std::endl;
+	std::cout<<"48 m_level: "<<m_level<<std::endl;
+	std::cout<<"49 m_strategy: "<<m_strategy<<std::endl;
+
+	// CreatE FLG header based on level
+	// Strategy information
+	header |= (m_level << 6);
+
+	// Ensure that Header (CMF + FLG) is
+	// divisible by 31
+	header += 31 - (header % 31);
+
+	out[outIdx] = (uint8_t)(header >> 8);
+	out[outIdx + 1] = (uint8_t)(header);
+	outIdx += 2;
+
+	return outIdx;
 }
 
-uint32_t gzipCompressionInternal(uint8_t* in, uint8_t* out, uint32_t inputSize, uint32_t &checksum){
+uint32_t writeZlibFooter(uint8_t *out, uint32_t idxAfterCompress, uint32_t checksum){
+	uint32_t outIdx = idxAfterCompress;
+
+	out[outIdx++] = checksum >> 24;
+	out[outIdx++] = checksum >> 16;
+	out[outIdx++] = checksum >> 8;
+	out[outIdx++] = checksum;
+
+	return outIdx;
+}
+
+bool readGzipZlibHeader(uint8_t* in){
+	uint8_t hidx = 0;
+    if (in[hidx++] == 0x1F && in[hidx++] == 0x8B) {
+        // Check for magic header
+        // Check if method is deflate or not
+        if (in[hidx++] != 0x08) {
+            std::cerr << "\n";
+            std::cerr << "Deflate Header Check Fails" << std::endl;
+            return 0;
+        }
+
+        // Check if the FLAG has correct value
+        // Supported file name or no file name
+        // 0x00: No File Name
+        // 0x08: File Name
+        if (in[hidx] != 0 && in[hidx] != 0x08) {
+            std::cerr << "\n";
+            std::cerr << "Deflate -n option check failed" << std::endl;
+            return 0;
+        }
+        hidx++;
+
+        // Skip time stamp bytes
+        // time stamp contains 4 bytes
+        hidx += 4;
+
+        // One extra 0  ending byte
+        hidx += 1;
+
+        // Check the operating system code
+        // for Unix its 3
+        uint8_t oscode_in = in[hidx];
+        std::vector<uint8_t> oscodes{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13};
+        bool ochck = std::find(oscodes.cbegin(), oscodes.cend(), oscode_in) == oscodes.cend();
+        if (ochck) {
+            std::cerr << "\n";
+            std::cerr << "GZip header mismatch: OS code is unknown" << std::endl;
+            return 0;
+        }
+    } else {
+		hidx = 0;
+        // ZLIB Header Checks
+        // CMF
+        // FLG
+        uint8_t cmf = 0x78;
+        // 0x01: Fast Mode
+        // 0x5E: 1 to 5 levels
+        // 0x9C: Default compression: level 6
+        // 0xDA: High compression
+        std::vector<uint8_t> zlib_flags{0x01, 0x5E, 0x9C, 0xDA};
+        if (in[hidx++] == cmf) {
+            uint8_t flg = in[hidx];
+            bool hchck = std::find(zlib_flags.cbegin(), zlib_flags.cend(), flg) == zlib_flags.cend();
+            if (hchck) {
+                std::cerr << "\n";
+                std::cerr << "Header check fails" << std::endl;
+                return 0;
+            }
+        } else {
+            std::cerr << "\n";
+            std::cerr << "Zlib Header mismatch" << std::endl;
+            return 0;
+        }
+    }
+    return true;
+}
+
+uint32_t gzipZlibCompressionInternal(uint8_t* in, uint8_t* out, uint32_t inputSize, uint32_t &checksum, bool isZlib){
 	cl_int err;
 
 	KernelPointer m_compressFullKernel;
@@ -83,11 +163,22 @@ uint32_t gzipCompressionInternal(uint8_t* in, uint8_t* out, uint32_t inputSize, 
 	BufferPointer buffer_cSize;
 	CommandQueuePointer m_def_q;
 
-	m_compressFullKernel.create(Application::getInstance().getProgram(), "xilGzipCompBlock:{xilGzipCompBlock_1}");
+	m_compressFullKernel.create(Application::getInstance().getProgram(), "xilGzipZlibCompressMM:{xilGzipZlibCompressMM_1}");
 
 	std::vector<uint32_t, zlib_aligned_allocator<uint32_t> > h_buf_checksum_data(1);
 	buffer_checksum_data.create(Application::getInstance().getContext(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, sizeof(uint32_t), h_buf_checksum_data.data());
-	h_buf_checksum_data.data()[0] = ~0;
+	
+	bool checksum_type;
+
+    if(isZlib){
+        std::cout<<"174 isZlib = "<<isZlib<<std::endl;
+        h_buf_checksum_data.data()[0] = 1;
+        checksum_type = false;
+    } else {
+        std::cout<<"178 isZlib = "<<isZlib<<std::endl;
+        h_buf_checksum_data.data()[0] = ~0;
+        checksum_type = true;
+    }
 
 	auto BLOCK_SIZE_IN_KB=32;
 	auto blockSize = BLOCK_SIZE_IN_KB * 1024; // can be changed for custom testing of block sizes upto 4KB.
@@ -115,7 +206,7 @@ uint32_t gzipCompressionInternal(uint8_t* in, uint8_t* out, uint32_t inputSize, 
 	m_compressFullKernel->setArg(narg++, *buffer_cSize);
 	m_compressFullKernel->setArg(narg++, *buffer_checksum_data);
 	m_compressFullKernel->setArg(narg++, inputSize);
-	m_compressFullKernel->setArg(narg++, true); //for gzip
+	m_compressFullKernel->setArg(narg++, checksum_type);
 
 	m_def_q.create(Application::getInstance().getContext(), Application::getInstance().getDevice(), CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE);
 
@@ -136,7 +227,7 @@ uint32_t gzipCompressionInternal(uint8_t* in, uint8_t* out, uint32_t inputSize, 
 	OCL_CHECK(err, err = m_def_q->enqueueMigrateMemObjects({*(buffer_output), *(buffer_checksum_data)}, CL_MIGRATE_MEM_OBJECT_HOST));
 	m_def_q->finish();
 
-	h_buf_checksum_data.data()[0] = ~h_buf_checksum_data.data()[0];
+	if(checksum_type) h_buf_checksum_data.data()[0] = ~h_buf_checksum_data.data()[0];
 
 	auto outIdx = 0;
 	uint32_t compSizeCntr = h_compressSize[0];
@@ -149,12 +240,12 @@ uint32_t gzipCompressionInternal(uint8_t* in, uint8_t* out, uint32_t inputSize, 
 	outIdx += 5;
 
 	checksum = h_buf_checksum_data.data()[0];
-	checksum = ~checksum;
+	if(checksum_type) checksum = ~checksum;
 
 	return outIdx;
 }
 
-uint32_t gzipDecompressionInternalMM(uint8_t* in, uint8_t* out, uint32_t inputSize, uint32_t max_outbuf_size){
+uint32_t gzipZlibDecompressionInternalMM(uint8_t* in, uint8_t* out, uint32_t inputSize, uint32_t max_outbuf_size){
 	cl_int err;
     // Streaming based solution
 
@@ -184,7 +275,7 @@ uint32_t gzipDecompressionInternalMM(uint8_t* in, uint8_t* out, uint32_t inputSi
 	buffer_dec_input.create(Application::getInstance().getContext(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, inBufferSize, dbuf_in.data());
 	buffer_size.create(Application::getInstance().getContext(), CL_MEM_USE_HOST_PTR | CL_MEM_WRITE_ONLY, sizeof(uint32_t), dbuf_outSize.data());
 	
-	decompress_kernel.create(Application::getInstance().getProgram(), "xilDecompressMM:{xilDecompressMM_1}");
+	decompress_kernel.create(Application::getInstance().getProgram(), "xilGzipZlibDecompressMM:{xilGzipZlibDecompressMM_1}");
 	decompress_kernel->setArg(0, *buffer_dec_input);
     decompress_kernel->setArg(1, *buffer_dec_zlib_output);
     decompress_kernel->setArg(2, *buffer_size);
@@ -212,7 +303,7 @@ uint32_t gzipDecompressionInternalMM(uint8_t* in, uint8_t* out, uint32_t inputSi
     return decmpSizeIdx;
 }
 
-uint32_t gzipDecompressionInternalStream(uint8_t* in, uint8_t* out, uint32_t inputSize, uint32_t max_outbuf_size){
+uint32_t gzipZlibDecompressionInternalStream(uint8_t* in, uint8_t* out, uint32_t inputSize, uint32_t max_outbuf_size){
 	cl_int err;
     // Streaming based solution
 	
@@ -247,8 +338,8 @@ uint32_t gzipDecompressionInternalStream(uint8_t* in, uint8_t* out, uint32_t inp
 	buffer_size.create(Application::getInstance().getContext(), CL_MEM_USE_HOST_PTR | CL_MEM_WRITE_ONLY, sizeof(uint32_t), dbuf_outSize.data());
 	buffer_status.create(Application::getInstance().getContext(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, sizeof(uint32_t), h_dcompressStatus.data());
 
-	data_writer_kernel.create(Application::getInstance().getProgram(), "xilGzipMM2S:{xilGzipMM2S_1}");
-	data_reader_kernel.create(Application::getInstance().getProgram(), "xilGzipS2MM:{xilGzipS2MM_1}");
+	data_writer_kernel.create(Application::getInstance().getProgram(), "xilGzipZlibMM2S:{xilGzipZlibMM2S_1}");
+	data_reader_kernel.create(Application::getInstance().getProgram(), "xilGzipZlibS2MM:{xilGzipZlibS2MM_1}");
 
 	data_writer_kernel->setArg(0, *(buffer_dec_input));
     data_writer_kernel->setArg(1, inBufferSize);
@@ -323,27 +414,28 @@ uint32_t gzipDecompressionInternalStream(uint8_t* in, uint8_t* out, uint32_t inp
 }
 } //namespace internal
 
-uint32_t gzipCompression(uint8_t *in, uint8_t *out, uint32_t inputSize, const std::string &fileName){
+uint32_t gzipZlibCompression(uint8_t *in, uint8_t *out, uint32_t inputSize, const std::string &fileName, bool isZlib){
 	std::cout<<"Original: "<<std::endl;
 	hexdump(in, inputSize);
 	uint32_t checksum=0;
-	uint32_t outIdx=internal::writeGzipHeader(out);
-	outIdx+=internal::gzipCompressionInternal(in, out+outIdx, inputSize, checksum);
-	outIdx=internal::writeGzipFooter(out, outIdx, checksum, fileName, inputSize);
+	uint32_t outIdx=isZlib ? internal::writeZlibHeader(out) : internal::writeGzipHeader(out);
+	outIdx+=internal::gzipZlibCompressionInternal(in, out+outIdx, inputSize, checksum, isZlib);
+	outIdx=isZlib ? internal::writeZlibFooter(out, outIdx, checksum) : internal::writeGzipFooter(out, outIdx, checksum, fileName, inputSize);
 	std::cout<<"Compressed: "<<std::endl;
 	hexdump(out, outIdx);
+	std::cout<<"checksum: "<<std::hex<<checksum<<std::dec<<std::endl;
 	return outIdx;
 }
 
-uint32_t gzipDecompression(uint8_t* in, uint8_t* out, uint32_t inputSize, uint32_t max_output_size, bool stream){
+uint32_t gzipZlibDecompression(uint8_t* in, uint8_t* out, uint32_t inputSize, uint32_t max_output_size, bool stream){
 	std::cout<<"Original: "<<std::endl;
 	hexdump(in, inputSize);
-	bool hcheck = internal::readGzipHeader(in);
+	bool hcheck = internal::readGzipZlibHeader(in);
     if (!hcheck) {
         std::cerr << "Header Check Failed" << std::endl;
         return 0;
     }
-	uint32_t outIdx = stream ? internal::gzipDecompressionInternalStream(in, out, inputSize, max_output_size) : internal::gzipDecompressionInternalMM(in, out, inputSize, max_output_size);
+	uint32_t outIdx = stream ? internal::gzipZlibDecompressionInternalStream(in, out, inputSize, max_output_size) : internal::gzipZlibDecompressionInternalMM(in, out, inputSize, max_output_size);
 	std::cout<<"Decompressed: "<<std::endl;
 	hexdump(out, outIdx);
 	return outIdx;

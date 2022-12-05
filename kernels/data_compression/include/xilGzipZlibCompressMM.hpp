@@ -63,7 +63,7 @@ extern "C" {
  * @param input_size input data size
  * @param checksumTye checksum type
  */
-void xilGzipCompBlock(const ap_uint<GMEM_DWIDTH>* in,
+void xilGzipZlibCompressMM(const ap_uint<GMEM_DWIDTH>* in,
                       ap_uint<GMEM_DWIDTH>* out,
                       uint32_t* compressd_size,
                       uint32_t* checksumData,

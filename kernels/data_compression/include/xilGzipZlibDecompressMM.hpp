@@ -15,8 +15,8 @@
  *
  */
 
-#ifndef _XFCOMPRESSION_ZLIB_DECOMPRESS_STREAM_HPP_
-#define _XFCOMPRESSION_ZLIB_DECOMPRESS_STREAM_HPP_
+#ifndef _XFCOMPRESSION_GZIP_DECOMPRESS_MM_HPP_
+#define _XFCOMPRESSION_GZIP_DECOMPRESS_MM_HPP_
 
 #include <stdio.h>
 #include <stdint.h>
@@ -30,25 +30,27 @@
 #include "stream_downsizer.hpp"
 #include "ap_axi_sdata.h"
 
-// use dynamic decoder by default
-#ifndef DECODER_TYPE
-#define DECODER_TYPE c_fullDecoder
-#endif
-
 // by default disable low latency model
 #ifndef LL_MODEL
 #define LL_MODEL false
 #endif
 
 #define LZ_MAX_OFFSET_LIMIT 32768
-#define LOW_OFFSET 10
+#define LOW_OFFSET 1
 
-#ifndef MULTIPLE_BYTES
 #define MULTIPLE_BYTES 8
-#endif
+#define MAX_OFFSET (32 * 1024)
+#define HISTORY_SIZE MAX_OFFSET
+
+#define HUFFMAN_TYPE xf::compression::FULL
+
+#define GMEM_DWIDTH (MULTIPLE_BYTES * 8)
+#define GMEM_BURST_SIZE 512
 
 extern "C" {
-void xilDecompressStream(hls::stream<ap_axiu<16, 0, 0, 0> >& inaxistreamd,
-                   hls::stream<ap_axiu<MULTIPLE_BYTES * 8, 0, 0, 0> >& outaxistreamd);
+void xilGzipZlibDecompressMM(const ap_uint<GMEM_DWIDTH>* in,
+                   ap_uint<GMEM_DWIDTH>* out,
+                   uint32_t* encodedSize,
+                   uint32_t inputSize);
 }
-#endif // _XFCOMPRESSION_ZLIB_DECOMPRESS_STREAM_HPP_
+#endif // _XFCOMPRESSION_GZIP_DECOMPRESS_MM_HPP_
