@@ -27,7 +27,7 @@ uint8_t readHeader(uint8_t* in){
     return fileIdx;
 }
 
-uint64_t snappyCompressEngineMM(uint8_t* in, uint8_t* out, uint64_t input_size){
+uint64_t snappyCompressEngineMM(uint8_t* in, uint8_t* out, uint64_t inputSize){
     KernelPointer compress_kernel_snappy;
     CommandQueuePointer m_q;
     BufferPointer buffer_input, buffer_output, buffer_compressed_size, buffer_block_size;
@@ -63,7 +63,7 @@ uint64_t snappyCompressEngineMM(uint8_t* in, uint8_t* out, uint64_t input_size){
     // Holds value of total compute units to be
     // used per iteration
     int compute_cu = 0;
-    for (uint64_t inIdx = 0; inIdx < input_size; inIdx += HOST_BUFFER_SIZE) {
+    for (uint64_t inIdx = 0; inIdx < inputSize; inIdx += HOST_BUFFER_SIZE) {
         // Needs to reset this variable
         // As this drives compute unit launch per iteration
         compute_cu = 0;
@@ -76,7 +76,7 @@ uint64_t snappyCompressEngineMM(uint8_t* in, uint8_t* out, uint64_t input_size){
 
         // This loop traverses through each compute based current inIdx
         // It tries to calculate chunk size and total compute units need to be
-        // launched (based on the input_size)
+        // launched (based on the inputSize)
 
         for (int bufCalc = 0; bufCalc < 1; bufCalc++) {
             hostChunk_cu = 0;
@@ -84,8 +84,8 @@ uint64_t snappyCompressEngineMM(uint8_t* in, uint8_t* out, uint64_t input_size){
             // Then choose to send is what is needed instead of full buffer size
             // based on host buffer macro
 
-            if (inIdx + (buf_size * (bufCalc + 1)) > input_size) {
-                hostChunk_cu = input_size - (inIdx + HOST_BUFFER_SIZE * bufCalc);
+            if (inIdx + (buf_size * (bufCalc + 1)) > inputSize) {
+                hostChunk_cu = inputSize - (inIdx + HOST_BUFFER_SIZE * bufCalc);
                 compute_cu++;
                 break;
             } else {
@@ -201,13 +201,13 @@ uint64_t snappyCompressEngineMM(uint8_t* in, uint8_t* out, uint64_t input_size){
     return outIdx;
 }
 
-uint64_t snappyCompressEngineStream(uint8_t* in, uint8_t* out, size_t input_size){
+uint64_t snappyCompressEngineStream(uint8_t* in, uint8_t* out, size_t inputSize){
     cl::Kernel *compress_kernel_snappy = new cl::Kernel(Application::getInstance().getProgram(), "xilSnappyCompressStream:{xilSnappyCompressStream_1}");
     cl::Kernel *compress_data_mover_kernel = new cl::Kernel(Application::getInstance().getProgram(), "xilCompressDatamover:{xilCompressDatamover_1}");
     cl::CommandQueue *m_q = new cl::CommandQueue(Application::getInstance().getContext(), Application::getInstance().getDevice(), CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE | CL_QUEUE_PROFILING_ENABLE);
 
     uint32_t host_buffer_size = BLOCK_SIZE_IN_KB * 1024;
-    uint32_t total_block_count = (input_size - 1) / host_buffer_size + 1;
+    uint32_t total_block_count = (inputSize - 1) / host_buffer_size + 1;
 
     // output buffer index
     uint64_t outIdx = 0;
@@ -230,12 +230,12 @@ uint64_t snappyCompressEngineStream(uint8_t* in, uint8_t* out, size_t input_size
         new cl::Buffer(Application::getInstance().getContext(), CL_MEM_USE_HOST_PTR | CL_MEM_WRITE_ONLY, sizeof(uint32_t), h_compressSize.data());
 
     // copy input to input buffer
-    // std::memcpy(h_buf_in.data(), in, input_size);
+    // std::memcpy(h_buf_in.data(), in, inputSize);
     // sequentially copy block sized buffers to kernel and wait for them to finish before enqueueing
     for (uint32_t blkIndx = 0, bufIndx = 0; blkIndx < total_block_count; blkIndx++, bufIndx += host_buffer_size) {
         // current block input size
         uint32_t c_input_size = host_buffer_size;
-        if (blkIndx == total_block_count - 1) c_input_size = input_size - bufIndx;
+        if (blkIndx == total_block_count - 1) c_input_size = inputSize - bufIndx;
 
         // copy input to input buffer
         std::memcpy(h_buf_in.data(), in + bufIndx, c_input_size);
@@ -310,7 +310,7 @@ uint64_t snappyCompressEngineStream(uint8_t* in, uint8_t* out, size_t input_size
 
 }
 
-uint64_t snappyDecompressEngineMM(uint8_t* in, uint8_t* out, size_t input_size){
+uint64_t snappyDecompressEngineMM(uint8_t* in, uint8_t* out, uint32_t inputSize, uint32_t maxOutputSize){
     KernelPointer decompress_kernel_snappy;
     CommandQueuePointer m_q;
     BufferPointer buffer_input, buffer_output, buffer_block_size, buffer_compressed_size;
@@ -354,9 +354,9 @@ uint64_t snappyDecompressEngineMM(uint8_t* in, uint8_t* out, size_t input_size){
     bool blkDecomExist = false;
     uint32_t blkUnComp = 0;
     // Maximum allowed outbuffer size, if it exceeds then exit
-    uint32_t c_max_outbuf = input_size * 20; //(20=m_maxCR by default)
+    uint32_t c_max_outbuf = maxOutputSize; // inputSize * 20 (20=m_maxCR by default)
     // Go over overall input size
-    for (uint32_t idxSize = 0; idxSize < input_size; idxSize += stride_cidsize, chunk_cntr++) {
+    for (uint32_t idxSize = 0; idxSize < inputSize; idxSize += stride_cidsize, chunk_cntr++) {
         // Chunk identifier
         chunk_idx = in[idxSize];
         chunk_size = 0;
@@ -532,39 +532,38 @@ uint64_t snappyDecompressEngineMM(uint8_t* in, uint8_t* out, size_t input_size){
     return output_idx;
 }
 
-uint64_t snappyDecompressEngineStream(uint8_t* in, uint8_t* out, size_t input_size){
+uint64_t snappyDecompressEngineStream(uint8_t* in, uint8_t* out, uint32_t inputSize, uint32_t maxOutputSize){
     
     cl::Kernel *decompress_kernel_snappy = new cl::Kernel(Application::getInstance().getProgram(), "xilSnappyDecompressStream:{xilSnappyDecompressStream_1}");
     cl::Kernel *decompress_data_mover_kernel = new cl::Kernel(Application::getInstance().getProgram(), "xilDecompressDatamover:{xilDecompressDatamover_1}");
     cl::CommandQueue *m_q = new cl::CommandQueue(Application::getInstance().getContext(), Application::getInstance().getDevice(), CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE | CL_QUEUE_PROFILING_ENABLE);
 
-    uint32_t outputSize = (input_size * 20) + 16; //m_maxCR
+    uint32_t outputSize = maxOutputSize; // (inputSize * 20) + 16; //m_maxCR
     // cl::Buffer* bufferOutputSize;
     // Index calculation
-    // h_buf_in.resize(input_size);
+    // h_buf_in.resize(inputSize);
     // h_buf_out.resize(outputSize);
     // h_buf_decompressSize.resize(sizeof(uint32_t));
-    std::vector<uint8_t, aligned_allocator<uint8_t> > h_buf_in(input_size);
+    std::vector<uint8_t, aligned_allocator<uint8_t> > h_buf_in(inputSize);
     std::vector<uint8_t, aligned_allocator<uint8_t> > h_buf_out(outputSize);
     std::vector<uint32_t, aligned_allocator<uint32_t> > h_buf_decompressSize(1);
 
-    std::memcpy(h_buf_in.data(), in, input_size);
+    std::memcpy(h_buf_in.data(), in, inputSize);
 
     // Device buffer allocation
-    cl::Buffer *buffer_input = new cl::Buffer(Application::getInstance().getContext(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, input_size, h_buf_in.data());
+    cl::Buffer *buffer_input = new cl::Buffer(Application::getInstance().getContext(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, inputSize, h_buf_in.data());
     cl::Buffer *buffer_output = new cl::Buffer(Application::getInstance().getContext(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, outputSize, h_buf_out.data());
     cl::Buffer *bufferOutputSize = new cl::Buffer(Application::getInstance().getContext(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, sizeof(uint32_t),
                                       h_buf_decompressSize.data());
 
-    uint32_t inputSize_32t = uint32_t(input_size);
     // set kernel arguments
     int narg = 0;
     decompress_data_mover_kernel->setArg(narg++, *(buffer_input));
     decompress_data_mover_kernel->setArg(narg++, *(buffer_output));
-    decompress_data_mover_kernel->setArg(narg++, inputSize_32t);
+    decompress_data_mover_kernel->setArg(narg++, inputSize);
     decompress_data_mover_kernel->setArg(narg, *(bufferOutputSize));
 
-    decompress_kernel_snappy->setArg(3, inputSize_32t);
+    decompress_kernel_snappy->setArg(3, inputSize);
 
     // Migrate Memory - Map host to device buffers
     m_q->enqueueMigrateMemObjects({*(buffer_input), *(bufferOutputSize), *(buffer_output)}, 0);
@@ -592,47 +591,47 @@ uint64_t snappyDecompressEngineStream(uint8_t* in, uint8_t* out, size_t input_si
     return uncompressedSize;
 }
 
-uint64_t snappyCompressMM(uint8_t* in, uint8_t* out, uint64_t input_size){
+uint64_t snappyCompressMM(uint8_t* in, uint8_t* out, uint64_t inputSize){
     std::cout<<"Before Snappy Compress: "<<std::endl;
-    hexdump(in, input_size);
+    hexdump(in, inputSize);
 
     uint32_t outIdx=writeHeader(out);
-    uint64_t enbytes=snappyCompressEngineMM(in, out+outIdx, input_size);
+    uint64_t enbytes=snappyCompressEngineMM(in, out+outIdx, inputSize);
     outIdx+=enbytes;
     std::cout<<"After Snappy Compress: "<<std::endl;
     hexdump(out, outIdx);
     return outIdx;
 }
 
-uint64_t snappyCompressStream(uint8_t* in, uint8_t* out, uint64_t input_size){
+uint64_t snappyCompressStream(uint8_t* in, uint8_t* out, uint64_t inputSize){
     std::cout<<"Before Snappy Compress: "<<std::endl;
-    hexdump(in, input_size);
+    hexdump(in, inputSize);
 
     uint32_t outIdx=writeHeader(out);
-    uint64_t enbytes=snappyCompressEngineStream(in, out+outIdx, input_size);
+    uint64_t enbytes=snappyCompressEngineStream(in, out+outIdx, inputSize);
     outIdx+=enbytes;
     std::cout<<"After Snappy Compress: "<<std::endl;
     hexdump(out, outIdx);
     return outIdx;
 }
 
-uint64_t snappyDecompressMM(uint8_t* in, uint8_t* out, uint64_t input_size){
+uint64_t snappyDecompressMM(uint8_t* in, uint8_t* out, uint32_t inputSize, uint32_t maxOutputSize){
     std::cout<<"Before Snappy Decompress: "<<std::endl;
-    hexdump(in, input_size);
+    hexdump(in, inputSize);
 
     uint8_t headerBytes = readHeader(in);
-    uint64_t debytes = snappyDecompressEngineMM(in+headerBytes, out, input_size-headerBytes);
+    uint64_t debytes = snappyDecompressEngineMM(in+headerBytes, out, inputSize-headerBytes, maxOutputSize);
 
     std::cout<<"After Snappy Decompress: "<<std::endl;
     hexdump(out, debytes);
     return debytes;
 }
 
-uint64_t snappyDecompressStream(uint8_t* in, uint8_t* out, uint64_t input_size){
+uint64_t snappyDecompressStream(uint8_t* in, uint8_t* out, uint32_t inputSize, uint32_t maxOutputSize){
     std::cout<<"Before Snappy Decompress: "<<std::endl;
-    hexdump(in, input_size);
+    hexdump(in, inputSize);
 
-    uint64_t debytes = snappyDecompressEngineStream(in, out, input_size);
+    uint64_t debytes = snappyDecompressEngineStream(in, out, inputSize, maxOutputSize);
 
     std::cout<<"After Snappy Decompress: "<<std::endl;
     hexdump(out, debytes);

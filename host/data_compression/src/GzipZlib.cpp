@@ -427,7 +427,7 @@ uint32_t gzipZlibCompression(uint8_t *in, uint8_t *out, uint32_t inputSize, cons
 	return outIdx;
 }
 
-uint32_t gzipZlibDecompression(uint8_t* in, uint8_t* out, uint32_t inputSize, uint32_t max_output_size, bool stream){
+uint32_t gzipZlibDecompression(uint8_t* in, uint8_t* out, uint32_t inputSize, uint32_t maxOutputSize, bool stream){
 	std::cout<<"Original: "<<std::endl;
 	hexdump(in, inputSize);
 	bool hcheck = internal::readGzipZlibHeader(in);
@@ -435,7 +435,7 @@ uint32_t gzipZlibDecompression(uint8_t* in, uint8_t* out, uint32_t inputSize, ui
         std::cerr << "Header Check Failed" << std::endl;
         return 0;
     }
-	uint32_t outIdx = stream ? internal::gzipZlibDecompressionInternalStream(in, out, inputSize, max_output_size) : internal::gzipZlibDecompressionInternalMM(in, out, inputSize, max_output_size);
+	uint32_t outIdx = stream ? internal::gzipZlibDecompressionInternalStream(in, out, inputSize, maxOutputSize) : internal::gzipZlibDecompressionInternalMM(in, out, inputSize, maxOutputSize);
 	std::cout<<"Decompressed: "<<std::endl;
 	hexdump(out, outIdx);
 	return outIdx;

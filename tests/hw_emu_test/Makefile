@@ -1,21 +1,22 @@
 .PHONY: all run build clean host kernel link clean package
 
-ROOTFS=/home/jiong/xilinx/xilinx-zynqmp-common-v2020.2
-WORKSPACE=/home/jiong/bsc-project
+USER=liujio
+ROOTFS=/home/$(USER)/xilinx/xilinx-zynqmp-common-v2020.2
+WORKSPACE=/home/$(USER)/bsc-project
 
-COMP=$(WORKSPACE)/componnets
+COMP=$(WORKSPACE)/components
 KNRL=$(WORKSPACE)/kernels
 HOST=$(WORKSPACE)/host
 
-HOST_INC_DIR=$(HOST)/common/include $(HOST)/security/include $(HOST)/test $(HOST)/data_compression/include /home/jiong/bsc-project/backup/data_compression/common/libs/compress /home/jiong/bsc-project/backup/data_compression/common/libs/cmdparser /home/jiong/bsc-project/backup/data_compression/common/libs/logger /home/jiong/bsc-project/backup/data_compression/common/libs/xcl2 /opt/xilinx/xrt/include
+HOST_INC_DIR=$(HOST)/common/include $(HOST)/security/include $(HOST)/test $(HOST)/data_compression/include /home/$(USER)/bsc-project/backup/data_compression/common/libs/compress /home/$(USER)/bsc-project/backup/data_compression/common/libs/cmdparser /home/$(USER)/bsc-project/backup/data_compression/common/libs/logger /home/$(USER)/bsc-project/backup/data_compression/common/libs/xcl2 /opt/xilinx/xrt/include
 HOST_INC_FLG=$(foreach dir, $(HOST_INC_DIR), -I$(dir))
 HOST_INC=$(foreach dir, $(HOST_INC_DIR), $(wildcard $(dir)/*.hpp))
-HOST_FLG=-DDECOMPRESS_MM -DFREE_RUNNING_KERNEL -D GZIP_MULTICORE_COMPRESS -D PARALLEL_BLOCK=1 -D GZIP_MODE=1 -Wall -g -std=c++1y -L${XILINX_XRT}/lib/ -lpthread -lrt -lstdc++ -lOpenCL 
-HOST_SRC=host.cpp $(wildcard $(HOST)/common/src/*.cpp) $(wildcard $(HOST)/security/src/*.cpp) $(wildcard $(HOST)/data_compression/src/*.cpp) $(wildcard /home/jiong/bsc-project/backup/data_compression/common/libs/compress/*.cpp) $(wildcard /home/jiong/bsc-project/backup/data_compression/common/libs/cmdparser/*.cpp) $(wildcard /home/jiong/bsc-project/backup/data_compression/common/libs/logger/*.cpp) $(wildcard /home/jiong/bsc-project/backup/data_compression/common/libs/xcl2/*.cpp)
+HOST_FLG=-Wall -g -std=c++1y -L${XILINX_XRT}/lib/ -lpthread -lrt -lstdc++ -lOpenCL -DSNAPPY_STREAM # -DXILINX
+HOST_SRC=host.cpp $(wildcard $(HOST)/common/src/*.cpp) $(wildcard $(HOST)/security/src/*.cpp) $(wildcard $(HOST)/data_compression/src/*.cpp) $(wildcard /home/$(USER)/bsc-project/backup/data_compression/common/libs/compress/*.cpp) $(wildcard /home/$(USER)/bsc-project/backup/data_compression/common/libs/cmdparser/*.cpp) $(wildcard /home/$(USER)/bsc-project/backup/data_compression/common/libs/logger/*.cpp) $(wildcard /home/$(USER)/bsc-project/backup/data_compression/common/libs/xcl2/*.cpp)
 HOST_OUTPUT=app
 
 KNRL_INC=-I$(COMP)/common/include
-KNRL_FLG=-t hw_emu --config config.cfg -g -D NUM_CORES=4 -D PARALLEL_BLOCK=1 -D MULTIPLE_BYTES=8 -D GZIP_MODE=1 -D LL_MODEL=true -DFREE_RUNNING_KERNEL
+KNRL_FLG=-t hw_emu --config config_kernel.cfg -g
 
 KNRL_SECURITY_SRC=$(wildcard $(KNRL)/security/src/*.cpp)
 KNRL_SECURITY_INC=-I$(COMP)/security/include -I$(KNRL)/security/include
@@ -29,12 +30,12 @@ KNRL_ALL=$(KNRL_SECURITY) $(KNRL_DATACOMPRESSION)
 KNRL_INC+=$(KNRL_SECURITY_INC) $(KNRL_DATACOMPRESSION_INC)
 
 LINK_INC=$(KNRL_INC)
-LINK_FLG=$(KNRL_FLG)
+LINK_FLG=-t hw_emu --config config_link.cfg -g
 LINK_OUTPUT=fpga.xclbin
 
-PAKG_FLG=$(KNRL_FLG)
+PAKG_FLG=-t hw_emu --config config_package.cfg -g
 
-# XCL_EMULATION_MODE=sw_emu ./app
+# XCL_EMULATION_MODE=hw_emu ./app
 # package/launch_sw_emu.sh -forward-port 1440 22
 
 package: $(LINK_OUTPUT) $(HOST_OUTPUT)
@@ -48,6 +49,39 @@ $(HOST_OUTPUT): $(HOST_SRC) $(HOST_INC)
 kernels/security/%.xo: $(KNRL)/security/src/%.cpp
 	v++ -c -k $(patsubst kernels/security/%.xo, %, $@) $(KNRL_INC) $^ -o $@ $(KNRL_FLG)
 
+kernels/data_compression/xilGzipZlibCompressMM.xo: $(KNRL)/data_compression/src/xilGzipZlibCompressMM.cpp
+	v++ -c -k $(patsubst kernels/data_compression/%.xo, %, $@) $(KNRL_INC) $^ -o $@ $(KNRL_FLG) -DNUM_CORES=4 -DPARALLEL_BLOCK=1 -DMULTIPLE_BYTES=8 -DGZIP_MODE=1 -DLL_MODEL=true -DFREE_RUNNING_KERNEL
+
+kernels/data_compression/xilGzipZlibDecompressMM.xo: $(KNRL)/data_compression/src/xilGzipZlibDecompressMM.cpp
+	v++ -c -k $(patsubst kernels/data_compression/%.xo, %, $@) $(KNRL_INC) $^ -o $@ $(KNRL_FLG) -DNUM_CORES=4 -DPARALLEL_BLOCK=1 -DMULTIPLE_BYTES=8 -DGZIP_MODE=1 -DLL_MODEL=true -DFREE_RUNNING_KERNEL
+
+kernels/data_compression/xilGzipZlibDecompressStream.xo: $(KNRL)/data_compression/src/xilGzipZlibDecompressStream.cpp
+	v++ -c -k $(patsubst kernels/data_compression/%.xo, %, $@) $(KNRL_INC) $^ -o $@ $(KNRL_FLG) -DNUM_CORES=4 -DPARALLEL_BLOCK=1 -DMULTIPLE_BYTES=8 -DGZIP_MODE=1 -DLL_MODEL=true -DFREE_RUNNING_KERNEL
+
+kernels/data_compression/xilGzipZlibMM2S.xo: $(KNRL)/data_compression/src/xilGzipZlibMM2S.cpp
+	v++ -c -k $(patsubst kernels/data_compression/%.xo, %, $@) $(KNRL_INC) $^ -o $@ $(KNRL_FLG) -DNUM_CORES=4 -DPARALLEL_BLOCK=1 -DMULTIPLE_BYTES=8 -DGZIP_MODE=1 -DLL_MODEL=true -DFREE_RUNNING_KERNEL
+
+kernels/data_compression/xilGzipZlibS2MM.xo: $(KNRL)/data_compression/src/xilGzipZlibS2MM.cpp
+	v++ -c -k $(patsubst kernels/data_compression/%.xo, %, $@) $(KNRL_INC) $^ -o $@ $(KNRL_FLG) -DNUM_CORES=4 -DPARALLEL_BLOCK=1 -DMULTIPLE_BYTES=8 -DGZIP_MODE=1 -DLL_MODEL=true -DFREE_RUNNING_KERNEL
+
+kernels/data_compression/xilSnappyCompressMM.xo: $(KNRL)/data_compression/src/xilSnappyCompressMM.cpp
+	v++ -c -k $(patsubst kernels/data_compression/%.xo, %, $@) $(KNRL_INC) $^ -o $@ $(KNRL_FLG)
+
+kernels/data_compression/xilSnappyDecompressMM.xo: $(KNRL)/data_compression/src/xilSnappyDecompressMM.cpp
+	v++ -c -k $(patsubst kernels/data_compression/%.xo, %, $@) $(KNRL_INC) $^ -o $@ $(KNRL_FLG)
+
+kernels/data_compression/xilSnappyCompressStream.xo: $(KNRL)/data_compression/src/xilSnappyCompressStream.cpp
+	v++ -c -k $(patsubst kernels/data_compression/%.xo, %, $@) $(KNRL_INC) $^ -o $@ $(KNRL_FLG)
+
+kernels/data_compression/xilSnappyDecompressStream.xo: $(KNRL)/data_compression/src/xilSnappyDecompressStream.cpp
+	v++ -c -k $(patsubst kernels/data_compression/%.xo, %, $@) $(KNRL_INC) $^ -o $@ $(KNRL_FLG)
+
+kernels/data_compression/xilCompressDatamover.xo: $(KNRL)/data_compression/src/xilCompressDatamover.cpp
+	v++ -c -k $(patsubst kernels/data_compression/%.xo, %, $@) $(KNRL_INC) $^ -o $@ $(KNRL_FLG)
+
+kernels/data_compression/xilDecompressDatamover.xo: $(KNRL)/data_compression/src/xilDecompressDatamover.cpp
+	v++ -c -k $(patsubst kernels/data_compression/%.xo, %, $@) $(KNRL_INC) $^ -o $@ $(KNRL_FLG)
+
 kernels/data_compression/%.xo: $(KNRL)/data_compression/src/%.cpp
 	v++ -c -k $(patsubst kernels/data_compression/%.xo, %, $@) $(KNRL_INC) $^ -o $@ $(KNRL_FLG)
 
@@ -59,3 +93,6 @@ run: package
 
 clean:
 	rm -rf .run *.csv _x .Xil package app *.log *_summary *.xo *.xclbin *.info kernels
+
+get:
+	scp -P 1440 root@127.0.0.1:/media/sd-mmcblk0p1/$(FILE) ./$(FILE)
