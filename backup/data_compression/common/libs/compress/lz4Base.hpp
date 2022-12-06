@@ -50,11 +50,11 @@ const auto BLOCK_SIZE_IN_KB = 64;
 const auto MAX_NUMBER_BLOCKS = (HOST_BUFFER_SIZE / (BLOCK_SIZE_IN_KB * 1024));
 
 // Kernel names
-const std::vector<std::string> compress_kernel_names = {"xilLz4Compress", "xilLz4CompressStream"};
-const std::vector<std::string> decompress_kernel_names = {"xilLz4Decompress", "xilLz4DecompressStream"};
+const std::vector<std::string> compress_kernel_names = {"xilLz4CompressMM", "xilLz4CompressStream"};
+const std::vector<std::string> decompress_kernel_names = {"xilLz4DecompressMM", "xilLz4DecompressStream"};
 
-const std::string compress_dm_kernel_name = "xilCompDatamover";
-const std::string decompress_dm_kernel_name = "xilDecompDatamover";
+const std::string compress_dm_kernel_name = "xilCompressDatamover:{xilCompressDatamover_2}";
+const std::string decompress_dm_kernel_name = "xilDecompressDatamover:{xilDecompressDatamover_2}";
 
 /**
  *  lz4Base class. Class containing methods for LZ4

@@ -81,6 +81,9 @@ lz4OCLHost::~lz4OCLHost() {
 
 // Compress driving API includes header processing and calling core compress engine
 uint64_t lz4OCLHost::xilCompress(uint8_t* in, uint8_t* out, size_t input_size) {
+    std::cout<<"Before compress: "<<std::endl;
+    hexdump(in, input_size);
+    std::cout<<std::endl;
     m_InputSize = input_size;
 
     // LZ4 header
@@ -110,11 +113,20 @@ uint64_t lz4OCLHost::xilCompress(uint8_t* in, uint8_t* out, size_t input_size) {
     out = out + enbytes;
     writeFooter(in, out);
     enbytes += m_frameByteCount;
+    out += 8;
+
+    std::cout<<"After compress: "<<std::endl;
+    hexdump(out-enbytes, enbytes);
+    std::cout<<std::endl;
     return enbytes;
 }
 
 // Decompress driving API for calling core compress engine
 uint64_t lz4OCLHost::xilDecompress(uint8_t* in, uint8_t* out, size_t input_size) {
+    std::cout<<"Before decompress: "<<std::endl;
+    hexdump(in, input_size);
+    std::cout<<std::endl;
+
     if (m_lz4Stream) {
         m_InputSize = input_size;
     } else {
@@ -142,6 +154,10 @@ uint64_t lz4OCLHost::xilDecompress(uint8_t* in, uint8_t* out, size_t input_size)
         float throughput_in_mbps_1 = (float)input_size * 1000 / total_time_ns.count();
         std::cout << std::fixed << std::setprecision(2) << throughput_in_mbps_1;
     }
+
+    std::cout<<"After decompress: "<<std::endl;
+    hexdump(out, debytes);
+    std::cout<<std::endl;
     return debytes;
 }
 

@@ -8,13 +8,6 @@ COMP=$(WORKSPACE)/components
 KNRL=$(WORKSPACE)/kernels
 HOST=$(WORKSPACE)/host
 
-HOST_INC_DIR=$(HOST)/common/include $(HOST)/security/include $(HOST)/test $(HOST)/data_compression/include /home/$(USER)/bsc-project/backup/data_compression/common/libs/compress /home/$(USER)/bsc-project/backup/data_compression/common/libs/cmdparser /home/$(USER)/bsc-project/backup/data_compression/common/libs/logger /home/$(USER)/bsc-project/backup/data_compression/common/libs/xcl2 /opt/xilinx/xrt/include
-HOST_INC_FLG=$(foreach dir, $(HOST_INC_DIR), -I$(dir))
-HOST_INC=$(foreach dir, $(HOST_INC_DIR), $(wildcard $(dir)/*.hpp))
-HOST_FLG=-Wall -g -std=c++1y -L${XILINX_XRT}/lib/ -lpthread -lrt -lstdc++ -lOpenCL -DSNAPPY_STREAM # -DXILINX
-HOST_SRC=host.cpp $(wildcard $(HOST)/common/src/*.cpp) $(wildcard $(HOST)/security/src/*.cpp) $(wildcard $(HOST)/data_compression/src/*.cpp) $(wildcard /home/$(USER)/bsc-project/backup/data_compression/common/libs/compress/*.cpp) $(wildcard /home/$(USER)/bsc-project/backup/data_compression/common/libs/cmdparser/*.cpp) $(wildcard /home/$(USER)/bsc-project/backup/data_compression/common/libs/logger/*.cpp) $(wildcard /home/$(USER)/bsc-project/backup/data_compression/common/libs/xcl2/*.cpp)
-HOST_OUTPUT=app
-
 KNRL_INC=-I$(COMP)/common/include
 KNRL_FLG=-t sw_emu --config config_kernel.cfg -g
 
@@ -28,6 +21,17 @@ KNRL_DATACOMPRESSION=$(patsubst $(KNRL)/data_compression/src/%.cpp, kernels/data
 
 KNRL_ALL=$(KNRL_SECURITY) $(KNRL_DATACOMPRESSION)
 KNRL_INC+=$(KNRL_SECURITY_INC) $(KNRL_DATACOMPRESSION_INC)
+
+HOST_INC_DIR=$(HOST)/common/include $(HOST)/security/include $(HOST)/test $(HOST)/data_compression/include /home/$(USER)/bsc-project/backup/data_compression/common/libs/compress /home/$(USER)/bsc-project/backup/data_compression/common/libs/cmdparser /home/$(USER)/bsc-project/backup/data_compression/common/libs/logger /home/$(USER)/bsc-project/backup/data_compression/common/libs/xcl2 /opt/xilinx/xrt/include $(HOST)/third_party/xxhash 
+HOST_INC_FLG=$(foreach dir, $(HOST_INC_DIR), -I$(dir))
+HOST_INC=$(foreach dir, $(HOST_INC_DIR), $(wildcard $(dir)/*.hpp))
+HOST_FLG=-Wall -g -std=c++1y -L${XILINX_XRT}/lib/ -lpthread -lrt -lstdc++ -lOpenCL -DSNAPPY_STREAM
+HOST_SRC=host.cpp $(wildcard $(HOST)/common/src/*.cpp) $(wildcard $(HOST)/security/src/*.cpp) $(wildcard $(HOST)/data_compression/src/*.cpp) $(wildcard /home/$(USER)/bsc-project/backup/data_compression/common/libs/compress/*.cpp) $(wildcard /home/$(USER)/bsc-project/backup/data_compression/common/libs/cmdparser/*.cpp) $(wildcard /home/$(USER)/bsc-project/backup/data_compression/common/libs/logger/*.cpp) $(wildcard /home/$(USER)/bsc-project/backup/data_compression/common/libs/xcl2/*.cpp)
+HOST_OUTPUT=app
+
+HOST_SRC+=$(HOST)/third_party/xxhash/xxhash.c
+HOST_INC_FLG+=$(KNRL_INC)
+HOST_FLG+=-DXILINX
 
 LINK_INC=$(KNRL_INC)
 LINK_FLG=-t sw_emu --config config_link.cfg -g

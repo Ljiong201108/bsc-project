@@ -1,0 +1,274 @@
+INFO: [SW-EM 09-0] Unable to find emconfig.json. Using default device.
+Found Device=xilinx_zcu104_base_202020_1
+--------------------------------------------------------------
+                     Xilinx Compress
+--------------------------------------------------------------
+KT(MBps)		:0.00
+Before compress: 
+000000: 2f 2a 0a 20 2a 20 28 63 29 20 43 6f 70 79 72 69  /*. * (c) Copyri
+000010: 67 68 74 20 32 30 31 39 20 58 69 6c 69 6e 78 2c  ght 2019 Xilinx,
+000020: 20 49 6e 63 2e 20 41 6c 6c 20 72 69 67 68 74 73   Inc. All rights
+000030: 20 72 65 73 65 72 76 65 64 2e 0a 20 2a 0a 20 2a   reserved.. *. *
+000040: 20 4c 69 63 65 6e 73 65 64 20 75 6e 64 65 72 20   Licensed under 
+000050: 74 68 65 20 41 70 61 63 68 65 20 4c 69 63 65 6e  the Apache Licen
+000060: 73 65 2c 20 56 65 72 73 69 6f 6e 20 32 2e 30 20  se, Version 2.0 
+000070: 28 74 68 65 20 22 4c 69 63 65 6e 73 65 22 29 3b  (the "License");
+000080: 0a 20 2a 20 79 6f 75 20 6d 61 79 20 6e 6f 74 20  . * you may not 
+000090: 75 73 65 20 74 68 69 73 20 66 69 6c 65 20 65 78  use this file ex
+0000a0: 63 65 70 74 20 69 6e 20 63 6f 6d 70 6c 69 61 6e  cept in complian
+0000b0: 63 65 20 77 69 74 68 20 74 68 65 20 4c 69 63 65  ce with the Lice
+0000c0: 6e 73 65 2e 0a 20 2a 20 59 6f 75 20 6d 61 79 20  nse.. * You may 
+0000d0: 6f 62 74 61 69 6e 20 61 20 63 6f 70 79 20 6f 66  obtain a copy of
+0000e0: 20 74 68 65 20 4c 69 63 65 6e 73 65 20 61 74 0a   the License at.
+0000f0: 20 2a 0a 20 2a 20 20 20 20 20 68 74 74 70 3a 2f   *. *     http:/
+000100: 2f 77 77 77 2e 61 70 61 63 68 65 2e 6f 72 67 2f  /www.apache.org/
+000110: 6c 69 63 65 6e 73 65 73 2f 4c 49 43 45 4e 53 45  licenses/LICENSE
+000120: 2d 32 2e 30 0a 20 2a 0a 20 2a 20 55 6e 6c 65 73  -2.0. *. * Unles
+000130: 73 20 72 65 71 75 69 72 65 64 20 62 79 20 61 70  s required by ap
+000140: 70 6c 69 63 61 62 6c 65 20 6c 61 77 20 6f 72 20  plicable law or 
+000150: 61 67 72 65 65 64 20 74 6f 20 69 6e 20 77 72 69  agreed to in wri
+000160: 74 69 6e 67 2c 20 73 6f 66 74 77 61 72 65 0a 20  ting, software. 
+000170: 2a 20 64 69 73 74 72 69 62 75 74 65 64 20 75 6e  * distributed un
+000180: 64 65 72 20 74 68 65 20 4c 69 63 65 6e 73 65 20  der the License 
+000190: 69 73 20 64 69 73 74 72 69 62 75 74 65 64 20 6f  is distributed o
+0001a0: 6e 20 61 6e 20 22 41 53 20 49 53 22 20 42 41 53  n an "AS IS" BAS
+0001b0: 49 53 2c 0a 20 2a 20 57 49 54 48 4f 55 54 20 57  IS,. * WITHOUT W
+0001c0: 41 52 52 41 4e 54 49 45 53 20 4f 52 20 43 4f 4e  ARRANTIES OR CON
+0001d0: 44 49 54 49 4f 4e 53 20 4f 46 20 41 4e 59 20 4b  DITIONS OF ANY K
+0001e0: 49 4e 44 2c 20 65 69 74 68 65 72 20 65 78 70 72  IND, either expr
+0001f0: 65 73 73 20 6f 72 20 69 6d 70 6c 69 65 64 2e 0a  ess or implied..
+000200: 20 2a 20 53 65 65 20 74 68 65 20 4c 69 63 65 6e   * See the Licen
+000210: 73 65 20 66 6f 72 20 74 68 65 20 73 70 65 63 69  se for the speci
+000220: 66 69 63 20 6c 61 6e 67 75 61 67 65 20 67 6f 76  fic language gov
+000230: 65 72 6e 69 6e 67 20 70 65 72 6d 69 73 73 69 6f  erning permissio
+000240: 6e 73 20 61 6e 64 0a 20 2a 20 6c 69 6d 69 74 61  ns and. * limita
+000250: 74 69 6f 6e 73 20 75 6e 64 65 72 20 74 68 65 20  tions under the 
+000260: 4c 69 63 65 6e 73 65 2e 0a 20 2a 0a 20 2a 2f 0a  License.. *. */.
+000270: 2f 2a 0a 20 2a 20 28 63 29 20 43 6f 70 79 72 69  /*. * (c) Copyri
+000280: 67 68 74 20 32 30 31 39 20 58 69 6c 69 6e 78 2c  ght 2019 Xilinx,
+000290: 20 49 6e 63 2e 20 41 6c 6c 20 72 69 67 68 74 73   Inc. All rights
+0002a0: 20 72 65 73 65 72 76 65 64 2e 0a 20 2a 0a 20 2a   reserved.. *. *
+0002b0: 20 4c 69 63 65 6e 73 65 64 20 75 6e 64 65 72 20   Licensed under 
+0002c0: 74 68 65 20 41 70 61 63 68 65 20 4c 69 63 65 6e  the Apache Licen
+0002d0: 73 65 2c 20 56 65 72 73 69 6f 6e 20 32 2e 30 20  se, Version 2.0 
+0002e0: 28 74 68 65 20 22 4c 69 63 65 6e 73 65 22 29 3b  (the "License");
+0002f0: 0a 20 2a 20 79 6f 75 20 6d 61 79 20 6e 6f 74 20  . * you may not 
+000300: 75 73 65 20 74 68 69 73 20 66 69 6c 65 20 65 78  use this file ex
+000310: 63 65 70 74 20 69 6e 20 63 6f 6d 70 6c 69 61 6e  cept in complian
+000320: 63 65 20 77 69 74 68 20 74 68 65 20 4c 69 63 65  ce with the Lice
+000330: 6e 73 65 2e 0a 20 2a 20 59 6f 75 20 6d 61 79 20  nse.. * You may 
+000340: 6f 62 74 61 69 6e 20 61 20 63 6f 70 79 20 6f 66  obtain a copy of
+000350: 20 74 68 65 20 4c 69 63 65 6e 73 65 20 61 74 0a   the License at.
+000360: 20 2a 0a 20 2a 20 20 20 20 20 68 74 74 70 3a 2f   *. *     http:/
+000370: 2f 77 77 77 2e 61 70 61 63 68 65 2e 6f 72 67 2f  /www.apache.org/
+000380: 6c 69 63 65 6e 73 65 73 2f 4c 49 43 45 4e 53 45  licenses/LICENSE
+000390: 2d 32 2e 30 0a 20 2a 0a 20 2a 20 55 6e 6c 65 73  -2.0. *. * Unles
+0003a0: 73 20 72 65 71 75 69 72 65 64 20 62 79 20 61 70  s required by ap
+0003b0: 70 6c 69 63 61 62 6c 65 20 6c 61 77 20 6f 72 20  plicable law or 
+0003c0: 61 67 72 65 65 64 20 74 6f 20 69 6e 20 77 72 69  agreed to in wri
+0003d0: 74 69 6e 67 2c 20 73 6f 66 74 77 61 72 65 0a 20  ting, software. 
+0003e0: 2a 20 64 69 73 74 72 69 62 75 74 65 64 20 75 6e  * distributed un
+0003f0: 64 65 72 20 74 68 65 20 4c 69 63 65 6e 73 65 20  der the License 
+000400: 69 73 20 64 69 73 74 72 69 62 75 74 65 64 20 6f  is distributed o
+000410: 6e 20 61 6e 20 22 41 53 20 49 53 22 20 42 41 53  n an "AS IS" BAS
+000420: 49 53 2c 0a 20 2a 20 57 49 54 48 4f 55 54 20 57  IS,. * WITHOUT W
+000430: 41 52 52 41 4e 54 49 45 53 20 4f 52 20 43 4f 4e  ARRANTIES OR CON
+000440: 44 49 54 49 4f 4e 53 20 4f 46 20 41 4e 59 20 4b  DITIONS OF ANY K
+000450: 49 4e 44 2c 20 65 69 74 68 65 72 20 65 78 70 72  IND, either expr
+000460: 65 73 73 20 6f 72 20 69 6d 70 6c 69 65 64 2e 0a  ess or implied..
+000470: 20 2a 20 53 65 65 20 74 68 65 20 4c 69 63 65 6e   * See the Licen
+000480: 73 65 20 66 6f 72 20 74 68 65 20 73 70 65 63 69  se for the speci
+000490: 66 69 63 20 6c 61 6e 67 75 61 67 65 20 67 6f 76  fic language gov
+0004a0: 65 72 6e 69 6e 67 20 70 65 72 6d 69 73 73 69 6f  erning permissio
+0004b0: 6e 73 20 61 6e 64 0a 20 2a 20 6c 69 6d 69 74 61  ns and. * limita
+0004c0: 74 69 6f 6e 73 20 75 6e 64 65 72 20 74 68 65 20  tions under the 
+0004d0: 4c 69 63 65 6e 73 65 2e 0a 20 2a 0a 20 2a 2f 0a  License.. *. */.
+
+After compress: 
+000000: 04 22 4d 18 64 40 a7 54 02 00 00 f1 1b 2f 2a 0a  ."M.d@.T...../*.
+000010: 20 2a 20 28 63 29 20 43 6f 70 79 72 69 67 68 74   * (c) Copyright
+000020: 20 32 30 31 39 20 58 69 6c 69 6e 78 2c 20 49 6e   2019 Xilinx, In
+000030: 63 2e 20 41 6c 6c 20 1c 00 d1 73 20 72 65 73 65  c. All ...s rese
+000040: 72 76 65 64 2e 0a 20 3b 00 f4 0a 4c 69 63 65 6e  rved.. ;...Licen
+000050: 73 65 64 20 75 6e 64 65 72 20 74 68 65 20 41 70  sed under the Ap
+000060: 61 63 68 65 1a 00 f0 00 2c 20 56 65 72 73 69 6f  ache...., Versio
+000070: 6e 20 32 2e 30 20 28 21 00 13 22 1b 00 30 22 29  n 2.0 (!.."..0")
+000080: 3b 43 00 f1 24 79 6f 75 20 6d 61 79 20 6e 6f 74  ;C..$you may not
+000090: 20 75 73 65 20 74 68 69 73 20 66 69 6c 65 20 65   use this file e
+0000a0: 78 63 65 70 74 20 69 6e 20 63 6f 6d 70 6c 69 61  xcept in complia
+0000b0: 6e 63 65 20 77 69 74 68 68 00 03 46 00 00 8a 00  nce withh..F....
+0000c0: 23 20 59 44 00 f8 01 6f 62 74 61 69 6e 20 61 20  # YD...obtain a 
+0000d0: 63 6f 70 79 20 6f 66 29 00 33 20 61 74 b5 00 f1  copy of).3 at...
+0000e0: 01 20 20 20 20 68 74 74 70 3a 2f 2f 77 77 77 2e  .    http://www.
+0000f0: 61 b1 00 62 2e 6f 72 67 2f 6c 2b 00 d3 73 2f 4c  a..b.org/l+..s/L
+000100: 49 43 45 4e 53 45 2d 32 2e 30 35 00 50 55 6e 6c  ICENSE-2.05.PUnl
+000110: 65 73 01 01 f0 16 71 75 69 72 65 64 20 62 79 20  es....quired by 
+000120: 61 70 70 6c 69 63 61 62 6c 65 20 6c 61 77 20 6f  applicable law o
+000130: 72 20 61 67 72 65 65 64 20 74 6f b5 00 f0 02 77  r agreed to....w
+000140: 72 69 74 69 6e 67 2c 20 73 6f 66 74 77 61 72 65  riting, software
+000150: 47 00 99 64 69 73 74 72 69 62 75 74 34 01 04 a3  G..distribut4...
+000160: 00 29 69 73 21 00 f0 05 6f 6e 20 61 6e 20 22 41  .)is!...on an "A
+000170: 53 20 49 53 22 20 42 41 53 49 53 2c 45 00 f0 2a  S IS" BASIS,E..*
+000180: 57 49 54 48 4f 55 54 20 57 41 52 52 41 4e 54 49  WITHOUT WARRANTI
+000190: 45 53 20 4f 52 20 43 4f 4e 44 49 54 49 4f 4e 53  ES OR CONDITIONS
+0001a0: 20 4f 46 20 41 4e 59 20 4b 49 4e 44 2c 20 65 69   OF ANY KIND, ei
+0001b0: 74 68 65 72 20 65 78 70 72 c2 00 40 6f 72 20 69  ther expr..@or i
+0001c0: 4e 01 02 c5 01 49 20 53 65 65 83 00 22 66 6f 93  N....I See.."fo.
+0001d0: 00 f0 13 73 70 65 63 69 66 69 63 20 6c 61 6e 67  ...specific lang
+0001e0: 75 61 67 65 20 67 6f 76 65 72 6e 69 6e 67 20 70  uage governing p
+0001f0: 65 72 6d 69 73 d6 01 50 73 20 61 6e 64 47 00 71  ermis..Ps andG.q
+000200: 6c 69 6d 69 74 61 74 13 00 0d d8 00 03 2e 02 2f  limitat......../
+000210: 2f 0a 70 02 ec 0f 70 02 ec 0f 70 02 1f f0 31 65  /.p...p...p...1e
+000220: 72 6e 69 6e 67 20 70 65 72 6d 69 73 73 69 6f 6e  rning permission
+000230: 73 20 61 6e 64 0a 20 2a 20 6c 69 6d 69 74 61 74  s and. * limitat
+000240: 69 6f 6e 73 20 75 6e 64 65 72 20 74 68 65 20 4c  ions under the L
+000250: 69 63 65 6e 73 65 2e 0a 20 2a 0a 20 2a 2f 0a 00  icense.. *. */..
+000260: 00 00 00 41 ef 46 a7                             ...A.F.
+
+
+CR			:2.03
+File Size(kB)		:1.248
+File Name		:sample.txt
+Output Location: sample.txt.lz4
+
+Compression is successful. No errors found.
+Compressed file size(B)		:615.000
+--------------------------------------------------------------
+                     Xilinx Decompress
+--------------------------------------------------------------
+KT(MBps)		:0.00
+Before decompress: 
+000000: 04 22 4d 18 64 40 a7 54 02 00 00 f1 1b 2f 2a 0a  ."M.d@.T...../*.
+000010: 20 2a 20 28 63 29 20 43 6f 70 79 72 69 67 68 74   * (c) Copyright
+000020: 20 32 30 31 39 20 58 69 6c 69 6e 78 2c 20 49 6e   2019 Xilinx, In
+000030: 63 2e 20 41 6c 6c 20 1c 00 d1 73 20 72 65 73 65  c. All ...s rese
+000040: 72 76 65 64 2e 0a 20 3b 00 f4 0a 4c 69 63 65 6e  rved.. ;...Licen
+000050: 73 65 64 20 75 6e 64 65 72 20 74 68 65 20 41 70  sed under the Ap
+000060: 61 63 68 65 1a 00 f0 00 2c 20 56 65 72 73 69 6f  ache...., Versio
+000070: 6e 20 32 2e 30 20 28 21 00 13 22 1b 00 30 22 29  n 2.0 (!.."..0")
+000080: 3b 43 00 f1 24 79 6f 75 20 6d 61 79 20 6e 6f 74  ;C..$you may not
+000090: 20 75 73 65 20 74 68 69 73 20 66 69 6c 65 20 65   use this file e
+0000a0: 78 63 65 70 74 20 69 6e 20 63 6f 6d 70 6c 69 61  xcept in complia
+0000b0: 6e 63 65 20 77 69 74 68 68 00 03 46 00 00 8a 00  nce withh..F....
+0000c0: 23 20 59 44 00 f8 01 6f 62 74 61 69 6e 20 61 20  # YD...obtain a 
+0000d0: 63 6f 70 79 20 6f 66 29 00 33 20 61 74 b5 00 f1  copy of).3 at...
+0000e0: 01 20 20 20 20 68 74 74 70 3a 2f 2f 77 77 77 2e  .    http://www.
+0000f0: 61 b1 00 62 2e 6f 72 67 2f 6c 2b 00 d3 73 2f 4c  a..b.org/l+..s/L
+000100: 49 43 45 4e 53 45 2d 32 2e 30 35 00 50 55 6e 6c  ICENSE-2.05.PUnl
+000110: 65 73 01 01 f0 16 71 75 69 72 65 64 20 62 79 20  es....quired by 
+000120: 61 70 70 6c 69 63 61 62 6c 65 20 6c 61 77 20 6f  applicable law o
+000130: 72 20 61 67 72 65 65 64 20 74 6f b5 00 f0 02 77  r agreed to....w
+000140: 72 69 74 69 6e 67 2c 20 73 6f 66 74 77 61 72 65  riting, software
+000150: 47 00 99 64 69 73 74 72 69 62 75 74 34 01 04 a3  G..distribut4...
+000160: 00 29 69 73 21 00 f0 05 6f 6e 20 61 6e 20 22 41  .)is!...on an "A
+000170: 53 20 49 53 22 20 42 41 53 49 53 2c 45 00 f0 2a  S IS" BASIS,E..*
+000180: 57 49 54 48 4f 55 54 20 57 41 52 52 41 4e 54 49  WITHOUT WARRANTI
+000190: 45 53 20 4f 52 20 43 4f 4e 44 49 54 49 4f 4e 53  ES OR CONDITIONS
+0001a0: 20 4f 46 20 41 4e 59 20 4b 49 4e 44 2c 20 65 69   OF ANY KIND, ei
+0001b0: 74 68 65 72 20 65 78 70 72 c2 00 40 6f 72 20 69  ther expr..@or i
+0001c0: 4e 01 02 c5 01 49 20 53 65 65 83 00 22 66 6f 93  N....I See.."fo.
+0001d0: 00 f0 13 73 70 65 63 69 66 69 63 20 6c 61 6e 67  ...specific lang
+0001e0: 75 61 67 65 20 67 6f 76 65 72 6e 69 6e 67 20 70  uage governing p
+0001f0: 65 72 6d 69 73 d6 01 50 73 20 61 6e 64 47 00 71  ermis..Ps andG.q
+000200: 6c 69 6d 69 74 61 74 13 00 0d d8 00 03 2e 02 2f  limitat......../
+000210: 2f 0a 70 02 ec 0f 70 02 ec 0f 70 02 1f f0 31 65  /.p...p...p...1e
+000220: 72 6e 69 6e 67 20 70 65 72 6d 69 73 73 69 6f 6e  rning permission
+000230: 73 20 61 6e 64 0a 20 2a 20 6c 69 6d 69 74 61 74  s and. * limitat
+000240: 69 6f 6e 73 20 75 6e 64 65 72 20 74 68 65 20 4c  ions under the L
+000250: 69 63 65 6e 73 65 2e 0a 20 2a 0a 20 2a 2f 0a 00  icense.. *. */..
+000260: 00 00 00 41 ef 46 a7                             ...A.F.
+
+After decompress: 
+000000: 2f 2a 0a 20 2a 20 28 63 29 20 43 6f 70 79 72 69  /*. * (c) Copyri
+000010: 67 68 74 20 32 30 31 39 20 58 69 6c 69 6e 78 2c  ght 2019 Xilinx,
+000020: 20 49 6e 63 2e 20 41 6c 6c 20 72 69 67 68 74 73   Inc. All rights
+000030: 20 72 65 73 65 72 76 65 64 2e 0a 20 2a 0a 20 2a   reserved.. *. *
+000040: 20 4c 69 63 65 6e 73 65 64 20 75 6e 64 65 72 20   Licensed under 
+000050: 74 68 65 20 41 70 61 63 68 65 20 4c 69 63 65 6e  the Apache Licen
+000060: 73 65 2c 20 56 65 72 73 69 6f 6e 20 32 2e 30 20  se, Version 2.0 
+000070: 28 74 68 65 20 22 4c 69 63 65 6e 73 65 22 29 3b  (the "License");
+000080: 0a 20 2a 20 79 6f 75 20 6d 61 79 20 6e 6f 74 20  . * you may not 
+000090: 75 73 65 20 74 68 69 73 20 66 69 6c 65 20 65 78  use this file ex
+0000a0: 63 65 70 74 20 69 6e 20 63 6f 6d 70 6c 69 61 6e  cept in complian
+0000b0: 63 65 20 77 69 74 68 20 74 68 65 20 4c 69 63 65  ce with the Lice
+0000c0: 6e 73 65 2e 0a 20 2a 20 59 6f 75 20 6d 61 79 20  nse.. * You may 
+0000d0: 6f 62 74 61 69 6e 20 61 20 63 6f 70 79 20 6f 66  obtain a copy of
+0000e0: 20 74 68 65 20 4c 69 63 65 6e 73 65 20 61 74 0a   the License at.
+0000f0: 20 2a 0a 20 2a 20 20 20 20 20 68 74 74 70 3a 2f   *. *     http:/
+000100: 2f 77 77 77 2e 61 70 61 63 68 65 2e 6f 72 67 2f  /www.apache.org/
+000110: 6c 69 63 65 6e 73 65 73 2f 4c 49 43 45 4e 53 45  licenses/LICENSE
+000120: 2d 32 2e 30 0a 20 2a 0a 20 2a 20 55 6e 6c 65 73  -2.0. *. * Unles
+000130: 73 20 72 65 71 75 69 72 65 64 20 62 79 20 61 70  s required by ap
+000140: 70 6c 69 63 61 62 6c 65 20 6c 61 77 20 6f 72 20  plicable law or 
+000150: 61 67 72 65 65 64 20 74 6f 20 69 6e 20 77 72 69  agreed to in wri
+000160: 74 69 6e 67 2c 20 73 6f 66 74 77 61 72 65 0a 20  ting, software. 
+000170: 2a 20 64 69 73 74 72 69 62 75 74 65 64 20 75 6e  * distributed un
+000180: 64 65 72 20 74 68 65 20 4c 69 63 65 6e 73 65 20  der the License 
+000190: 69 73 20 64 69 73 74 72 69 62 75 74 65 64 20 6f  is distributed o
+0001a0: 6e 20 61 6e 20 22 41 53 20 49 53 22 20 42 41 53  n an "AS IS" BAS
+0001b0: 49 53 2c 0a 20 2a 20 57 49 54 48 4f 55 54 20 57  IS,. * WITHOUT W
+0001c0: 41 52 52 41 4e 54 49 45 53 20 4f 52 20 43 4f 4e  ARRANTIES OR CON
+0001d0: 44 49 54 49 4f 4e 53 20 4f 46 20 41 4e 59 20 4b  DITIONS OF ANY K
+0001e0: 49 4e 44 2c 20 65 69 74 68 65 72 20 65 78 70 72  IND, either expr
+0001f0: 65 73 73 20 6f 72 20 69 6d 70 6c 69 65 64 2e 0a  ess or implied..
+000200: 20 2a 20 53 65 65 20 74 68 65 20 4c 69 63 65 6e   * See the Licen
+000210: 73 65 20 66 6f 72 20 74 68 65 20 73 70 65 63 69  se for the speci
+000220: 66 69 63 20 6c 61 6e 67 75 61 67 65 20 67 6f 76  fic language gov
+000230: 65 72 6e 69 6e 67 20 70 65 72 6d 69 73 73 69 6f  erning permissio
+000240: 6e 73 20 61 6e 64 0a 20 2a 20 6c 69 6d 69 74 61  ns and. * limita
+000250: 74 69 6f 6e 73 20 75 6e 64 65 72 20 74 68 65 20  tions under the 
+000260: 4c 69 63 65 6e 73 65 2e 0a 20 2a 0a 20 2a 2f 0a  License.. *. */.
+000270: 2f 2a 0a 20 2a 20 28 63 29 20 43 6f 70 79 72 69  /*. * (c) Copyri
+000280: 67 68 74 20 32 30 31 39 20 58 69 6c 69 6e 78 2c  ght 2019 Xilinx,
+000290: 20 49 6e 63 2e 20 41 6c 6c 20 72 69 67 68 74 73   Inc. All rights
+0002a0: 20 72 65 73 65 72 76 65 64 2e 0a 20 2a 0a 20 2a   reserved.. *. *
+0002b0: 20 4c 69 63 65 6e 73 65 64 20 75 6e 64 65 72 20   Licensed under 
+0002c0: 74 68 65 20 41 70 61 63 68 65 20 4c 69 63 65 6e  the Apache Licen
+0002d0: 73 65 2c 20 56 65 72 73 69 6f 6e 20 32 2e 30 20  se, Version 2.0 
+0002e0: 28 74 68 65 20 22 4c 69 63 65 6e 73 65 22 29 3b  (the "License");
+0002f0: 0a 20 2a 20 79 6f 75 20 6d 61 79 20 6e 6f 74 20  . * you may not 
+000300: 75 73 65 20 74 68 69 73 20 66 69 6c 65 20 65 78  use this file ex
+000310: 63 65 70 74 20 69 6e 20 63 6f 6d 70 6c 69 61 6e  cept in complian
+000320: 63 65 20 77 69 74 68 20 74 68 65 20 4c 69 63 65  ce with the Lice
+000330: 6e 73 65 2e 0a 20 2a 20 59 6f 75 20 6d 61 79 20  nse.. * You may 
+000340: 6f 62 74 61 69 6e 20 61 20 63 6f 70 79 20 6f 66  obtain a copy of
+000350: 20 74 68 65 20 4c 69 63 65 6e 73 65 20 61 74 0a   the License at.
+000360: 20 2a 0a 20 2a 20 20 20 20 20 68 74 74 70 3a 2f   *. *     http:/
+000370: 2f 77 77 77 2e 61 70 61 63 68 65 2e 6f 72 67 2f  /www.apache.org/
+000380: 6c 69 63 65 6e 73 65 73 2f 4c 49 43 45 4e 53 45  licenses/LICENSE
+000390: 2d 32 2e 30 0a 20 2a 0a 20 2a 20 55 6e 6c 65 73  -2.0. *. * Unles
+0003a0: 73 20 72 65 71 75 69 72 65 64 20 62 79 20 61 70  s required by ap
+0003b0: 70 6c 69 63 61 62 6c 65 20 6c 61 77 20 6f 72 20  plicable law or 
+0003c0: 61 67 72 65 65 64 20 74 6f 20 69 6e 20 77 72 69  agreed to in wri
+0003d0: 74 69 6e 67 2c 20 73 6f 66 74 77 61 72 65 0a 20  ting, software. 
+0003e0: 2a 20 64 69 73 74 72 69 62 75 74 65 64 20 75 6e  * distributed un
+0003f0: 64 65 72 20 74 68 65 20 4c 69 63 65 6e 73 65 20  der the License 
+000400: 69 73 20 64 69 73 74 72 69 62 75 74 65 64 20 6f  is distributed o
+000410: 6e 20 61 6e 20 22 41 53 20 49 53 22 20 42 41 53  n an "AS IS" BAS
+000420: 49 53 2c 0a 20 2a 20 57 49 54 48 4f 55 54 20 57  IS,. * WITHOUT W
+000430: 41 52 52 41 4e 54 49 45 53 20 4f 52 20 43 4f 4e  ARRANTIES OR CON
+000440: 44 49 54 49 4f 4e 53 20 4f 46 20 41 4e 59 20 4b  DITIONS OF ANY K
+000450: 49 4e 44 2c 20 65 69 74 68 65 72 20 65 78 70 72  IND, either expr
+000460: 65 73 73 20 6f 72 20 69 6d 70 6c 69 65 64 2e 0a  ess or implied..
+000470: 20 2a 20 53 65 65 20 74 68 65 20 4c 69 63 65 6e   * See the Licen
+000480: 73 65 20 66 6f 72 20 74 68 65 20 73 70 65 63 69  se for the speci
+000490: 66 69 63 20 6c 61 6e 67 75 61 67 65 20 67 6f 76  fic language gov
+0004a0: 65 72 6e 69 6e 67 20 70 65 72 6d 69 73 73 69 6f  erning permissio
+0004b0: 6e 73 20 61 6e 64 0a 20 2a 20 6c 69 6d 69 74 61  ns and. * limita
+0004c0: 74 69 6f 6e 73 20 75 6e 64 65 72 20 74 68 65 20  tions under the 
+0004d0: 4c 69 63 65 6e 73 65 2e 0a 20 2a 0a 20 2a 2f 0a  License.. *. */.
+
+	
+File Size(B)		:615.00
+File Name		:sample.txt.lz4
+Output Location: sample.txt.lz4.orig
+
+Decompression is successful. No errors found.
+
+PASSED		sample.txt
+The maximum depth reached by any of the 8 hls::stream() instances in the design is 1248
+The maximum depth reached by any of the 1 hls::stream() instances in the design is 0
+The maximum depth reached by any of the 9 hls::stream() instances in the design is 184
+The maximum depth reached by any of the 10 hls::stream() instances in the design is 597
+The maximum depth reached by any of the 8 hls::stream() instances in the design is 157
+The maximum depth reached by any of the 12 hls::stream() instances in the design is 0
