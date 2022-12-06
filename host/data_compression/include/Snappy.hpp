@@ -17,11 +17,11 @@ uint8_t writeHeader(uint8_t* out);
 uint8_t readHeader(uint8_t* in);
 uint64_t snappyCompressEngineMM(uint8_t* in, uint8_t* out, uint64_t input_size);
 uint64_t snappyCompressEngineStream(uint8_t* in, uint8_t* out, size_t input_size);
-uint64_t snappyDecompressEngineMM(uint8_t* in, uint8_t* out, size_t input_size);
-uint64_t snappyDecompressEngineStream(uint8_t* in, uint8_t* out, size_t input_size);
+uint64_t snappyDecompressEngineMM(uint8_t* in, uint8_t* out, size_t input_size, uint32_t maxOutputSize);
+uint64_t snappyDecompressEngineStream(uint8_t* in, uint8_t* out, size_t input_size, uint32_t maxOutputSize);
 uint64_t snappyCompressMM(uint8_t* in, uint8_t* out, uint64_t input_size);
 uint64_t snappyCompressStream(uint8_t* in, uint8_t* out, uint64_t input_size);
-uint64_t snappyDecompressMM(uint8_t* in, uint8_t* out, uint64_t input_size, uint32_t maxOutputSize);
-uint64_t snappyDecompressStream(uint8_t* in, uint8_t* out, uint64_t input_size, uint32_t maxOutputSize);
+uint64_t snappyDecompressMM(uint8_t* in, uint8_t* out, uint32_t input_size, uint32_t maxOutputSize);
+uint64_t snappyDecompressStream(uint8_t* in, uint8_t* out, uint32_t input_size, uint32_t maxOutputSize);
 } //internal
 } //dataCompression
