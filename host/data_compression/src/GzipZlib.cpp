@@ -338,8 +338,8 @@ uint32_t gzipZlibDecompressionInternalStream(uint8_t* in, uint8_t* out, uint32_t
 	buffer_size.create(Application::getInstance().getContext(), CL_MEM_USE_HOST_PTR | CL_MEM_WRITE_ONLY, sizeof(uint32_t), dbuf_outSize.data());
 	buffer_status.create(Application::getInstance().getContext(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, sizeof(uint32_t), h_dcompressStatus.data());
 
-	data_writer_kernel.create(Application::getInstance().getProgram(), "xilGzipZlibMM2S:{xilGzipZlibMM2S_1}");
-	data_reader_kernel.create(Application::getInstance().getProgram(), "xilGzipZlibS2MM:{xilGzipZlibS2MM_1}");
+	data_writer_kernel.create(Application::getInstance().getProgram(), "xilMM2S:{xilMM2S_1}");
+	data_reader_kernel.create(Application::getInstance().getProgram(), "xilS2MM:{xilS2MM_1}");
 
 	data_writer_kernel->setArg(0, *(buffer_dec_input));
     data_writer_kernel->setArg(1, inBufferSize);

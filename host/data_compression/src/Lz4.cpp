@@ -2,7 +2,7 @@
 
 namespace dataCompression{
 namespace internal{
-uint8_t writeLz4Header(uint8_t* out, size_t input_size) {
+uint8_t writeLz4Header(uint8_t* out, size_t input_size){
     uint8_t fileIdx = 0;
     (out[fileIdx++]) = xf::compression::MAGIC_BYTE_1;
     (out[fileIdx++]) = xf::compression::MAGIC_BYTE_2;
@@ -58,7 +58,7 @@ uint8_t writeLz4Header(uint8_t* out, size_t input_size) {
     return fileIdx;
 }
 
-uint8_t writeLz4Footer(uint8_t* in, uint8_t* out, uint64_t input_size) {
+uint8_t writeLz4Footer(uint8_t* in, uint8_t* out, uint64_t input_size){
     uint8_t fileIdx = 0;
     uint32_t* zero_ptr = 0;
     memcpy(out, &zero_ptr, 4);
@@ -71,7 +71,7 @@ uint8_t writeLz4Footer(uint8_t* in, uint8_t* out, uint64_t input_size) {
     return fileIdx;
 }
 
-uint8_t readLz4Header(uint8_t* in) {
+uint8_t readLz4Header(uint8_t* in){
     uint8_t fileIdx = 0;
     // Read magic header 4 bytes
     char c = 0;
@@ -129,7 +129,7 @@ uint8_t readLz4Header(uint8_t* in) {
     return fileIdx;
 }
 
-uint64_t lz4CompressEngineMM(uint8_t* in, uint8_t* out, size_t input_size) {
+uint64_t lz4CompressEngineMM(uint8_t* in, uint8_t* out, size_t input_size){
     uint32_t host_buffer_size = HOST_BUFFER_SIZE;
     uint32_t max_num_blks = (host_buffer_size) / (BLOCK_SIZE_IN_KB * 1024);
     std::vector<uint8_t, aligned_allocator<uint8_t>> h_buf_in(host_buffer_size);
@@ -264,7 +264,7 @@ uint64_t lz4CompressEngineMM(uint8_t* in, uint8_t* out, size_t input_size) {
     return outIdx;
 }
 
-uint64_t lz4CompressEngineStream(uint8_t* in, uint8_t* out, size_t input_size) {
+uint64_t lz4CompressEngineStream(uint8_t* in, uint8_t* out, size_t input_size){
     std::vector<uint8_t, aligned_allocator<uint8_t>> h_buf_in(BLOCK_SIZE_IN_KB * 1024);
     std::vector<uint8_t, aligned_allocator<uint8_t>> h_buf_out(BLOCK_SIZE_IN_KB * 1024);
 
@@ -284,7 +284,7 @@ uint64_t lz4CompressEngineStream(uint8_t* in, uint8_t* out, size_t input_size) {
         new cl::Buffer(Application::getInstance().getContext(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, host_buffer_size, h_buf_out.data());
 
     cl::CommandQueue *m_q= new cl::CommandQueue(Application::getInstance().getContext(), Application::getInstance().getDevice(), CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE | CL_QUEUE_PROFILING_ENABLE);
-    cl::Kernel *compress_data_mover_kernel = new cl::Kernel(Application::getInstance().getProgram(), "xilCompDatamover:{xilCompDatamover_1}");
+    cl::Kernel *compress_data_mover_kernel = new cl::Kernel(Application::getInstance().getProgram(), "xilCompressDatamover:{xilCompressDatamover_2}");
     cl::Kernel *compress_kernel_lz4 = new cl::Kernel(Application::getInstance().getProgram(), "xilLz4CompressStream:{xilLz4CompressStream_1}");
 
     // sequentially copy block sized buffers to kernel and wait for them to finish before enqueueing
@@ -361,7 +361,7 @@ uint64_t lz4CompressEngineStream(uint8_t* in, uint8_t* out, size_t input_size) {
 
 }
 
-uint64_t lz4DecompressEngineMM(uint8_t* in, uint8_t* out, size_t input_size, size_t maxOutputSize) {
+uint64_t lz4DecompressEngineMM(uint8_t* in, uint8_t* out, size_t input_size, size_t maxOutputSize){
     size_t host_buffer_size = maxOutputSize;
     uint32_t max_num_blks = (host_buffer_size) / (BLOCK_SIZE_IN_KB * 1024);
     std::vector<uint8_t, aligned_allocator<uint8_t>> h_buf_in(host_buffer_size);
@@ -399,7 +399,7 @@ uint64_t lz4DecompressEngineMM(uint8_t* in, uint8_t* out, size_t input_size, siz
                                             sizeof(uint32_t) * host_buffer_size, h_compressSize.data());
 
     cl::CommandQueue *m_q= new cl::CommandQueue(Application::getInstance().getContext(), Application::getInstance().getDevice(), CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE | CL_QUEUE_PROFILING_ENABLE);
-    cl::Kernel *decompress_kernel_lz4 = new cl::Kernel(Application::getInstance().getProgram(), "xilLz4DecompressMM:{xilLz4Decompress_1MM}");
+    cl::Kernel *decompress_kernel_lz4 = new cl::Kernel(Application::getInstance().getProgram(), "xilLz4DecompressMM:{xilLz4DecompressMM_1}");
 
     for (; inIdx < input_size;) {
         compute_cu = 0;
@@ -525,7 +525,7 @@ uint64_t lz4DecompressEngineMM(uint8_t* in, uint8_t* out, size_t input_size, siz
     return total_decomression_size;
 }
 
-uint64_t lz4DecompressEngineStream(uint8_t* in, uint8_t* out, size_t input_size, size_t maxOutputSize) {
+uint64_t lz4DecompressEngineStream(uint8_t* in, uint8_t* out, size_t input_size, size_t maxOutputSize){
     std::vector<uint32_t, aligned_allocator<uint32_t> > decompressSize;
     uint32_t outputSize = maxOutputSize;
     
@@ -545,14 +545,14 @@ uint64_t lz4DecompressEngineStream(uint8_t* in, uint8_t* out, size_t input_size,
     uint32_t inputSize_32t = uint32_t(input_size);
 
     // set kernel arguments
-    cl::Kernel *decompress_data_mover_kernel = new cl::Kernel(Application::getInstance().getProgram(), "xilDecompDatamover:{xilDecompDatamover_1}");
+    cl::Kernel *decompress_data_mover_kernel = new cl::Kernel(Application::getInstance().getProgram(), "xilDecompressDatamover:{xilDecompressDatamover_2}");
     int narg = 0;
     decompress_data_mover_kernel->setArg(narg++, *(buffer_input));
     decompress_data_mover_kernel->setArg(narg++, *(buffer_output));
     decompress_data_mover_kernel->setArg(narg++, inputSize_32t);
     decompress_data_mover_kernel->setArg(narg, *(bufferOutputSize));
 
-    cl::Kernel *decompress_kernel_lz4 = new cl::Kernel(Application::getInstance().getProgram(), "xilLz4CompressStream:{xilLz4CompressStream_1}");
+    cl::Kernel *decompress_kernel_lz4 = new cl::Kernel(Application::getInstance().getProgram(), "xilLz4DecompressStream:{xilLz4DecompressStream_1}");
     decompress_kernel_lz4->setArg(3, inputSize_32t);
 
     // Migrate Memory - Map host to device buffers
@@ -582,20 +582,33 @@ uint64_t lz4DecompressEngineStream(uint8_t* in, uint8_t* out, size_t input_size,
     return uncompressedSize;
 }
 
-uint64_t lz4CompressMM(uint8_t* in, uint8_t* out, size_t input_size) {
+uint64_t lz4CompressMM(uint8_t* in, uint8_t* out, size_t input_size){
     uint64_t outIdx=0;
 
     // LZ4 header
-    outIdx += writeLz4Header(out, input_size);
+    outIdx+=writeLz4Header(out+outIdx, input_size);
 
-    uint64_t enbytes = lz4CompressEngineMM(in, out, input_size);
+    uint64_t enbytes=lz4CompressEngineMM(in, out+outIdx, input_size);
     outIdx+=enbytes;
 
-    outIdx+=writeLz4Footer(in, out, input_size);
+    outIdx+=writeLz4Footer(in, out+outIdx, input_size);
     return outIdx;
 }
 
-uint64_t lz4DecompressMM(uint8_t* in, uint8_t* out, size_t input_size, size_t maxOutputSize) {
+uint64_t lz4CompressStream(uint8_t* in, uint8_t* out, size_t input_size){
+    uint64_t outIdx=0;
+
+    // LZ4 header
+    outIdx += writeLz4Header(out+outIdx, input_size);
+
+    uint64_t enbytes = lz4CompressEngineStream(in, out+outIdx, input_size);
+    outIdx+=enbytes;
+
+    outIdx+=writeLz4Footer(in, out+outIdx, input_size);
+    return outIdx;
+}
+
+uint64_t lz4DecompressMM(uint8_t* in, uint8_t* out, size_t input_size, size_t maxOutputSize){
     in += readLz4Header(in);
     input_size = input_size - 15;
 
@@ -610,26 +623,5 @@ uint64_t lz4DecompressStream(uint8_t* in, uint8_t* out, size_t input_size, size_
 
     return debytes;
 }
-
-// uint64_t lz4CompressMM(uint8_t* in, uint8_t* out, size_t input_size) {
-//     uint64_t outIdx=0;
-
-//     // LZ4 header
-//     outIdx += writeLz4Header(out, input_size);
-
-//     uint64_t enbytes;
-
-//     if (m_lz4Stream) {
-//         enbytes = compressEngineStreamSeq(in, out, m_InputSize);
-//     } else {
-//         enbytes = compressEngineSeq(in, out, m_InputSize);
-//     }
-
-//     // lz4 frame formatting
-//     out = out + enbytes;
-//     writeFooter(in, out);
-//     enbytes += m_frameByteCount;
-//     return enbytes;
-// }
 }
 }

@@ -22,7 +22,7 @@
  * This file is part of Vitis Data Compression Library.
  */
 
-#include "xilGzipZlibMM2S.hpp"
+#include "xilMM2S.hpp"
 
 template <int STREAMDWIDTH>
 void streamDataDm2kSync(hls::stream<ap_uint<STREAMDWIDTH> >& in,
@@ -50,7 +50,7 @@ streamDataDm2kSync:
 }
 
 extern "C" {
-void xilGzipZlibMM2S(uintMemWidth_t* in,
+void xilMM2S(uintMemWidth_t* in,
                  uint32_t inputSize,
                  uint32_t last,
                  hls::stream<ap_axiu<c_inStreamDwidth, 0, 0, 0> >& outStream) {

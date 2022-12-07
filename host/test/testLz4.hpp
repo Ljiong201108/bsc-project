@@ -39,22 +39,29 @@ void testLz4(int argc, char** argv){
     // Run API to launch the compress or decompress engine
     d.run(lz4.get(), enable_profile);
 #else
-    // std::vector<uint8_t> in, out;
-	// readFile("sample.txt", in, out);
-	// std::vector<uint8_t> out2;
-    // out2.resize(20 * in.size());
+    std::vector<uint8_t> in, out;
+	readFile("sample.txt", in, out);
+	std::vector<uint8_t> out2;
+    out2.resize(20 * in.size());
 
-    // uint64_t inputSize=in.size(), outputSize, outputSize2;
+    uint64_t inputSize=in.size(), outputSize, outputSize2;
 
-    // std::cout<<"Start test Snappy"<<std::endl;
-    // outputSize=dataCompression::internal::snappyCompressStream(in.data(), out.data(), inputSize);
-    // hexdump(out.data(), outputSize);
-	// std::cout<<"------------------------"<<std::endl;
-    // std::cout<<"MM solution: "<<std::endl;
-    // dataCompression::internal::snappyDecompressMM(out.data(), out2.data(), outputSize, out2.size());
-    // std::cout<<"Stream solution: "<<std::endl;
-	// dataCompression::internal::snappyDecompressStream(out.data(), out2.data(), outputSize, out2.size());
-    // std::cout<<"End test Snappy"<<std::endl;
+    std::cout<<"Start test Lz4"<<std::endl;
+    std::cout<<"Original: "<<std::endl;
+    hexdump(in.data(), inputSize);
+    outputSize=dataCompression::internal::lz4CompressStream(in.data(), out.data(), inputSize);
+    std::cout<<"------------------------"<<std::endl;
+    std::cout<<"Compressed: "<<std::endl;
+    hexdump(out.data(), outputSize);
+	std::cout<<"------------------------"<<std::endl;
+    std::cout<<"MM solution: "<<std::endl;
+    outputSize2=dataCompression::internal::lz4DecompressMM(out.data(), out2.data(), outputSize, out2.size());
+    hexdump(out2.data(), outputSize2);
+    std::cout<<"------------------------"<<std::endl;
+    std::cout<<"Stream solution: "<<std::endl;
+	outputSize2=dataCompression::internal::lz4DecompressStream(out.data(), out2.data(), outputSize, out2.size());
+    hexdump(out2.data(), outputSize2);
+    std::cout<<"End test Snappy"<<std::endl;
 #endif
 }
 } //testSnappy

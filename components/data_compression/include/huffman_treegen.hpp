@@ -783,7 +783,7 @@ traverse_tree:
     }
 }
 
-void truncateTree(Histogram* length_histogram, uint16_t c_tree_depth, int max_bit_len) {
+inline void truncateTree(Histogram* length_histogram, uint16_t c_tree_depth, int max_bit_len) {
     int j = max_bit_len;
 move_nodes:
     for (uint16_t i = c_tree_depth - 1; i > max_bit_len; --i) {
@@ -816,7 +816,7 @@ move_nodes:
     }
 }
 
-void truncateTreeStream(hls::stream<DSVectorStream_dt<Histogram, 1> >& inLengthHistogramStream,
+inline void truncateTreeStream(hls::stream<DSVectorStream_dt<Histogram, 1> >& inLengthHistogramStream,
                         hls::stream<DSVectorStream_dt<Histogram, 1> >& outLengthHistogramStream) {
     const uint16_t c_maxBitLen[2] = {c_blnCodeCount, c_blnCodeCount};
     Histogram length_histogram[c_lengthHistogram];
@@ -2035,7 +2035,7 @@ send_tree_outer:
     }
 }
 
-void sendProcTrees(hls::stream<ap_uint<c_tgnSymbolBits> >& maxLdCodes,
+inline void sendProcTrees(hls::stream<ap_uint<c_tgnSymbolBits> >& maxLdCodes,
                    hls::stream<ap_uint<c_tgnSymbolBits> >& maxBlCodes,
                    hls::stream<DSVectorStream_dt<Codeword, 1> >& Ldcodes,
                    hls::stream<DSVectorStream_dt<Codeword, 1> >& Blcodes,
@@ -2287,7 +2287,7 @@ send_all_hf_data:
     }
 }
 
-void codeWordDistributor(hls::stream<DSVectorStream_dt<Codeword, 1> >& inStreamCode,
+inline void codeWordDistributor(hls::stream<DSVectorStream_dt<Codeword, 1> >& inStreamCode,
                          hls::stream<DSVectorStream_dt<Codeword, 1> >& outStreamCode1,
                          hls::stream<DSVectorStream_dt<Codeword, 1> >& outStreamCode2,
                          hls::stream<ap_uint<c_tgnSymbolBits> >& inStreamMaxCode,

@@ -78,5 +78,17 @@ inline uint8_t get_bsize(uint32_t c_input_size) {
             break;
     }
 }
+
+uint8_t writeLz4Header(uint8_t* out, size_t input_size);
+uint8_t writeLz4Footer(uint8_t* in, uint8_t* out, uint64_t input_size);
+uint8_t readLz4Header(uint8_t* in);
+uint64_t lz4CompressEngineMM(uint8_t* in, uint8_t* out, size_t input_size);
+uint64_t lz4CompressEngineStream(uint8_t* in, uint8_t* out, size_t input_size);
+uint64_t lz4DecompressEngineMM(uint8_t* in, uint8_t* out, size_t input_size, size_t maxOutputSize);
+uint64_t lz4DecompressEngineStream(uint8_t* in, uint8_t* out, size_t input_size, size_t maxOutputSize);
+uint64_t lz4CompressMM(uint8_t* in, uint8_t* out, size_t input_size);
+uint64_t lz4CompressStream(uint8_t* in, uint8_t* out, size_t input_size);
+uint64_t lz4DecompressMM(uint8_t* in, uint8_t* out, size_t input_size, size_t maxOutputSize);
+uint64_t lz4DecompressStream(uint8_t* in, uint8_t* out, size_t input_size, size_t maxOutputSize);
 }// internal
 }// dataCompression
