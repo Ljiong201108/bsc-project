@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 #ifndef _XFCOMPRESSION_ZSTD_COMPRESS_STREAM_HPP_
 #define _XFCOMPRESSION_ZSTD_COMPRESS_STREAM_HPP_
 
@@ -46,7 +47,9 @@
 #define ZSTD_BLOCK_SIZE_KB 32
 #endif
 
+#ifndef FREE_RUNNING_KERNEL
 #define FREE_RUNNING_KERNEL
+#endif
 
 // const int c_streamDWidth = 8 * MULTIPLE_BYTES;
 // window size is kept equal to block size in this design

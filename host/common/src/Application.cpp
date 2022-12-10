@@ -1,10 +1,5 @@
 #include "Application.hpp"
 
-Application& Application::getInstance(){
-    static Application instance(xclbinFileName);
-    return instance;
-}
-
 void Application::get_xilinx_devices(){
     std::vector<cl::Platform> platforms;
     OCL_CHECK(m_err, m_err = cl::Platform::get(&platforms))
@@ -54,22 +49,6 @@ Application::Application(const std::string &binaryFileName){
 
 Application::~Application(){
     delete[] m_xclbinBuffer;
-}
-
-cl_int &Application::getErr(){
-    return m_err;
-}
-
-cl::Device &Application::getDevice(){
-    return m_device;
-}
-
-cl::Program &Application::getProgram(){
-    return m_program;
-}
-
-cl::Context &Application::getContext(){
-    return m_context;
 }
 
 // CommandQueuePointer &Application::getOrCreateCommandQueue(const std::string &identifier, cl_command_queue_properties properties){

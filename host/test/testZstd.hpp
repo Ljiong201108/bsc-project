@@ -10,8 +10,8 @@
 
 #include "Helper.hpp"
 
-namespace testLz4{
-void testLz4(int argc, char** argv){
+namespace testZstd{
+void testZstd(int argc, char** argv){
 #ifdef XILINX
     bool enable_profile = false;
     compressBase::State flow = compressBase::BOTH;
@@ -32,7 +32,7 @@ void testLz4(int argc, char** argv){
 
     uint64_t inputSize=in.size(), outputSize, outputSize2;
 
-    std::cout<<"Start test Lz4"<<std::endl;
+    std::cout<<"Start test Zstd"<<std::endl;
     std::cout<<"Original: "<<std::endl;
     hexdump(in.data(), inputSize);
     outputSize=dataCompression::internal::zstdCompressStream(in.data(), out.data(), inputSize);
@@ -43,7 +43,7 @@ void testLz4(int argc, char** argv){
     std::cout<<"Stream solution: "<<std::endl;
 	outputSize2=dataCompression::internal::zstdDecompressStream(out.data(), out2.data(), outputSize, out2.size());
     hexdump(out2.data(), outputSize2);
-    std::cout<<"End test Snappy"<<std::endl;
+    std::cout<<"End test Zstd"<<std::endl;
 #endif
 }
-} //testSnappy
+} //testZstd

@@ -30,7 +30,7 @@ void testSnappy(int argc, char** argv){
 	std::vector<uint8_t> out2;
     out2.resize(20 * in.size());
 
-    uint64_t inputSize=in.size(), outputSize, outputSize2;
+    uint64_t inputSize=in.size(), outputSize, outputSize2=2048;
 
     std::cout<<"Start test Snappy"<<std::endl;
     outputSize=dataCompression::internal::snappyCompressStream(in.data(), out.data(), inputSize);

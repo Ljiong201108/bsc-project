@@ -1,0 +1,199 @@
+
+
+================================================================
+== Vitis HLS Report for 'xilSnappyCompressStream'
+================================================================
+* Date:           Sat Dec 10 03:39:55 2022
+
+* Version:        2020.2 (Build 3064766 on Wed Nov 18 09:12:47 MST 2020)
+* Project:        xilSnappyCompressStream
+* Solution:       solution (Vitis Kernel Flow Target)
+* Product family: zynquplus
+* Target device:  xczu7ev-ffvc1156-2-e
+
+
+================================================================
+== Performance Estimates
+================================================================
++ Timing: 
+    * Summary: 
+    +--------+---------+----------+------------+
+    |  Clock |  Target | Estimated| Uncertainty|
+    +--------+---------+----------+------------+
+    |ap_clk  |  6.67 ns|  4.887 ns|     1.80 ns|
+    +--------+---------+----------+------------+
+
++ Latency: 
+    * Summary: 
+    +---------+---------+----------+----------+-----+-----+----------+
+    |  Latency (cycles) |  Latency (absolute) |  Interval | Pipeline |
+    |   min   |   max   |    min   |    max   | min | max |   Type   |
+    +---------+---------+----------+----------+-----+-----+----------+
+    |        ?|        ?|         ?|         ?|    ?|    ?|  dataflow|
+    +---------+---------+----------+----------+-----+-----+----------+
+
+    + Detail: 
+        * Instance: 
+        +-------------------------------------+------------------------------------+---------+---------+----------+----------+-----+-----+----------+
+        |                                     |                                    |  Latency (cycles) |  Latency (absolute) |  Interval | Pipeline |
+        |               Instance              |               Module               |   min   |   max   |    min   |    max   | min | max |   Type   |
+        +-------------------------------------+------------------------------------+---------+---------+----------+----------+-----+-----+----------+
+        |lzCompress_6_4_65536_6_1_4096_64_U0  |lzCompress_6_4_65536_6_1_4096_64_s  |        ?|        ?|         ?|         ?|    ?|    ?|      none|
+        |snappyCompress_60_64_8_U0            |snappyCompress_60_64_8_s            |        ?|        ?|         ?|         ?|    ?|    ?|  dataflow|
+        |lzBooster_64_16384_64_U0             |lzBooster_64_16384_64_s             |        ?|        ?|         ?|         ?|    ?|    ?|      none|
+        |lzBestMatchFilter_6_65536_U0         |lzBestMatchFilter_6_65536_s         |        ?|        ?|         ?|         ?|    ?|    ?|      none|
+        |kStreamRead_8u_U0                    |kStreamRead_8u_s                    |        ?|        ?|         ?|         ?|    ?|    ?|      none|
+        |kStreamWrite_8u_U0                   |kStreamWrite_8u_s                   |        ?|        ?|         ?|         ?|    ?|    ?|      none|
+        +-------------------------------------+------------------------------------+---------+---------+----------+----------+-----+-----+----------+
+
+        * Loop: 
+        N/A
+
+
+
+================================================================
+== Utilization Estimates
+================================================================
+* Summary: 
++-----------------+---------+------+--------+--------+-----+
+|       Name      | BRAM_18K|  DSP |   FF   |   LUT  | URAM|
++-----------------+---------+------+--------+--------+-----+
+|DSP              |        -|     -|       -|       -|    -|
+|Expression       |        -|     -|       0|      14|    -|
+|FIFO             |        -|     -|    1089|     733|    -|
+|Instance         |        8|     -|    3193|    6149|    6|
+|Memory           |        -|     -|       -|       -|    -|
+|Multiplexer      |        -|     -|       -|       -|    -|
+|Register         |        -|     -|       6|       -|    -|
++-----------------+---------+------+--------+--------+-----+
+|Total            |        8|     0|    4288|    6896|    6|
++-----------------+---------+------+--------+--------+-----+
+|Available        |      624|  1728|  460800|  230400|   96|
++-----------------+---------+------+--------+--------+-----+
+|Utilization (%)  |        1|     0|      ~0|       2|    6|
++-----------------+---------+------+--------+--------+-----+
+
++ Detail: 
+    * Instance: 
+    +-------------------------------------+------------------------------------+---------+----+-----+------+-----+
+    |               Instance              |               Module               | BRAM_18K| DSP|  FF |  LUT | URAM|
+    +-------------------------------------+------------------------------------+---------+----+-----+------+-----+
+    |control_s_axi_U                      |control_s_axi                       |        0|   0|   74|   104|    0|
+    |kStreamRead_8u_U0                    |kStreamRead_8u_s                    |        0|   0|   48|   169|    0|
+    |kStreamWrite_8u_U0                   |kStreamWrite_8u_s                   |        0|   0|    6|    94|    0|
+    |lzBestMatchFilter_6_65536_U0         |lzBestMatchFilter_6_65536_s         |        0|   0|  500|   621|    0|
+    |lzBooster_64_16384_64_U0             |lzBooster_64_16384_64_s             |        8|   0|  749|   958|    0|
+    |lzCompress_6_4_65536_6_1_4096_64_U0  |lzCompress_6_4_65536_6_1_4096_64_s  |        0|   0|  858|  2465|    6|
+    |snappyCompress_60_64_8_U0            |snappyCompress_60_64_8_s            |        0|   0|  958|  1738|    0|
+    +-------------------------------------+------------------------------------+---------+----+-----+------+-----+
+    |Total                                |                                    |        8|   0| 3193|  6149|    6|
+    +-------------------------------------+------------------------------------+---------+----+-----+------+-----+
+
+    * DSP: 
+    N/A
+
+    * Memory: 
+    N/A
+
+    * FIFO: 
+    +-------------------+---------+----+----+-----+------+-----+---------+
+    |        Name       | BRAM_18K| FF | LUT| URAM| Depth| Bits| Size:D*B|
+    +-------------------+---------+----+----+-----+------+-----+---------+
+    |bestMatchStream_U  |        0|  99|   0|    -|     8|   32|      256|
+    |boosterStream_U    |        0|  99|   0|    -|     8|   32|      256|
+    |compressdStream_U  |        0|  99|   0|    -|     8|   32|      256|
+    |compressedSize_U   |        0|  99|   0|    -|     2|   32|       64|
+    |inStream_U         |        0|  99|   0|    -|     2|    8|       16|
+    |inputSize_c16_U    |        0|  99|   0|    -|     2|   32|       64|
+    |inputSize_c17_U    |        0|  99|   0|    -|     2|   32|       64|
+    |inputSize_c18_U    |        0|  99|   0|    -|     2|   32|       64|
+    |inputSize_c_U      |        0|  99|   0|    -|     2|   32|       64|
+    |outStream_U        |        0|  99|   0|    -|     2|    8|       16|
+    |snappyOutEos_U     |        0|  99|   0|    -|     8|    1|        8|
+    +-------------------+---------+----+----+-----+------+-----+---------+
+    |Total              |        0|1089|   0|    0|    46|  273|     1128|
+    +-------------------+---------+----+----+-----+------+-----+---------+
+
+    * Expression: 
+    +-----------------------+----------+----+---+----+------------+------------+
+    |     Variable Name     | Operation| DSP| FF| LUT| Bitwidth P0| Bitwidth P1|
+    +-----------------------+----------+----+---+----+------------+------------+
+    |ap_ext_blocking_n      |       and|   0|  0|   2|           1|           1|
+    |ap_ext_blocking_sub_n  |       and|   0|  0|   2|           1|           1|
+    |ap_idle                |       and|   0|  0|   2|           1|           1|
+    |ap_int_blocking_n      |       and|   0|  0|   2|           1|           1|
+    |ap_int_blocking_sub_n  |       and|   0|  0|   2|           1|           1|
+    |ap_str_blocking_n      |       and|   0|  0|   2|           1|           1|
+    |ap_str_blocking_sub_n  |       and|   0|  0|   2|           1|           1|
+    +-----------------------+----------+----+---+----+------------+------------+
+    |Total                  |          |   0|  0|  14|           7|           7|
+    +-----------------------+----------+----+---+----+------------+------------+
+
+    * Multiplexer: 
+    N/A
+
+    * Register: 
+    +-----------------------+---+----+-----+-----------+
+    |          Name         | FF| LUT| Bits| Const Bits|
+    +-----------------------+---+----+-----+-----------+
+    |ap_ext_blocking_n_reg  |  1|   0|    1|          0|
+    |ap_int_blocking_n_reg  |  1|   0|    1|          0|
+    |ap_rst_n_inv           |  1|   0|    1|          0|
+    |ap_rst_reg_1           |  1|   0|    1|          0|
+    |ap_rst_reg_2           |  1|   0|    1|          0|
+    |ap_str_blocking_n_reg  |  1|   0|    1|          0|
+    +-----------------------+---+----+-----+-----------+
+    |Total                  |  6|   0|    6|          0|
+    +-----------------------+---+----+-----+-----------+
+
+
+
+================================================================
+== Interface
+================================================================
+* Summary: 
++-----------------------+-----+-----+---------------+-------------------------+--------------+
+|       RTL Ports       | Dir | Bits|    Protocol   |      Source Object      |    C Type    |
++-----------------------+-----+-----+---------------+-------------------------+--------------+
+|s_axi_control_AWVALID  |   in|    1|          s_axi|                  control|        scalar|
+|s_axi_control_AWREADY  |  out|    1|          s_axi|                  control|        scalar|
+|s_axi_control_AWADDR   |   in|    5|          s_axi|                  control|        scalar|
+|s_axi_control_WVALID   |   in|    1|          s_axi|                  control|        scalar|
+|s_axi_control_WREADY   |  out|    1|          s_axi|                  control|        scalar|
+|s_axi_control_WDATA    |   in|   32|          s_axi|                  control|        scalar|
+|s_axi_control_WSTRB    |   in|    4|          s_axi|                  control|        scalar|
+|s_axi_control_ARVALID  |   in|    1|          s_axi|                  control|        scalar|
+|s_axi_control_ARREADY  |  out|    1|          s_axi|                  control|        scalar|
+|s_axi_control_ARADDR   |   in|    5|          s_axi|                  control|        scalar|
+|s_axi_control_RVALID   |  out|    1|          s_axi|                  control|        scalar|
+|s_axi_control_RREADY   |   in|    1|          s_axi|                  control|        scalar|
+|s_axi_control_RDATA    |  out|   32|          s_axi|                  control|        scalar|
+|s_axi_control_RRESP    |  out|    2|          s_axi|                  control|        scalar|
+|s_axi_control_BVALID   |  out|    1|          s_axi|                  control|        scalar|
+|s_axi_control_BREADY   |   in|    1|          s_axi|                  control|        scalar|
+|s_axi_control_BRESP    |  out|    2|          s_axi|                  control|        scalar|
+|ap_clk                 |   in|    1|  ap_ctrl_chain|  xilSnappyCompressStream|  return value|
+|ap_rst_n               |   in|    1|  ap_ctrl_chain|  xilSnappyCompressStream|  return value|
+|event_done             |  out|    1|  ap_ctrl_chain|  xilSnappyCompressStream|  return value|
+|interrupt              |  out|    1|  ap_ctrl_chain|  xilSnappyCompressStream|  return value|
+|event_start            |  out|    1|  ap_ctrl_chain|  xilSnappyCompressStream|  return value|
+|stall_start_ext        |  out|    1|  ap_ctrl_chain|  xilSnappyCompressStream|  return value|
+|stall_done_ext         |  out|    1|  ap_ctrl_chain|  xilSnappyCompressStream|  return value|
+|stall_start_str        |  out|    1|  ap_ctrl_chain|  xilSnappyCompressStream|  return value|
+|stall_done_str         |  out|    1|  ap_ctrl_chain|  xilSnappyCompressStream|  return value|
+|stall_start_int        |  out|    1|  ap_ctrl_chain|  xilSnappyCompressStream|  return value|
+|stall_done_int         |  out|    1|  ap_ctrl_chain|  xilSnappyCompressStream|  return value|
+|inaxistream_TDATA      |   in|    8|           axis|     inaxistream_V_data_V|       pointer|
+|inaxistream_TKEEP      |   in|    1|           axis|     inaxistream_V_keep_V|       pointer|
+|inaxistream_TSTRB      |   in|    1|           axis|     inaxistream_V_strb_V|       pointer|
+|inaxistream_TLAST      |   in|    1|           axis|     inaxistream_V_last_V|       pointer|
+|inaxistream_TVALID     |   in|    1|           axis|     inaxistream_V_last_V|       pointer|
+|inaxistream_TREADY     |  out|    1|           axis|     inaxistream_V_last_V|       pointer|
+|outaxistream_TDATA     |  out|    8|           axis|    outaxistream_V_data_V|       pointer|
+|outaxistream_TKEEP     |  out|    1|           axis|    outaxistream_V_keep_V|       pointer|
+|outaxistream_TSTRB     |  out|    1|           axis|    outaxistream_V_strb_V|       pointer|
+|outaxistream_TLAST     |  out|    1|           axis|    outaxistream_V_last_V|       pointer|
+|outaxistream_TVALID    |  out|    1|           axis|    outaxistream_V_last_V|       pointer|
+|outaxistream_TREADY    |   in|    1|           axis|    outaxistream_V_last_V|       pointer|
++-----------------------+-----+-----+---------------+-------------------------+--------------+
+

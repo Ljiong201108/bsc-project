@@ -61,7 +61,7 @@ void testLz4(int argc, char** argv){
     std::cout<<"Stream solution: "<<std::endl;
 	outputSize2=dataCompression::internal::lz4DecompressStream(out.data(), out2.data(), outputSize, out2.size());
     hexdump(out2.data(), outputSize2);
-    std::cout<<"End test Snappy"<<std::endl;
+    std::cout<<"End test Lz4"<<std::endl;
 #endif
 }
 } //testSnappy

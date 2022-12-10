@@ -6,5 +6,6 @@
 class CommandQueuePointer : public Pointer<cl::CommandQueue>{
 public:
     CommandQueuePointer();
+    CommandQueuePointer(const cl::Context& context, const cl::Device& device, cl_command_queue_properties properties=0);
     CommandQueuePointer &create(const cl::Context& context, const cl::Device& device, cl_command_queue_properties properties=0);
 };

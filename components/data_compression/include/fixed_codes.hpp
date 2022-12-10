@@ -14,6 +14,8 @@
  * limitations under the License.
  *
  */
+#pragma once
+
 #define STABLE_SIZE 544
 const uint8_t fixed_litml_op[STABLE_SIZE] = {
     96, 0,  0,  20, 18, 0,  0,  0,  16, 0,  0,  0,  0,  0,  0,  0,  16, 0,  0,  0,  19, 0,  0,  0,  17, 0,  0,  0,  0,

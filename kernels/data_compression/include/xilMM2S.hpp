@@ -36,10 +36,6 @@
 #include <stdint.h>
 #include <stdio.h>
 
-#ifndef MULTIPLE_BYTES
-#define MULTIPLE_BYTES 8
-#endif
-
 #ifndef INPUT_BYTES
 #define INPUT_BYTES MULTIPLE_BYTES
 #endif

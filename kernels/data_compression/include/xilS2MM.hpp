@@ -35,10 +35,6 @@
 #include <stdint.h>
 #include <stdio.h>
 
-#ifndef MULTIPLE_BYTES
-#define MULTIPLE_BYTES 8
-#endif
-
 #ifndef OUTPUT_BYTES
 #define OUTPUT_BYTES MULTIPLE_BYTES
 #endif

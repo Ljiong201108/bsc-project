@@ -33,10 +33,10 @@ void xilZstdDecompressStream(hls::stream<ap_axiu<c_instreamDWidth, 0, 0, 0> >& i
 #pragma HLS interface axis port = inaxistreamd
 #pragma HLS interface axis port = outaxistreamd
     // data width for literal length, match length and offset data
-    const int c_lmoDWidth = 1 + getDataPortWidth(c_windowSize);
+    const int c_lmoDWidth = 1 + getDataPortWidth(c_windowSize_1);
 
     // Call for decompression
-    xf::compression::zstdDecompressCore<INPUT_BYTES, OUTPUT_BYTES, ZSTD_BLOCK_SIZE_KB, c_windowSize, c_lmoDWidth,
+    xf::compression::zstdDecompressCore<INPUT_BYTES, OUTPUT_BYTES, ZSTD_BLOCK_SIZE_KB, c_windowSize_1, c_lmoDWidth,
                                         SEQ_LL_MODEL, LL_MODEL>(inaxistreamd, outaxistreamd);
 }
 }

@@ -42,6 +42,8 @@ struct zlib_aligned_allocator {
 
 namespace dataCompression{
 namespace internal{
+constexpr uint64_t BLOCK_SIZE_IN_KB=1;
+constexpr uint64_t BLOCK_SIZE_IN_BYTE=BLOCK_SIZE_IN_KB*1024;
 constexpr auto DEFLATE_METHOD = 8;
 uint32_t writeGzipHeader(uint8_t* out);
 uint32_t writeGzipFooter(uint8_t* out, uint32_t compressSize, uint32_t checksum, const std::string &fileName, uint32_t fileSize);
@@ -50,6 +52,7 @@ uint32_t writeZlibFooter(uint8_t *out, uint32_t idxAfterCompress, uint32_t check
 bool readGzipZlibHeader(uint8_t* in);
 
 uint32_t gzipZlibCompressionInternal(uint8_t* in, uint8_t* out, uint32_t inputSize, uint32_t &checksum, bool isZlib);
+uint32_t gzipZlibCompressionInternal(uint8_t* in, uint8_t* out, uint64_t inputSize, uint64_t maxOutputSize, uint32_t &checksum, bool isZlib);
 uint32_t gzipZlibDecompressionInternalMM(uint8_t* in, uint8_t* out, uint32_t inputSize, uint32_t max_outbuf_size);
 uint32_t gzipZlibDecompressionInternalStream(uint8_t* in, uint8_t* out, uint32_t inputSize, uint32_t max_outbuf_size);
 } //internal

@@ -13,41 +13,31 @@
 namespace testGzip{
 
 inline void testGzip(){
-    // uint8_t in[256], out[1024], out2[2048];
-    // for(int i=0;i<256;i++) in[i]=i;
 	std::vector<uint8_t> in, out;
 	readFile("sample.txt", in, out);
-	std::vector<uint8_t> out2;
-    out2.resize(20 * in.size());
+	std::vector<uint8_t> out2(20*out.size());
 
     uint64_t inputSize=in.size(), outputSize, outputSize2;
 
     std::cout<<"Start test Gzip"<<std::endl;
-    outputSize=dataCompression::gzipZlibCompression(in.data(), out.data(), inputSize, "", false);
-    hexdump(out.data(), outputSize);
+    outputSize=dataCompression::gzipZlibCompression(in.data(), out.data(), in.size(), "", false);
 	std::cout<<"------------------------"<<std::endl;
-	outputSize2=dataCompression::gzipZlibDecompression(out.data(), out2.data(), outputSize, 2048, true);
-	hexdump(out2.data(), outputSize2);
+	outputSize2=dataCompression::gzipZlibDecompression(out.data(), out2.data(), outputSize, out2.size(), true);
     std::cout<<"End test Gzip"<<std::endl;
 }
 
 inline void testZlib(){
-    // uint8_t in[256], out[1024], out2[2048];
-    // for(int i=0;i<256;i++) in[i]=i;
 	std::vector<uint8_t> in, out;
 	readFile("sample.txt", in, out);
-	std::vector<uint8_t> out2;
-    out2.resize(20 * in.size());
+	std::vector<uint8_t> out2(20*out.size());
 
     uint64_t inputSize=in.size(), outputSize, outputSize2;
 
-    std::cout<<"Start test Gzip"<<std::endl;
-    outputSize=dataCompression::gzipZlibCompression(in.data(), out.data(), inputSize, "", true);
-    hexdump(out.data(), outputSize);
+    std::cout<<"Start test Zlib"<<std::endl;
+    outputSize=dataCompression::gzipZlibCompression(in.data(), out.data(), in.size(), "", true);
 	std::cout<<"------------------------"<<std::endl;
-	outputSize2=dataCompression::gzipZlibDecompression(out.data(), out2.data(), outputSize, 2048, true);
-	hexdump(out2.data(), outputSize2);
-    std::cout<<"End test Gzip"<<std::endl;
+	outputSize2=dataCompression::gzipZlibDecompression(out.data(), out2.data(), outputSize, out2.size(), true);
+    std::cout<<"End test Zlib"<<std::endl;
 }
 
 // inline void testXilinxGzipZlib(int argc, char** argv){

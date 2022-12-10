@@ -14,8 +14,6 @@
  * limitations under the License.
  *
  */
-#ifndef _XFCOMPRESSION_ZSTD_COMPRESS_STREAM_CPP_
-#define _XFCOMPRESSION_ZSTD_COMPRESS_STREAM_CPP_
 
 /**
  * @file zstd_compress_stream.cpp
@@ -44,4 +42,3 @@ void xilZstdCompressStream(hls::stream<ap_axiu<STREAM_IN_DWIDTH, 0, 0, 0> >& axi
                                            MIN_BLCK_SIZE>(axiInStream, axiOutStream);
 }
 }
-#endif // _XFCOMPRESSION_ZSTD_COMPRESS_STREAM_CPP_

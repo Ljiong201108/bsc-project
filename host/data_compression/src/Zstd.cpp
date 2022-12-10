@@ -11,22 +11,17 @@ uint64_t zstdCompressEngineStream(uint8_t* in, uint8_t* out, size_t input_size){
     std::vector<uint8_t, aligned_allocator<uint8_t>> cbuf_out(c_inputSize);
     std::vector<uint64_t, aligned_allocator<uint64_t>> cbuf_outSize(2);
 
-    // opencl buffer creation
-    OCL_CHECK(err, cl::Buffer *buffer_cmp_input = new cl::Buffer(Application::getInstance().getContext(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, c_inputSize,
-                                                     cbuf_in.data(), &err));
-    OCL_CHECK(err, cl::Buffer *buffer_cmp_output = new cl::Buffer(Application::getInstance().getContext(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, c_inputSize,
-                                                      cbuf_out.data(), &err));
-
-    OCL_CHECK(err, cl::Buffer *buffer_cmp_size = new cl::Buffer(Application::getInstance().getContext(), CL_MEM_USE_HOST_PTR | CL_MEM_WRITE_ONLY,
-                                                    sizeof(uint32_t), cbuf_outSize.data(), &err));
+    BufferPointer buffer_cmp_input(Application::getContext<Lib::dataCompressionLib>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, c_inputSize, cbuf_in.data());
+    BufferPointer buffer_cmp_output(Application::getContext<Lib::dataCompressionLib>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, c_inputSize, cbuf_out.data());
+    BufferPointer buffer_cmp_size(Application::getContext<Lib::dataCompressionLib>(), CL_MEM_USE_HOST_PTR | CL_MEM_WRITE_ONLY, sizeof(uint32_t), cbuf_outSize.data());
 
     // set consistent kernel arguments
-    cl::Kernel *cmp_dm_kernel = new cl::Kernel(Application::getInstance().getProgram(), "xilZstdCompressDataMover:{xilZstdCompressDataMover_1}");
+    KernelPointer cmp_dm_kernel(Application::getProgram<Lib::dataCompressionLib>(), "xilZstdCompressDataMover:{xilZstdCompressDataMover_1}");
     cmp_dm_kernel->setArg(0, *buffer_cmp_input);
     cmp_dm_kernel->setArg(1, *buffer_cmp_output);
     cmp_dm_kernel->setArg(3, *buffer_cmp_size);
 
-    cl::CommandQueue *m_q_cdm = new cl::CommandQueue(Application::getInstance().getContext(), Application::getInstance().getDevice(), CL_QUEUE_PROFILING_ENABLE);
+    CommandQueuePointer m_q_cdm(Application::getContext<Lib::dataCompressionLib>(), Application::getDevice<Lib::dataCompressionLib>(), CL_QUEUE_PROFILING_ENABLE);
 
     auto enbytes = 0;
     auto outIdx = 0;
@@ -62,11 +57,6 @@ uint64_t zstdCompressEngineStream(uint8_t* in, uint8_t* out, size_t input_size){
     }
     m_q_cdm->finish();
 
-    // free the cl buffers
-    delete buffer_cmp_input;
-    delete buffer_cmp_output;
-    delete buffer_cmp_size;
-
     return enbytes;
 }
 
@@ -88,19 +78,14 @@ uint64_t zstdDecompressEngineStream(uint8_t* in, uint8_t* out, size_t input_size
     std::vector<uint64_t, aligned_allocator<uint64_t>> dbuf_outSize(2);
     std::vector<uint32_t, aligned_allocator<uint32_t>> h_dcompressStatus(2);
 
-    // opencl buffer creation
-    cl::Buffer *buffer_dec_input = new cl::Buffer(Application::getInstance().getContext(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, inBufferSize, dbuf_in.data());
-    cl::Buffer *buffer_dec_output =
-        new cl::Buffer(Application::getInstance().getContext(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, outBufferSize, dbuf_out.data());
-
-    cl::Buffer *buffer_size =
-        new cl::Buffer(Application::getInstance().getContext(), CL_MEM_USE_HOST_PTR | CL_MEM_WRITE_ONLY, sizeof(uint32_t), dbuf_outSize.data());
-    cl::Buffer *buffer_status =
-        new cl::Buffer(Application::getInstance().getContext(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, sizeof(uint32_t), h_dcompressStatus.data());
+    BufferPointer buffer_dec_input(Application::getContext<Lib::dataCompressionLib>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, inBufferSize, dbuf_in.data());
+    BufferPointer buffer_dec_output(Application::getContext<Lib::dataCompressionLib>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, outBufferSize, dbuf_out.data());
+    BufferPointer buffer_size(Application::getContext<Lib::dataCompressionLib>(), CL_MEM_USE_HOST_PTR | CL_MEM_WRITE_ONLY, sizeof(uint32_t), dbuf_outSize.data());
+    BufferPointer buffer_status(Application::getContext<Lib::dataCompressionLib>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, sizeof(uint32_t), h_dcompressStatus.data());
 
     // Set Kernel Args
-    cl::Kernel *data_writer_kernel = new cl::Kernel(Application::getInstance().getProgram(), "xilMM2S:{xilMM2S_2}");
-    cl::Kernel *data_reader_kernel = new cl::Kernel(Application::getInstance().getProgram(), "xilS2MM:{xilS2MM_2}");
+    KernelPointer data_writer_kernel(Application::getProgram<Lib::dataCompressionLib>(), "xilMM2S:{xilMM2S_2}");
+    KernelPointer data_reader_kernel(Application::getProgram<Lib::dataCompressionLib>(), "xilS2MM:{xilS2MM_2}");
 
     data_writer_kernel->setArg(0, *(buffer_dec_input));
     data_writer_kernel->setArg(1, inBufferSize);
@@ -111,8 +96,8 @@ uint64_t zstdDecompressEngineStream(uint8_t* in, uint8_t* out, size_t input_size
     data_reader_kernel->setArg(2, *(buffer_status));
     data_reader_kernel->setArg(3, outBufferSize);
 
-    cl::CommandQueue *m_q_rd = new cl::CommandQueue(Application::getInstance().getContext(), Application::getInstance().getDevice(), CL_QUEUE_PROFILING_ENABLE);
-    cl::CommandQueue *m_q_wr = new cl::CommandQueue(Application::getInstance().getContext(), Application::getInstance().getDevice(), CL_QUEUE_PROFILING_ENABLE);
+    CommandQueuePointer m_q_rd(Application::getContext<Lib::dataCompressionLib>(), Application::getDevice<Lib::dataCompressionLib>(), CL_QUEUE_PROFILING_ENABLE);
+    CommandQueuePointer m_q_wr(Application::getContext<Lib::dataCompressionLib>(), Application::getDevice<Lib::dataCompressionLib>(), CL_QUEUE_PROFILING_ENABLE);
 
     // Copy input data
     std::memcpy(dbuf_in.data(), in, inBufferSize); // must be equal to input_size
@@ -136,13 +121,6 @@ uint64_t zstdDecompressEngineStream(uint8_t* in, uint8_t* out, size_t input_size
     // copy output decompressed data
     std::memcpy(out, dbuf_out.data(), decmpSizeIdx);
 
-    // free the cl buffers
-    delete buffer_dec_input;
-    delete buffer_dec_output;
-    delete buffer_size;
-    delete buffer_status;
-
-    // printme("Done with decompress \n");
     return decmpSizeIdx;
 }
 

@@ -36,7 +36,7 @@ namespace xf {
 namespace compression {
 namespace details {
 
-void bitPackingStatic(hls::stream<DSVectorStream_dt<HuffmanCode_dt<c_maxBits>, 1> >& inStream,
+inline void bitPackingStatic(hls::stream<DSVectorStream_dt<HuffmanCode_dt<c_maxBits>, 1> >& inStream,
                       hls::stream<IntVectorStream_dt<8, 2> >& outStream) {
     DSVectorStream_dt<HuffmanCode_dt<c_maxBits>, 1> inValue;
     IntVectorStream_dt<8, 2> outValue;
@@ -121,7 +121,7 @@ void bitPackingStatic(hls::stream<DSVectorStream_dt<HuffmanCode_dt<c_maxBits>, 1
     }
 }
 
-void bitPackingStream(hls::stream<DSVectorStream_dt<HuffmanCode_dt<c_maxBits>, 1> >& inStream,
+inline void bitPackingStream(hls::stream<DSVectorStream_dt<HuffmanCode_dt<c_maxBits>, 1> >& inStream,
                       hls::stream<IntVectorStream_dt<8, 2> >& outStream) {
     DSVectorStream_dt<HuffmanCode_dt<c_maxBits>, 1> inValue;
     IntVectorStream_dt<8, 2> outValue;
@@ -212,7 +212,7 @@ void bitPackingStream(hls::stream<DSVectorStream_dt<HuffmanCode_dt<c_maxBits>, 1
  * information.
  * @param outStream output 32bit compressed data
  */
-void huffmanProcessingUnit(hls::stream<IntVectorStream_dt<9, 1> >& inStream,
+inline void huffmanProcessingUnit(hls::stream<IntVectorStream_dt<9, 1> >& inStream,
                            hls::stream<IntVectorStream_dt<32, 1> >& outStream) {
     enum HuffEncoderStates { READ_LITERAL, READ_MATCH_LEN, READ_OFFSET0, READ_OFFSET1 };
     IntVectorStream_dt<32, 1> outValue;
@@ -282,7 +282,7 @@ void huffmanProcessingUnit(hls::stream<IntVectorStream_dt<9, 1> >& inStream,
 
 } // end details
 
-void huffmanEncoderStatic(hls::stream<IntVectorStream_dt<32, 1> >& inStream,
+inline void huffmanEncoderStatic(hls::stream<IntVectorStream_dt<32, 1> >& inStream,
                           hls::stream<DSVectorStream_dt<HuffmanCode_dt<c_maxBits>, 1> >& outStream) {
     uint8_t extra_lbits[c_length_codes] = {0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2,
                                            2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 0};
@@ -410,7 +410,7 @@ void huffmanEncoderStatic(hls::stream<IntVectorStream_dt<32, 1> >& inStream,
  * @param hufCodeInStream Huffman Codes input
  * @param hufCodeOutStream HuffmanCodes output
  */
-void huffmanEncoderStream(hls::stream<IntVectorStream_dt<32, 1> >& inStream,
+inline void huffmanEncoderStream(hls::stream<IntVectorStream_dt<32, 1> >& inStream,
                           hls::stream<DSVectorStream_dt<HuffmanCode_dt<c_maxBits>, 1> >& hufCodeInStream,
                           hls::stream<DSVectorStream_dt<HuffmanCode_dt<c_maxBits>, 1> >& hufCodeOutStream) {
     enum huffmanEncoderState { WRITE_TOKEN, ML_DIST_REP, LIT_REP, SEND_OUTPUT, ML_EXTRA, DIST_REP, DIST_EXTRA, DONE };

@@ -43,10 +43,6 @@
 #define LZ_MAX_OFFSET_LIMIT 32768
 #define LOW_OFFSET 10
 
-#ifndef MULTIPLE_BYTES
-#define MULTIPLE_BYTES 8
-#endif
-
 extern "C" {
 void xilGzipZlibDecompressStream(hls::stream<ap_axiu<16, 0, 0, 0> >& inaxistreamd,
                    hls::stream<ap_axiu<MULTIPLE_BYTES * 8, 0, 0, 0> >& outaxistreamd);

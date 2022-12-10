@@ -60,12 +60,10 @@
 #define LL_MODEL false
 #endif
 
-#define FREE_RUNNING_KERNEL
-
 const int c_instreamDWidth = INPUT_BYTES * 8;
 const int c_outstreamDWidth = OUTPUT_BYTES * 8;
 // window size is kept equal to block size in this design
-const int c_windowSize = ZSTD_BLOCK_SIZE_KB * 1024;
+const int c_windowSize_1 = ZSTD_BLOCK_SIZE_KB * 1024;
 
 extern "C" {
 /**
