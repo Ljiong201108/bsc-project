@@ -1,6 +1,7 @@
-USER=liujio
+USER=jiong
 ROOTFS=/home/$(USER)/xilinx/xilinx-zynqmp-common-v2020.2
 WORKSPACE=/home/$(USER)/bsc-project
+PLATFORM=--platform /home/$(USER)/xilinx/platforms/xilinx_zcu104_base_202020_1/xilinx_zcu104_base_202020_1.xpfm
 
 COMP=$(WORKSPACE)/components
 KNRL=$(WORKSPACE)/kernels
@@ -16,7 +17,7 @@ KNRL_INC=-I$(COMP)/common/include
 KNRL_INC+=-I$(COMP)/security/include -I$(KNRL)/security/include
 KNRL_INC+=-I$(COMP)/data_compression/include -I$(KNRL)/data_compression/include
 
-KNRL_FLG=-t hw_emu --config $(TEST)/config_kernel.cfg -g
+KNRL_FLG=-t hw_emu --config $(TEST)/config_kernel.cfg -g $(PLATFORM)
 
 HOST_INC+=$(KNRL_INC)
 
@@ -31,6 +32,6 @@ HOST_INC+=$(KNRL_INC)
 # KNRL_ALL=$(KNRL_SECURITY) $(KNRL_DATACOMPRESSION)
 # KNRL_INC+=$(KNRL_SECURITY_INC) $(KNRL_DATACOMPRESSION_INC)
 
-LINK_FLG=-t hw_emu --optimize quick -g
+LINK_FLG=-t hw_emu --optimize quick -g $(PLATFORM)
 
-PAKG_FLG=-t hw_emu --config config_package.cfg
+PAKG_FLG=-t hw_emu --config config_package.cfg $(PLATFORM)
