@@ -28,8 +28,8 @@ uint8_t readHeader(uint8_t* in){
 }
 
 uint64_t snappyCompressEngineMM(uint8_t* in, uint8_t* out, uint64_t inputSize){
-    KernelPointer compress_kernel_snappy(Application::getProgram<Lib::dataCompressionLib>(), "xilSnappyCompressMM:{xilSnappyCompressMM_1}");
-    CommandQueuePointer m_q(Application::getContext<Lib::dataCompressionLib>(), Application::getDevice<Lib::dataCompressionLib>(), CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE | CL_QUEUE_PROFILING_ENABLE);
+    KernelPointer compress_kernel_snappy(Application::getProgram<Lib::SNAPPY>(), "xilSnappyCompressMM:{xilSnappyCompressMM_1}");
+    CommandQueuePointer m_q(Application::getContext<Lib::SNAPPY>(), Application::getDevice<Lib::SNAPPY>(), CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE | CL_QUEUE_PROFILING_ENABLE);
 
     std::vector<uint8_t, aligned_allocator<uint8_t> > h_buf_in(HOST_BUFFER_SIZE);
     std::vector<uint8_t, aligned_allocator<uint8_t> > h_buf_out(HOST_BUFFER_SIZE);
@@ -114,10 +114,10 @@ uint64_t snappyCompressEngineMM(uint8_t* in, uint8_t* out, uint64_t inputSize){
             bufSize_in_bytes_cu = ((hostChunk_cu - 1) / BLOCK_SIZE_IN_KB + 1) * BLOCK_SIZE_IN_KB;
         }
 
-        BufferPointer buffer_input(Application::getContext<Lib::dataCompressionLib>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, bufSize_in_bytes_cu, h_buf_in.data());
-        BufferPointer buffer_output(Application::getContext<Lib::dataCompressionLib>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, bufSize_in_bytes_cu, h_buf_out.data());
-        BufferPointer buffer_compressed_size(Application::getContext<Lib::dataCompressionLib>(), CL_MEM_USE_HOST_PTR | CL_MEM_WRITE_ONLY, sizeof(uint32_t) * total_blocks_cu, h_compressSize.data());
-        BufferPointer buffer_block_size(Application::getContext<Lib::dataCompressionLib>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, sizeof(uint32_t) * total_blocks_cu, h_blksize.data());
+        BufferPointer buffer_input(Application::getContext<Lib::SNAPPY>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, bufSize_in_bytes_cu, h_buf_in.data());
+        BufferPointer buffer_output(Application::getContext<Lib::SNAPPY>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, bufSize_in_bytes_cu, h_buf_out.data());
+        BufferPointer buffer_compressed_size(Application::getContext<Lib::SNAPPY>(), CL_MEM_USE_HOST_PTR | CL_MEM_WRITE_ONLY, sizeof(uint32_t) * total_blocks_cu, h_compressSize.data());
+        BufferPointer buffer_block_size(Application::getContext<Lib::SNAPPY>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, sizeof(uint32_t) * total_blocks_cu, h_blksize.data());
 
         int narg = 0;
         compress_kernel_snappy->setArg(narg++, *(buffer_input));
@@ -199,9 +199,9 @@ uint64_t snappyCompressEngineMM(uint8_t* in, uint8_t* out, uint64_t inputSize){
 }
 
 uint64_t snappyCompressEngineStream(uint8_t* in, uint8_t* out, size_t inputSize){
-    KernelPointer compress_kernel_snappy(Application::getProgram<Lib::dataCompressionLib>(), "xilSnappyCompressStream:{xilSnappyCompressStream_1}");
-    KernelPointer compress_data_mover_kernel(Application::getProgram<Lib::dataCompressionLib>(), "xilCompressDatamover:{xilCompressDatamover_1}");
-    CommandQueuePointer m_q(Application::getContext<Lib::dataCompressionLib>(), Application::getDevice<Lib::dataCompressionLib>(), CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE | CL_QUEUE_PROFILING_ENABLE);
+    KernelPointer compress_kernel_snappy(Application::getProgram<Lib::SNAPPY>(), "xilSnappyCompressStream:{xilSnappyCompressStream_1}");
+    KernelPointer compress_data_mover_kernel(Application::getProgram<Lib::SNAPPY>(), "xilCompressDatamover:{xilCompressDatamover_1}");
+    CommandQueuePointer m_q(Application::getContext<Lib::SNAPPY>(), Application::getDevice<Lib::SNAPPY>(), CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE | CL_QUEUE_PROFILING_ENABLE);
 
     uint32_t host_buffer_size = BLOCK_SIZE_IN_KB * 1024;
     uint32_t total_block_count = (inputSize - 1) / host_buffer_size + 1;
@@ -214,9 +214,9 @@ uint64_t snappyCompressEngineStream(uint8_t* in, uint8_t* out, size_t inputSize)
     std::vector<uint32_t, aligned_allocator<uint32_t> > h_compressSize(1);
 
     // device buffer allocation
-    BufferPointer buffer_input(Application::getContext<Lib::dataCompressionLib>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, host_buffer_size, h_buf_in.data());
-    BufferPointer buffer_output(Application::getContext<Lib::dataCompressionLib>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, host_buffer_size, h_buf_out.data());
-    BufferPointer buffer_compressed_size(Application::getContext<Lib::dataCompressionLib>(), CL_MEM_USE_HOST_PTR | CL_MEM_WRITE_ONLY, sizeof(uint32_t), h_compressSize.data());
+    BufferPointer buffer_input(Application::getContext<Lib::SNAPPY>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, host_buffer_size, h_buf_in.data());
+    BufferPointer buffer_output(Application::getContext<Lib::SNAPPY>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, host_buffer_size, h_buf_out.data());
+    BufferPointer buffer_compressed_size(Application::getContext<Lib::SNAPPY>(), CL_MEM_USE_HOST_PTR | CL_MEM_WRITE_ONLY, sizeof(uint32_t), h_compressSize.data());
 
     // sequentially copy block sized buffers to kernel and wait for them to finish before enqueueing
     for (uint32_t blkIndx = 0, bufIndx = 0; blkIndx < total_block_count; blkIndx++, bufIndx += host_buffer_size) {
@@ -292,8 +292,8 @@ uint64_t snappyCompressEngineStream(uint8_t* in, uint8_t* out, size_t inputSize)
 }
 
 uint64_t snappyDecompressEngineMM(uint8_t* in, uint8_t* out, uint32_t inputSize, uint32_t maxOutputSize){
-    KernelPointer decompress_kernel_snappy(Application::getProgram<Lib::dataCompressionLib>(), "xilSnappyDecompressMM:{xilSnappyDecompressMM_1}");
-    CommandQueuePointer m_q(Application::getContext<Lib::dataCompressionLib>(), Application::getDevice<Lib::dataCompressionLib>(), CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE | CL_QUEUE_PROFILING_ENABLE);
+    KernelPointer decompress_kernel_snappy(Application::getProgram<Lib::SNAPPY>(), "xilSnappyDecompressMM:{xilSnappyDecompressMM_1}");
+    CommandQueuePointer m_q(Application::getContext<Lib::SNAPPY>(), Application::getDevice<Lib::SNAPPY>(), CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE | CL_QUEUE_PROFILING_ENABLE);
 
     std::vector<uint8_t, aligned_allocator<uint8_t> > h_buf_in(HOST_BUFFER_SIZE);
     std::vector<uint8_t, aligned_allocator<uint8_t> > h_buf_out(HOST_BUFFER_SIZE);
@@ -306,10 +306,10 @@ uint64_t snappyDecompressEngineMM(uint8_t* in, uint8_t* out, uint32_t inputSize,
     uint32_t blocksPerChunk = HOST_BUFFER_SIZE / buf_size;
     uint32_t host_buffer_size = ((HOST_BUFFER_SIZE - 1) / BLOCK_SIZE_IN_KB + 1) * BLOCK_SIZE_IN_KB;
 
-    BufferPointer buffer_input(Application::getContext<Lib::dataCompressionLib>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, host_buffer_size, h_buf_in.data());
-    BufferPointer buffer_output(Application::getContext<Lib::dataCompressionLib>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, host_buffer_size, h_buf_out.data());
-    BufferPointer buffer_block_size(Application::getContext<Lib::dataCompressionLib>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, sizeof(uint32_t) * blocksPerChunk, h_blksize.data());
-    BufferPointer buffer_compressed_size(Application::getContext<Lib::dataCompressionLib>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, sizeof(uint32_t) * blocksPerChunk, h_compressSize.data());
+    BufferPointer buffer_input(Application::getContext<Lib::SNAPPY>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, host_buffer_size, h_buf_in.data());
+    BufferPointer buffer_output(Application::getContext<Lib::SNAPPY>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, host_buffer_size, h_buf_out.data());
+    BufferPointer buffer_block_size(Application::getContext<Lib::SNAPPY>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, sizeof(uint32_t) * blocksPerChunk, h_blksize.data());
+    BufferPointer buffer_compressed_size(Application::getContext<Lib::SNAPPY>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, sizeof(uint32_t) * blocksPerChunk, h_compressSize.data());
                                         
     uint32_t narg = 0;
     decompress_kernel_snappy->setArg(narg++, *(buffer_input));
@@ -512,9 +512,9 @@ uint64_t snappyDecompressEngineMM(uint8_t* in, uint8_t* out, uint32_t inputSize,
 
 uint64_t snappyDecompressEngineStream(uint8_t* in, uint8_t* out, uint32_t inputSize, uint32_t maxOutputSize){
     
-    KernelPointer decompress_kernel_snappy(Application::getProgram<Lib::dataCompressionLib>(), "xilSnappyDecompressStream:{xilSnappyDecompressStream_1}");
-    KernelPointer decompress_data_mover_kernel(Application::getProgram<Lib::dataCompressionLib>(), "xilDecompressDatamover:{xilDecompressDatamover_1}");
-    CommandQueuePointer m_q(Application::getContext<Lib::dataCompressionLib>(), Application::getDevice<Lib::dataCompressionLib>(), CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE | CL_QUEUE_PROFILING_ENABLE);
+    KernelPointer decompress_kernel_snappy(Application::getProgram<Lib::SNAPPY>(), "xilSnappyDecompressStream:{xilSnappyDecompressStream_1}");
+    KernelPointer decompress_data_mover_kernel(Application::getProgram<Lib::SNAPPY>(), "xilDecompressDatamover:{xilDecompressDatamover_1}");
+    CommandQueuePointer m_q(Application::getContext<Lib::SNAPPY>(), Application::getDevice<Lib::SNAPPY>(), CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE | CL_QUEUE_PROFILING_ENABLE);
 
     uint32_t outputSize = maxOutputSize; // (inputSize * 20) + 16; //m_maxCR
     std::vector<uint8_t, aligned_allocator<uint8_t> > h_buf_in(inputSize);
@@ -524,9 +524,9 @@ uint64_t snappyDecompressEngineStream(uint8_t* in, uint8_t* out, uint32_t inputS
     std::memcpy(h_buf_in.data(), in, inputSize);
 
     // Device buffer allocation
-    BufferPointer buffer_input(Application::getContext<Lib::dataCompressionLib>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, inputSize, h_buf_in.data());
-    BufferPointer buffer_output(Application::getContext<Lib::dataCompressionLib>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, outputSize, h_buf_out.data());
-    BufferPointer bufferOutputSize(Application::getContext<Lib::dataCompressionLib>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, sizeof(uint32_t), h_buf_decompressSize.data());
+    BufferPointer buffer_input(Application::getContext<Lib::SNAPPY>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, inputSize, h_buf_in.data());
+    BufferPointer buffer_output(Application::getContext<Lib::SNAPPY>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, outputSize, h_buf_out.data());
+    BufferPointer bufferOutputSize(Application::getContext<Lib::SNAPPY>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, sizeof(uint32_t), h_buf_decompressSize.data());
 
     // set kernel arguments
     int narg = 0;

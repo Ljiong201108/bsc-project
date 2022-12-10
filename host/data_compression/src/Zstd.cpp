@@ -11,17 +11,17 @@ uint64_t zstdCompressEngineStream(uint8_t* in, uint8_t* out, size_t input_size){
     std::vector<uint8_t, aligned_allocator<uint8_t>> cbuf_out(c_inputSize);
     std::vector<uint64_t, aligned_allocator<uint64_t>> cbuf_outSize(2);
 
-    BufferPointer buffer_cmp_input(Application::getContext<Lib::dataCompressionLib>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, c_inputSize, cbuf_in.data());
-    BufferPointer buffer_cmp_output(Application::getContext<Lib::dataCompressionLib>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, c_inputSize, cbuf_out.data());
-    BufferPointer buffer_cmp_size(Application::getContext<Lib::dataCompressionLib>(), CL_MEM_USE_HOST_PTR | CL_MEM_WRITE_ONLY, sizeof(uint32_t), cbuf_outSize.data());
+    BufferPointer buffer_cmp_input(Application::getContext<Lib::ZSTD>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, c_inputSize, cbuf_in.data());
+    BufferPointer buffer_cmp_output(Application::getContext<Lib::ZSTD>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, c_inputSize, cbuf_out.data());
+    BufferPointer buffer_cmp_size(Application::getContext<Lib::ZSTD>(), CL_MEM_USE_HOST_PTR | CL_MEM_WRITE_ONLY, sizeof(uint32_t), cbuf_outSize.data());
 
     // set consistent kernel arguments
-    KernelPointer cmp_dm_kernel(Application::getProgram<Lib::dataCompressionLib>(), "xilZstdCompressDataMover:{xilZstdCompressDataMover_1}");
+    KernelPointer cmp_dm_kernel(Application::getProgram<Lib::ZSTD>(), "xilZstdCompressDataMover:{xilZstdCompressDataMover_1}");
     cmp_dm_kernel->setArg(0, *buffer_cmp_input);
     cmp_dm_kernel->setArg(1, *buffer_cmp_output);
     cmp_dm_kernel->setArg(3, *buffer_cmp_size);
 
-    CommandQueuePointer m_q_cdm(Application::getContext<Lib::dataCompressionLib>(), Application::getDevice<Lib::dataCompressionLib>(), CL_QUEUE_PROFILING_ENABLE);
+    CommandQueuePointer m_q_cdm(Application::getContext<Lib::ZSTD>(), Application::getDevice<Lib::ZSTD>(), CL_QUEUE_PROFILING_ENABLE);
 
     auto enbytes = 0;
     auto outIdx = 0;
@@ -78,14 +78,14 @@ uint64_t zstdDecompressEngineStream(uint8_t* in, uint8_t* out, size_t input_size
     std::vector<uint64_t, aligned_allocator<uint64_t>> dbuf_outSize(2);
     std::vector<uint32_t, aligned_allocator<uint32_t>> h_dcompressStatus(2);
 
-    BufferPointer buffer_dec_input(Application::getContext<Lib::dataCompressionLib>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, inBufferSize, dbuf_in.data());
-    BufferPointer buffer_dec_output(Application::getContext<Lib::dataCompressionLib>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, outBufferSize, dbuf_out.data());
-    BufferPointer buffer_size(Application::getContext<Lib::dataCompressionLib>(), CL_MEM_USE_HOST_PTR | CL_MEM_WRITE_ONLY, sizeof(uint32_t), dbuf_outSize.data());
-    BufferPointer buffer_status(Application::getContext<Lib::dataCompressionLib>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, sizeof(uint32_t), h_dcompressStatus.data());
+    BufferPointer buffer_dec_input(Application::getContext<Lib::ZSTD>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, inBufferSize, dbuf_in.data());
+    BufferPointer buffer_dec_output(Application::getContext<Lib::ZSTD>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, outBufferSize, dbuf_out.data());
+    BufferPointer buffer_size(Application::getContext<Lib::ZSTD>(), CL_MEM_USE_HOST_PTR | CL_MEM_WRITE_ONLY, sizeof(uint32_t), dbuf_outSize.data());
+    BufferPointer buffer_status(Application::getContext<Lib::ZSTD>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, sizeof(uint32_t), h_dcompressStatus.data());
 
     // Set Kernel Args
-    KernelPointer data_writer_kernel(Application::getProgram<Lib::dataCompressionLib>(), "xilMM2S:{xilMM2S_2}");
-    KernelPointer data_reader_kernel(Application::getProgram<Lib::dataCompressionLib>(), "xilS2MM:{xilS2MM_2}");
+    KernelPointer data_writer_kernel(Application::getProgram<Lib::ZSTD>(), "xilMM2S:{xilMM2S_2}");
+    KernelPointer data_reader_kernel(Application::getProgram<Lib::ZSTD>(), "xilS2MM:{xilS2MM_2}");
 
     data_writer_kernel->setArg(0, *(buffer_dec_input));
     data_writer_kernel->setArg(1, inBufferSize);
@@ -96,8 +96,8 @@ uint64_t zstdDecompressEngineStream(uint8_t* in, uint8_t* out, size_t input_size
     data_reader_kernel->setArg(2, *(buffer_status));
     data_reader_kernel->setArg(3, outBufferSize);
 
-    CommandQueuePointer m_q_rd(Application::getContext<Lib::dataCompressionLib>(), Application::getDevice<Lib::dataCompressionLib>(), CL_QUEUE_PROFILING_ENABLE);
-    CommandQueuePointer m_q_wr(Application::getContext<Lib::dataCompressionLib>(), Application::getDevice<Lib::dataCompressionLib>(), CL_QUEUE_PROFILING_ENABLE);
+    CommandQueuePointer m_q_rd(Application::getContext<Lib::ZSTD>(), Application::getDevice<Lib::ZSTD>(), CL_QUEUE_PROFILING_ENABLE);
+    CommandQueuePointer m_q_wr(Application::getContext<Lib::ZSTD>(), Application::getDevice<Lib::ZSTD>(), CL_QUEUE_PROFILING_ENABLE);
 
     // Copy input data
     std::memcpy(dbuf_in.data(), in, inBufferSize); // must be equal to input_size

@@ -156,10 +156,10 @@ bool readGzipZlibHeader(uint8_t* in){
 uint32_t gzipZlibCompressionInternal1(uint8_t* in, uint8_t* out, uint64_t inputSize, uint64_t maxOutputSize, uint32_t &checksum, bool isZlib){
 	cl_int err;
 
-	KernelPointer compressKernelMM(Application::getProgram<Lib::dataCompressionLib>(), "xilGzipZlibCompressMM:{xilGzipZlibCompressMM_1}");
+	KernelPointer compressKernelMM(Application::getProgram<Lib::GZIP_ZLIB>(), "xilGzipZlibCompressMM:{xilGzipZlibCompressMM_1}");
 
 	std::vector<uint32_t, aligned_allocator<uint32_t>> checksumDataBufferHost(1);
-	BufferPointer checksumDataBuffer(Application::getContext<Lib::dataCompressionLib>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, sizeof(uint32_t), checksumDataBufferHost.data());
+	BufferPointer checksumDataBuffer(Application::getContext<Lib::GZIP_ZLIB>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, sizeof(uint32_t), checksumDataBufferHost.data());
 	
 	bool checksum_type;
 
@@ -179,9 +179,9 @@ uint32_t gzipZlibCompressionInternal1(uint8_t* in, uint8_t* out, uint64_t inputS
 	std::vector<uint32_t, aligned_allocator<uint32_t>> compressedSizeBufferHost(1);
 
 	// Device buffers
-	BufferPointer inputBuffer(Application::getContext<Lib::dataCompressionLib>(), CL_MEM_READ_ONLY | CL_MEM_USE_HOST_PTR, sizeof(uint8_t)*inputBufferHost.size(), inputBufferHost.data());
-	BufferPointer outputBuffer(Application::getContext<Lib::dataCompressionLib>(), CL_MEM_READ_WRITE | CL_MEM_USE_HOST_PTR, sizeof(uint8_t)*outputBufferHost.size(), outputBufferHost.data());
-	BufferPointer compressedSizeBuffer(Application::getContext<Lib::dataCompressionLib>(), CL_MEM_READ_WRITE | CL_MEM_USE_HOST_PTR, sizeof(uint32_t), compressedSizeBufferHost.data());
+	BufferPointer inputBuffer(Application::getContext<Lib::GZIP_ZLIB>(), CL_MEM_READ_ONLY | CL_MEM_USE_HOST_PTR, sizeof(uint8_t)*inputBufferHost.size(), inputBufferHost.data());
+	BufferPointer outputBuffer(Application::getContext<Lib::GZIP_ZLIB>(), CL_MEM_READ_WRITE | CL_MEM_USE_HOST_PTR, sizeof(uint8_t)*outputBufferHost.size(), outputBufferHost.data());
+	BufferPointer compressedSizeBuffer(Application::getContext<Lib::GZIP_ZLIB>(), CL_MEM_READ_WRITE | CL_MEM_USE_HOST_PTR, sizeof(uint32_t), compressedSizeBufferHost.data());
 
     compressKernelMM->setArg(0, *inputBuffer);
 	compressKernelMM->setArg(1, *outputBuffer);
@@ -189,7 +189,7 @@ uint32_t gzipZlibCompressionInternal1(uint8_t* in, uint8_t* out, uint64_t inputS
 	compressKernelMM->setArg(3, *checksumDataBuffer);
 	compressKernelMM->setArg(5, checksum_type);
 
-    CommandQueuePointer queue(Application::getContext<Lib::dataCompressionLib>(), Application::getDevice<Lib::dataCompressionLib>(), CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE);
+    CommandQueuePointer queue(Application::getContext<Lib::GZIP_ZLIB>(), Application::getDevice<Lib::GZIP_ZLIB>(), CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE);
 
     uint64_t outIdx=0;
 
@@ -251,10 +251,10 @@ uint32_t gzipZlibCompressionInternal1(uint8_t* in, uint8_t* out, uint64_t inputS
 uint32_t gzipZlibCompressionInternal(uint8_t* in, uint8_t* out, uint32_t inputSize, uint32_t &checksum, bool isZlib){
 	cl_int err;
 
-	KernelPointer m_compressFullKernel(Application::getProgram<Lib::dataCompressionLib>(), "xilGzipZlibCompressMM:{xilGzipZlibCompressMM_1}");
+	KernelPointer m_compressFullKernel(Application::getProgram<Lib::GZIP_ZLIB>(), "xilGzipZlibCompressMM:{xilGzipZlibCompressMM_1}");
 
 	std::vector<uint32_t, zlib_aligned_allocator<uint32_t> > h_buf_checksum_data(1);
-	BufferPointer buffer_checksum_data(Application::getContext<Lib::dataCompressionLib>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, sizeof(uint32_t), h_buf_checksum_data.data());
+	BufferPointer buffer_checksum_data(Application::getContext<Lib::GZIP_ZLIB>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, sizeof(uint32_t), h_buf_checksum_data.data());
 	
 	bool checksum_type;
 
@@ -277,9 +277,9 @@ uint32_t gzipZlibCompressionInternal(uint8_t* in, uint8_t* out, uint32_t inputSi
 	std::vector<uint32_t, aligned_allocator<uint32_t> > h_compressSize(2 * blckNum);
 
 	// Device buffers
-	BufferPointer buffer_input(Application::getContext<Lib::dataCompressionLib>(), CL_MEM_READ_ONLY | CL_MEM_USE_HOST_PTR, sizeof(uint8_t) * inputSize, h_input_buffer.data());
-	BufferPointer buffer_output(Application::getContext<Lib::dataCompressionLib>(), CL_MEM_READ_WRITE | CL_MEM_USE_HOST_PTR, sizeof(uint8_t) * output_size, h_output_buffer.data());
-	BufferPointer buffer_cSize(Application::getContext<Lib::dataCompressionLib>(), CL_MEM_READ_WRITE | CL_MEM_USE_HOST_PTR, sizeof(uint32_t) * blckNum * 2, h_compressSize.data());
+	BufferPointer buffer_input(Application::getContext<Lib::GZIP_ZLIB>(), CL_MEM_READ_ONLY | CL_MEM_USE_HOST_PTR, sizeof(uint8_t) * inputSize, h_input_buffer.data());
+	BufferPointer buffer_output(Application::getContext<Lib::GZIP_ZLIB>(), CL_MEM_READ_WRITE | CL_MEM_USE_HOST_PTR, sizeof(uint8_t) * output_size, h_output_buffer.data());
+	BufferPointer buffer_cSize(Application::getContext<Lib::GZIP_ZLIB>(), CL_MEM_READ_WRITE | CL_MEM_USE_HOST_PTR, sizeof(uint32_t) * blckNum * 2, h_compressSize.data());
 
 	// Copy input data
 	std::memcpy(h_input_buffer.data(), in, inputSize);
@@ -294,7 +294,7 @@ uint32_t gzipZlibCompressionInternal(uint8_t* in, uint8_t* out, uint32_t inputSi
 	m_compressFullKernel->setArg(narg++, inputSize);
 	m_compressFullKernel->setArg(narg++, checksum_type);
 
-	CommandQueuePointer m_def_q(Application::getContext<Lib::dataCompressionLib>(), Application::getDevice<Lib::dataCompressionLib>(), CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE);
+	CommandQueuePointer m_def_q(Application::getContext<Lib::GZIP_ZLIB>(), Application::getDevice<Lib::GZIP_ZLIB>(), CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE);
 
 	// Transfer the data to device
 	OCL_CHECK(err, err = m_def_q->enqueueMigrateMemObjects({*(buffer_input), *(buffer_checksum_data)}, 0, nullptr, nullptr));
@@ -351,11 +351,11 @@ uint32_t gzipZlibDecompressionInternalMM(uint8_t* in, uint8_t* out, uint32_t inp
     std::vector<uint8_t, aligned_allocator<uint8_t> > dbuf_out(outBufferSize);
     std::vector<uint32_t, aligned_allocator<uint32_t> > dbuf_outSize(2);
 
-	BufferPointer buffer_dec_zlib_output(Application::getContext<Lib::dataCompressionLib>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, outBufferSize, dbuf_out.data());
-	BufferPointer buffer_dec_input(Application::getContext<Lib::dataCompressionLib>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, inBufferSize, dbuf_in.data());
-	BufferPointer buffer_size(Application::getContext<Lib::dataCompressionLib>(), CL_MEM_USE_HOST_PTR | CL_MEM_WRITE_ONLY, sizeof(uint32_t), dbuf_outSize.data());
+	BufferPointer buffer_dec_zlib_output(Application::getContext<Lib::GZIP_ZLIB>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, outBufferSize, dbuf_out.data());
+	BufferPointer buffer_dec_input(Application::getContext<Lib::GZIP_ZLIB>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, inBufferSize, dbuf_in.data());
+	BufferPointer buffer_size(Application::getContext<Lib::GZIP_ZLIB>(), CL_MEM_USE_HOST_PTR | CL_MEM_WRITE_ONLY, sizeof(uint32_t), dbuf_outSize.data());
 	
-	KernelPointer decompress_kernel(Application::getProgram<Lib::dataCompressionLib>(), "xilGzipZlibDecompressMM:{xilGzipZlibDecompressMM_1}");
+	KernelPointer decompress_kernel(Application::getProgram<Lib::GZIP_ZLIB>(), "xilGzipZlibDecompressMM:{xilGzipZlibDecompressMM_1}");
 	decompress_kernel->setArg(0, *buffer_dec_input);
     decompress_kernel->setArg(1, *buffer_dec_zlib_output);
     decompress_kernel->setArg(2, *buffer_size);
@@ -364,7 +364,7 @@ uint32_t gzipZlibDecompressionInternalMM(uint8_t* in, uint8_t* out, uint32_t inp
 	// Copy input data
     std::memcpy(dbuf_in.data(), in, inBufferSize); // must be equal to inputSize
 	
-	CommandQueuePointer m_q_dec(Application::getContext<Lib::dataCompressionLib>(), Application::getDevice<Lib::dataCompressionLib>(), CL_QUEUE_PROFILING_ENABLE);
+	CommandQueuePointer m_q_dec(Application::getContext<Lib::GZIP_ZLIB>(), Application::getDevice<Lib::GZIP_ZLIB>(), CL_QUEUE_PROFILING_ENABLE);
     OCL_CHECK(err, err = m_q_dec->enqueueMigrateMemObjects({*(buffer_dec_input)}, 0, NULL, NULL));
     m_q_dec->finish();
 
@@ -404,13 +404,13 @@ uint32_t gzipZlibDecompressionInternalStream(uint8_t* in, uint8_t* out, uint32_t
     std::vector<uint8_t, aligned_allocator<uint8_t> > dbuf_out(outBufferSize);
     std::vector<uint32_t, aligned_allocator<uint32_t> > dbuf_outSize(2);
 
-	BufferPointer buffer_dec_zlib_output(Application::getContext<Lib::dataCompressionLib>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, outBufferSize, dbuf_out.data());
-	BufferPointer buffer_dec_input(Application::getContext<Lib::dataCompressionLib>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, inBufferSize, dbuf_in.data());
-	BufferPointer buffer_size(Application::getContext<Lib::dataCompressionLib>(), CL_MEM_USE_HOST_PTR | CL_MEM_WRITE_ONLY, sizeof(uint32_t), dbuf_outSize.data());
-	BufferPointer buffer_status(Application::getContext<Lib::dataCompressionLib>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, sizeof(uint32_t), h_dcompressStatus.data());
+	BufferPointer buffer_dec_zlib_output(Application::getContext<Lib::GZIP_ZLIB>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, outBufferSize, dbuf_out.data());
+	BufferPointer buffer_dec_input(Application::getContext<Lib::GZIP_ZLIB>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, inBufferSize, dbuf_in.data());
+	BufferPointer buffer_size(Application::getContext<Lib::GZIP_ZLIB>(), CL_MEM_USE_HOST_PTR | CL_MEM_WRITE_ONLY, sizeof(uint32_t), dbuf_outSize.data());
+	BufferPointer buffer_status(Application::getContext<Lib::GZIP_ZLIB>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, sizeof(uint32_t), h_dcompressStatus.data());
 
-	KernelPointer data_writer_kernel(Application::getProgram<Lib::dataCompressionLib>(), "xilMM2S:{xilMM2S_1}");
-	KernelPointer data_reader_kernel(Application::getProgram<Lib::dataCompressionLib>(), "xilS2MM:{xilS2MM_1}");
+	KernelPointer data_writer_kernel(Application::getProgram<Lib::GZIP_ZLIB>(), "xilMM2S:{xilMM2S_1}");
+	KernelPointer data_reader_kernel(Application::getProgram<Lib::GZIP_ZLIB>(), "xilS2MM:{xilS2MM_1}");
 
 	data_writer_kernel->setArg(0, *(buffer_dec_input));
     data_writer_kernel->setArg(1, inBufferSize);
@@ -424,8 +424,8 @@ uint32_t gzipZlibDecompressionInternalStream(uint8_t* in, uint8_t* out, uint32_t
 	uint32_t decmpSizeIdx = 0;
     h_dcompressStatus.data()[0] = 0;
 
-	CommandQueuePointer m_q_wr(Application::getContext<Lib::dataCompressionLib>(), Application::getDevice<Lib::dataCompressionLib>(), CL_QUEUE_PROFILING_ENABLE);
-	CommandQueuePointer m_q_rd(Application::getContext<Lib::dataCompressionLib>(), Application::getDevice<Lib::dataCompressionLib>(), CL_QUEUE_PROFILING_ENABLE);
+	CommandQueuePointer m_q_wr(Application::getContext<Lib::GZIP_ZLIB>(), Application::getDevice<Lib::GZIP_ZLIB>(), CL_QUEUE_PROFILING_ENABLE);
+	CommandQueuePointer m_q_rd(Application::getContext<Lib::GZIP_ZLIB>(), Application::getDevice<Lib::GZIP_ZLIB>(), CL_QUEUE_PROFILING_ENABLE);
 
 	// Copy input data
     std::memcpy(dbuf_in.data(), in, inBufferSize); // must be equal to inputSize

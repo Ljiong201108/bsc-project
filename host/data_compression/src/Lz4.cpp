@@ -163,8 +163,8 @@ uint64_t lz4CompressEngineMM(uint8_t* in, uint8_t* out, size_t input_size){
     // used per iteration
     uint32_t compute_cu = 0;
 
-    CommandQueuePointer m_q(Application::getContext<Lib::dataCompressionLib>(), Application::getDevice<Lib::dataCompressionLib>(), CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE | CL_QUEUE_PROFILING_ENABLE);
-    KernelPointer compress_kernel_lz4(Application::getProgram<Lib::dataCompressionLib>(), "xilLz4CompressMM:{xilLz4CompressMM_1}");
+    CommandQueuePointer m_q(Application::getContext<Lib::LZ4>(), Application::getDevice<Lib::LZ4>(), CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE | CL_QUEUE_PROFILING_ENABLE);
+    KernelPointer compress_kernel_lz4(Application::getProgram<Lib::LZ4>(), "xilLz4CompressMM:{xilLz4CompressMM_1}");
 
     for (uint64_t inIdx = 0; inIdx < input_size; inIdx += host_buffer_size) {
         // Needs to reset this variable
@@ -208,10 +208,10 @@ uint64_t lz4CompressEngineMM(uint8_t* in, uint8_t* out, size_t input_size){
         bufSize_in_bytes_cu = ((hostChunk_cu - 1) / BLOCK_SIZE_IN_KB + 1) * BLOCK_SIZE_IN_KB;
 
         // Device buffer allocation
-        BufferPointer buffer_input(Application::getContext<Lib::dataCompressionLib>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, bufSize_in_bytes_cu, h_buf_in.data());
-        BufferPointer buffer_output(Application::getContext<Lib::dataCompressionLib>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, bufSize_in_bytes_cu, h_buf_out.data());
-        BufferPointer buffer_compressed_size(Application::getContext<Lib::dataCompressionLib>(), CL_MEM_USE_HOST_PTR | CL_MEM_WRITE_ONLY, sizeof(uint32_t) * total_blocks_cu, h_compressSize.data());
-        BufferPointer buffer_block_size(Application::getContext<Lib::dataCompressionLib>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, sizeof(uint32_t) * total_blocks_cu, h_blksize.data());
+        BufferPointer buffer_input(Application::getContext<Lib::LZ4>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, bufSize_in_bytes_cu, h_buf_in.data());
+        BufferPointer buffer_output(Application::getContext<Lib::LZ4>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, bufSize_in_bytes_cu, h_buf_out.data());
+        BufferPointer buffer_compressed_size(Application::getContext<Lib::LZ4>(), CL_MEM_USE_HOST_PTR | CL_MEM_WRITE_ONLY, sizeof(uint32_t) * total_blocks_cu, h_compressSize.data());
+        BufferPointer buffer_block_size(Application::getContext<Lib::LZ4>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, sizeof(uint32_t) * total_blocks_cu, h_blksize.data());
 
         // Set kernel arguments
         uint32_t narg = 0;
@@ -254,13 +254,13 @@ uint64_t lz4CompressEngineStream(uint8_t* in, uint8_t* out, size_t input_size){
     uint32_t total_block_count = (input_size - 1) / host_buffer_size + 1;
 
     uint64_t outIdx = 0;
-    BufferPointer buffer_compressed_size(Application::getContext<Lib::dataCompressionLib>(), CL_MEM_USE_HOST_PTR | CL_MEM_WRITE_ONLY, sizeof(uint32_t), h_compressSize.data());
-    BufferPointer buffer_input(Application::getContext<Lib::dataCompressionLib>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, host_buffer_size, h_buf_in.data());
-    BufferPointer buffer_output(Application::getContext<Lib::dataCompressionLib>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, host_buffer_size, h_buf_out.data());
+    BufferPointer buffer_compressed_size(Application::getContext<Lib::LZ4>(), CL_MEM_USE_HOST_PTR | CL_MEM_WRITE_ONLY, sizeof(uint32_t), h_compressSize.data());
+    BufferPointer buffer_input(Application::getContext<Lib::LZ4>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, host_buffer_size, h_buf_in.data());
+    BufferPointer buffer_output(Application::getContext<Lib::LZ4>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, host_buffer_size, h_buf_out.data());
 
-    CommandQueuePointer m_q(Application::getContext<Lib::dataCompressionLib>(), Application::getDevice<Lib::dataCompressionLib>(), CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE | CL_QUEUE_PROFILING_ENABLE);
-    KernelPointer compress_data_mover_kernel(Application::getProgram<Lib::dataCompressionLib>(), "xilCompressDatamover:{xilCompressDatamover_2}");
-    KernelPointer compress_kernel_lz4(Application::getProgram<Lib::dataCompressionLib>(), "xilLz4CompressStream:{xilLz4CompressStream_1}");
+    CommandQueuePointer m_q(Application::getContext<Lib::LZ4>(), Application::getDevice<Lib::LZ4>(), CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE | CL_QUEUE_PROFILING_ENABLE);
+    KernelPointer compress_data_mover_kernel(Application::getProgram<Lib::LZ4>(), "xilCompressDatamover:{xilCompressDatamover_2}");
+    KernelPointer compress_kernel_lz4(Application::getProgram<Lib::LZ4>(), "xilLz4CompressStream:{xilLz4CompressStream_1}");
 
     // sequentially copy block sized buffers to kernel and wait for them to finish before enqueueing
     for (uint32_t blkIndx = 0, bufIndx = 0; blkIndx < total_block_count; blkIndx++, bufIndx += host_buffer_size) {
@@ -356,13 +356,13 @@ uint64_t lz4DecompressEngineMM(uint8_t* in, uint8_t* out, size_t input_size, siz
     bool compressBlk = false;
 
     // Device buffer allocation
-    BufferPointer buffer_input(Application::getContext<Lib::dataCompressionLib>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, host_buffer_size, h_buf_in.data());
-    BufferPointer buffer_output(Application::getContext<Lib::dataCompressionLib>(), CL_MEM_USE_HOST_PTR | CL_MEM_WRITE_ONLY, c_max_outbuf, h_buf_out.data());
-    BufferPointer buffer_dec_size(Application::getContext<Lib::dataCompressionLib>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, sizeof(uint32_t) * host_buffer_size, h_decSize.data());
-    BufferPointer buffer_compressed_size(Application::getContext<Lib::dataCompressionLib>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, sizeof(uint32_t) * host_buffer_size, h_compressSize.data());
+    BufferPointer buffer_input(Application::getContext<Lib::LZ4>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, host_buffer_size, h_buf_in.data());
+    BufferPointer buffer_output(Application::getContext<Lib::LZ4>(), CL_MEM_USE_HOST_PTR | CL_MEM_WRITE_ONLY, c_max_outbuf, h_buf_out.data());
+    BufferPointer buffer_dec_size(Application::getContext<Lib::LZ4>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, sizeof(uint32_t) * host_buffer_size, h_decSize.data());
+    BufferPointer buffer_compressed_size(Application::getContext<Lib::LZ4>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, sizeof(uint32_t) * host_buffer_size, h_compressSize.data());
 
-    CommandQueuePointer m_q(Application::getContext<Lib::dataCompressionLib>(), Application::getDevice<Lib::dataCompressionLib>(), CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE | CL_QUEUE_PROFILING_ENABLE);
-    KernelPointer decompress_kernel_lz4(Application::getProgram<Lib::dataCompressionLib>(), "xilLz4DecompressMM:{xilLz4DecompressMM_1}");
+    CommandQueuePointer m_q(Application::getContext<Lib::LZ4>(), Application::getDevice<Lib::LZ4>(), CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE | CL_QUEUE_PROFILING_ENABLE);
+    KernelPointer decompress_kernel_lz4(Application::getProgram<Lib::LZ4>(), "xilLz4DecompressMM:{xilLz4DecompressMM_1}");
 
     for (; inIdx < input_size;) {
         compute_cu = 0;
@@ -493,15 +493,15 @@ uint64_t lz4DecompressEngineStream(uint8_t* in, uint8_t* out, size_t input_size,
     std::memcpy(h_buf_in.data(), in, input_size);
 
     // Device buffer allocation
-    BufferPointer buffer_input(Application::getContext<Lib::dataCompressionLib>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, input_size, h_buf_in.data());
-    BufferPointer buffer_output(Application::getContext<Lib::dataCompressionLib>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, outputSize, h_buf_out.data());
-    BufferPointer bufferOutputSize(Application::getContext<Lib::dataCompressionLib>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, sizeof(uint32_t), h_buf_decompressSize.data());
+    BufferPointer buffer_input(Application::getContext<Lib::LZ4>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, input_size, h_buf_in.data());
+    BufferPointer buffer_output(Application::getContext<Lib::LZ4>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, outputSize, h_buf_out.data());
+    BufferPointer bufferOutputSize(Application::getContext<Lib::LZ4>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, sizeof(uint32_t), h_buf_decompressSize.data());
 
     uint32_t inputSize_32t = uint32_t(input_size);
 
-    KernelPointer decompress_data_mover_kernel(Application::getProgram<Lib::dataCompressionLib>(), "xilDecompressDatamover:{xilDecompressDatamover_2}");
-    KernelPointer decompress_kernel_lz4(Application::getProgram<Lib::dataCompressionLib>(), "xilLz4DecompressStream:{xilLz4DecompressStream_1}");
-    CommandQueuePointer m_q(Application::getContext<Lib::dataCompressionLib>(), Application::getDevice<Lib::dataCompressionLib>(), CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE | CL_QUEUE_PROFILING_ENABLE);
+    KernelPointer decompress_data_mover_kernel(Application::getProgram<Lib::LZ4>(), "xilDecompressDatamover:{xilDecompressDatamover_2}");
+    KernelPointer decompress_kernel_lz4(Application::getProgram<Lib::LZ4>(), "xilLz4DecompressStream:{xilLz4DecompressStream_1}");
+    CommandQueuePointer m_q(Application::getContext<Lib::LZ4>(), Application::getDevice<Lib::LZ4>(), CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE | CL_QUEUE_PROFILING_ENABLE);
 
     // set kernel arguments
     int narg = 0;

@@ -11,10 +11,10 @@
 // const std::string xclbinFileName="fpga.xclbin";
 
 enum class Lib{
-    securityLib, dataCompressionLib
+    securityLib, dataCompressionLib, GZIP_ZLIB, SNAPPY, LZ4, ZSTD
 };
 
-const std::string xclbinFileNames[]={"security.xclbin", "fpga.xclbin"};
+const std::string xclbinFileNames[]={"security.xclbin", "fpga.xclbin", "gzip_zlib.xclbin", "snappy.xclbin", "lz4.xclbin", "zstd.xclbin"};
 
 class Application{
 private:

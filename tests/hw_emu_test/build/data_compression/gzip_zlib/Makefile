@@ -36,8 +36,7 @@ xilS2MM.xo: $(KNRL)/data_compression/src/xilS2MM.cpp
 	v++ -c -k $(patsubst %.xo, %, $@) $(KNRL_INC) $^ -o $@ $(KNRL_FLG) -DMULTIPLE_BYTES=8
 
 clean:
-	rm -rf _x .Xil log report *.link_summary *.compile_summary *.log
+	rm -rf _x .Xil log report *.log
 
-cleanall:
-	clean
+cleanall: clean
 	rm -rf *.link_summary *.compile_summary *.xo *.xclbin
