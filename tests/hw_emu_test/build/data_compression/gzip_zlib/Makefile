@@ -4,7 +4,6 @@ include ../../../make_environment.mk
 
 OUTPUT=gzip_zlib
 KERNELS=xilGzipZlibCompressMM xilGzipZlibDecompressMM xilGzipZlibDecompressStream xilMM2S xilS2MM
-KNRL_FLG+=-DFREE_RUNNING_KERNEL -DNUM_CORES=4 -DPARALLEL_BLOCK=1 -DMULTIPLE_BYTES=8 -DGZIP_MODE=1 -DLL_MODEL=true
 
 LINK_FLG+=--config config_link.cfg
 
@@ -18,10 +17,10 @@ LING_FLG+=--report_dir $(REPORT_DIR)
 
 $(OUTPUT).xclbin: $(patsubst %, %.xo, $(KERNELS))
 	v++ -l $^ -o $@ $(LINK_FLG)
-	clean
+	rm -rf _x .Xil log report *.log
 
 xilGzipZlibCompressMM.xo: $(KNRL)/data_compression/src/xilGzipZlibCompressMM.cpp
-	v++ -c -k $(patsubst %.xo, %, $@) $(KNRL_INC) $^ -o $@ $(KNRL_FLG) -DNUM_CORES=4
+	v++ -c -k $(patsubst %.xo, %, $@) $(KNRL_INC) $^ -o $@ $(KNRL_FLG)
 
 xilGzipZlibDecompressMM.xo: $(KNRL)/data_compression/src/xilGzipZlibDecompressMM.cpp
 	v++ -c -k $(patsubst %.xo, %, $@) $(KNRL_INC) $^ -o $@ $(KNRL_FLG) -DLL_MODEL=true
@@ -39,4 +38,4 @@ clean:
 	rm -rf _x .Xil log report *.log
 
 cleanall: clean
-	rm -rf *.link_summary *.compile_summary *.xo *.xclbin
+	rm -rf *.link_summary *.compile_summary *.xo *.xclbin *.info

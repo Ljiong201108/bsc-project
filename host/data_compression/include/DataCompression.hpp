@@ -11,25 +11,32 @@
 #include <sys/mman.h>
 #include <cassert>
 #include <algorithm>
+#include <stdio.h>
+#include <stdlib.h>
+#include <thread>
 
 #include "HostCommon.hpp"
 
 constexpr uint64_t MCR=20;
 
 inline void hexdump(void *ptr, int buflen) {
+	FILE *fptr=fopen("out", "a");
+
 	unsigned char *buf = (unsigned char*)ptr;
 	int i, j;
-	for (i=0; i<buflen; i+=128) {
-	printf("%08x: ", i);
+	for (i=0; i<buflen; i+=256) {
+	fprintf(fptr, "%08x: ", i);
 	for (j=0; j<256; j++) 
 		if (i+j < buflen)
-		printf("%02x ", buf[i+j]);
+		fprintf(fptr, "%02x ", buf[i+j]);
 		else
-		printf("   ");
-	printf(" ");
+		fprintf(fptr, "   ");
+	fprintf(fptr, " ");
 	for (j=0; j<256; j++) 
 		if (i+j < buflen)
-		printf("%c", isprint(buf[i+j]) ? buf[i+j] : '.');
-	printf("\n");
+		fprintf(fptr, "%c", isprint(buf[i+j]) ? buf[i+j] : '.');
+	fprintf(fptr, "\n");
 	}
+
+	fclose(fptr);
 }

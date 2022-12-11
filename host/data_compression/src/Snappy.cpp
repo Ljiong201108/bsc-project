@@ -27,14 +27,17 @@ uint8_t readHeader(uint8_t* in){
     return fileIdx;
 }
 
+/**
+ * mostly copied from xilinx for testing correctness and performance measure
+*/
 uint64_t snappyCompressEngineMM(uint8_t* in, uint8_t* out, uint64_t inputSize){
-    KernelPointer compress_kernel_snappy(Application::getProgram<Lib::SNAPPY>(), "xilSnappyCompressMM:{xilSnappyCompressMM_1}");
-    CommandQueuePointer m_q(Application::getContext<Lib::SNAPPY>(), Application::getDevice<Lib::SNAPPY>(), CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE | CL_QUEUE_PROFILING_ENABLE);
+    KernelPointer compressKernel(Application::getProgram<Lib::SNAPPY>(), "xilSnappyCompressMM:{xilSnappyCompressMM_1}");
+    CommandQueuePointer queue(Application::getContext<Lib::SNAPPY>(), Application::getDevice<Lib::SNAPPY>(), CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE | CL_QUEUE_PROFILING_ENABLE);
 
-    std::vector<uint8_t, aligned_allocator<uint8_t> > h_buf_in(HOST_BUFFER_SIZE);
-    std::vector<uint8_t, aligned_allocator<uint8_t> > h_buf_out(HOST_BUFFER_SIZE);
-    std::vector<uint32_t, aligned_allocator<uint32_t> > h_compressSize(MAX_NUMBER_BLOCKS);
-    std::vector<uint32_t, aligned_allocator<uint32_t> > h_blksize(MAX_NUMBER_BLOCKS);
+    std::vector<uint8_t, aligned_allocator<uint8_t> > inBufferHost(HOST_BUFFER_SIZE);
+    std::vector<uint8_t, aligned_allocator<uint8_t> > outBufferHost(HOST_BUFFER_SIZE);
+    std::vector<uint32_t, aligned_allocator<uint32_t> > compressSizeBufferHost(MAX_NUMBER_BLOCKS);
+    std::vector<uint32_t, aligned_allocator<uint32_t> > blockSizeBufferHost(MAX_NUMBER_BLOCKS);
 
     uint32_t block_size_in_kb = BLOCK_SIZE_IN_KB;
     uint32_t block_size_in_bytes = block_size_in_kb * 1024;
@@ -96,7 +99,7 @@ uint64_t snappyCompressEngineMM(uint8_t* in, uint8_t* out, uint64_t inputSize){
         for (int blkCalc = 0; blkCalc < compute_cu; blkCalc++) {
             uint32_t nblocks = (hostChunk_cu - 1) / block_size_in_bytes + 1;
             total_blocks_cu = nblocks;
-            std::memcpy(h_buf_in.data(), &in[inIdx + blkCalc * HOST_BUFFER_SIZE], hostChunk_cu);
+            std::memcpy(inBufferHost.data(), &in[inIdx + blkCalc * HOST_BUFFER_SIZE], hostChunk_cu);
         }
         // Fill the host block size buffer with various block sizes per chunk/cu
         for (int cuBsize = 0; cuBsize < compute_cu; cuBsize++) {
@@ -108,41 +111,41 @@ uint64_t snappyCompressEngineMM(uint8_t* in, uint8_t* out, uint64_t inputSize){
                 if (bs + block_size > chunkSize_curr_cu) {
                     block_size = chunkSize_curr_cu - bs;
                 }
-                h_blksize.data()[bIdx++] = block_size;
+                blockSizeBufferHost.data()[bIdx++] = block_size;
             }
             // Calculate chunks size in bytes for device buffer creation
             bufSize_in_bytes_cu = ((hostChunk_cu - 1) / BLOCK_SIZE_IN_KB + 1) * BLOCK_SIZE_IN_KB;
         }
 
-        BufferPointer buffer_input(Application::getContext<Lib::SNAPPY>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, bufSize_in_bytes_cu, h_buf_in.data());
-        BufferPointer buffer_output(Application::getContext<Lib::SNAPPY>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, bufSize_in_bytes_cu, h_buf_out.data());
-        BufferPointer buffer_compressed_size(Application::getContext<Lib::SNAPPY>(), CL_MEM_USE_HOST_PTR | CL_MEM_WRITE_ONLY, sizeof(uint32_t) * total_blocks_cu, h_compressSize.data());
-        BufferPointer buffer_block_size(Application::getContext<Lib::SNAPPY>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, sizeof(uint32_t) * total_blocks_cu, h_blksize.data());
+        BufferPointer inputBuffer(Application::getContext<Lib::SNAPPY>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, bufSize_in_bytes_cu, inBufferHost.data());
+        BufferPointer outputBuffer(Application::getContext<Lib::SNAPPY>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, bufSize_in_bytes_cu, outBufferHost.data());
+        BufferPointer compressedSizeBuffer(Application::getContext<Lib::SNAPPY>(), CL_MEM_USE_HOST_PTR | CL_MEM_WRITE_ONLY, sizeof(uint32_t) * total_blocks_cu, compressSizeBufferHost.data());
+        BufferPointer blockSizeBuffer(Application::getContext<Lib::SNAPPY>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, sizeof(uint32_t) * total_blocks_cu, blockSizeBufferHost.data());
 
         int narg = 0;
-        compress_kernel_snappy->setArg(narg++, *(buffer_input));
-        compress_kernel_snappy->setArg(narg++, *(buffer_output));
-        compress_kernel_snappy->setArg(narg++, *(buffer_compressed_size));
-        compress_kernel_snappy->setArg(narg++, *(buffer_block_size));
-        compress_kernel_snappy->setArg(narg++, block_size_in_kb);
-        compress_kernel_snappy->setArg(narg++, hostChunk_cu);
+        compressKernel->setArg(narg++, *(inputBuffer));
+        compressKernel->setArg(narg++, *(outputBuffer));
+        compressKernel->setArg(narg++, *(compressedSizeBuffer));
+        compressKernel->setArg(narg++, *(blockSizeBuffer));
+        compressKernel->setArg(narg++, block_size_in_kb);
+        compressKernel->setArg(narg++, hostChunk_cu);
         std::vector<cl::Memory> inBufVec;
 
-        inBufVec.push_back(*(buffer_input));
-        inBufVec.push_back(*(buffer_block_size));
+        inBufVec.push_back(*(inputBuffer));
+        inBufVec.push_back(*(blockSizeBuffer));
 
         // Migrate memory - Map host to device buffers
-        m_q->enqueueMigrateMemObjects(inBufVec, 0 /* 0 means from host*/);
-        m_q->finish();
+        queue->enqueueMigrateMemObjects(inBufVec, 0 /* 0 means from host*/);
+        queue->finish();
 
         // Fire kernel execution
-        m_q->enqueueTask(*compress_kernel_snappy);
+        queue->enqueueTask(*compressKernel);
         // wait till kernels complete
-        m_q->finish();
+        queue->finish();
 
         // Migrate memory - Map device to host buffers
-        m_q->enqueueMigrateMemObjects({*(buffer_output), *(buffer_compressed_size)}, CL_MIGRATE_MEM_OBJECT_HOST);
-        m_q->finish();
+        queue->enqueueMigrateMemObjects({*(outputBuffer), *(compressedSizeBuffer)}, CL_MIGRATE_MEM_OBJECT_HOST);
+        queue->finish();
         for (int cuCopy = 0; cuCopy < compute_cu; cuCopy++) {
             // Copy data into out buffer
             // Include compress and block size data
@@ -155,7 +158,7 @@ uint64_t snappyCompressEngineMM(uint8_t* in, uint8_t* out, uint64_t inputSize){
                 if (idx + block_size > hostChunk_cu) {
                     block_size = hostChunk_cu - idx;
                 }
-                uint32_t compressed_size = h_compressSize.data()[bIdx];
+                uint32_t compressed_size = compressSizeBufferHost.data()[bIdx];
                 assert(compressed_size != 0);
 
                 int orig_block_size = hostChunk_cu;
@@ -173,7 +176,7 @@ uint64_t snappyCompressEngineMM(uint8_t* in, uint8_t* out, uint64_t inputSize){
                     std::memcpy(&out[outIdx], &crc_value, 4);
                     outIdx += 4;
                     // Compressed data of this block with preamble
-                    std::memcpy(&out[outIdx], (h_buf_out.data() + bIdx * block_size_in_bytes), compressed_size);
+                    std::memcpy(&out[outIdx], (outBufferHost.data() + bIdx * block_size_in_bytes), compressed_size);
                     outIdx += compressed_size;
                 } else {
                     // Chunk Type Identifier
@@ -198,93 +201,87 @@ uint64_t snappyCompressEngineMM(uint8_t* in, uint8_t* out, uint64_t inputSize){
     return outIdx;
 }
 
-uint64_t snappyCompressEngineStream(uint8_t* in, uint8_t* out, size_t inputSize){
-    KernelPointer compress_kernel_snappy(Application::getProgram<Lib::SNAPPY>(), "xilSnappyCompressStream:{xilSnappyCompressStream_1}");
-    KernelPointer compress_data_mover_kernel(Application::getProgram<Lib::SNAPPY>(), "xilCompressDatamover:{xilCompressDatamover_1}");
-    CommandQueuePointer m_q(Application::getContext<Lib::SNAPPY>(), Application::getDevice<Lib::SNAPPY>(), CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE | CL_QUEUE_PROFILING_ENABLE);
-
-    uint32_t host_buffer_size = BLOCK_SIZE_IN_KB * 1024;
-    uint32_t total_block_count = (inputSize - 1) / host_buffer_size + 1;
+uint64_t snappyCompressEngineStream(uint8_t* in, uint8_t* out, uint64_t inputSize){
+    uint64_t hostBufferSize = BLOCK_SIZE_IN_KB * 1024;
+    uint64_t chunkNum = (inputSize - 1) / hostBufferSize + 1;
 
     // output buffer index
     uint64_t outIdx = 0;
     // Index calculation
-    std::vector<uint8_t, aligned_allocator<uint8_t> > h_buf_in(host_buffer_size);
-    std::vector<uint8_t, aligned_allocator<uint8_t> > h_buf_out(host_buffer_size);
-    std::vector<uint32_t, aligned_allocator<uint32_t> > h_compressSize(1);
+    std::vector<uint8_t, aligned_allocator<uint8_t> > inBufferHost(hostBufferSize);
+    std::vector<uint8_t, aligned_allocator<uint8_t> > outBufferHost(hostBufferSize);
+    std::vector<uint32_t, aligned_allocator<uint32_t> > compressSizeBufferHost(1);
 
     // device buffer allocation
-    BufferPointer buffer_input(Application::getContext<Lib::SNAPPY>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, host_buffer_size, h_buf_in.data());
-    BufferPointer buffer_output(Application::getContext<Lib::SNAPPY>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, host_buffer_size, h_buf_out.data());
-    BufferPointer buffer_compressed_size(Application::getContext<Lib::SNAPPY>(), CL_MEM_USE_HOST_PTR | CL_MEM_WRITE_ONLY, sizeof(uint32_t), h_compressSize.data());
+    BufferPointer inputBuffer(Application::getContext<Lib::SNAPPY>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, hostBufferSize, inBufferHost.data());
+    BufferPointer outputBuffer(Application::getContext<Lib::SNAPPY>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, hostBufferSize, outBufferHost.data());
+    BufferPointer compressedSizeBuffer(Application::getContext<Lib::SNAPPY>(), CL_MEM_USE_HOST_PTR | CL_MEM_WRITE_ONLY, sizeof(uint32_t), compressSizeBufferHost.data());
 
-    // sequentially copy block sized buffers to kernel and wait for them to finish before enqueueing
-    for (uint32_t blkIndx = 0, bufIndx = 0; blkIndx < total_block_count; blkIndx++, bufIndx += host_buffer_size) {
+    KernelPointer compressKernel(Application::getProgram<Lib::SNAPPY>(), "xilSnappyCompressStream:{xilSnappyCompressStream_1}");
+    KernelPointer compressDataMoverKernel(Application::getProgram<Lib::SNAPPY>(), "xilCompressDatamover:{xilCompressDatamover_1}");
+    compressDataMoverKernel->setArg(0, *inputBuffer);
+    compressDataMoverKernel->setArg(1, *outputBuffer);
+    compressDataMoverKernel->setArg(2, *compressedSizeBuffer);
+
+    CommandQueuePointer queue(Application::getContext<Lib::SNAPPY>(), Application::getDevice<Lib::SNAPPY>(), CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE | CL_QUEUE_PROFILING_ENABLE);
+
+    for (uint64_t blkIndx=0, bufIndx=0; blkIndx<chunkNum; blkIndx++, bufIndx+=hostBufferSize) {
         // current block input size
-        uint32_t c_input_size = host_buffer_size;
-        if (blkIndx == total_block_count - 1) c_input_size = inputSize - bufIndx;
+        uint32_t chunkSize = hostBufferSize;
+        if (blkIndx==chunkNum-1) chunkSize=inputSize-bufIndx;
 
         // copy input to input buffer
-        std::memcpy(h_buf_in.data(), in + bufIndx, c_input_size);
+        std::memcpy(inBufferHost.data(), in+bufIndx, chunkSize);
 
         // set kernel args
-        uint32_t narg = 0;
-        compress_data_mover_kernel->setArg(narg++, *buffer_input);
-        compress_data_mover_kernel->setArg(narg++, *buffer_output);
-        compress_data_mover_kernel->setArg(narg++, *buffer_compressed_size);
-        compress_data_mover_kernel->setArg(narg, c_input_size);
+        compressDataMoverKernel->setArg(3, chunkSize);
 
-        compress_kernel_snappy->setArg(2, c_input_size);
+        compressKernel->setArg(2, chunkSize);
         // Migrate Memory - Map host to device buffers
-        m_q->enqueueMigrateMemObjects({*(buffer_input)}, 0);
-        m_q->finish();
+        queue->enqueueMigrateMemObjects({*inputBuffer}, 0);
+        queue->finish();
         
         // enqueue the kernels and wait for them to finish
-        m_q->enqueueTask(*compress_data_mover_kernel);
-        m_q->enqueueTask(*compress_kernel_snappy);
-        m_q->finish();
-
-        // Setup output buffer vectors
-        std::vector<cl::Memory> outBufVec;
-        outBufVec.push_back(*buffer_output);
-        outBufVec.push_back(*buffer_compressed_size);
+        queue->enqueueTask(*compressDataMoverKernel);
+        queue->enqueueTask(*compressKernel);
+        queue->finish();
 
         // Migrate memory - Map device to host buffers
-        m_q->enqueueMigrateMemObjects(outBufVec, CL_MIGRATE_MEM_OBJECT_HOST);
-        m_q->finish();
+        queue->enqueueMigrateMemObjects({*outputBuffer, *compressedSizeBuffer}, CL_MIGRATE_MEM_OBJECT_HOST);
+        queue->finish();
 
         // copy the compressed data to out pointer
-        uint32_t compressedSize = h_compressSize.data()[0];
+        uint32_t compressedSize=compressSizeBufferHost.data()[0];
 
-        if (c_input_size > compressedSize) {
-            out[outIdx++] = 0x00;
+        if (chunkSize>compressedSize) {
+            out[outIdx++]=0x00;
 
             // 3 Bytes to represent compressed block length + 4
-            uint32_t f_csize = compressedSize + 4;
-            std::memcpy(out + outIdx, &f_csize, 3);
-            outIdx += 3;
+            uint32_t fixedSize=compressedSize+4;
+            std::memcpy(out+outIdx, &fixedSize, 3);
+            outIdx+=3;
 
             // CRC - for now 0s
-            uint32_t crc_value = 0;
-            std::memcpy(out + outIdx, &crc_value, 4);
-            outIdx += 4;
+            uint32_t crcValue=0;
+            std::memcpy(out+outIdx, &crcValue, 4);
+            outIdx+=4;
 
-            std::memcpy(out + outIdx, h_buf_out.data(), compressedSize);
-            outIdx += compressedSize;
+            std::memcpy(out+outIdx, outBufferHost.data(), compressedSize);
+            outIdx+=compressedSize;
         } else {
             // Chunk Type Identifier
-            out[outIdx++] = 0x01;
+            out[outIdx++]=0x01;
             // 3 Bytes to represent uncompress block length + 4;
-            uint32_t f_csize = c_input_size + 4;
-            std::memcpy(out + outIdx, &f_csize, 3);
-            outIdx += 3;
+            uint32_t fixedSize=chunkSize + 4;
+            std::memcpy(out+outIdx, &fixedSize, 3);
+            outIdx+=3;
             // CRC -for now 0s
-            uint32_t crc_value = 0;
-            std::memcpy(out + outIdx, &crc_value, 4);
-            outIdx += 4;
+            uint32_t crcValue=0;
+            std::memcpy(out+outIdx, &crcValue, 4);
+            outIdx+=4;
 
-            std::memcpy(out + outIdx, in + (host_buffer_size * blkIndx), c_input_size);
-            outIdx += c_input_size;
+            std::memcpy(out+outIdx, in+(hostBufferSize*blkIndx), chunkSize);
+            outIdx+=chunkSize;
         }
     }
 
@@ -293,12 +290,12 @@ uint64_t snappyCompressEngineStream(uint8_t* in, uint8_t* out, size_t inputSize)
 
 uint64_t snappyDecompressEngineMM(uint8_t* in, uint8_t* out, uint32_t inputSize, uint32_t maxOutputSize){
     KernelPointer decompress_kernel_snappy(Application::getProgram<Lib::SNAPPY>(), "xilSnappyDecompressMM:{xilSnappyDecompressMM_1}");
-    CommandQueuePointer m_q(Application::getContext<Lib::SNAPPY>(), Application::getDevice<Lib::SNAPPY>(), CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE | CL_QUEUE_PROFILING_ENABLE);
+    CommandQueuePointer queue(Application::getContext<Lib::SNAPPY>(), Application::getDevice<Lib::SNAPPY>(), CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE | CL_QUEUE_PROFILING_ENABLE);
 
-    std::vector<uint8_t, aligned_allocator<uint8_t> > h_buf_in(HOST_BUFFER_SIZE);
-    std::vector<uint8_t, aligned_allocator<uint8_t> > h_buf_out(HOST_BUFFER_SIZE);
-    std::vector<uint32_t, aligned_allocator<uint32_t> > h_compressSize(MAX_NUMBER_BLOCKS);
-    std::vector<uint32_t, aligned_allocator<uint32_t> > h_blksize(MAX_NUMBER_BLOCKS);
+    std::vector<uint8_t, aligned_allocator<uint8_t> > inBufferHost(HOST_BUFFER_SIZE);
+    std::vector<uint8_t, aligned_allocator<uint8_t> > outBufferHost(HOST_BUFFER_SIZE);
+    std::vector<uint32_t, aligned_allocator<uint32_t> > compressSizeBufferHost(MAX_NUMBER_BLOCKS);
+    std::vector<uint32_t, aligned_allocator<uint32_t> > blockSizeBufferHost(MAX_NUMBER_BLOCKS);
     std::vector<uint32_t> m_blkSize(MAX_NUMBER_BLOCKS);
     std::vector<uint32_t> m_compressSize(MAX_NUMBER_BLOCKS);
 
@@ -306,16 +303,16 @@ uint64_t snappyDecompressEngineMM(uint8_t* in, uint8_t* out, uint32_t inputSize,
     uint32_t blocksPerChunk = HOST_BUFFER_SIZE / buf_size;
     uint32_t host_buffer_size = ((HOST_BUFFER_SIZE - 1) / BLOCK_SIZE_IN_KB + 1) * BLOCK_SIZE_IN_KB;
 
-    BufferPointer buffer_input(Application::getContext<Lib::SNAPPY>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, host_buffer_size, h_buf_in.data());
-    BufferPointer buffer_output(Application::getContext<Lib::SNAPPY>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, host_buffer_size, h_buf_out.data());
-    BufferPointer buffer_block_size(Application::getContext<Lib::SNAPPY>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, sizeof(uint32_t) * blocksPerChunk, h_blksize.data());
-    BufferPointer buffer_compressed_size(Application::getContext<Lib::SNAPPY>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, sizeof(uint32_t) * blocksPerChunk, h_compressSize.data());
+    BufferPointer inputBuffer(Application::getContext<Lib::SNAPPY>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, host_buffer_size, inBufferHost.data());
+    BufferPointer outputBuffer(Application::getContext<Lib::SNAPPY>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, host_buffer_size, outBufferHost.data());
+    BufferPointer blockSizeBuffer(Application::getContext<Lib::SNAPPY>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, sizeof(uint32_t) * blocksPerChunk, blockSizeBufferHost.data());
+    BufferPointer compressedSizeBuffer(Application::getContext<Lib::SNAPPY>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, sizeof(uint32_t) * blocksPerChunk, compressSizeBufferHost.data());
                                         
     uint32_t narg = 0;
-    decompress_kernel_snappy->setArg(narg++, *(buffer_input));
-    decompress_kernel_snappy->setArg(narg++, *(buffer_output));
-    decompress_kernel_snappy->setArg(narg++, *(buffer_block_size));
-    decompress_kernel_snappy->setArg(narg++, *(buffer_compressed_size));
+    decompress_kernel_snappy->setArg(narg++, *(inputBuffer));
+    decompress_kernel_snappy->setArg(narg++, *(outputBuffer));
+    decompress_kernel_snappy->setArg(narg++, *(blockSizeBuffer));
+    decompress_kernel_snappy->setArg(narg++, *(compressedSizeBuffer));
     decompress_kernel_snappy->setArg(narg++, (uint32_t)BLOCK_SIZE_IN_KB);
     decompress_kernel_snappy->setArg(narg++, blocksPerChunk);
     uint32_t chunk_size = 0;
@@ -387,11 +384,11 @@ uint64_t snappyDecompressEngineMM(uint8_t* in, uint8_t* out, uint32_t inputSize,
             m_compressSize.data()[over_block_cntr] = chunk_size - 4;
             m_blkSize.data()[over_block_cntr] = block_size;
 
-            h_compressSize.data()[bufblocks] = chunk_size - 4;
-            h_blksize.data()[bufblocks] = block_size;
+            compressSizeBufferHost.data()[bufblocks] = chunk_size - 4;
+            blockSizeBufferHost.data()[bufblocks] = block_size;
             bufblocks++;
             // Copy data
-            std::memcpy(&(h_buf_in.data()[block_cntr * buf_size]), &in[idxSize + 8], chunk_size - 4);
+            std::memcpy(&(inBufferHost.data()[block_cntr * buf_size]), &in[idxSize + 8], chunk_size - 4);
             block_cntr++;
             blkDecomExist = true;
         } else if (chunk_idx == 0x01) {
@@ -414,15 +411,15 @@ uint64_t snappyDecompressEngineMM(uint8_t* in, uint8_t* out, uint32_t inputSize,
             decompress_kernel_snappy->setArg(5, block_cntr);
             // For big files go ahead do it here
             // Migrate memory - Map host to device buffers
-            m_q->enqueueMigrateMemObjects({*(buffer_input), *(buffer_block_size), *(buffer_compressed_size)}, 0 /*0 means from host*/);
-            m_q->finish();
+            queue->enqueueMigrateMemObjects({*(inputBuffer), *(blockSizeBuffer), *(compressedSizeBuffer)}, 0 /*0 means from host*/);
+            queue->finish();
 
-            m_q->enqueueTask(*decompress_kernel_snappy);
-            m_q->finish();
+            queue->enqueueTask(*decompress_kernel_snappy);
+            queue->finish();
 
             // Migrate memory - Map device to host buffers
-            m_q->enqueueMigrateMemObjects({*(buffer_output)}, CL_MIGRATE_MEM_OBJECT_HOST);
-            m_q->finish();
+            queue->enqueueMigrateMemObjects({*(outputBuffer)}, CL_MIGRATE_MEM_OBJECT_HOST);
+            queue->finish();
             bufIdx = 0;
             // copy output
             for (uint32_t bIdx = 0; bIdx < over_block_cntr; bIdx++) {
@@ -441,7 +438,7 @@ uint64_t snappyDecompressEngineMM(uint8_t* in, uint8_t* out, uint32_t inputSize,
                 }
 
                 if (compressed_size < block_size) {
-                    std::memcpy(&out[output_idx], &h_buf_out.data()[bufIdx], block_size);
+                    std::memcpy(&out[output_idx], &outBufferHost.data()[bufIdx], block_size);
                     output_idx += block_size;
                     bufIdx += block_size;
                 } else if (compressed_size == block_size) {
@@ -465,16 +462,16 @@ uint64_t snappyDecompressEngineMM(uint8_t* in, uint8_t* out, uint32_t inputSize,
         decompress_kernel_snappy->setArg(5, block_cntr);
 
         // Migrate memory - Map host to device buffers
-        m_q->enqueueMigrateMemObjects({*(buffer_input), *(buffer_block_size), *(buffer_compressed_size)}, 0 /*0 means from host*/);
-        m_q->finish();
+        queue->enqueueMigrateMemObjects({*(inputBuffer), *(blockSizeBuffer), *(compressedSizeBuffer)}, 0 /*0 means from host*/);
+        queue->finish();
         
         // Kernel invocation
-        m_q->enqueueTask(*decompress_kernel_snappy);
-        m_q->finish();
+        queue->enqueueTask(*decompress_kernel_snappy);
+        queue->finish();
 
         // Migrate memory - Map device to host buffers
-        m_q->enqueueMigrateMemObjects({*(buffer_output)}, CL_MIGRATE_MEM_OBJECT_HOST);
-        m_q->finish();
+        queue->enqueueMigrateMemObjects({*(outputBuffer)}, CL_MIGRATE_MEM_OBJECT_HOST);
+        queue->finish();
         bufIdx = 0;
         // copy output
         for (uint32_t bIdx = 0; bIdx < over_block_cntr; bIdx++) {
@@ -493,7 +490,7 @@ uint64_t snappyDecompressEngineMM(uint8_t* in, uint8_t* out, uint32_t inputSize,
             }
 
             if (compressed_size < block_size) {
-                std::memcpy(&out[output_idx], &h_buf_out.data()[bufIdx], block_size);
+                std::memcpy(&out[output_idx], &outBufferHost.data()[bufIdx], block_size);
                 output_idx += block_size;
                 bufIdx += block_size;
             } else if (compressed_size == block_size) {
@@ -514,44 +511,44 @@ uint64_t snappyDecompressEngineStream(uint8_t* in, uint8_t* out, uint32_t inputS
     
     KernelPointer decompress_kernel_snappy(Application::getProgram<Lib::SNAPPY>(), "xilSnappyDecompressStream:{xilSnappyDecompressStream_1}");
     KernelPointer decompress_data_mover_kernel(Application::getProgram<Lib::SNAPPY>(), "xilDecompressDatamover:{xilDecompressDatamover_1}");
-    CommandQueuePointer m_q(Application::getContext<Lib::SNAPPY>(), Application::getDevice<Lib::SNAPPY>(), CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE | CL_QUEUE_PROFILING_ENABLE);
+    CommandQueuePointer queue(Application::getContext<Lib::SNAPPY>(), Application::getDevice<Lib::SNAPPY>(), CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE | CL_QUEUE_PROFILING_ENABLE);
 
     uint32_t outputSize = maxOutputSize; // (inputSize * 20) + 16; //m_maxCR
-    std::vector<uint8_t, aligned_allocator<uint8_t> > h_buf_in(inputSize);
-    std::vector<uint8_t, aligned_allocator<uint8_t> > h_buf_out(outputSize);
+    std::vector<uint8_t, aligned_allocator<uint8_t> > inBufferHost(inputSize);
+    std::vector<uint8_t, aligned_allocator<uint8_t> > outBufferHost(outputSize);
     std::vector<uint32_t, aligned_allocator<uint32_t> > h_buf_decompressSize(1);
 
-    std::memcpy(h_buf_in.data(), in, inputSize);
+    std::memcpy(inBufferHost.data(), in, inputSize);
 
     // Device buffer allocation
-    BufferPointer buffer_input(Application::getContext<Lib::SNAPPY>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, inputSize, h_buf_in.data());
-    BufferPointer buffer_output(Application::getContext<Lib::SNAPPY>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, outputSize, h_buf_out.data());
+    BufferPointer inputBuffer(Application::getContext<Lib::SNAPPY>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, inputSize, inBufferHost.data());
+    BufferPointer outputBuffer(Application::getContext<Lib::SNAPPY>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, outputSize, outBufferHost.data());
     BufferPointer bufferOutputSize(Application::getContext<Lib::SNAPPY>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, sizeof(uint32_t), h_buf_decompressSize.data());
 
     // set kernel arguments
     int narg = 0;
-    decompress_data_mover_kernel->setArg(narg++, *(buffer_input));
-    decompress_data_mover_kernel->setArg(narg++, *(buffer_output));
+    decompress_data_mover_kernel->setArg(narg++, *(inputBuffer));
+    decompress_data_mover_kernel->setArg(narg++, *(outputBuffer));
     decompress_data_mover_kernel->setArg(narg++, inputSize);
     decompress_data_mover_kernel->setArg(narg, *(bufferOutputSize));
 
     decompress_kernel_snappy->setArg(3, inputSize);
 
     // Migrate Memory - Map host to device buffers
-    m_q->enqueueMigrateMemObjects({*(buffer_input), *(bufferOutputSize), *(buffer_output)}, 0);
-    m_q->finish();
+    queue->enqueueMigrateMemObjects({*(inputBuffer), *(bufferOutputSize), *(outputBuffer)}, 0);
+    queue->finish();
 
     // enqueue the kernels and wait for them to finish
-    m_q->enqueueTask(*decompress_data_mover_kernel);
-    m_q->enqueueTask(*decompress_kernel_snappy);
-    m_q->finish();
+    queue->enqueueTask(*decompress_data_mover_kernel);
+    queue->enqueueTask(*decompress_kernel_snappy);
+    queue->finish();
     
     // Migrate memory - Map device to host buffers
-    m_q->enqueueMigrateMemObjects({*(buffer_output), *(bufferOutputSize)}, CL_MIGRATE_MEM_OBJECT_HOST);
-    m_q->finish();
+    queue->enqueueMigrateMemObjects({*(outputBuffer), *(bufferOutputSize)}, CL_MIGRATE_MEM_OBJECT_HOST);
+    queue->finish();
 
     uint32_t uncompressedSize = h_buf_decompressSize[0];
-    std::memcpy(out, h_buf_out.data(), uncompressedSize);
+    std::memcpy(out, outBufferHost.data(), uncompressedSize);
 
     return uncompressedSize;
 }

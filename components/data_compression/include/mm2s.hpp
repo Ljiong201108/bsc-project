@@ -700,6 +700,10 @@ mm2s:
             if ((i + j) < inSize_gmemwidth) outstream << temp;
         }
     }
+
+    #ifndef __SYNTHESIS__
+    std::cout<<"finish reading"<<std::endl;
+    #endif
 }
 
 } // namespace details

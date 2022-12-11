@@ -50,9 +50,6 @@ void streamDataK2dmSync(hls::stream<ap_uint<STREAMDWIDTH> >& out,
         for (uint32_t i = 0; (i < itrLim) && (!last); ++i) {
 #pragma HLS PIPELINE II = 1
             dataout = dmOutStream.read();
-            // #ifndef __SYNTHESIS__
-            // std::cout<<"streamDataK2dmSync get a data: "<<dataout.data<<" "<<dataout.last<<std::endl;
-            // #endif
             last = dataout.last;
             strb = (uint32_t)dataout.strb;
 
@@ -61,26 +58,27 @@ void streamDataK2dmSync(hls::stream<ap_uint<STREAMDWIDTH> >& out,
             bytEos << false;
             out << dataout.data;
         }
-        if (last) {
-            uint32_t allignedData = (uint32_t)(outSize % readBlockSize);
-            if (allignedData == 0) {
-                outSize = (outSize == 0) ? 1 : readBlockSize + 1; // write 1 extra size
-                                                                  // if last block has
-                                                                  // the size equal to
-                                                                  // readBlockSize
+        // if (last) {
+        //     uint32_t allignedData = (uint32_t)(outSize % readBlockSize);
+        //     if (allignedData == 0) {
+        //         outSize = (outSize == 0) ? 1 : readBlockSize + 1; // write 1 extra size
+        //                                                           // if last block has
+        //                                                           // the size equal to
+        //                                                           // readBlockSize
 
-                bytEos << 0;
-                out << 0;
-            }
-            last_block = 1;
-        } else {
-            outSize = readBlockSize;
-        }
+        //         bytEos << 0;
+        //         out << 0;
+        //     }
+        //     last_block = 1;
+        // } else {
+        //     outSize = readBlockSize;
+        // }
     } else {
         bytEos << 0;
         out << 0;
     }
-    dcStatusStream << (bool)last_block;
+    // dcStatusStream << (bool)last_block;
+    dcStatusStream << last;
     bytEos << 1;
     out << 0;
     dataSize << outSize; // read encoded size from decompression kernel
