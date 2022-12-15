@@ -34,15 +34,12 @@ void testZstd(int argc, char** argv){
 
     std::cout<<"Start test Zstd"<<std::endl;
     std::cout<<"Original: "<<std::endl;
-    hexdump(in.data(), inputSize);
-    outputSize=dataCompression::internal::zstdCompressStream(in.data(), out.data(), inputSize);
-    std::cout<<"------------------------"<<std::endl;
+    outputSize=dataCompression::zstdCompress(in.data(), out.data(), inputSize);
     std::cout<<"Compressed: "<<std::endl;
-    hexdump(out.data(), outputSize);
+    hexdump(out.data(), outputSize, "output_zstd");
     std::cout<<"------------------------"<<std::endl;
-    std::cout<<"Stream solution: "<<std::endl;
-	outputSize2=dataCompression::internal::zstdDecompressStream(out.data(), out2.data(), outputSize, out2.size());
-    hexdump(out2.data(), outputSize2);
+	outputSize2=dataCompression::zstdDecompress(out.data(), out2.data(), outputSize);
+    hexdump(out2.data(), outputSize2, "output_zstd");
     std::cout<<"End test Zstd"<<std::endl;
 #endif
 }

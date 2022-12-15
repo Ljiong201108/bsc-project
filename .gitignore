@@ -13,3 +13,9 @@ app
 *.0
 *.csv
 report
+out*
+# *.vhdl
+# *.v
+# *.dcp
+# *.xci
+.ipcache

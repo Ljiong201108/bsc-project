@@ -16,7 +16,7 @@ std::string methodToString(Method m);
 namespace internal{
 template<Type T, Method M>
 void desWithIV(uint64_t *in, const uint64_t &key, const uint64_t &iv, uint64_t *out, uint32_t size){
-    Application &app=Application::getInstance();
+    Application &app=Application::getInstance<Lib::DES>();
     CommandQueuePointer cqPointer;
     KernelPointer kPointer;
     Pool<BufferPointer, 2> bufferPool;
@@ -50,7 +50,7 @@ void desWithIV(uint64_t *in, const uint64_t &key, const uint64_t &iv, uint64_t *
 
 template<Type T, Method M>
 void desWithoutIV(uint64_t *in, const uint64_t &key, uint64_t *out, uint32_t size){
-    Application &app=Application::getInstance();
+    Application &app=Application::getInstance<Lib::DES>();
     CommandQueuePointer cqPointer;
     KernelPointer kPointer;
     Pool<BufferPointer, 2> bufferPool;

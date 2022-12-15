@@ -19,8 +19,9 @@
 
 constexpr uint64_t MCR=20;
 
-inline void hexdump(void *ptr, int buflen) {
-	FILE *fptr=fopen("out", "a");
+inline void hexdump(void *ptr, int buflen, std::string filename) {
+	FILE *fptr=NULL;
+	if(fptr==NULL) fptr=fopen(filename.c_str(), "a");
 
 	unsigned char *buf = (unsigned char*)ptr;
 	int i, j;

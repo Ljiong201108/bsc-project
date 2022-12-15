@@ -5,7 +5,7 @@
 #include "xxhash.h"
 
 namespace dataCompression{
-namespace internal{
+namespace internalLz4{
 // Maximum host buffer used to operate per kernel invocation
 const auto HOST_BUFFER_SIZE = (32 * 1024 * 1024);
 
@@ -16,19 +16,19 @@ const auto BLOCK_SIZE_IN_KB = 64;
 const auto MAX_NUMBER_BLOCKS = (HOST_BUFFER_SIZE / (BLOCK_SIZE_IN_KB * 1024));
 
 template <typename T>
-void writeCompressedBlock(size_t input_size, uint32_t block_length, uint32_t* compressSize, uint8_t* out, T* in, T* buf_out, uint64_t& outIdx, uint64_t& inIdx) {
-    uint32_t no_blocks = (input_size - 1) / block_length + 1;
+void writeCompressedBlock(uint64_t inputSize, uint32_t block_length, uint32_t* compressSize, uint8_t* out, T* in, T* buf_out, uint64_t& outIdx, uint64_t& inIdx) {
+    uint32_t no_blocks = (inputSize - 1) / block_length + 1;
     uint32_t idx = 0;
     for (uint32_t bIdx = 0; bIdx < no_blocks; bIdx++, idx += block_length) {
         // Default block size in bytes i.e., 64 * 1024
         uint32_t block_size = block_length;
-        if (idx + block_size > input_size) {
-            block_size = input_size - idx;
+        if (idx + block_size > inputSize) {
+            block_size = inputSize - idx;
         }
         uint32_t compressed_size = compressSize[bIdx];
         assert(compressed_size != 0);
 
-        int orig_block_size = input_size;
+        int orig_block_size = inputSize;
         int perc_cal = orig_block_size * 10;
         perc_cal = perc_cal / block_size;
 
@@ -79,16 +79,18 @@ inline uint8_t get_bsize(uint32_t c_input_size) {
     }
 }
 
-uint8_t writeLz4Header(uint8_t* out, size_t input_size);
-uint8_t writeLz4Footer(uint8_t* in, uint8_t* out, uint64_t input_size);
+uint8_t writeLz4Header(uint8_t* out, uint64_t inputSize);
+uint8_t writeLz4Footer(uint8_t* in, uint8_t* out, uint64_t inputSize);
 uint8_t readLz4Header(uint8_t* in);
-uint64_t lz4CompressEngineMM(uint8_t* in, uint8_t* out, size_t input_size);
-uint64_t lz4CompressEngineStream(uint8_t* in, uint8_t* out, size_t input_size);
-uint64_t lz4DecompressEngineMM(uint8_t* in, uint8_t* out, size_t input_size, size_t maxOutputSize);
-uint64_t lz4DecompressEngineStream(uint8_t* in, uint8_t* out, size_t input_size, size_t maxOutputSize);
-uint64_t lz4CompressMM(uint8_t* in, uint8_t* out, size_t input_size);
-uint64_t lz4CompressStream(uint8_t* in, uint8_t* out, size_t input_size);
-uint64_t lz4DecompressMM(uint8_t* in, uint8_t* out, size_t input_size, size_t maxOutputSize);
-uint64_t lz4DecompressStream(uint8_t* in, uint8_t* out, size_t input_size, size_t maxOutputSize);
+uint64_t lz4CompressEngineMM(uint8_t* in, uint8_t* out, uint64_t inputSize);
+uint64_t lz4CompressEngineStream(uint8_t* in, uint8_t* out, uint64_t inputSize);
+uint64_t lz4DecompressEngineMM(uint8_t* in, uint8_t* out, uint64_t inputSize);
+uint64_t lz4DecompressEngineStream(uint8_t* in, uint8_t* out, uint64_t inputSize);
+uint64_t lz4CompressMM(uint8_t* in, uint8_t* out, uint64_t inputSize);
+uint64_t lz4CompressStream(uint8_t* in, uint8_t* out, uint64_t inputSize);
+uint64_t lz4DecompressMM(uint8_t* in, uint8_t* out, uint64_t inputSize);
+uint64_t lz4DecompressStream(uint8_t* in, uint8_t* out, uint64_t inputSize);
 }// internal
+uint64_t lz4Compress(uint8_t* in, uint8_t* out, uint64_t inputSize, bool stream=false);
+uint64_t lz4Decompress(uint8_t* in, uint8_t* out, uint64_t inputSize, bool stream=false);
 }// dataCompression

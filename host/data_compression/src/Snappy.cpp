@@ -1,7 +1,7 @@
 #include "Snappy.hpp"
 
 namespace dataCompression{
-namespace internal{
+namespace internalSnappy{
 uint8_t writeHeader(uint8_t* out){
     int fileIdx = 0;
 
@@ -288,7 +288,7 @@ uint64_t snappyCompressEngineStream(uint8_t* in, uint8_t* out, uint64_t inputSiz
     return outIdx;
 }
 
-uint64_t snappyDecompressEngineMM(uint8_t* in, uint8_t* out, uint32_t inputSize, uint32_t maxOutputSize){
+uint64_t snappyDecompressEngineMM(uint8_t* in, uint8_t* out, uint64_t inputSize){
     KernelPointer decompress_kernel_snappy(Application::getProgram<Lib::SNAPPY>(), "xilSnappyDecompressMM:{xilSnappyDecompressMM_1}");
     CommandQueuePointer queue(Application::getContext<Lib::SNAPPY>(), Application::getDevice<Lib::SNAPPY>(), CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE | CL_QUEUE_PROFILING_ENABLE);
 
@@ -328,8 +328,7 @@ uint64_t snappyDecompressEngineMM(uint8_t* in, uint8_t* out, uint32_t inputSize,
     uint16_t stride_cidsize = 4;
     bool blkDecomExist = false;
     uint32_t blkUnComp = 0;
-    // Maximum allowed outbuffer size, if it exceeds then exit
-    uint32_t c_max_outbuf = maxOutputSize; // inputSize * 20 (20=m_maxCR by default)
+    
     // Go over overall input size
     for (uint32_t idxSize = 0; idxSize < inputSize; idxSize += stride_cidsize, chunk_cntr++) {
         // Chunk identifier
@@ -426,17 +425,6 @@ uint64_t snappyDecompressEngineMM(uint8_t* in, uint8_t* out, uint32_t inputSize,
                 uint32_t block_size = m_blkSize.data()[bIdx];
                 uint32_t compressed_size = m_compressSize.data()[bIdx];
 
-                if ((output_idx + block_size) > c_max_outbuf) {
-                    std::cout << "\n" << std::endl;
-                    std::cout << "\x1B[35mZIP BOMB: Exceeded output buffer size during decompression \033[0m \n"
-                              << std::endl;
-                    std::cout
-                        << "\x1B[35mUse -mcr option to increase the maximum compression ratio (Default: 10) \033[0m \n"
-                        << std::endl;
-                    std::cout << "\x1B[35mAborting .... \033[0m\n" << std::endl;
-                    exit(1);
-                }
-
                 if (compressed_size < block_size) {
                     std::memcpy(&out[output_idx], &outBufferHost.data()[bufIdx], block_size);
                     output_idx += block_size;
@@ -478,17 +466,6 @@ uint64_t snappyDecompressEngineMM(uint8_t* in, uint8_t* out, uint32_t inputSize,
             uint32_t block_size = m_blkSize.data()[bIdx];
             uint32_t compressed_size = m_compressSize.data()[bIdx];
 
-            if ((output_idx + block_size) > c_max_outbuf) {
-                std::cout << "\n" << std::endl;
-                std::cout << "\x1B[35mZIP BOMB: Exceeded output buffer size during decompression \033[0m \n"
-                          << std::endl;
-                std::cout
-                    << "\x1B[35mUse -mcr option to increase the maximum compression ratio (Default: 10) \033[0m \n"
-                    << std::endl;
-                std::cout << "\x1B[35mAborting .... \033[0m\n" << std::endl;
-                exit(1);
-            }
-
             if (compressed_size < block_size) {
                 std::memcpy(&out[output_idx], &outBufferHost.data()[bufIdx], block_size);
                 output_idx += block_size;
@@ -507,13 +484,12 @@ uint64_t snappyDecompressEngineMM(uint8_t* in, uint8_t* out, uint32_t inputSize,
     return output_idx;
 }
 
-uint64_t snappyDecompressEngineStream(uint8_t* in, uint8_t* out, uint32_t inputSize, uint32_t maxOutputSize){
-    
+uint64_t snappyDecompressEngineStream(uint8_t* in, uint8_t* out, uint64_t inputSize){
     KernelPointer decompress_kernel_snappy(Application::getProgram<Lib::SNAPPY>(), "xilSnappyDecompressStream:{xilSnappyDecompressStream_1}");
     KernelPointer decompress_data_mover_kernel(Application::getProgram<Lib::SNAPPY>(), "xilDecompressDatamover:{xilDecompressDatamover_1}");
     CommandQueuePointer queue(Application::getContext<Lib::SNAPPY>(), Application::getDevice<Lib::SNAPPY>(), CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE | CL_QUEUE_PROFILING_ENABLE);
 
-    uint32_t outputSize = maxOutputSize; // (inputSize * 20) + 16; //m_maxCR
+    uint32_t outputSize = inputSize*2; // (inputSize * 20) + 16; //m_maxCR
     std::vector<uint8_t, aligned_allocator<uint8_t> > inBufferHost(inputSize);
     std::vector<uint8_t, aligned_allocator<uint8_t> > outBufferHost(outputSize);
     std::vector<uint32_t, aligned_allocator<uint32_t> > h_buf_decompressSize(1);
@@ -554,50 +530,52 @@ uint64_t snappyDecompressEngineStream(uint8_t* in, uint8_t* out, uint32_t inputS
 }
 
 uint64_t snappyCompressMM(uint8_t* in, uint8_t* out, uint64_t inputSize){
-    std::cout<<"Before Snappy Compress: "<<std::endl;
-    hexdump(in, inputSize);
-
     uint32_t outIdx=writeHeader(out);
     uint64_t enbytes=snappyCompressEngineMM(in, out+outIdx, inputSize);
     outIdx+=enbytes;
-    std::cout<<"After Snappy Compress: "<<std::endl;
-    hexdump(out, outIdx);
     return outIdx;
 }
 
-uint64_t snappyCompressStream(uint8_t* in, uint8_t* out, uint64_t inputSize){
-    std::cout<<"Before Snappy Compress: "<<std::endl;
-    hexdump(in, inputSize);
-
+uint64_t snappyCompressStream(uint8_t* in, uint8_t* out, uint32_t inputSize){
     uint32_t outIdx=writeHeader(out);
     uint64_t enbytes=snappyCompressEngineStream(in, out+outIdx, inputSize);
     outIdx+=enbytes;
-    std::cout<<"After Snappy Compress: "<<std::endl;
-    hexdump(out, outIdx);
     return outIdx;
 }
 
-uint64_t snappyDecompressMM(uint8_t* in, uint8_t* out, uint32_t inputSize, uint32_t maxOutputSize){
-    std::cout<<"Before Snappy Decompress: "<<std::endl;
-    hexdump(in, inputSize);
-
+uint64_t snappyDecompressMM(uint8_t* in, uint8_t* out, uint64_t inputSize){
     uint8_t headerBytes = readHeader(in);
-    uint64_t debytes = snappyDecompressEngineMM(in+headerBytes, out, inputSize-headerBytes, maxOutputSize);
-
-    std::cout<<"After Snappy Decompress: "<<std::endl;
-    hexdump(out, debytes);
+    uint64_t debytes = snappyDecompressEngineMM(in+headerBytes, out, inputSize-headerBytes);
     return debytes;
 }
 
-uint64_t snappyDecompressStream(uint8_t* in, uint8_t* out, uint32_t inputSize, uint32_t maxOutputSize){
-    std::cout<<"Before Snappy Decompress: "<<std::endl;
-    hexdump(in, inputSize);
-
-    uint64_t debytes = snappyDecompressEngineStream(in, out, inputSize, maxOutputSize);
-
-    std::cout<<"After Snappy Decompress: "<<std::endl;
-    hexdump(out, debytes);
+uint64_t snappyDecompressStream(uint8_t* in, uint8_t* out, uint32_t inputSize){
+    uint64_t debytes = snappyDecompressEngineStream(in, out, inputSize);
     return debytes;
 }
 } //internal
+
+uint64_t snappyCompress(uint8_t* in, uint8_t* out, uint64_t inputSize, bool stream){
+    std::cout<<"Before Snappy Compress: "<<std::endl;
+    hexdump(in, inputSize, "output_snappy");
+
+    uint64_t enbytes=stream ? internalSnappy::snappyCompressStream(in, out, inputSize) : internalSnappy::snappyCompressMM(in, out, inputSize);
+
+    std::cout<<"After Snappy Compress: "<<std::endl;
+    hexdump(out, enbytes, "output_snappy");
+
+    return enbytes;
+}
+
+uint64_t snappyDecompress(uint8_t* in, uint8_t* out, uint64_t inputSize, bool stream){
+    std::cout<<"Before Snappy Decompress: "<<std::endl;
+    hexdump(in, inputSize, "output_snappy");
+
+    uint64_t debytes = stream ? internalSnappy::snappyDecompressStream(in, out, inputSize) : internalSnappy::snappyDecompressMM(in, out, inputSize);
+
+    std::cout<<"After Snappy Decompress: "<<std::endl;
+    hexdump(out, debytes, "output_snappy");
+
+    return debytes;
+}
 } //dataCompression

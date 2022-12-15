@@ -1,8 +1,8 @@
 #include "Lz4.hpp"
 
 namespace dataCompression{
-namespace internal{
-uint8_t writeLz4Header(uint8_t* out, size_t input_size){
+namespace internalLz4{
+uint8_t writeLz4Header(uint8_t* out, uint64_t inputSize){
     uint8_t fileIdx = 0;
     (out[fileIdx++]) = xf::compression::MAGIC_BYTE_1;
     (out[fileIdx++]) = xf::compression::MAGIC_BYTE_2;
@@ -14,7 +14,7 @@ uint8_t writeLz4Header(uint8_t* out, size_t input_size){
     // --content-size
     (out[fileIdx++]) = xf::compression::FLG_BYTE;
 
-    size_t block_size_header = 0;
+    uint64_t block_size_header = 0;
     // Default value 64K
     switch (BLOCK_SIZE_IN_KB) {
         case 64:
@@ -40,14 +40,14 @@ uint8_t writeLz4Header(uint8_t* out, size_t input_size){
 
     uint8_t temp_buff[10] = {xf::compression::FLG_BYTE,
                              (uint8_t)block_size_header,
-                             (uint8_t)input_size,
-                             (uint8_t)(input_size >> 8),
-                             (uint8_t)(input_size >> 16),
-                             (uint8_t)(input_size >> 24),
-                             (uint8_t)(input_size >> 32),
-                             (uint8_t)(input_size >> 40),
-                             (uint8_t)(input_size >> 48),
-                             (uint8_t)(input_size >> 56)};
+                             (uint8_t)inputSize,
+                             (uint8_t)(inputSize >> 8),
+                             (uint8_t)(inputSize >> 16),
+                             (uint8_t)(inputSize >> 24),
+                             (uint8_t)(inputSize >> 32),
+                             (uint8_t)(inputSize >> 40),
+                             (uint8_t)(inputSize >> 48),
+                             (uint8_t)(inputSize >> 56)};
 
     // xxhash is used to calculate hash value
     uint32_t xxh = XXH32(temp_buff, 2, 0);
@@ -58,14 +58,14 @@ uint8_t writeLz4Header(uint8_t* out, size_t input_size){
     return fileIdx;
 }
 
-uint8_t writeLz4Footer(uint8_t* in, uint8_t* out, uint64_t input_size){
+uint8_t writeLz4Footer(uint8_t* in, uint8_t* out, uint64_t inputSize){
     uint8_t fileIdx = 0;
     uint32_t* zero_ptr = 0;
     memcpy(out, &zero_ptr, 4);
     fileIdx += 4;
 
     // xxhash is used to calculate content checksum value
-    uint32_t xxh = XXH32(in, input_size, 0);
+    uint32_t xxh = XXH32(in, inputSize, 0);
     memcpy(out+fileIdx, &xxh, 4);
     fileIdx += 4;
     return fileIdx;
@@ -113,7 +113,7 @@ uint8_t readLz4Header(uint8_t* in){
 
     if (xf::compression::FLG_BYTE == 104) {
         // Original size
-        size_t original_size = 0;
+        uint64_t original_size = 0;
 
         memcpy(&original_size, &in[fileIdx], 8);
 
@@ -129,7 +129,7 @@ uint8_t readLz4Header(uint8_t* in){
     return fileIdx;
 }
 
-uint64_t lz4CompressEngineMM(uint8_t* in, uint8_t* out, size_t input_size){
+uint64_t lz4CompressEngineMM(uint8_t* in, uint8_t* out, uint64_t inputSize){
     uint32_t host_buffer_size = HOST_BUFFER_SIZE;
     uint32_t max_num_blks = (host_buffer_size) / (BLOCK_SIZE_IN_KB * 1024);
     std::vector<uint8_t, aligned_allocator<uint8_t>> h_buf_in(host_buffer_size);
@@ -166,7 +166,7 @@ uint64_t lz4CompressEngineMM(uint8_t* in, uint8_t* out, size_t input_size){
     CommandQueuePointer m_q(Application::getContext<Lib::LZ4>(), Application::getDevice<Lib::LZ4>(), CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE | CL_QUEUE_PROFILING_ENABLE);
     KernelPointer compress_kernel_lz4(Application::getProgram<Lib::LZ4>(), "xilLz4CompressMM:{xilLz4CompressMM_1}");
 
-    for (uint64_t inIdx = 0; inIdx < input_size; inIdx += host_buffer_size) {
+    for (uint64_t inIdx = 0; inIdx < inputSize; inIdx += host_buffer_size) {
         // Needs to reset this variable
         // As this drives compute unit launch per iteration
         compute_cu = 0;
@@ -176,13 +176,13 @@ uint64_t lz4CompressEngineMM(uint8_t* in, uint8_t* out, size_t input_size){
         uint32_t buf_size = host_buffer_size;
         // This loop traverses through each compute based current inIdx
         // It tries to calculate chunk size and total compute units need to be
-        // launched (based on the input_size)
+        // launched (based on the inputSize)
         hostChunk_cu = 0;
         // If amount of data to be consumed is less than HOST_BUFFER_SIZE
         // Then choose to send is what is needed instead of full buffer size
         // based on host buffer macro
-        if (inIdx + (buf_size) > input_size) {
-            hostChunk_cu = input_size - (inIdx);
+        if (inIdx + (buf_size) > inputSize) {
+            hostChunk_cu = inputSize - (inIdx);
             compute_cu++;
         } else {
             hostChunk_cu = buf_size;
@@ -245,13 +245,13 @@ uint64_t lz4CompressEngineMM(uint8_t* in, uint8_t* out, size_t input_size){
     return outIdx;
 }
 
-uint64_t lz4CompressEngineStream(uint8_t* in, uint8_t* out, size_t input_size){
+uint64_t lz4CompressEngineStream(uint8_t* in, uint8_t* out, uint64_t inputSize){
     std::vector<uint8_t, aligned_allocator<uint8_t>> h_buf_in(BLOCK_SIZE_IN_KB * 1024);
     std::vector<uint8_t, aligned_allocator<uint8_t>> h_buf_out(BLOCK_SIZE_IN_KB * 1024);
     std::vector<uint32_t, aligned_allocator<uint32_t>> h_compressSize(1);
 
     uint32_t host_buffer_size = BLOCK_SIZE_IN_KB * 1024;
-    uint32_t total_block_count = (input_size - 1) / host_buffer_size + 1;
+    uint32_t total_block_count = (inputSize - 1) / host_buffer_size + 1;
 
     uint64_t outIdx = 0;
     BufferPointer buffer_compressed_size(Application::getContext<Lib::LZ4>(), CL_MEM_USE_HOST_PTR | CL_MEM_WRITE_ONLY, sizeof(uint32_t), h_compressSize.data());
@@ -266,7 +266,7 @@ uint64_t lz4CompressEngineStream(uint8_t* in, uint8_t* out, size_t input_size){
     for (uint32_t blkIndx = 0, bufIndx = 0; blkIndx < total_block_count; blkIndx++, bufIndx += host_buffer_size) {
         // current block input size
         uint32_t c_input_size = host_buffer_size;
-        if (blkIndx == total_block_count - 1) c_input_size = input_size - bufIndx;
+        if (blkIndx == total_block_count - 1) c_input_size = inputSize - bufIndx;
 
         // copy input to input buffer
         std::memcpy(h_buf_in.data(), in + bufIndx, c_input_size);
@@ -330,17 +330,14 @@ uint64_t lz4CompressEngineStream(uint8_t* in, uint8_t* out, size_t input_size){
     return outIdx;
 }
 
-uint64_t lz4DecompressEngineMM(uint8_t* in, uint8_t* out, size_t input_size, size_t maxOutputSize){
-    size_t host_buffer_size = maxOutputSize;
-    // uint32_t max_num_blks = (host_buffer_size) / (BLOCK_SIZE_IN_KB * 1024);
+uint64_t lz4DecompressEngineMM(uint8_t* in, uint8_t* out, uint64_t inputSize){
+    uint64_t host_buffer_size = HOST_BUFFER_SIZE*2;
+    uint32_t max_num_blks = (host_buffer_size) / (BLOCK_SIZE_IN_KB * 1024);
     std::vector<uint8_t, aligned_allocator<uint8_t>> h_buf_in(host_buffer_size);
     std::vector<uint8_t, aligned_allocator<uint8_t>> h_buf_out(host_buffer_size);
-    std::vector<uint32_t, aligned_allocator<uint32_t>> h_decSize(host_buffer_size);
-    std::vector<uint32_t, aligned_allocator<uint32_t>> h_compressSize(host_buffer_size);
-    std::vector<uint32_t> m_compressSize(host_buffer_size);
+    std::vector<uint32_t, aligned_allocator<uint32_t>> h_decSize(max_num_blks);
+    std::vector<uint32_t, aligned_allocator<uint32_t>> h_compressSize(max_num_blks);
 
-    // Maximum allowed outbuffer size, if it exceeds then exit
-    uint32_t c_max_outbuf = host_buffer_size;
     uint32_t block_size_in_bytes = BLOCK_SIZE_IN_KB * 1024;
     uint32_t block_cntr = 0;
     uint32_t done_block_cntr = 0;
@@ -357,21 +354,21 @@ uint64_t lz4DecompressEngineMM(uint8_t* in, uint8_t* out, size_t input_size, siz
 
     // Device buffer allocation
     BufferPointer buffer_input(Application::getContext<Lib::LZ4>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, host_buffer_size, h_buf_in.data());
-    BufferPointer buffer_output(Application::getContext<Lib::LZ4>(), CL_MEM_USE_HOST_PTR | CL_MEM_WRITE_ONLY, c_max_outbuf, h_buf_out.data());
-    BufferPointer buffer_dec_size(Application::getContext<Lib::LZ4>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, sizeof(uint32_t) * host_buffer_size, h_decSize.data());
-    BufferPointer buffer_compressed_size(Application::getContext<Lib::LZ4>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, sizeof(uint32_t) * host_buffer_size, h_compressSize.data());
+    BufferPointer buffer_output(Application::getContext<Lib::LZ4>(), CL_MEM_USE_HOST_PTR | CL_MEM_WRITE_ONLY, host_buffer_size*2, h_buf_out.data());
+    BufferPointer buffer_dec_size(Application::getContext<Lib::LZ4>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, sizeof(uint32_t) * max_num_blks, h_decSize.data());
+    BufferPointer buffer_compressed_size(Application::getContext<Lib::LZ4>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, sizeof(uint32_t) * max_num_blks, h_compressSize.data());
 
     CommandQueuePointer m_q(Application::getContext<Lib::LZ4>(), Application::getDevice<Lib::LZ4>(), CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE | CL_QUEUE_PROFILING_ENABLE);
     KernelPointer decompress_kernel_lz4(Application::getProgram<Lib::LZ4>(), "xilLz4DecompressMM:{xilLz4DecompressMM_1}");
 
-    for (; inIdx < input_size;) {
+    for (; inIdx < inputSize;) {
         compute_cu = 0;
         uint64_t chunk_size = host_buffer_size;
 
         // Figure out the chunk size for each compute unit
         hostChunk_cu = 0;
-        if (inIdx + (chunk_size) > input_size) {
-            hostChunk_cu = input_size - (inIdx);
+        if (inIdx + (chunk_size) > inputSize) {
+            hostChunk_cu = inputSize - (inIdx);
             compute_cu++;
         } else {
             hostChunk_cu = chunk_size;
@@ -416,7 +413,6 @@ uint64_t lz4DecompressEngineMM(uint8_t* in, uint8_t* out, size_t input_size, siz
                 }
             }
             // Fill original block size and compressed size
-            m_compressSize.data()[nblocks] = compressed_size;
             h_compressSize.data()[bufblocks] = compressed_size;
             std::memcpy(&(h_buf_in.data()[buf_size]), &in[inIdx], compressed_size);
             inIdx += compressed_size;
@@ -460,16 +456,7 @@ uint64_t lz4DecompressEngineMM(uint8_t* in, uint8_t* out, size_t input_size, siz
         uint32_t bufIdx = 0;
         for (uint32_t bIdx = 0; bIdx < nblocks; bIdx++) {
             uint32_t block_size = h_decSize.data()[bIdx];
-            if ((output_idx + block_size) > c_max_outbuf) {
-                std::cout << "\n" << std::endl;
-                std::cout << "\x1B[35mZIP BOMB: Exceeded output buffer size during decompression \033[0m \n"
-                          << std::endl;
-                std::cout
-                    << "\x1B[35mUse -mcr option to increase the maximum compression ratio (Default: 10) \033[0m \n"
-                    << std::endl;
-                std::cout << "\x1B[35mAborting .... \033[0m\n" << std::endl;
-                exit(1);
-            }
+            
             std::memcpy(&out[output_idx], &h_buf_out.data()[bufIdx], block_size);
             output_idx += block_size;
             bufIdx += block_size;
@@ -481,25 +468,25 @@ uint64_t lz4DecompressEngineMM(uint8_t* in, uint8_t* out, size_t input_size, siz
     return total_decomression_size;
 }
 
-uint64_t lz4DecompressEngineStream(uint8_t* in, uint8_t* out, size_t input_size, size_t maxOutputSize){
+uint64_t lz4DecompressEngineStream(uint8_t* in, uint8_t* out, uint64_t inputSize){
     std::vector<uint32_t, aligned_allocator<uint32_t> > decompressSize;
-    uint32_t outputSize = maxOutputSize;
+    uint32_t outputSize = inputSize*2;
     
     // Index calculation
-    std::vector<uint8_t, aligned_allocator<uint8_t>> h_buf_in(input_size);
+    std::vector<uint8_t, aligned_allocator<uint8_t>> h_buf_in(inputSize);
     std::vector<uint8_t, aligned_allocator<uint8_t>> h_buf_out(outputSize);
     std::vector<uint32_t, aligned_allocator<uint32_t>> h_buf_decompressSize(sizeof(uint32_t));
 
-    std::memcpy(h_buf_in.data(), in, input_size);
+    std::memcpy(h_buf_in.data(), in, inputSize);
 
     // Device buffer allocation
-    BufferPointer buffer_input(Application::getContext<Lib::LZ4>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, input_size, h_buf_in.data());
+    BufferPointer buffer_input(Application::getContext<Lib::LZ4>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, inputSize, h_buf_in.data());
     BufferPointer buffer_output(Application::getContext<Lib::LZ4>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, outputSize, h_buf_out.data());
     BufferPointer bufferOutputSize(Application::getContext<Lib::LZ4>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, sizeof(uint32_t), h_buf_decompressSize.data());
 
-    uint32_t inputSize_32t = uint32_t(input_size);
+    uint32_t inputSize_32t = uint32_t(inputSize);
 
-    KernelPointer decompress_data_mover_kernel(Application::getProgram<Lib::LZ4>(), "xilDecompressDatamover:{xilDecompressDatamover_2}");
+    KernelPointer decompress_data_mover_kernel(Application::getProgram<Lib::LZ4>(), "xilDecompressDatamover:{xilDecompressDatamover_1}");
     KernelPointer decompress_kernel_lz4(Application::getProgram<Lib::LZ4>(), "xilLz4DecompressStream:{xilLz4DecompressStream_1}");
     CommandQueuePointer m_q(Application::getContext<Lib::LZ4>(), Application::getDevice<Lib::LZ4>(), CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE | CL_QUEUE_PROFILING_ENABLE);
 
@@ -531,46 +518,52 @@ uint64_t lz4DecompressEngineStream(uint8_t* in, uint8_t* out, size_t input_size,
     return uncompressedSize;
 }
 
-uint64_t lz4CompressMM(uint8_t* in, uint8_t* out, size_t input_size){
+uint64_t lz4CompressMM(uint8_t* in, uint8_t* out, uint64_t inputSize){
     uint64_t outIdx=0;
 
     // LZ4 header
-    outIdx+=writeLz4Header(out+outIdx, input_size);
+    outIdx+=writeLz4Header(out+outIdx, inputSize);
 
-    uint64_t enbytes=lz4CompressEngineMM(in, out+outIdx, input_size);
+    uint64_t enbytes=lz4CompressEngineMM(in, out+outIdx, inputSize);
     outIdx+=enbytes;
 
-    outIdx+=writeLz4Footer(in, out+outIdx, input_size);
+    outIdx+=writeLz4Footer(in, out+outIdx, inputSize);
     return outIdx;
 }
 
-uint64_t lz4CompressStream(uint8_t* in, uint8_t* out, size_t input_size){
+uint64_t lz4CompressStream(uint8_t* in, uint8_t* out, uint64_t inputSize){
     uint64_t outIdx=0;
 
     // LZ4 header
-    outIdx += writeLz4Header(out+outIdx, input_size);
+    outIdx += writeLz4Header(out+outIdx, inputSize);
 
-    uint64_t enbytes = lz4CompressEngineStream(in, out+outIdx, input_size);
+    uint64_t enbytes = lz4CompressEngineStream(in, out+outIdx, inputSize);
     outIdx+=enbytes;
 
-    outIdx+=writeLz4Footer(in, out+outIdx, input_size);
+    outIdx+=writeLz4Footer(in, out+outIdx, inputSize);
     return outIdx;
 }
 
-uint64_t lz4DecompressMM(uint8_t* in, uint8_t* out, size_t input_size, size_t maxOutputSize){
+uint64_t lz4DecompressMM(uint8_t* in, uint8_t* out, uint64_t inputSize){
     in += readLz4Header(in);
-    input_size = input_size - 15;
-
-    uint64_t debytes = lz4DecompressEngineMM(in, out, input_size, maxOutputSize);
-
+    inputSize = inputSize - 15;
+    uint64_t debytes = lz4DecompressEngineMM(in, out, inputSize);
     return debytes;
 }
 
-uint64_t lz4DecompressStream(uint8_t* in, uint8_t* out, size_t input_size, size_t maxOutputSize) {
-
-    uint64_t debytes = lz4DecompressEngineStream(in, out, input_size, maxOutputSize);
-
+uint64_t lz4DecompressStream(uint8_t* in, uint8_t* out, uint64_t inputSize) {
+    uint64_t debytes = lz4DecompressEngineStream(in, out, inputSize);
     return debytes;
 }
+}
+
+uint64_t lz4Compress(uint8_t* in, uint8_t* out, uint64_t inputSize, bool stream){
+    uint64_t enbytes = stream ? internalLz4::lz4CompressStream(in, out, inputSize) : internalLz4::lz4CompressMM(in, out, inputSize);
+    return enbytes;
+}
+
+uint64_t lz4Decompress(uint8_t* in, uint8_t* out, uint64_t inputSize, bool stream){
+    uint64_t debytes = stream ? internalLz4::lz4DecompressStream(in, out, inputSize) : internalLz4::lz4DecompressMM(in, out, inputSize);
+    return debytes;
 }
 }

@@ -22,7 +22,7 @@ inline void testGzip(){
     std::cout<<"Start test Gzip"<<std::endl;
     outputSize=dataCompression::gzipZlibCompression(in.data(), out.data(), in.size(), "", false);
 	std::cout<<"------------------------"<<std::endl;
-	outputSize2=dataCompression::gzipZlibDecompression(out.data(), out2.data(), outputSize, out2.size(), true);
+	outputSize2=dataCompression::gzipZlibDecompression(out.data(), out2.data(), outputSize);
     std::cout<<"End test Gzip"<<std::endl;
 }
 
@@ -36,7 +36,7 @@ inline void testZlib(){
     std::cout<<"Start test Zlib"<<std::endl;
     outputSize=dataCompression::gzipZlibCompression(in.data(), out.data(), in.size(), "", true);
 	std::cout<<"------------------------"<<std::endl;
-	outputSize2=dataCompression::gzipZlibDecompression(out.data(), out2.data(), outputSize, out2.size(), true);
+	outputSize2=dataCompression::gzipZlibDecompression(out.data(), out2.data(), outputSize);
     std::cout<<"End test Zlib"<<std::endl;
 }
 

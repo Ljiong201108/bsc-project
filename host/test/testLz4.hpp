@@ -48,19 +48,14 @@ void testLz4(int argc, char** argv){
 
     std::cout<<"Start test Lz4"<<std::endl;
     std::cout<<"Original: "<<std::endl;
-    hexdump(in.data(), inputSize);
-    outputSize=dataCompression::internal::lz4CompressStream(in.data(), out.data(), inputSize);
-    std::cout<<"------------------------"<<std::endl;
+    hexdump(in.data(), inputSize, "output_lz4");
+    outputSize=dataCompression::lz4Compress(in.data(), out.data(), inputSize);
     std::cout<<"Compressed: "<<std::endl;
-    hexdump(out.data(), outputSize);
+    hexdump(out.data(), outputSize, "output_lz4");
 	std::cout<<"------------------------"<<std::endl;
-    std::cout<<"MM solution: "<<std::endl;
-    outputSize2=dataCompression::internal::lz4DecompressMM(out.data(), out2.data(), outputSize, out2.size());
-    hexdump(out2.data(), outputSize2);
-    std::cout<<"------------------------"<<std::endl;
-    std::cout<<"Stream solution: "<<std::endl;
-	outputSize2=dataCompression::internal::lz4DecompressStream(out.data(), out2.data(), outputSize, out2.size());
-    hexdump(out2.data(), outputSize2);
+    outputSize2=dataCompression::lz4Decompress(out.data(), out2.data(), outputSize, out2.size());
+    std::cout<<"Decompressed: "<<std::endl;
+    hexdump(out2.data(), outputSize2, "output_lz4");
     std::cout<<"End test Lz4"<<std::endl;
 #endif
 }

@@ -21,10 +21,12 @@ int keyLengthToNumBits(KeyLength k);
 
 std::string keyLengthToString(KeyLength k);
 
+constexpr Lib keyLengthToLib(KeyLength k);
+
 namespace internal{
 template<Type T, KeyLength K, Method M>
 void aesWithIV(uint64_t *in, uint64_t *key, uint64_t *iv, uint64_t *out, uint32_t size){
-    Application &app=Application::getInstance();
+    Application &app=Application::getInstance<keyLengthToLib(K)>();
     CommandQueuePointer cqPointer;
     KernelPointer kPointer;
     Pool<BufferPointer, 4> bufferPool;
@@ -62,7 +64,7 @@ void aesWithIV(uint64_t *in, uint64_t *key, uint64_t *iv, uint64_t *out, uint32_
 
 template<Type T, KeyLength K, Method M>
 void aesWithoutIV(uint64_t *in, uint64_t *key, uint64_t *out, uint32_t size){
-    Application &app=Application::getInstance();
+    Application &app=Application::getInstance<keyLengthToLib(K)>();
     CommandQueuePointer cqPointer;
     KernelPointer kPointer;
     Pool<BufferPointer, 3> bufferPool;
@@ -96,7 +98,7 @@ void aesWithoutIV(uint64_t *in, uint64_t *key, uint64_t *out, uint32_t size){
 
 template<Type T, KeyLength K>
 void aesCcm(uint64_t *in, uint64_t *key, uint64_t nonce, uint64_t *ad, uint64_t *out, uint64_t *tag, uint64_t *numBlockIn, uint64_t *numBlockAD, uint64_t numMessage){
-    Application &app=Application::getInstance();
+    Application &app=Application::getInstance<keyLengthToLib(K)>();
     CommandQueuePointer cqPointer;
     KernelPointer kPointer;
     Pool<BufferPointer, 8> bufferPool;
@@ -154,7 +156,7 @@ void aesCcm(uint64_t *in, uint64_t *key, uint64_t nonce, uint64_t *ad, uint64_t 
 
 template<Type T, KeyLength K>
 void aesGcm(uint64_t *in, uint64_t *key, uint64_t *IV, uint64_t *ad, uint64_t *out, uint64_t *tag, uint64_t *numBlockIn, uint64_t *numBlockAD, uint64_t numMessage){
-    Application &app=Application::getInstance();
+    Application &app=Application::getInstance<keyLengthToLib(K)>();
     CommandQueuePointer cqPointer;
     KernelPointer kPointer;
     Pool<BufferPointer, 8> bufferPool;

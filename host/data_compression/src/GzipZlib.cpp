@@ -1,7 +1,7 @@
 #include "GzipZlib.hpp"
 
 namespace dataCompression{
-namespace internal{
+namespace internalGzipZlib{
 uint32_t writeGzipHeader(uint8_t *out){
 	uint32_t outIdx = 0;
 	long int magic_headers = 0x0000000008088B1F;
@@ -153,7 +153,7 @@ bool readGzipZlibHeader(uint8_t* in){
     return true;
 }
 
-uint64_t gzipZlibCompressionInternal1(uint8_t* in, uint8_t* out, uint64_t inputSize, uint64_t maxOutputSize, uint32_t &checksum, bool isZlib){
+uint64_t gzipZlibCompressionInternal(uint8_t* in, uint8_t* out, uint64_t inputSize, uint32_t &checksum, bool isZlib){
 	cl_int err;
 
 	std::vector<uint32_t, aligned_allocator<uint32_t>> checksumDataBufferHost(1);
@@ -181,7 +181,7 @@ uint64_t gzipZlibCompressionInternal1(uint8_t* in, uint8_t* out, uint64_t inputS
     // Device buffers
     BufferPointer inputBuffer(Application::getContext<Lib::GZIP_ZLIB>(), CL_MEM_READ_ONLY | CL_MEM_USE_HOST_PTR, sizeof(uint8_t)*inputBufferHost.size(), inputBufferHost.data());
     BufferPointer outputBuffer(Application::getContext<Lib::GZIP_ZLIB>(), CL_MEM_READ_WRITE | CL_MEM_USE_HOST_PTR, sizeof(uint8_t)*outputBufferHost.size(), outputBufferHost.data());
-    BufferPointer compressedSizeBuffer(Application::getContext<Lib::GZIP_ZLIB>(), CL_MEM_READ_WRITE | CL_MEM_USE_HOST_PTR, sizeof(uint32_t)*2*chunkNum, compressedSizeBufferHost.data());
+    BufferPointer compressedSizeBuffer(Application::getContext<Lib::GZIP_ZLIB>(), CL_MEM_READ_WRITE | CL_MEM_USE_HOST_PTR, sizeof(uint32_t), compressedSizeBufferHost.data());
 
     KernelPointer compressKernelMM(Application::getProgram<Lib::GZIP_ZLIB>(), "xilGzipZlibCompressMM:{xilGzipZlibCompressMM_1}");
     compressKernelMM->setArg(0, *inputBuffer);
@@ -214,12 +214,6 @@ uint64_t gzipZlibCompressionInternal1(uint8_t* in, uint8_t* out, uint64_t inputS
         OCL_CHECK(err, err=queue->enqueueMigrateMemObjects({*compressedSizeBuffer}, CL_MIGRATE_MEM_OBJECT_HOST));
         queue->finish();
 
-        // test whether host output buffer is big enough to hold the compressed data
-        if(outIdx+compressedSizeBufferHost[0]>maxOutputSize){
-            std::cout<<"The output buffer is too smaller, please allocate a bigger buffer!"<<std::endl;
-            exit(EXIT_FAILURE);
-        }
-
         // transfer the data from device to host
         OCL_CHECK(err, err=queue->enqueueMigrateMemObjects({*outputBuffer, *checksumDataBuffer}, CL_MIGRATE_MEM_OBJECT_HOST));
         queue->finish();
@@ -240,103 +234,13 @@ uint64_t gzipZlibCompressionInternal1(uint8_t* in, uint8_t* out, uint64_t inputS
 	return outIdx;
 }
 
-uint32_t gzipZlibCompressionInternal(uint8_t* in, uint8_t* out, uint32_t inputSize, uint32_t maxOutputSize, uint32_t &checksum, bool isZlib){
-	cl_int err;
-
-	KernelPointer m_compressFullKernel(Application::getProgram<Lib::GZIP_ZLIB>(), "xilGzipZlibCompressMM:{xilGzipZlibCompressMM_1}");
-
-	std::vector<uint32_t, zlib_aligned_allocator<uint32_t> > h_buf_checksum_data(1);
-	BufferPointer buffer_checksum_data(Application::getContext<Lib::GZIP_ZLIB>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, sizeof(uint32_t), h_buf_checksum_data.data());
-	
-	bool checksum_type;
-
-    if(isZlib){
-        h_buf_checksum_data.data()[0] = 1;
-        checksum_type = false;
-    } else {
-        h_buf_checksum_data.data()[0] = ~0;
-        checksum_type = true;
-    }
-
-	auto CHUNK_SIZE_IN_KB=32;
-	auto chunkSize = CHUNK_SIZE_IN_KB * 1024; // can be changed for custom testing of block sizes upto 4KB.
-	auto blckNum = (inputSize - 1) / chunkSize + 1;
-	auto output_size = 10 * blckNum * CHUNK_SIZE_IN_KB * 1024;
-
-	// Host Buffers
-	std::vector<uint8_t, aligned_allocator<uint8_t> > h_input_buffer(inputSize);
-	std::vector<uint8_t, aligned_allocator<uint8_t> > h_output_buffer(output_size);
-	std::vector<uint32_t, aligned_allocator<uint32_t> > h_compressSize(2 * blckNum);
-
-	// Device buffers
-	BufferPointer buffer_input(Application::getContext<Lib::GZIP_ZLIB>(), CL_MEM_READ_ONLY | CL_MEM_USE_HOST_PTR, sizeof(uint8_t) * inputSize, h_input_buffer.data());
-	BufferPointer buffer_output(Application::getContext<Lib::GZIP_ZLIB>(), CL_MEM_READ_WRITE | CL_MEM_USE_HOST_PTR, sizeof(uint8_t) * output_size, h_output_buffer.data());
-	BufferPointer buffer_cSize(Application::getContext<Lib::GZIP_ZLIB>(), CL_MEM_READ_WRITE | CL_MEM_USE_HOST_PTR, sizeof(uint32_t) * blckNum * 2, h_compressSize.data());
-
-	// Copy input data
-	std::memcpy(h_input_buffer.data(), in, inputSize);
-
-	// Set kernel arguments
-	int narg = 0;
-
-	m_compressFullKernel->setArg(narg++, *buffer_input);
-	m_compressFullKernel->setArg(narg++, *buffer_output);
-	m_compressFullKernel->setArg(narg++, *buffer_cSize);
-	m_compressFullKernel->setArg(narg++, *buffer_checksum_data);
-	m_compressFullKernel->setArg(narg++, inputSize);
-	m_compressFullKernel->setArg(narg++, checksum_type);
-
-	CommandQueuePointer m_def_q(Application::getContext<Lib::GZIP_ZLIB>(), Application::getDevice<Lib::GZIP_ZLIB>(), CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE);
-
-	// Transfer the data to device
-	OCL_CHECK(err, err = m_def_q->enqueueMigrateMemObjects({*(buffer_input), *(buffer_checksum_data)}, 0, nullptr, nullptr));
-	m_def_q->finish();
-
-	// Execute the kernel
-	OCL_CHECK(err, err = m_def_q->enqueueTask(*m_compressFullKernel));
-	m_def_q->finish();
-
-	// Migrate the block sizes back
-	OCL_CHECK(err, err = m_def_q->enqueueMigrateMemObjects({*(buffer_cSize)}, CL_MIGRATE_MEM_OBJECT_HOST));
-	m_def_q->finish();
-	BOOST_ASSERT_MSG(h_compressSize[0] < unsigned(output_size), "\x1B[35m xGzip Error: Output Buffer Size is not sufficient \033[0m ");
-
-	// Transfer the data from device to host
-	OCL_CHECK(err, err = m_def_q->enqueueMigrateMemObjects({*(buffer_output), *(buffer_checksum_data)}, CL_MIGRATE_MEM_OBJECT_HOST));
-	m_def_q->finish();
-
-	if(checksum_type) h_buf_checksum_data.data()[0] = ~h_buf_checksum_data.data()[0];
-
-	auto outIdx = 0;
-	uint32_t compSizeCntr = h_compressSize[0];
-	std::memcpy(out, &h_output_buffer[0], compSizeCntr);
-	outIdx += compSizeCntr;
-
-	// Add last block header
-	long int last_block = 0xffff000001;
-	std::memcpy(&(out[outIdx]), &last_block, 5);
-	outIdx += 5;
-
-	checksum = h_buf_checksum_data.data()[0];
-	if(checksum_type) checksum = ~checksum;
-
-	return outIdx;
-}
-
-uint32_t gzipZlibDecompressionInternalMM(uint8_t* in, uint8_t* out, uint32_t inputSize, uint32_t max_outbuf_size){
+uint32_t gzipZlibDecompressionInternalMM(uint8_t* in, uint8_t* out, uint32_t inputSize){
 	cl_int err;
     // Streaming based solution
 
     uint32_t inBufferSize = inputSize;
-    const uint32_t lim_4gb = (uint32_t)(((uint64_t)1024 * 1024 * 1024) - 2); // 4GB limit on output size
     uint32_t outBufferSize = 0;
     // auto num_itr = 1;
-
-    if (max_outbuf_size > lim_4gb) {
-        outBufferSize = lim_4gb;
-    } else {
-        outBufferSize = (uint32_t)max_outbuf_size;
-    }
 
 	// host allocated aligned memory
     std::vector<uint8_t, aligned_allocator<uint8_t> > dbuf_in(inBufferSize);
@@ -375,7 +279,7 @@ uint32_t gzipZlibDecompressionInternalMM(uint8_t* in, uint8_t* out, uint32_t inp
     return decmpSizeIdx;
 }
 
-uint64_t gzipZlibDecompressionInternalStream1(uint8_t* in, uint8_t* out, uint64_t inputSize, uint64_t maxOutputSize){
+uint64_t gzipZlibDecompressionInternalStream(uint8_t* in, uint8_t* out, uint64_t inputSize){
     const uint64_t CHUNK_SIZE_IN_KB=32;
     const uint64_t CHUNK_SIZE_IN_BYTE=CHUNK_SIZE_IN_KB*1024;
     uint64_t outIdx=0;
@@ -391,7 +295,7 @@ uint64_t gzipZlibDecompressionInternalStream1(uint8_t* in, uint8_t* out, uint64_
         chunkWriterKernel->setArg(0, *inputBuffer);
 
         uint64_t chunkNum=inputSize/CHUNK_SIZE_IN_BYTE+(inputSize%CHUNK_SIZE_IN_BYTE!=0);
-        for(int i=0;i<chunkNum;i++){
+        for(uint64_t i=0;i<chunkNum;i++){
             uint32_t chunkSize=std::min(inputSize-i*CHUNK_SIZE_IN_BYTE, CHUNK_SIZE_IN_BYTE);
             std::memcpy(inputBufferHost.data(), in+i*CHUNK_SIZE_IN_BYTE, chunkSize); 
 
@@ -407,7 +311,7 @@ uint64_t gzipZlibDecompressionInternalStream1(uint8_t* in, uint8_t* out, uint64_
         }
     });
 
-    std::thread chunkReader([out, maxOutputSize, CHUNK_SIZE_IN_BYTE, &outIdx]{
+    std::thread chunkReader([out, CHUNK_SIZE_IN_BYTE, &outIdx]{
         CommandQueuePointer chunkReaderQueue(Application::getContext<Lib::GZIP_ZLIB>(), Application::getDevice<Lib::GZIP_ZLIB>(), CL_QUEUE_PROFILING_ENABLE);
         KernelPointer chunkReaderKernel(Application::getProgram<Lib::GZIP_ZLIB>(), "xilS2MM:{xilS2MM_1}");
 
@@ -432,20 +336,13 @@ uint64_t gzipZlibDecompressionInternalStream1(uint8_t* in, uint8_t* out, uint64_
             chunkReaderQueue->enqueueMigrateMemObjects({*outputSizeBuffer, *statusBuffer}, CL_MIGRATE_MEM_OBJECT_HOST);
             chunkReaderQueue->finish();
 
-            if(outIdx+outputSizeBufferHost[0]<=maxOutputSize){
-                chunkReaderQueue->enqueueMigrateMemObjects({*outputBuffer}, CL_MIGRATE_MEM_OBJECT_HOST);
-                chunkReaderQueue->finish();
-                memcpy(out+outIdx, outputBufferHost.data(), outputSizeBufferHost[0]);
-            }
+            chunkReaderQueue->enqueueMigrateMemObjects({*outputBuffer}, CL_MIGRATE_MEM_OBJECT_HOST);
+            chunkReaderQueue->finish();
+            memcpy(out+outIdx, outputBufferHost.data(), outputSizeBufferHost[0]);
 
             outIdx+=outputSizeBufferHost[0];
             std::cout<<"read a chunk["<<outputSizeBufferHost[0]<<"Bytes]"<<std::endl;
             std::cout<<"current OutIdx: "<<outIdx<<std::endl;
-        }
-
-        if(outIdx>maxOutputSize){
-            std::cout<<"The output buffer is too smaller, please allocate a bigger buffer!"<<std::endl;
-            exit(EXIT_FAILURE);
         }
     });
 
@@ -454,133 +351,32 @@ uint64_t gzipZlibDecompressionInternalStream1(uint8_t* in, uint8_t* out, uint64_
 
     return outIdx;
 }
-
-uint32_t gzipZlibDecompressionInternalStream(uint8_t* in, uint8_t* out, uint32_t inputSize, uint32_t max_outbuf_size){
-	cl_int err;
-    // Streaming based solution
-
-    uint32_t inBufferSize = inputSize;
-    uint32_t isLast = 1;
-    const uint32_t lim_4gb = (uint32_t)(((uint64_t)1024 * 1024 * 1024) - 2); // 4GB limit on output size
-    uint32_t outBufferSize = 0;
-	std::vector<uint32_t, aligned_allocator<uint32_t>> h_dcompressStatus(4);
-    h_dcompressStatus.data()[0] = 0;
-    if (max_outbuf_size > lim_4gb) {
-        outBufferSize = lim_4gb;
-    } else {
-        outBufferSize = (uint32_t)max_outbuf_size;
-    }
-
-	// host allocated aligned memory
-    std::vector<uint8_t, aligned_allocator<uint8_t> > dbuf_in(inBufferSize);
-    std::vector<uint8_t, aligned_allocator<uint8_t> > dbuf_out(outBufferSize);
-    std::vector<uint32_t, aligned_allocator<uint32_t> > dbuf_outSize(2);
-
-	BufferPointer buffer_dec_zlib_output(Application::getContext<Lib::GZIP_ZLIB>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, outBufferSize, dbuf_out.data());
-	BufferPointer buffer_dec_input(Application::getContext<Lib::GZIP_ZLIB>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, inBufferSize, dbuf_in.data());
-	BufferPointer buffer_size(Application::getContext<Lib::GZIP_ZLIB>(), CL_MEM_USE_HOST_PTR | CL_MEM_WRITE_ONLY, sizeof(uint32_t), dbuf_outSize.data());
-	BufferPointer buffer_status(Application::getContext<Lib::GZIP_ZLIB>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, sizeof(uint32_t), h_dcompressStatus.data());
-
-	KernelPointer data_writer_kernel(Application::getProgram<Lib::GZIP_ZLIB>(), "xilMM2S:{xilMM2S_1}");
-	KernelPointer data_reader_kernel(Application::getProgram<Lib::GZIP_ZLIB>(), "xilS2MM:{xilS2MM_1}");
-
-	data_writer_kernel->setArg(0, *(buffer_dec_input));
-    data_writer_kernel->setArg(1, inBufferSize);
-    data_writer_kernel->setArg(2, isLast);
-
-    data_reader_kernel->setArg(0, *(buffer_dec_zlib_output));
-    data_reader_kernel->setArg(1, *(buffer_size));
-    data_reader_kernel->setArg(2, *(buffer_status));
-    data_reader_kernel->setArg(3, outBufferSize);
-
-	uint32_t decmpSizeIdx = 0;
-    h_dcompressStatus.data()[0] = 0;
-
-	CommandQueuePointer m_q_wr(Application::getContext<Lib::GZIP_ZLIB>(), Application::getDevice<Lib::GZIP_ZLIB>(), CL_QUEUE_PROFILING_ENABLE);
-	CommandQueuePointer m_q_rd(Application::getContext<Lib::GZIP_ZLIB>(), Application::getDevice<Lib::GZIP_ZLIB>(), CL_QUEUE_PROFILING_ENABLE);
-
-	// Copy input data
-    std::memcpy(dbuf_in.data(), in, inBufferSize); // must be equal to inputSize
-    OCL_CHECK(err, err = m_q_wr->enqueueMigrateMemObjects({*(buffer_dec_input)}, 0, NULL, NULL));
-    m_q_wr->finish();
-
-    OCL_CHECK(err, err = m_q_rd->enqueueMigrateMemObjects({*(buffer_status)}, 0, NULL, NULL));
-    m_q_rd->finish();
-
-	// enqueue data movers
-    m_q_rd->enqueueTask(*data_reader_kernel);
-
-    sleep(1);
-    // enqueue decompression kernel
-    m_q_wr->enqueueTask(*data_writer_kernel);
-    m_q_wr->finish();
-
-	// wait for reader to finish
-    m_q_rd->finish();
-
-    // copy decompressed output data
-    m_q_rd->enqueueMigrateMemObjects({*(buffer_size), *(buffer_status)}, CL_MIGRATE_MEM_OBJECT_HOST, NULL, NULL);
-    m_q_rd->finish();
-
-	// decompressed size
-    decmpSizeIdx = dbuf_outSize[0];
-    if (decmpSizeIdx >= max_outbuf_size) {
-        auto brkloop = false;
-        do {
-            m_q_rd->enqueueTask(*data_reader_kernel);
-            // wait for reader to finish
-            m_q_rd->finish();
-
-            // copy decompressed output data
-            m_q_rd->enqueueMigrateMemObjects({*(buffer_size), *(buffer_status)}, CL_MIGRATE_MEM_OBJECT_HOST, NULL,
-                                                NULL);
-            m_q_rd->finish();
-
-            decmpSizeIdx += dbuf_outSize[0];
-            brkloop = h_dcompressStatus.data()[0];
-        } while (!brkloop);
-        std::cout << "\n" << std::endl;
-        std::cout << "compressed size (.gz/.xz): " << inputSize << std::endl;
-        std::cout << "decompressed size : " << decmpSizeIdx << std::endl;
-        std::cout << "maximum output buffer allocated: " << max_outbuf_size << std::endl;
-        std::cout << "Output Buffer Size Exceeds as the Compression Ratio is High " << std::endl;
-        std::cout << "Use -mcr option to increase the output buffer size (Default: 20) --> Aborting " << std::endl;
-        abort();
-    } else {
-        m_q_rd->enqueueMigrateMemObjects({*(buffer_dec_zlib_output)}, CL_MIGRATE_MEM_OBJECT_HOST, NULL, NULL);
-        m_q_rd->finish();
-        // copy output decompressed data
-        std::memcpy(out, dbuf_out.data(), decmpSizeIdx);
-    }
-
-    return decmpSizeIdx;
-}
-} //namespace internal
+} //namespace internalGzipZlib
 
 uint32_t gzipZlibCompression(uint8_t *in, uint8_t *out, uint32_t inputSize, const std::string &fileName, bool isZlib){
 	std::cout<<"Original: "<<std::endl;
-	hexdump(in, inputSize);
+	hexdump(in, inputSize, "output_gz");
 	uint32_t checksum=0;
-	uint32_t outIdx=isZlib ? internal::writeZlibHeader(out) : internal::writeGzipHeader(out);
-	outIdx+=internal::gzipZlibCompressionInternal(in, out+outIdx, inputSize, inputSize*20, checksum, isZlib);
-	outIdx=isZlib ? internal::writeZlibFooter(out, outIdx, checksum) : internal::writeGzipFooter(out, outIdx, checksum, fileName, inputSize);
+	uint32_t outIdx=isZlib ? internalGzipZlib::writeZlibHeader(out) : internalGzipZlib::writeGzipHeader(out);
+	outIdx+=internalGzipZlib::gzipZlibCompressionInternal(in, out+outIdx, inputSize, checksum, isZlib);
+	outIdx=isZlib ? internalGzipZlib::writeZlibFooter(out, outIdx, checksum) : internalGzipZlib::writeGzipFooter(out, outIdx, checksum, fileName, inputSize);
 	std::cout<<"Compressed: "<<std::endl;
-	hexdump(out, outIdx);
+	hexdump(out, outIdx, "output_gz");
 	std::cout<<"checksum: "<<std::hex<<checksum<<std::dec<<std::endl;
 	return outIdx;
 }
 
-uint32_t gzipZlibDecompression(uint8_t* in, uint8_t* out, uint32_t inputSize, uint32_t maxOutputSize, bool stream){
+uint32_t gzipZlibDecompression(uint8_t* in, uint8_t* out, uint32_t inputSize, bool stream){
 	std::cout<<"Original: "<<std::endl;
-	hexdump(in, inputSize);
-	bool hcheck = internal::readGzipZlibHeader(in);
+	hexdump(in, inputSize, "output_gz");
+	bool hcheck = internalGzipZlib::readGzipZlibHeader(in);
     if (!hcheck) {
         std::cerr << "Header Check Failed" << std::endl;
         return 0;
     }
-	uint32_t outIdx = stream ? internal::gzipZlibDecompressionInternalStream1(in, out, inputSize, maxOutputSize) : internal::gzipZlibDecompressionInternalMM(in, out, inputSize, maxOutputSize);
+	uint32_t outIdx = stream ? internalGzipZlib::gzipZlibDecompressionInternalStream(in, out, inputSize) : internalGzipZlib::gzipZlibDecompressionInternalMM(in, out, inputSize);
 	std::cout<<"Decompressed: "<<std::endl;
-	hexdump(out, outIdx);
+	hexdump(out, outIdx, "output_gz");
 	return outIdx;
 }
 

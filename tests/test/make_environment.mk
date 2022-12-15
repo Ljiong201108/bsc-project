@@ -1,13 +1,13 @@
 USER=jiong
 ROOTFS=/home/$(USER)/xilinx/xilinx-zynqmp-common-v2020.2
 WORKSPACE=/home/$(USER)/bsc-project
-PLATFORM=--platform /home/$(USER)/xilinx/platforms/xilinx_zcu104_base_202020_1/xilinx_zcu104_base_202020_1.xpfm
+PLATFORM?=/home/$(USER)/xilinx/platforms/xilinx_zcu104_base_202020_1/xilinx_zcu104_base_202020_1.xpfm
 TARGET?=hw_emu
 
 COMP=$(WORKSPACE)/components
 KNRL=$(WORKSPACE)/kernels
 HOST=$(WORKSPACE)/host
-TEST=$(WORKSPACE)/tests/hw_emu_test
+TEST=$(WORKSPACE)/tests/test
 
 HOST_INC=-I$(HOST)/common/include -I$(HOST)/security/include -I$(HOST)/test -I$(HOST)/data_compression/include -I/opt/xilinx/xrt/include -I$(COMP)/data_compression/include -I$(HOST)/third_party/xxhash # /home/$(USER)/bsc-project/backup/data_compression/common/libs/compress /home/$(USER)/bsc-project/backup/data_compression/common/libs/cmdparser /home/$(USER)/bsc-project/backup/data_compression/common/libs/logger /home/$(USER)/bsc-project/backup/data_compression/common/libs/xcl2 
 HOST_FLG=-Wall -g -std=c++1y -L${XILINX_XRT}/lib/ -lpthread -lrt -lstdc++ -lOpenCL
@@ -18,7 +18,7 @@ KNRL_INC=-I$(COMP)/common/include
 KNRL_INC+=-I$(COMP)/security/include -I$(KNRL)/security/include
 KNRL_INC+=-I$(COMP)/data_compression/include -I$(KNRL)/data_compression/include
 
-KNRL_FLG=-t $(TARGET) --config $(TEST)/config_kernel.cfg -g $(PLATFORM)
+KNRL_FLG=-t $(TARGET) --config $(TEST)/config_kernel.cfg -g --platform $(PLATFORM)
 
 HOST_INC+=$(KNRL_INC)
 
@@ -33,9 +33,9 @@ HOST_INC+=$(KNRL_INC)
 # KNRL_ALL=$(KNRL_SECURITY) $(KNRL_DATACOMPRESSION)
 # KNRL_INC+=$(KNRL_SECURITY_INC) $(KNRL_DATACOMPRESSION_INC)
 
-LINK_FLG=-t $(TARGET) -g $(PLATFORM)
+LINK_FLG=-t $(TARGET) -g --platform $(PLATFORM)
 
-PAKG_FLG=-t $(TARGET) --config config_package.cfg $(PLATFORM)
+PAKG_FLG=-t $(TARGET) --config config_package.cfg --platform $(PLATFORM)
 
 LOG_DIR=log
 PAKG_FLG+=--log_dir $(LOG_DIR)
