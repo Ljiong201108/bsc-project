@@ -1,8 +1,8 @@
-v++ -c -k  xilZstdCompressDataMover -I/home/jiong/bsc-project/components/common/include -I/home/jiong/bsc-project/components/security/include -I/home/jiong/bsc-project/kernels/security/include -I/home/jiong/bsc-project/components/data_compression/include -I/home/jiong/bsc-project/kernels/data_compression/include /home/jiong/bsc-project/kernels/data_compression/src/xilZstdCompressDataMover.cpp -o xilZstdCompressDataMover.xo -t hw --config /home/jiong/bsc-project/tests/test/config_kernel.cfg -g --platform /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm --log_dir log --report_dir report
-v++ -c -k  xilZstdCompressStream -I/home/jiong/bsc-project/components/common/include -I/home/jiong/bsc-project/components/security/include -I/home/jiong/bsc-project/kernels/security/include -I/home/jiong/bsc-project/components/data_compression/include -I/home/jiong/bsc-project/kernels/data_compression/include /home/jiong/bsc-project/kernels/data_compression/src/xilZstdCompressStream.cpp -o xilZstdCompressStream.xo -t hw --config /home/jiong/bsc-project/tests/test/config_kernel.cfg -g --platform /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm --log_dir log --report_dir report -DFREE_RUNNING_KERNEL
 v++ -c -k  xilZstdDecompressStream -I/home/jiong/bsc-project/components/common/include -I/home/jiong/bsc-project/components/security/include -I/home/jiong/bsc-project/kernels/security/include -I/home/jiong/bsc-project/components/data_compression/include -I/home/jiong/bsc-project/kernels/data_compression/include /home/jiong/bsc-project/kernels/data_compression/src/xilZstdDecompressStream.cpp -o xilZstdDecompressStream.xo -t hw --config /home/jiong/bsc-project/tests/test/config_kernel.cfg -g --platform /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm --log_dir log --report_dir report -DFREE_RUNNING_KERNEL -DINZSTD=1 -DINPUT_BYTES=4 -DOUTPUT_BYTES=8 -DZSTD_BLOCK_SIZE_KB=32
 v++ -c -k  xilMM2S -I/home/jiong/bsc-project/components/common/include -I/home/jiong/bsc-project/components/security/include -I/home/jiong/bsc-project/kernels/security/include -I/home/jiong/bsc-project/components/data_compression/include -I/home/jiong/bsc-project/kernels/data_compression/include /home/jiong/bsc-project/kernels/data_compression/src/xilMM2S.cpp -o xilMM2S.xo -t hw --config /home/jiong/bsc-project/tests/test/config_kernel.cfg -g --platform /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm --log_dir log --report_dir report -DINZSTD=1 -DINPUT_BYTES=4 -DOUTPUT_BYTES=8 -DZSTD_BLOCK_SIZE_KB=32
 v++ -c -k  xilS2MM -I/home/jiong/bsc-project/components/common/include -I/home/jiong/bsc-project/components/security/include -I/home/jiong/bsc-project/kernels/security/include -I/home/jiong/bsc-project/components/data_compression/include -I/home/jiong/bsc-project/kernels/data_compression/include /home/jiong/bsc-project/kernels/data_compression/src/xilS2MM.cpp -o xilS2MM.xo -t hw --config /home/jiong/bsc-project/tests/test/config_kernel.cfg -g --platform /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm --log_dir log --report_dir report -DINZSTD=1 -DINPUT_BYTES=4 -DOUTPUT_BYTES=8 -DZSTD_BLOCK_SIZE_KB=32
+v++ -c -k  xilZstdCompressDataMover -I/home/jiong/bsc-project/components/common/include -I/home/jiong/bsc-project/components/security/include -I/home/jiong/bsc-project/kernels/security/include -I/home/jiong/bsc-project/components/data_compression/include -I/home/jiong/bsc-project/kernels/data_compression/include /home/jiong/bsc-project/kernels/data_compression/src/xilZstdCompressDataMover.cpp -o xilZstdCompressDataMover.xo -t hw --config /home/jiong/bsc-project/tests/test/config_kernel.cfg -g --platform /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm --log_dir log --report_dir report
+v++ -c -k  xilZstdCompressStream -I/home/jiong/bsc-project/components/common/include -I/home/jiong/bsc-project/components/security/include -I/home/jiong/bsc-project/kernels/security/include -I/home/jiong/bsc-project/components/data_compression/include -I/home/jiong/bsc-project/kernels/data_compression/include /home/jiong/bsc-project/kernels/data_compression/src/xilZstdCompressStream.cpp -o xilZstdCompressStream.xo -t hw --config /home/jiong/bsc-project/tests/test/config_kernel.cfg -g --platform /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm --log_dir log --report_dir report -DFREE_RUNNING_KERNEL
 Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
 
 ****** v++ v2020.2 (64-bit)
@@ -10,8 +10,8 @@ Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
     ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 
 INFO: [v++ 60-1306] Additional information associated with this v++ compile can be found at:
-	Reports: /home/jiong/bsc-project/tests/test/build/data_compression/zstd/report/xilMM2S
-	Log files: /home/jiong/bsc-project/tests/test/build/data_compression/zstd/log/xilMM2S
+	Reports: /home/jiong/bsc-project/tests/test/build/data_compression/zstd/report/xilZstdDecompressStream
+	Log files: /home/jiong/bsc-project/tests/test/build/data_compression/zstd/log/xilZstdDecompressStream
 Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
 
 ****** v++ v2020.2 (64-bit)
@@ -19,8 +19,8 @@ Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
     ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 
 INFO: [v++ 60-1306] Additional information associated with this v++ compile can be found at:
-	Reports: /home/jiong/bsc-project/tests/test/build/data_compression/zstd/report/xilZstdCompressStream
-	Log files: /home/jiong/bsc-project/tests/test/build/data_compression/zstd/log/xilZstdCompressStream
+	Reports: /home/jiong/bsc-project/tests/test/build/data_compression/zstd/report/xilZstdCompressDataMover
+	Log files: /home/jiong/bsc-project/tests/test/build/data_compression/zstd/log/xilZstdCompressDataMover
 Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
 Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
 Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
@@ -38,75 +38,75 @@ INFO: [v++ 60-1306] Additional information associated with this v++ compile can 
     ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 
 INFO: [v++ 60-1306] Additional information associated with this v++ compile can be found at:
-	Reports: /home/jiong/bsc-project/tests/test/build/data_compression/zstd/report/xilZstdDecompressStream
-	Log files: /home/jiong/bsc-project/tests/test/build/data_compression/zstd/log/xilZstdDecompressStream
+	Reports: /home/jiong/bsc-project/tests/test/build/data_compression/zstd/report/xilMM2S
+	Log files: /home/jiong/bsc-project/tests/test/build/data_compression/zstd/log/xilMM2S
 
 ****** v++ v2020.2 (64-bit)
   **** SW Build (by xbuild) on 2020-11-18-05:13:29
     ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 
 INFO: [v++ 60-1306] Additional information associated with this v++ compile can be found at:
-	Reports: /home/jiong/bsc-project/tests/test/build/data_compression/zstd/report/xilZstdCompressDataMover
-	Log files: /home/jiong/bsc-project/tests/test/build/data_compression/zstd/log/xilZstdCompressDataMover
-Running Dispatch Server on port:36921
-INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/tests/test/build/data_compression/zstd/xilMM2S.xo.compile_summary, at Thu Dec 15 11:56:19 2022
-INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Thu Dec 15 11:56:19 2022
-Running Dispatch Server on port:40869
-INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/tests/test/build/data_compression/zstd/xilZstdCompressStream.xo.compile_summary, at Thu Dec 15 11:56:20 2022
-INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Thu Dec 15 11:56:20 2022
-Running Dispatch Server on port:34059
-Running Dispatch Server on port:34433
-INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/tests/test/build/data_compression/zstd/xilZstdCompressDataMover.xo.compile_summary, at Thu Dec 15 11:56:21 2022
-INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/tests/test/build/data_compression/zstd/xilS2MM.xo.compile_summary, at Thu Dec 15 11:56:21 2022
-Running Dispatch Server on port:41903
-INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/tests/test/build/data_compression/zstd/xilZstdDecompressStream.xo.compile_summary, at Thu Dec 15 11:56:21 2022
-INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Thu Dec 15 11:56:21 2022
-INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Thu Dec 15 11:56:21 2022
-INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Thu Dec 15 11:56:21 2022
-Running Rule Check Server on port:35841
-INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/tests/test/build/data_compression/zstd/report/xilMM2S/v++_compile_xilMM2S_guidance.html', at Thu Dec 15 11:56:23 2022
+	Reports: /home/jiong/bsc-project/tests/test/build/data_compression/zstd/report/xilZstdCompressStream
+	Log files: /home/jiong/bsc-project/tests/test/build/data_compression/zstd/log/xilZstdCompressStream
+Running Dispatch Server on port:45815
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/tests/test/build/data_compression/zstd/xilZstdDecompressStream.xo.compile_summary, at Fri Dec 16 01:18:51 2022
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Fri Dec 16 01:18:51 2022
+Running Dispatch Server on port:45857
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/tests/test/build/data_compression/zstd/xilZstdCompressDataMover.xo.compile_summary, at Fri Dec 16 01:18:52 2022
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Fri Dec 16 01:18:52 2022
+Running Dispatch Server on port:36011
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/tests/test/build/data_compression/zstd/xilS2MM.xo.compile_summary, at Fri Dec 16 01:18:52 2022
+Running Dispatch Server on port:43055
+Running Dispatch Server on port:34441
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/tests/test/build/data_compression/zstd/xilMM2S.xo.compile_summary, at Fri Dec 16 01:18:52 2022
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Fri Dec 16 01:18:52 2022
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/tests/test/build/data_compression/zstd/xilZstdCompressStream.xo.compile_summary, at Fri Dec 16 01:18:52 2022
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Fri Dec 16 01:18:52 2022
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Fri Dec 16 01:18:52 2022
+Running Rule Check Server on port:36527
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/tests/test/build/data_compression/zstd/report/xilZstdCompressStream/v++_compile_xilZstdCompressStream_guidance.html', at Fri Dec 16 01:18:53 2022
 INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
 INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
 INFO: [v++ 74-74] Compiler Version string: 2020.2
-Running Rule Check Server on port:45705
-INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/tests/test/build/data_compression/zstd/report/xilZstdDecompressStream/v++_compile_xilZstdDecompressStream_guidance.html', at Thu Dec 15 11:56:23 2022
+Running Rule Check Server on port:34287
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/tests/test/build/data_compression/zstd/report/xilZstdDecompressStream/v++_compile_xilZstdDecompressStream_guidance.html', at Fri Dec 16 01:18:54 2022
 INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
 INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
 INFO: [v++ 74-74] Compiler Version string: 2020.2
-Running Rule Check Server on port:35977
-INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/tests/test/build/data_compression/zstd/report/xilZstdCompressStream/v++_compile_xilZstdCompressStream_guidance.html', at Thu Dec 15 11:56:24 2022
-INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
-INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
-Running Rule Check Server on port:44511
-INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/tests/test/build/data_compression/zstd/report/xilS2MM/v++_compile_xilS2MM_guidance.html', at Thu Dec 15 11:56:24 2022
-Running Rule Check Server on port:41377
-INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/tests/test/build/data_compression/zstd/report/xilZstdCompressDataMover/v++_compile_xilZstdCompressDataMover_guidance.html', at Thu Dec 15 11:56:24 2022
+Running Rule Check Server on port:37627
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/tests/test/build/data_compression/zstd/report/xilZstdCompressDataMover/v++_compile_xilZstdCompressDataMover_guidance.html', at Fri Dec 16 01:18:55 2022
 INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
 INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
 INFO: [v++ 74-74] Compiler Version string: 2020.2
+Running Rule Check Server on port:35755
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/tests/test/build/data_compression/zstd/report/xilS2MM/v++_compile_xilS2MM_guidance.html', at Fri Dec 16 01:18:56 2022
+Running Rule Check Server on port:39929
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/tests/test/build/data_compression/zstd/report/xilMM2S/v++_compile_xilMM2S_guidance.html', at Fri Dec 16 01:18:56 2022
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
 INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
 INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
 INFO: [v++ 74-74] Compiler Version string: 2020.2
 INFO: [v++ 74-74] Compiler Version string: 2020.2
-INFO: [v++ 60-585] Compiling for hardware target
-INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
-INFO: [v++ 60-242] Creating kernel: 'xilZstdCompressDataMover'
-WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
-INFO: [v++ 60-585] Compiling for hardware target
-INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
-INFO: [v++ 60-242] Creating kernel: 'xilMM2S'
-WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
 INFO: [v++ 60-585] Compiling for hardware target
 INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
 INFO: [v++ 60-242] Creating kernel: 'xilZstdDecompressStream'
 WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
 INFO: [v++ 60-585] Compiling for hardware target
 INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
-INFO: [v++ 60-242] Creating kernel: 'xilS2MM'
+INFO: [v++ 60-242] Creating kernel: 'xilZstdCompressStream'
 WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
 INFO: [v++ 60-585] Compiling for hardware target
 INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
-INFO: [v++ 60-242] Creating kernel: 'xilZstdCompressStream'
+INFO: [v++ 60-242] Creating kernel: 'xilZstdCompressDataMover'
+WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
+INFO: [v++ 60-585] Compiling for hardware target
+INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [v++ 60-242] Creating kernel: 'xilS2MM'
+INFO: [v++ 60-585] Compiling for hardware target
+INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [v++ 60-242] Creating kernel: 'xilMM2S'
+WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
 WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
 
 ===>The following messages were generated while  performing high-level synthesis for kernel: xilS2MM Log file: /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/xilS2MM/xilS2MM/vitis_hls.log :
@@ -118,11 +118,6 @@ INFO: [v++ 200-789] **** Estimated Fmax: 411.00 MHz
 INFO: [v++ 60-594] Finished kernel compilation
 INFO: [v++ 60-244] Generating system estimate report...
 INFO: [v++ 60-1092] Generated system estimate report: /home/jiong/bsc-project/tests/test/build/data_compression/zstd/report/xilS2MM/system_estimate_xilS2MM.xtxt
-INFO: [v++ 60-586] Created xilS2MM.xo
-INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
-    vitis_analyzer /home/jiong/bsc-project/tests/test/build/data_compression/zstd/xilS2MM.xo.compile_summary 
-INFO: [v++ 60-791] Total elapsed time: 0h 1m 23s
-INFO: [v++ 60-1653] Closing dispatch client.
 
 ===>The following messages were generated while  performing high-level synthesis for kernel: xilMM2S Log file: /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/xilMM2S/xilMM2S/vitis_hls.log :
 INFO: [v++ 204-61] Pipelining loop 'mm2s_simple'.
@@ -136,10 +131,15 @@ INFO: [v++ 200-789] **** Estimated Fmax: 411.00 MHz
 INFO: [v++ 60-594] Finished kernel compilation
 INFO: [v++ 60-244] Generating system estimate report...
 INFO: [v++ 60-1092] Generated system estimate report: /home/jiong/bsc-project/tests/test/build/data_compression/zstd/report/xilMM2S/system_estimate_xilMM2S.xtxt
+INFO: [v++ 60-586] Created xilS2MM.xo
+INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
+    vitis_analyzer /home/jiong/bsc-project/tests/test/build/data_compression/zstd/xilS2MM.xo.compile_summary 
+INFO: [v++ 60-791] Total elapsed time: 0h 1m 37s
 INFO: [v++ 60-586] Created xilMM2S.xo
 INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
     vitis_analyzer /home/jiong/bsc-project/tests/test/build/data_compression/zstd/xilMM2S.xo.compile_summary 
-INFO: [v++ 60-791] Total elapsed time: 0h 1m 28s
+INFO: [v++ 60-791] Total elapsed time: 0h 1m 37s
+INFO: [v++ 60-1653] Closing dispatch client.
 INFO: [v++ 60-1653] Closing dispatch client.
 
 ===>The following messages were generated while  performing high-level synthesis for kernel: xilZstdCompressDataMover Log file: /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/xilZstdCompressDataMover/xilZstdCompressDataMover/vitis_hls.log :
@@ -162,7 +162,7 @@ INFO: [v++ 60-1092] Generated system estimate report: /home/jiong/bsc-project/te
 INFO: [v++ 60-586] Created xilZstdCompressDataMover.xo
 INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
     vitis_analyzer /home/jiong/bsc-project/tests/test/build/data_compression/zstd/xilZstdCompressDataMover.xo.compile_summary 
-INFO: [v++ 60-791] Total elapsed time: 0h 1m 41s
+INFO: [v++ 60-791] Total elapsed time: 0h 1m 49s
 INFO: [v++ 60-1653] Closing dispatch client.
 
 ===>The following messages were generated while  performing high-level synthesis for kernel: xilZstdDecompressStream Log file: /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/xilZstdDecompressStream/xilZstdDecompressStream/vitis_hls.log :
@@ -259,7 +259,7 @@ INFO: [v++ 60-1092] Generated system estimate report: /home/jiong/bsc-project/te
 INFO: [v++ 60-586] Created xilZstdDecompressStream.xo
 INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
     vitis_analyzer /home/jiong/bsc-project/tests/test/build/data_compression/zstd/xilZstdDecompressStream.xo.compile_summary 
-INFO: [v++ 60-791] Total elapsed time: 0h 7m 20s
+INFO: [v++ 60-791] Total elapsed time: 0h 6m 38s
 INFO: [v++ 60-1653] Closing dispatch client.
 
 ===>The following messages were generated while  performing high-level synthesis for kernel: xilZstdCompressStream Log file: /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/xilZstdCompressStream/xilZstdCompressStream/vitis_hls.log :
@@ -470,9 +470,9 @@ INFO: [v++ 60-1092] Generated system estimate report: /home/jiong/bsc-project/te
 INFO: [v++ 60-586] Created xilZstdCompressStream.xo
 INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
     vitis_analyzer /home/jiong/bsc-project/tests/test/build/data_compression/zstd/xilZstdCompressStream.xo.compile_summary 
-INFO: [v++ 60-791] Total elapsed time: 0h 10m 46s
+INFO: [v++ 60-791] Total elapsed time: 0h 10m 27s
 INFO: [v++ 60-1653] Closing dispatch client.
-v++ -l xilZstdCompressDataMover.xo xilZstdCompressStream.xo xilZstdDecompressStream.xo xilMM2S.xo xilS2MM.xo -o zstd.xclbin -t hw -g --platform /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm --config config_link.cfg
+v++ -l xilZstdDecompressStream.xo xilMM2S.xo xilS2MM.xo xilZstdCompressDataMover.xo xilZstdCompressStream.xo -o zstd.xclbin -t hw -g --platform /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm --config config_link.cfg
 Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
 
 ****** v++ v2020.2 (64-bit)
@@ -482,33 +482,98 @@ Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
 INFO: [v++ 60-1306] Additional information associated with this v++ link can be found at:
 	Reports: /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/reports/link
 	Log files: /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/logs/link
-Running Dispatch Server on port:34855
-INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/tests/test/build/data_compression/zstd/zstd.xclbin.link_summary, at Thu Dec 15 12:07:12 2022
-INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Thu Dec 15 12:07:13 2022
-Running Rule Check Server on port:36963
-INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/reports/link/v++_link_zstd_guidance.html', at Thu Dec 15 12:07:16 2022
+Running Dispatch Server on port:35489
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/tests/test/build/data_compression/zstd/zstd.xclbin.link_summary, at Fri Dec 16 01:29:26 2022
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Fri Dec 16 01:29:26 2022
+Running Rule Check Server on port:42077
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/reports/link/v++_link_zstd_guidance.html', at Fri Dec 16 01:29:29 2022
 INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
 INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
 INFO: [v++ 74-74] Compiler Version string: 2020.2
 INFO: [v++ 60-629] Linking for hardware target
 INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
 INFO: [v++ 60-1332] Run 'run_link' status: Not started
-INFO: [v++ 60-1443] [12:07:30] Run run_link: Step system_link: Started
-INFO: [v++ 60-1453] Command Line: system_link --xo /home/jiong/bsc-project/tests/test/build/data_compression/zstd/xilZstdCompressDataMover.xo --xo /home/jiong/bsc-project/tests/test/build/data_compression/zstd/xilZstdCompressStream.xo --xo /home/jiong/bsc-project/tests/test/build/data_compression/zstd/xilZstdDecompressStream.xo --xo /home/jiong/bsc-project/tests/test/build/data_compression/zstd/xilMM2S.xo --xo /home/jiong/bsc-project/tests/test/build/data_compression/zstd/xilS2MM.xo --config /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/int/syslinkConfig.ini --xpfm /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm --target hw --output_dir /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/int --temp_dir /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/sys_link
+INFO: [v++ 60-1443] [01:29:43] Run run_link: Step system_link: Started
+INFO: [v++ 60-1453] Command Line: system_link --xo /home/jiong/bsc-project/tests/test/build/data_compression/zstd/xilZstdDecompressStream.xo --xo /home/jiong/bsc-project/tests/test/build/data_compression/zstd/xilMM2S.xo --xo /home/jiong/bsc-project/tests/test/build/data_compression/zstd/xilS2MM.xo --xo /home/jiong/bsc-project/tests/test/build/data_compression/zstd/xilZstdCompressDataMover.xo --xo /home/jiong/bsc-project/tests/test/build/data_compression/zstd/xilZstdCompressStream.xo --config /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/int/syslinkConfig.ini --xpfm /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm --target hw --output_dir /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/int --temp_dir /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/sys_link
 INFO: [v++ 60-1454] Run Directory: /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/run_link
-INFO: [SYSTEM_LINK 60-1316] Initiating connection to rulecheck server, at Thu Dec 15 12:07:34 2022
-INFO: [SYSTEM_LINK 82-70] Extracting xo v3 file /home/jiong/bsc-project/tests/test/build/data_compression/zstd/xilZstdCompressDataMover.xo
-INFO: [SYSTEM_LINK 82-70] Extracting xo v3 file /home/jiong/bsc-project/tests/test/build/data_compression/zstd/xilZstdCompressStream.xo
+INFO: [SYSTEM_LINK 60-1316] Initiating connection to rulecheck server, at Fri Dec 16 01:29:48 2022
 INFO: [SYSTEM_LINK 82-70] Extracting xo v3 file /home/jiong/bsc-project/tests/test/build/data_compression/zstd/xilZstdDecompressStream.xo
 INFO: [SYSTEM_LINK 82-70] Extracting xo v3 file /home/jiong/bsc-project/tests/test/build/data_compression/zstd/xilMM2S.xo
 INFO: [SYSTEM_LINK 82-70] Extracting xo v3 file /home/jiong/bsc-project/tests/test/build/data_compression/zstd/xilS2MM.xo
+INFO: [SYSTEM_LINK 82-70] Extracting xo v3 file /home/jiong/bsc-project/tests/test/build/data_compression/zstd/xilZstdCompressDataMover.xo
+INFO: [SYSTEM_LINK 82-70] Extracting xo v3 file /home/jiong/bsc-project/tests/test/build/data_compression/zstd/xilZstdCompressStream.xo
 INFO: [SYSTEM_LINK 82-53] Creating IP database /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/sys_link/_sysl/.cdb/xd_ip_db.xml
-INFO: [SYSTEM_LINK 82-38] [12:07:36] build_xd_ip_db started: /share/xilinx/Vitis/2020.2/bin/build_xd_ip_db -ip_search 0  -sds-pf /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/sys_link/hw.hpfm -clkid 0 -ip /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/sys_link/iprepo/xilinx_com_hls_xilZstdCompressDataMover_1_0,xilZstdCompressDataMover -ip /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/sys_link/iprepo/xilinx_com_hls_xilZstdDecompressStream_1_0,xilZstdDecompressStream -ip /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/sys_link/iprepo/xilinx_com_hls_xilZstdCompressStream_1_0,xilZstdCompressStream -ip /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/sys_link/iprepo/xilinx_com_hls_xilMM2S_1_0,xilMM2S -ip /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/sys_link/iprepo/xilinx_com_hls_xilS2MM_1_0,xilS2MM -o /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/sys_link/_sysl/.cdb/xd_ip_db.xml
-INFO: [SYSTEM_LINK 82-37] [12:07:55] build_xd_ip_db finished successfully
-Time (s): cpu = 00:00:23 ; elapsed = 00:00:19 . Memory (MB): peak = 1684.059 ; gain = 0.000 ; free physical = 152509 ; free virtual = 231766
+INFO: [SYSTEM_LINK 82-38] [01:29:49] build_xd_ip_db started: /share/xilinx/Vitis/2020.2/bin/build_xd_ip_db -ip_search 0  -sds-pf /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/sys_link/hw.hpfm -clkid 0 -ip /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/sys_link/iprepo/xilinx_com_hls_xilZstdCompressDataMover_1_0,xilZstdCompressDataMover -ip /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/sys_link/iprepo/xilinx_com_hls_xilZstdDecompressStream_1_0,xilZstdDecompressStream -ip /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/sys_link/iprepo/xilinx_com_hls_xilZstdCompressStream_1_0,xilZstdCompressStream -ip /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/sys_link/iprepo/xilinx_com_hls_xilMM2S_1_0,xilMM2S -ip /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/sys_link/iprepo/xilinx_com_hls_xilS2MM_1_0,xilS2MM -o /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/sys_link/_sysl/.cdb/xd_ip_db.xml
+INFO: [SYSTEM_LINK 82-37] [01:30:00] build_xd_ip_db finished successfully
+Time (s): cpu = 00:00:13 ; elapsed = 00:00:10 . Memory (MB): peak = 1684.055 ; gain = 0.000 ; free physical = 139101 ; free virtual = 225674
 INFO: [SYSTEM_LINK 82-51] Create system connectivity graph
 INFO: [SYSTEM_LINK 82-102] Applying explicit connections to the system connectivity graph: /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/sys_link/cfgraph/cfgen_cfgraph.xml
-INFO: [SYSTEM_LINK 82-38] [12:07:55] cfgen started: /share/xilinx/Vitis/2020.2/bin/cfgen  -nk xilMM2S:1:xilMM2S_1 -nk xilS2MM:1:xilS2MM_1 -nk xilZstdCompressStream:1:xilZstdCompressStream_1 -nk xilZstdDecompressStream:1:xilZstdDecompressStream_1 -nk xilZstdCompressDataMover:1:xilZstdCompressDataMover_1 -sc xilZstdCompressDataMover_1.origStream:xilZstdCompressStream_1.axiInStream -sc xilZstdCompressStream_1.axiOutStream:xilZstdCompressDataMover_1.destStream -sc xilMM2S_1.outStream:xilZstdDecompressStream_1.inaxistreamd -sc xilZstdDecompressStream_1.outaxistreamd:xilS2MM_1.inStream -dmclkid 0 -r /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/sys_link/_sysl/.cdb/xd_ip_db.xml -o /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/sys_link/cfgraph/cfgen_cfgraph.xml
+INFO: [SYSTEM_LINK 82-38] [01:30:00] cfgen started: /share/xilinx/Vitis/2020.2/bin/cfgen  -nk xilMM2S:1:xilMM2S_1 -nk xilS2MM:1:xilS2MM_1 -nk xilZstdDecompressStream:1:xilZstdDecompressStream_1 -sc xilMM2S_1.outStream:xilZstdDecompressStream_1.inaxistreamd -sc xilZstdDecompressStream_1.outaxistreamd:xilS2MM_1.inStream -dmclkid 0 -r /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/sys_link/_sysl/.cdb/xd_ip_db.xml -o /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/sys_link/cfgraph/cfgen_cfgraph.xml
+INFO: [CFGEN 83-0] Kernel Specs: 
+INFO: [CFGEN 83-0]   kernel: xilMM2S, num: 1  {xilMM2S_1}
+INFO: [CFGEN 83-0]   kernel: xilS2MM, num: 1  {xilS2MM_1}
+INFO: [CFGEN 83-0]   kernel: xilZstdDecompressStream, num: 1  {xilZstdDecompressStream_1}
+INFO: [CFGEN 83-0]   kernel: xilZstdCompressDataMover, num: 1  {xilZstdCompressDataMover_1}
+INFO: [CFGEN 83-0]   kernel: xilZstdCompressStream, num: 1  {xilZstdCompressStream_1}
+INFO: [CFGEN 83-0] Stream Specs: 
+INFO: [CFGEN 83-0]   xilMM2S_1.outStream => xilZstdDecompressStream_1.inaxistreamd
+INFO: [CFGEN 83-0]   xilZstdDecompressStream_1.outaxistreamd => xilS2MM_1.inStream
+INFO: [CFGEN 83-2226] Inferring mapping for argument xilMM2S_1.in to HBM[0]
+INFO: [CFGEN 83-2226] Inferring mapping for argument xilS2MM_1.out to HBM[0]
+INFO: [CFGEN 83-2226] Inferring mapping for argument xilS2MM_1.encoded_size to HBM[0]
+INFO: [CFGEN 83-2226] Inferring mapping for argument xilS2MM_1.status_flag to HBM[0]
+INFO: [CFGEN 83-2226] Inferring mapping for argument xilZstdCompressDataMover_1.in to HBM[0]
+INFO: [CFGEN 83-2226] Inferring mapping for argument xilZstdCompressDataMover_1.out to HBM[0]
+INFO: [CFGEN 83-2226] Inferring mapping for argument xilZstdCompressDataMover_1.outputSize to HBM[0]
+ERROR: [CFGEN 83-2284] No stream resources found that can accomodate compute unit "xilZstdCompressDataMover_1.origStream"
+ERROR: [SYSTEM_LINK 82-36] [01:30:10] cfgen failed
+Time (s): cpu = 00:00:10 ; elapsed = 00:00:10 . Memory (MB): peak = 1684.055 ; gain = 0.000 ; free physical = 139048 ; free virtual = 225624
+ERROR: [SYSTEM_LINK 82-62] Error generating design file for /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/sys_link/cfgraph/cfgen_cfgraph.xml, command: /share/xilinx/Vitis/2020.2/bin/cfgen  -nk xilMM2S:1:xilMM2S_1 -nk xilS2MM:1:xilS2MM_1 -nk xilZstdDecompressStream:1:xilZstdDecompressStream_1 -sc xilMM2S_1.outStream:xilZstdDecompressStream_1.inaxistreamd -sc xilZstdDecompressStream_1.outaxistreamd:xilS2MM_1.inStream -dmclkid 0 -r /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/sys_link/_sysl/.cdb/xd_ip_db.xml -o /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/sys_link/cfgraph/cfgen_cfgraph.xml
+ERROR: [SYSTEM_LINK 82-96] Error applying explicit connections to the system connectivity graph
+ERROR: [SYSTEM_LINK 82-79] Unable to create system connectivity graph
+INFO: [v++ 60-1442] [01:30:10] Run run_link: Step system_link: Failed
+Time (s): cpu = 00:00:30 ; elapsed = 00:00:27 . Memory (MB): peak = 1577.793 ; gain = 0.000 ; free physical = 139092 ; free virtual = 225665
+ERROR: [v++ 60-661] v++ link run 'run_link' failed
+ERROR: [v++ 60-626] Kernel link failed to complete
+ERROR: [v++ 60-703] Failed to finish linking
+INFO: [v++ 60-1653] Closing dispatch client.
+v++ -l xilZstdDecompressStream.xo xilMM2S.xo xilS2MM.xo xilZstdCompressDataMover.xo xilZstdCompressStream.xo -o zstd.xclbin -t hw -g --platform /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm --config config_link.cfg
+Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ link can be found at:
+	Reports: /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/reports/link
+	Log files: /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/logs/link
+Running Dispatch Server on port:43899
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/tests/test/build/data_compression/zstd/zstd.xclbin.link_summary, at Fri Dec 16 13:18:09 2022
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Fri Dec 16 13:18:09 2022
+Running Rule Check Server on port:45475
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/reports/link/v++_link_zstd_guidance.html', at Fri Dec 16 13:18:12 2022
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
+INFO: [v++ 74-74] Compiler Version string: 2020.2
+INFO: [v++ 60-629] Linking for hardware target
+INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [v++ 60-1332] Run 'run_link' status: Not started
+INFO: [v++ 60-1443] [13:18:18] Run run_link: Step system_link: Started
+INFO: [v++ 60-1453] Command Line: system_link --xo /home/jiong/bsc-project/tests/test/build/data_compression/zstd/xilZstdDecompressStream.xo --xo /home/jiong/bsc-project/tests/test/build/data_compression/zstd/xilMM2S.xo --xo /home/jiong/bsc-project/tests/test/build/data_compression/zstd/xilS2MM.xo --xo /home/jiong/bsc-project/tests/test/build/data_compression/zstd/xilZstdCompressDataMover.xo --xo /home/jiong/bsc-project/tests/test/build/data_compression/zstd/xilZstdCompressStream.xo --config /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/int/syslinkConfig.ini --xpfm /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm --target hw --output_dir /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/int --temp_dir /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/sys_link
+INFO: [v++ 60-1454] Run Directory: /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/run_link
+INFO: [SYSTEM_LINK 60-1316] Initiating connection to rulecheck server, at Fri Dec 16 13:18:23 2022
+INFO: [SYSTEM_LINK 82-70] Extracting xo v3 file /home/jiong/bsc-project/tests/test/build/data_compression/zstd/xilZstdDecompressStream.xo
+INFO: [SYSTEM_LINK 82-70] Extracting xo v3 file /home/jiong/bsc-project/tests/test/build/data_compression/zstd/xilMM2S.xo
+INFO: [SYSTEM_LINK 82-70] Extracting xo v3 file /home/jiong/bsc-project/tests/test/build/data_compression/zstd/xilS2MM.xo
+INFO: [SYSTEM_LINK 82-70] Extracting xo v3 file /home/jiong/bsc-project/tests/test/build/data_compression/zstd/xilZstdCompressDataMover.xo
+INFO: [SYSTEM_LINK 82-70] Extracting xo v3 file /home/jiong/bsc-project/tests/test/build/data_compression/zstd/xilZstdCompressStream.xo
+INFO: [SYSTEM_LINK 82-53] Creating IP database /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/sys_link/_sysl/.cdb/xd_ip_db.xml
+INFO: [SYSTEM_LINK 82-38] [13:18:24] build_xd_ip_db started: /share/xilinx/Vitis/2020.2/bin/build_xd_ip_db -ip_search 0  -sds-pf /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/sys_link/hw.hpfm -clkid 0 -ip /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/sys_link/iprepo/xilinx_com_hls_xilZstdCompressDataMover_1_0,xilZstdCompressDataMover -ip /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/sys_link/iprepo/xilinx_com_hls_xilZstdDecompressStream_1_0,xilZstdDecompressStream -ip /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/sys_link/iprepo/xilinx_com_hls_xilZstdCompressStream_1_0,xilZstdCompressStream -ip /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/sys_link/iprepo/xilinx_com_hls_xilMM2S_1_0,xilMM2S -ip /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/sys_link/iprepo/xilinx_com_hls_xilS2MM_1_0,xilS2MM -o /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/sys_link/_sysl/.cdb/xd_ip_db.xml
+INFO: [SYSTEM_LINK 82-37] [13:18:43] build_xd_ip_db finished successfully
+Time (s): cpu = 00:00:21 ; elapsed = 00:00:19 . Memory (MB): peak = 1684.059 ; gain = 0.000 ; free physical = 145898 ; free virtual = 233659
+INFO: [SYSTEM_LINK 82-51] Create system connectivity graph
+INFO: [SYSTEM_LINK 82-102] Applying explicit connections to the system connectivity graph: /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/sys_link/cfgraph/cfgen_cfgraph.xml
+INFO: [SYSTEM_LINK 82-38] [13:18:43] cfgen started: /share/xilinx/Vitis/2020.2/bin/cfgen  -nk xilMM2S:1:xilMM2S_1 -nk xilS2MM:1:xilS2MM_1 -nk xilZstdCompressStream:1:xilZstdCompressStream_1 -nk xilZstdDecompressStream:1:xilZstdDecompressStream_1 -nk xilZstdCompressDataMover:1:xilZstdCompressDataMover_1 -sc xilZstdCompressDataMover_1.origStream:xilZstdCompressStream_1.axiInStream -sc xilZstdCompressStream_1.axiOutStream:xilZstdCompressDataMover_1.destStream -sc xilMM2S_1.outStream:xilZstdDecompressStream_1.inaxistreamd -sc xilZstdDecompressStream_1.outaxistreamd:xilS2MM_1.inStream -dmclkid 0 -r /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/sys_link/_sysl/.cdb/xd_ip_db.xml -o /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/sys_link/cfgraph/cfgen_cfgraph.xml
 INFO: [CFGEN 83-0] Kernel Specs: 
 INFO: [CFGEN 83-0]   kernel: xilMM2S, num: 1  {xilMM2S_1}
 INFO: [CFGEN 83-0]   kernel: xilS2MM, num: 1  {xilS2MM_1}
@@ -527,30 +592,30 @@ INFO: [CFGEN 83-2226] Inferring mapping for argument xilS2MM_1.status_flag to HB
 INFO: [CFGEN 83-2226] Inferring mapping for argument xilZstdCompressDataMover_1.in to HBM[0]
 INFO: [CFGEN 83-2226] Inferring mapping for argument xilZstdCompressDataMover_1.out to HBM[0]
 INFO: [CFGEN 83-2226] Inferring mapping for argument xilZstdCompressDataMover_1.outputSize to HBM[0]
-INFO: [SYSTEM_LINK 82-37] [12:08:05] cfgen finished successfully
-Time (s): cpu = 00:00:10 ; elapsed = 00:00:10 . Memory (MB): peak = 1684.059 ; gain = 0.000 ; free physical = 152506 ; free virtual = 231762
+INFO: [SYSTEM_LINK 82-37] [13:18:52] cfgen finished successfully
+Time (s): cpu = 00:00:09 ; elapsed = 00:00:09 . Memory (MB): peak = 1684.059 ; gain = 0.000 ; free physical = 145892 ; free virtual = 233653
 INFO: [SYSTEM_LINK 82-52] Create top-level block diagram
-INFO: [SYSTEM_LINK 82-38] [12:08:05] cf2bd started: /share/xilinx/Vitis/2020.2/bin/cf2bd  --linux --trace_buffer 1024 --input_file /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/sys_link/cfgraph/cfgen_cfgraph.xml --ip_db /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/sys_link/_sysl/.cdb/xd_ip_db.xml --cf_name dr --working_dir /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/sys_link/_sysl/.xsd --temp_dir /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/sys_link --output_dir /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/int --target_bd ulp.bd
+INFO: [SYSTEM_LINK 82-38] [13:18:52] cf2bd started: /share/xilinx/Vitis/2020.2/bin/cf2bd  --linux --trace_buffer 1024 --input_file /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/sys_link/cfgraph/cfgen_cfgraph.xml --ip_db /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/sys_link/_sysl/.cdb/xd_ip_db.xml --cf_name dr --working_dir /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/sys_link/_sysl/.xsd --temp_dir /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/sys_link --output_dir /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/int --target_bd ulp.bd
 INFO: [CF2BD 82-31] Launching cf2xd: cf2xd -linux -trace-buffer 1024 -i /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/sys_link/cfgraph/cfgen_cfgraph.xml -r /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/sys_link/_sysl/.cdb/xd_ip_db.xml -o dr.xml
 INFO: [CF2BD 82-28] cf2xd finished successfully
 INFO: [CF2BD 82-31] Launching cf_xsd: cf_xsd -disable-address-gen -bd ulp.bd -dn dr -dp /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/sys_link/_sysl/.xsd
 INFO: [CF2BD 82-28] cf_xsd finished successfully
-INFO: [SYSTEM_LINK 82-37] [12:08:12] cf2bd finished successfully
-Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 1684.059 ; gain = 0.000 ; free physical = 153144 ; free virtual = 232091
-INFO: [v++ 60-1441] [12:08:12] Run run_link: Step system_link: Completed
-Time (s): cpu = 00:00:46 ; elapsed = 00:00:42 . Memory (MB): peak = 1577.793 ; gain = 0.000 ; free physical = 153184 ; free virtual = 232127
-INFO: [v++ 60-1443] [12:08:12] Run run_link: Step cf2sw: Started
+INFO: [SYSTEM_LINK 82-37] [13:19:00] cf2bd finished successfully
+Time (s): cpu = 00:00:07 ; elapsed = 00:00:08 . Memory (MB): peak = 1684.059 ; gain = 0.000 ; free physical = 145894 ; free virtual = 233660
+INFO: [v++ 60-1441] [13:19:00] Run run_link: Step system_link: Completed
+Time (s): cpu = 00:00:44 ; elapsed = 00:00:42 . Memory (MB): peak = 1555.086 ; gain = 0.000 ; free physical = 145941 ; free virtual = 233702
+INFO: [v++ 60-1443] [13:19:00] Run run_link: Step cf2sw: Started
 INFO: [v++ 60-1453] Command Line: cf2sw -sdsl /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/int/sdsl.dat -rtd /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/int/cf2sw.rtd -nofilter /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/int/cf2sw_full.rtd -xclbin /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/int/xclbin_orig.xml -o /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/int/xclbin_orig.1.xml
 INFO: [v++ 60-1454] Run Directory: /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/run_link
-INFO: [v++ 60-1441] [12:08:15] Run run_link: Step cf2sw: Completed
-Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 1577.793 ; gain = 0.000 ; free physical = 152604 ; free virtual = 231818
-INFO: [v++ 60-1443] [12:08:15] Run run_link: Step rtd2_system_diagram: Started
+INFO: [v++ 60-1441] [13:19:09] Run run_link: Step cf2sw: Completed
+Time (s): cpu = 00:00:09 ; elapsed = 00:00:09 . Memory (MB): peak = 1555.086 ; gain = 0.000 ; free physical = 145932 ; free virtual = 233694
+INFO: [v++ 60-1443] [13:19:09] Run run_link: Step rtd2_system_diagram: Started
 INFO: [v++ 60-1453] Command Line: rtd2SystemDiagram
 INFO: [v++ 60-1454] Run Directory: /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/run_link
-INFO: [v++ 60-1441] [12:08:16] Run run_link: Step rtd2_system_diagram: Completed
-Time (s): cpu = 00:00:00 ; elapsed = 00:00:01 . Memory (MB): peak = 1577.793 ; gain = 0.000 ; free physical = 153006 ; free virtual = 231949
-INFO: [v++ 60-1443] [12:08:16] Run run_link: Step vpl: Started
-INFO: [v++ 60-1453] Command Line: vpl -t hw -f /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm -g --remote_ip_cache /home/jiong/bsc-project/tests/test/build/data_compression/zstd/.ipcache --output_dir /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/int --log_dir /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/logs/link --report_dir /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/reports/link --config /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/int/vplConfig.ini -k /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/int/kernel_info.dat --webtalk_flag Vitis --temp_dir /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link --no-info --iprepo /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/int/xo/ip_repo/xilinx_com_hls_xilS2MM_1_0 --iprepo /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/int/xo/ip_repo/xilinx_com_hls_xilMM2S_1_0 --iprepo /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/int/xo/ip_repo/xilinx_com_hls_xilZstdDecompressStream_1_0 --iprepo /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/int/xo/ip_repo/xilinx_com_hls_xilZstdCompressDataMover_1_0 --iprepo /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/int/xo/ip_repo/xilinx_com_hls_xilZstdCompressStream_1_0 --messageDb /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/run_link/vpl.pb /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/int/dr.bd.tcl
+INFO: [v++ 60-1441] [13:19:13] Run run_link: Step rtd2_system_diagram: Completed
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:04 . Memory (MB): peak = 1555.086 ; gain = 0.000 ; free physical = 145451 ; free virtual = 233213
+INFO: [v++ 60-1443] [13:19:13] Run run_link: Step vpl: Started
+INFO: [v++ 60-1453] Command Line: vpl -t hw -f /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm -g --remote_ip_cache /home/jiong/bsc-project/tests/test/build/data_compression/zstd/.ipcache --output_dir /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/int --log_dir /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/logs/link --report_dir /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/reports/link --config /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/int/vplConfig.ini -k /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/int/kernel_info.dat --webtalk_flag Vitis --temp_dir /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link --no-info --iprepo /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/int/xo/ip_repo/xilinx_com_hls_xilZstdCompressStream_1_0 --iprepo /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/int/xo/ip_repo/xilinx_com_hls_xilS2MM_1_0 --iprepo /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/int/xo/ip_repo/xilinx_com_hls_xilZstdDecompressStream_1_0 --iprepo /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/int/xo/ip_repo/xilinx_com_hls_xilZstdCompressDataMover_1_0 --iprepo /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/int/xo/ip_repo/xilinx_com_hls_xilMM2S_1_0 --messageDb /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/run_link/vpl.pb /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/int/dr.bd.tcl
 INFO: [v++ 60-1454] Run Directory: /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/run_link
 
 ****** vpl v2020.2 (64-bit)
@@ -562,72 +627,264 @@ INFO: [VPL 74-74] Compiler Version string: 2020.2
 INFO: [VPL 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
 INFO: [VPL 60-1032] Extracting hardware platform to /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/vivado/vpl/.local/hw_platform
 WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
-[12:08:52] Run vpl: Step create_project: Started
+[13:19:52] Run vpl: Step create_project: Started
 Creating Vivado project.
-[12:08:59] Run vpl: Step create_project: Completed
-[12:08:59] Run vpl: Step create_bd: Started
-[12:10:15] Run vpl: Step create_bd: RUNNING...
-[12:11:23] Run vpl: Step create_bd: Completed
-[12:11:23] Run vpl: Step update_bd: Started
-[12:11:42] Run vpl: Step update_bd: Completed
-[12:11:42] Run vpl: Step generate_target: Started
-[12:12:58] Run vpl: Step generate_target: RUNNING...
-[12:14:13] Run vpl: Step generate_target: RUNNING...
-[12:15:28] Run vpl: Step generate_target: RUNNING...
-[12:15:42] Run vpl: Step generate_target: Completed
-[12:15:42] Run vpl: Step config_hw_runs: Started
-[12:15:48] Run vpl: Step config_hw_runs: Completed
-[12:15:48] Run vpl: Step synth: Started
-[12:16:49] Block-level synthesis in progress, 0 of 5 jobs complete, 1 job running.
-[12:17:20] Block-level synthesis in progress, 0 of 5 jobs complete, 1 job running.
-[12:17:50] Block-level synthesis in progress, 0 of 5 jobs complete, 1 job running.
-[12:18:20] Block-level synthesis in progress, 0 of 5 jobs complete, 1 job running.
-[12:18:50] Block-level synthesis in progress, 0 of 5 jobs complete, 1 job running.
-[12:19:20] Block-level synthesis in progress, 0 of 5 jobs complete, 1 job running.
-[12:19:50] Block-level synthesis in progress, 0 of 5 jobs complete, 1 job running.
-[12:20:21] Block-level synthesis in progress, 0 of 5 jobs complete, 1 job running.
-[12:20:51] Block-level synthesis in progress, 0 of 5 jobs complete, 1 job running.
-[12:21:21] Block-level synthesis in progress, 0 of 5 jobs complete, 1 job running.
-[12:21:51] Block-level synthesis in progress, 0 of 5 jobs complete, 1 job running.
-[12:22:21] Block-level synthesis in progress, 0 of 5 jobs complete, 1 job running.
-[12:22:52] Block-level synthesis in progress, 0 of 5 jobs complete, 1 job running.
-[12:23:22] Block-level synthesis in progress, 0 of 5 jobs complete, 1 job running.
-[12:23:52] Block-level synthesis in progress, 0 of 5 jobs complete, 1 job running.
-[12:24:22] Block-level synthesis in progress, 0 of 5 jobs complete, 1 job running.
-[12:24:52] Block-level synthesis in progress, 0 of 5 jobs complete, 1 job running.
-[12:25:22] Block-level synthesis in progress, 0 of 5 jobs complete, 1 job running.
-[12:25:52] Block-level synthesis in progress, 0 of 5 jobs complete, 1 job running.
-[12:26:22] Block-level synthesis in progress, 0 of 5 jobs complete, 1 job running.
-[12:26:53] Block-level synthesis in progress, 0 of 5 jobs complete, 1 job running.
-[12:27:23] Block-level synthesis in progress, 0 of 5 jobs complete, 1 job running.
-[12:27:53] Block-level synthesis in progress, 0 of 5 jobs complete, 1 job running.
-[12:28:23] Block-level synthesis in progress, 0 of 5 jobs complete, 1 job running.
-[12:28:53] Block-level synthesis in progress, 0 of 5 jobs complete, 1 job running.
-[12:29:24] Block-level synthesis in progress, 0 of 5 jobs complete, 1 job running.
-[12:29:54] Block-level synthesis in progress, 0 of 5 jobs complete, 1 job running.
-[12:30:24] Block-level synthesis in progress, 1 of 5 jobs complete, 0 jobs running.
-[12:30:54] Block-level synthesis in progress, 1 of 5 jobs complete, 1 job running.
-[12:31:25] Block-level synthesis in progress, 1 of 5 jobs complete, 1 job running.
-[12:31:55] Block-level synthesis in progress, 1 of 5 jobs complete, 1 job running.
-[12:32:25] Block-level synthesis in progress, 1 of 5 jobs complete, 1 job running.
-[12:32:55] Block-level synthesis in progress, 1 of 5 jobs complete, 1 job running.
-[12:33:25] Block-level synthesis in progress, 1 of 5 jobs complete, 1 job running.
-[12:33:55] Block-level synthesis in progress, 1 of 5 jobs complete, 1 job running.
-[12:34:25] Block-level synthesis in progress, 1 of 5 jobs complete, 1 job running.
-[12:34:55] Block-level synthesis in progress, 1 of 5 jobs complete, 1 job running.
-[12:35:06] Run vpl: Step synth: Completed
-[12:35:06] Run vpl: Step impl: Started
-[12:53:48] Finished 2nd of 6 tasks (FPGA linking synthesized kernels to platform). Elapsed time: 00h 45m 29s 
+[13:19:59] Run vpl: Step create_project: Completed
+[13:19:59] Run vpl: Step create_bd: Started
+[13:21:17] Run vpl: Step create_bd: RUNNING...
+[13:21:47] Run vpl: Step create_bd: Completed
+[13:21:47] Run vpl: Step update_bd: Started
+[13:22:11] Run vpl: Step update_bd: Completed
+[13:22:11] Run vpl: Step generate_target: Started
+[13:23:26] Run vpl: Step generate_target: RUNNING...
+[13:24:41] Run vpl: Step generate_target: RUNNING...
+[13:25:27] Run vpl: Step generate_target: Completed
+[13:25:27] Run vpl: Step config_hw_runs: Started
+[13:25:33] Run vpl: Step config_hw_runs: Completed
+[13:25:33] Run vpl: Step synth: Started
+[13:26:03] Block-level synthesis in progress, 0 of 22 jobs complete, 5 jobs running.
+[13:26:34] Block-level synthesis in progress, 0 of 22 jobs complete, 8 jobs running.
+[13:27:04] Block-level synthesis in progress, 0 of 22 jobs complete, 8 jobs running.
+[13:27:34] Block-level synthesis in progress, 0 of 22 jobs complete, 8 jobs running.
+[13:28:05] Block-level synthesis in progress, 1 of 22 jobs complete, 7 jobs running.
+[13:28:35] Block-level synthesis in progress, 3 of 22 jobs complete, 6 jobs running.
+[13:29:05] Block-level synthesis in progress, 5 of 22 jobs complete, 6 jobs running.
+[13:29:36] Block-level synthesis in progress, 6 of 22 jobs complete, 8 jobs running.
+[13:30:06] Block-level synthesis in progress, 8 of 22 jobs complete, 6 jobs running.
+[13:30:36] Block-level synthesis in progress, 9 of 22 jobs complete, 7 jobs running.
+[13:31:07] Block-level synthesis in progress, 10 of 22 jobs complete, 7 jobs running.
+[13:31:37] Block-level synthesis in progress, 10 of 22 jobs complete, 8 jobs running.
+[13:32:07] Block-level synthesis in progress, 11 of 22 jobs complete, 8 jobs running.
+[13:32:38] Block-level synthesis in progress, 11 of 22 jobs complete, 8 jobs running.
+[13:33:08] Block-level synthesis in progress, 14 of 22 jobs complete, 5 jobs running.
+[13:33:38] Block-level synthesis in progress, 14 of 22 jobs complete, 8 jobs running.
+[13:34:09] Block-level synthesis in progress, 14 of 22 jobs complete, 8 jobs running.
+[13:34:39] Block-level synthesis in progress, 14 of 22 jobs complete, 8 jobs running.
+[13:35:10] Block-level synthesis in progress, 16 of 22 jobs complete, 6 jobs running.
+[13:35:40] Block-level synthesis in progress, 18 of 22 jobs complete, 4 jobs running.
+[13:36:11] Block-level synthesis in progress, 19 of 22 jobs complete, 3 jobs running.
+[13:36:41] Block-level synthesis in progress, 19 of 22 jobs complete, 3 jobs running.
+[13:37:12] Block-level synthesis in progress, 20 of 22 jobs complete, 2 jobs running.
+[13:37:42] Block-level synthesis in progress, 20 of 22 jobs complete, 2 jobs running.
+[13:38:13] Block-level synthesis in progress, 20 of 22 jobs complete, 2 jobs running.
+[13:38:43] Block-level synthesis in progress, 20 of 22 jobs complete, 2 jobs running.
+[13:39:14] Block-level synthesis in progress, 20 of 22 jobs complete, 2 jobs running.
+[13:39:44] Block-level synthesis in progress, 20 of 22 jobs complete, 2 jobs running.
+[13:40:15] Block-level synthesis in progress, 20 of 22 jobs complete, 2 jobs running.
+[13:40:46] Block-level synthesis in progress, 20 of 22 jobs complete, 2 jobs running.
+[13:41:16] Block-level synthesis in progress, 20 of 22 jobs complete, 2 jobs running.
+[13:41:47] Block-level synthesis in progress, 21 of 22 jobs complete, 1 job running.
+[13:42:17] Block-level synthesis in progress, 21 of 22 jobs complete, 1 job running.
+[13:42:48] Block-level synthesis in progress, 21 of 22 jobs complete, 1 job running.
+[13:43:18] Block-level synthesis in progress, 21 of 22 jobs complete, 1 job running.
+[13:43:49] Block-level synthesis in progress, 22 of 22 jobs complete, 0 jobs running.
+[13:44:19] Top-level synthesis in progress.
+[13:44:50] Top-level synthesis in progress.
+[13:45:20] Top-level synthesis in progress.
+[13:45:51] Top-level synthesis in progress.
+[13:46:20] Run vpl: Step synth: Completed
+[13:46:20] Run vpl: Step impl: Started
+[13:59:02] Finished 2nd of 6 tasks (FPGA linking synthesized kernels to platform). Elapsed time: 00h 39m 44s 
 
-[12:53:48] Starting logic optimization..
-[12:55:49] Phase 1 Retarget
-[12:55:49] Phase 2 Constant propagation
-[12:56:20] Phase 3 Sweep
-[12:56:50] Phase 4 BUFG optimization
-[12:56:50] Phase 5 Shift Register Optimization
-[12:57:20] Phase 6 Post Processing Netlist
-[12:59:22] Finished 3rd of 6 tasks (FPGA logic optimization). Elapsed time: 00h 05m 34s 
+[13:59:02] Starting logic optimization..
+[14:00:03] Phase 1 Retarget
+[14:00:33] Phase 2 Constant propagation
+[14:00:33] Phase 3 Sweep
+[14:01:04] Phase 4 BUFG optimization
+[14:01:04] Phase 5 Shift Register Optimization
+[14:01:04] Phase 6 Post Processing Netlist
+[14:05:09] Finished 3rd of 6 tasks (FPGA logic optimization). Elapsed time: 00h 06m 07s 
 
-[12:59:22] Starting logic placement..
-[13:00:53] Phase 1 Placer Initialization
-[13:00:53] Phase 1.1 Placer Initialization Netlist Sorting
+[14:05:09] Starting logic placement..
+[14:06:41] Phase 1 Placer Initialization
+[14:06:41] Phase 1.1 Placer Initialization Netlist Sorting
+[14:11:48] Phase 1.2 IO Placement/ Clock Placement/ Build Placer Device
+[14:13:50] Phase 1.3 Build Placer Netlist Model
+[14:17:22] Phase 1.4 Constrain Clocks/Macros
+[14:18:23] Phase 2 Global Placement
+[14:18:23] Phase 2.1 Floorplanning
+[14:19:55] Phase 2.1.1 Partition Driven Placement
+[14:19:55] Phase 2.1.1.1 PBP: Partition Driven Placement
+[14:21:58] Phase 2.1.1.2 PBP: Clock Region Placement
+[14:26:05] Phase 2.1.1.3 PBP: Compute Congestion
+[14:26:05] Phase 2.1.1.4 PBP: UpdateTiming
+[14:26:36] Phase 2.1.1.5 PBP: Add part constraints
+[14:27:07] Phase 2.2 Update Timing before SLR Path Opt
+[14:27:07] Phase 2.3 Global Placement Core
+[14:38:56] Phase 2.3.1 Physical Synthesis In Placer
+[14:47:34] Phase 3 Detail Placement
+[14:47:34] Phase 3.1 Commit Multi Column Macros
+[14:47:34] Phase 3.2 Commit Most Macros & LUTRAMs
+[14:50:08] Phase 3.3 Small Shape DP
+[14:50:08] Phase 3.3.1 Small Shape Clustering
+[14:51:41] Phase 3.3.2 Flow Legalize Slice Clusters
+[14:52:11] Phase 3.3.3 Slice Area Swap
+[14:54:46] Phase 3.4 Place Remaining
+[14:54:46] Phase 3.5 Re-assign LUT pins
+[14:56:17] Phase 3.6 Pipeline Register Optimization
+[14:56:17] Phase 3.7 Fast Optimization
+[14:58:19] Phase 4 Post Placement Optimization and Clean-Up
+[14:58:19] Phase 4.1 Post Commit Optimization
+[15:00:20] Phase 4.1.1 Post Placement Optimization
+[15:00:51] Phase 4.1.1.1 BUFG Insertion
+[15:00:51] Phase 1 Physical Synthesis Initialization
+[15:01:21] Phase 4.1.1.2 BUFG Replication
+[15:04:23] Phase 4.1.1.3 Replication
+[15:06:25] Phase 4.2 Post Placement Cleanup
+[15:06:25] Phase 4.3 Placer Reporting
+[15:06:25] Phase 4.3.1 Print Estimated Congestion
+[15:06:56] Phase 4.4 Final Placement Cleanup
+[15:26:18] Finished 4th of 6 tasks (FPGA logic placement). Elapsed time: 01h 21m 08s 
+
+[15:26:18] Starting logic routing..
+[15:26:49] Phase 1 Build RT Design
+[15:29:54] Phase 2 Router Initialization
+[15:29:54] Phase 2.1 Fix Topology Constraints
+[15:34:32] Phase 2.2 Pre Route Cleanup
+[15:34:32] Phase 2.3 Global Clock Net Routing
+[15:36:04] Phase 2.4 Update Timing
+[15:39:39] Phase 2.5 Update Timing for Bus Skew
+[15:39:39] Phase 2.5.1 Update Timing
+[15:41:42] Phase 3 Initial Routing
+[15:41:42] Phase 3.1 Global Routing
+[15:43:45] Phase 4 Rip-up And Reroute
+[15:43:45] Phase 4.1 Global Iteration 0
+[15:54:00] Phase 4.2 Global Iteration 1
+[15:57:04] Phase 4.3 Global Iteration 2
+[16:00:11] Phase 4.4 Global Iteration 3
+[16:04:46] Phase 4.5 Global Iteration 4
+[16:07:50] Phase 4.6 Global Iteration 5
+[16:09:54] Phase 5 Delay and Skew Optimization
+[16:09:54] Phase 5.1 Delay CleanUp
+[16:09:54] Phase 5.1.1 Update Timing
+[16:11:26] Phase 5.1.2 Update Timing
+[16:12:58] Phase 5.2 Clock Skew Optimization
+[16:13:29] Phase 6 Post Hold Fix
+[16:13:29] Phase 6.1 Hold Fix Iter
+[16:13:29] Phase 6.1.1 Update Timing
+[16:15:01] Phase 7 Leaf Clock Prog Delay Opt
+[16:19:05] Phase 7.1 Delay CleanUp
+[16:19:05] Phase 7.1.1 Update Timing
+[16:20:38] Phase 7.1.2 Update Timing
+[16:21:40] Phase 7.2 Hold Fix Iter
+[16:21:40] Phase 7.2.1 Update Timing
+[16:23:12] Phase 7.3 Additional Hold Fix
+[16:25:46] Phase 7.4 Global Iteration for Hold
+[16:25:46] Phase 7.4.1 Update Timing
+[16:29:21] Phase 8 Route finalize
+[16:29:51] Phase 9 Verifying routed nets
+[16:29:51] Phase 10 Depositing Routes
+[16:31:24] Phase 11 Post Router Timing
+[16:32:25] Phase 12 Physical Synthesis in Router
+[16:32:25] Phase 12.1 Physical Synthesis Initialization
+[16:34:27] Phase 12.2 Critical Path Optimization
+[16:35:29] Finished 5th of 6 tasks (FPGA routing). Elapsed time: 01h 09m 11s 
+
+[16:35:29] Starting bitstream generation..
+[16:57:33] Creating bitmap...
+[17:10:21] Writing bitstream ./level0_i_ulp_my_rm_partial.bit...
+[17:10:21] Finished 6th of 6 tasks (FPGA bitstream generation). Elapsed time: 00h 34m 52s 
+[17:13:01] Run vpl: Step impl: Completed
+[17:13:02] Run vpl: FINISHED. Run Status: impl Complete!
+INFO: [v++ 60-1441] [17:13:03] Run run_link: Step vpl: Completed
+Time (s): cpu = 00:04:28 ; elapsed = 03:53:50 . Memory (MB): peak = 1555.086 ; gain = 0.000 ; free physical = 113433 ; free virtual = 219733
+INFO: [v++ 60-1443] [17:13:03] Run run_link: Step rtdgen: Started
+INFO: [v++ 60-1453] Command Line: rtdgen
+INFO: [v++ 60-1454] Run Directory: /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/run_link
+INFO: [v++ 60-991] clock name 'clk_kernel2_in' (clock ID '1') is being mapped to clock name 'KERNEL_CLK' in the xclbin
+INFO: [v++ 60-991] clock name 'clk_kernel_in' (clock ID '0') is being mapped to clock name 'DATA_CLK' in the xclbin
+INFO: [v++ 60-991] clock name 'hbm_aclk' (clock ID '') is being mapped to clock name 'hbm_aclk' in the xclbin
+INFO: [v++ 60-1230] The compiler selected the following frequencies for the runtime controllable kernel clock(s) and scalable system clock(s): System (SYSTEM) clock: hbm_aclk = 450, Kernel (KERNEL) clock: clk_kernel2_in = 500, Kernel (DATA) clock: clk_kernel_in = 234
+INFO: [v++ 60-1453] Command Line: cf2sw -a /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/int/address_map.xml -sdsl /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/int/sdsl.dat -xclbin /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/int/xclbin_orig.xml -rtd /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/int/zstd.rtd -o /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/int/zstd.xml
+INFO: [v++ 60-1652] Cf2sw returned exit code: 0
+INFO: [v++ 60-2311] HPISystemDiagram::writeSystemDiagramAfterRunningVivado, rtdInputFilePath: /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/int/zstd.rtd
+INFO: [v++ 60-2312] HPISystemDiagram::writeSystemDiagramAfterRunningVivado, systemDiagramOutputFilePath: /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/int/systemDiagramModelSlrBaseAddress.json
+INFO: [v++ 60-1618] Launching 
+INFO: [v++ 60-1441] [17:13:09] Run run_link: Step rtdgen: Completed
+Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 1555.086 ; gain = 0.000 ; free physical = 116033 ; free virtual = 222333
+INFO: [v++ 60-1443] [17:13:09] Run run_link: Step xclbinutil: Started
+INFO: [v++ 60-1453] Command Line: xclbinutil --add-section DEBUG_IP_LAYOUT:JSON:/home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/int/debug_ip_layout.rtd --add-section BITSTREAM:RAW:/home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/int/partial.bit --force --target hw --key-value SYS:dfx_enable:true --add-section :JSON:/home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/int/zstd.rtd --append-section :JSON:/home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/int/appendSection.rtd --add-section CLOCK_FREQ_TOPOLOGY:JSON:/home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/int/zstd_xml.rtd --add-section BUILD_METADATA:JSON:/home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/int/zstd_build.rtd --add-section EMBEDDED_METADATA:RAW:/home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/int/zstd.xml --add-section SYSTEM_METADATA:RAW:/home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/int/systemDiagramModelSlrBaseAddress.json --key-value SYS:PlatformVBNV:xilinx_u50_gen3x16_xdma_201920_3 --output /home/jiong/bsc-project/tests/test/build/data_compression/zstd/zstd.xclbin
+INFO: [v++ 60-1454] Run Directory: /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/run_link
+XRT Build Version: 2.12.427 (2021.2)
+       Build Date: 2021-10-08 22:06:50
+          Hash ID: 2719b6027e185000fc49783171631db03fc0ef79
+Creating a default 'in-memory' xclbin image.
+
+Section: 'DEBUG_IP_LAYOUT'(9) was successfully added.
+Size   : 1880 bytes
+Format : JSON
+File   : '/home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/int/debug_ip_layout.rtd'
+
+Section: 'BITSTREAM'(0) was successfully added.
+Size   : 35022044 bytes
+Format : RAW
+File   : '/home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/int/partial.bit'
+
+Section: 'MEM_TOPOLOGY'(6) was successfully added.
+Format : JSON
+File   : 'mem_topology'
+
+Section: 'IP_LAYOUT'(8) was successfully added.
+Format : JSON
+File   : 'ip_layout'
+
+Section: 'CONNECTIVITY'(7) was successfully added.
+Format : JSON
+File   : 'connectivity'
+
+Section: 'CLOCK_FREQ_TOPOLOGY'(11) was successfully added.
+Size   : 410 bytes
+Format : JSON
+File   : '/home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/int/zstd_xml.rtd'
+
+Section: 'BUILD_METADATA'(14) was successfully added.
+Size   : 7258 bytes
+Format : JSON
+File   : '/home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/int/zstd_build.rtd'
+
+Section: 'EMBEDDED_METADATA'(2) was successfully added.
+Size   : 107467 bytes
+Format : RAW
+File   : '/home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/int/zstd.xml'
+
+Section: 'SYSTEM_METADATA'(22) was successfully added.
+Size   : 28052 bytes
+Format : RAW
+File   : '/home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/int/systemDiagramModelSlrBaseAddress.json'
+
+Section: 'PARTITION_METADATA'(20) was successfully appended to.
+Format : JSON
+File   : 'partition_metadata'
+
+Section: 'IP_LAYOUT'(8) was successfully appended to.
+Format : JSON
+File   : 'ip_layout'
+Successfully wrote (35205540 bytes) to the output file: /home/jiong/bsc-project/tests/test/build/data_compression/zstd/zstd.xclbin
+Leaving xclbinutil.
+INFO: [v++ 60-1441] [17:13:09] Run run_link: Step xclbinutil: Completed
+Time (s): cpu = 00:00:00.20 ; elapsed = 00:00:00.38 . Memory (MB): peak = 1555.086 ; gain = 0.000 ; free physical = 116001 ; free virtual = 222334
+INFO: [v++ 60-1443] [17:13:09] Run run_link: Step xclbinutilinfo: Started
+INFO: [v++ 60-1453] Command Line: xclbinutil --quiet --force --info /home/jiong/bsc-project/tests/test/build/data_compression/zstd/zstd.xclbin.info --input /home/jiong/bsc-project/tests/test/build/data_compression/zstd/zstd.xclbin
+INFO: [v++ 60-1454] Run Directory: /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/run_link
+INFO: [v++ 60-1441] [17:13:10] Run run_link: Step xclbinutilinfo: Completed
+Time (s): cpu = 00:00:01 ; elapsed = 00:00:01 . Memory (MB): peak = 1555.086 ; gain = 0.000 ; free physical = 116002 ; free virtual = 222335
+INFO: [v++ 60-1443] [17:13:10] Run run_link: Step generate_sc_driver: Started
+INFO: [v++ 60-1453] Command Line: 
+INFO: [v++ 60-1454] Run Directory: /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/link/run_link
+INFO: [v++ 60-1441] [17:13:10] Run run_link: Step generate_sc_driver: Completed
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1555.086 ; gain = 0.000 ; free physical = 116002 ; free virtual = 222335
+INFO: [v++ 60-244] Generating system estimate report...
+INFO: [v++ 60-1092] Generated system estimate report: /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/reports/link/system_estimate_zstd.xtxt
+INFO: [v++ 60-586] Created /home/jiong/bsc-project/tests/test/build/data_compression/zstd/zstd.ltx
+INFO: [v++ 60-586] Created zstd.xclbin
+INFO: [v++ 60-1307] Run completed. Additional information can be found in:
+	Guidance: /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/reports/link/v++_link_zstd_guidance.html
+	Timing Report: /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/reports/link/imp/impl_1_hw_bb_locked_timing_summary_routed.rpt
+	Vivado Log: /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/logs/link/vivado.log
+	Steps Log File: /home/jiong/bsc-project/tests/test/build/data_compression/zstd/_x/logs/link/link.steps.log
+
+INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
+    vitis_analyzer /home/jiong/bsc-project/tests/test/build/data_compression/zstd/zstd.xclbin.link_summary 
+INFO: [v++ 60-791] Total elapsed time: 3h 55m 12s
+INFO: [v++ 60-1653] Closing dispatch client.
+rm -rf _x .Xil log report *.log

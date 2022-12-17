@@ -27,6 +27,10 @@
 
 #include "ap_axi_sdata.h"
 
+#ifndef __SYNTHESIS__
+#include <iostream>
+#endif
+
 #include "hls_stream.h"
 #include "s2mm.hpp"
 #include "zlib_specs.hpp"
@@ -53,7 +57,7 @@ extern "C" {
  *
  */
 
-void xilGzipZlibS2MM(uintMemWidth_t* out,
+void xilS2MM(uintMemWidth_t* out,
                  uint32_t* encoded_size,
                  uint32_t* status_flag,
                  uint32_t read_block_size,

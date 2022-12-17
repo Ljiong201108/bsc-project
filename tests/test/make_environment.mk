@@ -10,7 +10,7 @@ HOST=$(WORKSPACE)/host
 TEST=$(WORKSPACE)/tests/test
 
 HOST_INC=-I$(HOST)/common/include -I$(HOST)/security/include -I$(HOST)/test -I$(HOST)/data_compression/include -I/opt/xilinx/xrt/include -I$(COMP)/data_compression/include -I$(HOST)/third_party/xxhash # /home/$(USER)/bsc-project/backup/data_compression/common/libs/compress /home/$(USER)/bsc-project/backup/data_compression/common/libs/cmdparser /home/$(USER)/bsc-project/backup/data_compression/common/libs/logger /home/$(USER)/bsc-project/backup/data_compression/common/libs/xcl2 
-HOST_FLG=-Wall -g -std=c++1y -L${XILINX_XRT}/lib/ -lpthread -lrt -lstdc++ -lOpenCL
+HOST_FLG=-Wall -g -std=c++17 -L${XILINX_XRT}/lib/ -lpthread -lrt -lstdc++ -lOpenCL
 HOST_SRC=host.cpp $(wildcard $(HOST)/common/src/*.cpp) $(wildcard $(HOST)/data_compression/src/*.cpp) $(HOST)/third_party/xxhash/xxhash.c # $(wildcard /home/$(USER)/bsc-project/backup/data_compression/common/libs/compress/*.cpp) $(wildcard /home/$(USER)/bsc-project/backup/data_compression/common/libs/cmdparser/*.cpp) $(wildcard /home/$(USER)/bsc-project/backup/data_compression/common/libs/logger/*.cpp) $(wildcard /home/$(USER)/bsc-project/backup/data_compression/common/libs/xcl2/*.cpp) $(wildcard $(HOST)/security/src/*.cpp)
 HOST_OUTPUT=app
 

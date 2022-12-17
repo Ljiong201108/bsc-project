@@ -26,19 +26,28 @@ void testZstd(int argc, char** argv){
     d.run(zstd.get(), enable_profile);
 #else
     std::vector<uint8_t> in, out;
-	readFile("sample.txt", in, out);
+	// readFile("sample.txt", in, out);
+    readFile("sample.txt", in, out);
 	std::vector<uint8_t> out2;
     out2.resize(20 * in.size());
 
-    uint64_t inputSize=in.size(), outputSize, outputSize2;
+    uint64_t inputSize=in.size(), outputSize=0, outputSize2=0;
+    bool last;
+
+    freopen("output_zstd", "w", stdout);
 
     std::cout<<"Start test Zstd"<<std::endl;
     std::cout<<"Original: "<<std::endl;
     outputSize=dataCompression::zstdCompress(in.data(), out.data(), inputSize);
+    // dataCompression::zstdCompressionInput(in.data(), inputSize, true);
+    // outputSize=dataCompression::zstdCompressionOutput(out.data(), out.size(), last);
     std::cout<<"Compressed: "<<std::endl;
     hexdump(out.data(), outputSize, "output_zstd");
     std::cout<<"------------------------"<<std::endl;
-	outputSize2=dataCompression::zstdDecompress(out.data(), out2.data(), outputSize);
+	// outputSize2=dataCompression::zstdDecompress(out.data(), out2.data(), outputSize);
+    dataCompression::zstdDecompressionInput(out.data(), outputSize, true);
+    outputSize2=dataCompression::zstdDecompressionOutput(out2.data(), out2.size(), last);
+    std::cout<<"last: "<<last<<std::endl;
     hexdump(out2.data(), outputSize2, "output_zstd");
     std::cout<<"End test Zstd"<<std::endl;
 #endif

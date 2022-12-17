@@ -19,3 +19,5 @@ out*
 # *.dcp
 # *.xci
 .ipcache
+.run
+*.ltx

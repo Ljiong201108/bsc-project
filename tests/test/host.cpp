@@ -1,6 +1,6 @@
 // #include "testDes.hpp"
 // #include "testAes.hpp"
-// #include "testGzip.hpp"
+#include "testGzip.hpp"
 // #include "testSnappy.hpp"
 #include "testLz4.hpp"
 #include "testZstd.hpp"

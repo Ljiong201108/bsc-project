@@ -3,7 +3,7 @@
 include ../../../make_environment.mk
 
 OUTPUT=zstd
-KERNELS=xilZstdCompressDataMover xilZstdCompressStream xilZstdDecompressStream xilMM2S xilS2MM 
+KERNELS=xilZstdDecompressStream xilMM2S xilS2MM xilZstdCompressDataMover xilZstdCompressStream
 
 LINK_FLG+=--config config_link.cfg
 

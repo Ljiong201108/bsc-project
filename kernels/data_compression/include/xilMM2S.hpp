@@ -27,6 +27,10 @@
 
 #include "ap_axi_sdata.h"
 
+#ifndef __SYNTHESIS__
+#include <iostream>
+#endif
+
 #include "hls_stream.h"
 #include "mm2s.hpp"
 #include "stream_downsizer.hpp"
