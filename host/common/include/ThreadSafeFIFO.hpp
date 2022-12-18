@@ -17,11 +17,17 @@ private:
     std::condition_variable cv;
 
 public:
+    ~ThreadSafeFIFO();
     void push(T val, bool last);
     std::pair<T, bool> pop();
     void push(void *val, uint32_t num, bool last);
     uint32_t pop(void *val, uint32_t num, bool &last);
 };
+
+template<typename T>
+ThreadSafeFIFO<T>::~ThreadSafeFIFO(){
+    if(!queue.empty()) std::cout<<"FIFO is not empty!"<<std::endl;
+}
 
 template<typename T>
 void ThreadSafeFIFO<T>::push(T val, bool last) {

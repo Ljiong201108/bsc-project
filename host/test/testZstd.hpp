@@ -38,17 +38,19 @@ void testZstd(int argc, char** argv){
 
     std::cout<<"Start test Zstd"<<std::endl;
     std::cout<<"Original: "<<std::endl;
-    outputSize=dataCompression::zstdCompress(in.data(), out.data(), inputSize);
-    // dataCompression::zstdCompressionInput(in.data(), inputSize, true);
-    // outputSize=dataCompression::zstdCompressionOutput(out.data(), out.size(), last);
+    std::cout<<"in.size(): "<<in.size()<<std::endl;
+    std::cout<<"out.size(): "<<out.size()<<std::endl;
+    // outputSize=dataCompression::zstdCompress(in.data(), out.data(), inputSize);
+    dataCompression::zstdCompressionInput(in.data(), inputSize, true);
+    outputSize+=dataCompression::zstdCompressionOutput(out.data(), out.size(), last);
     std::cout<<"Compressed: "<<std::endl;
-    hexdump(out.data(), outputSize, "output_zstd");
+    hexdump(out.data(), outputSize);
     std::cout<<"------------------------"<<std::endl;
 	// outputSize2=dataCompression::zstdDecompress(out.data(), out2.data(), outputSize);
     dataCompression::zstdDecompressionInput(out.data(), outputSize, true);
     outputSize2=dataCompression::zstdDecompressionOutput(out2.data(), out2.size(), last);
     std::cout<<"last: "<<last<<std::endl;
-    hexdump(out2.data(), outputSize2, "output_zstd");
+    hexdump(out2.data(), outputSize2);
     std::cout<<"End test Zstd"<<std::endl;
 #endif
 }

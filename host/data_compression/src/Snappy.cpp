@@ -557,24 +557,24 @@ uint64_t snappyDecompressStream(uint8_t* in, uint8_t* out, uint32_t inputSize){
 
 uint64_t snappyCompress(uint8_t* in, uint8_t* out, uint64_t inputSize, bool stream){
     std::cout<<"Before Snappy Compress: "<<std::endl;
-    hexdump(in, inputSize, "output_snappy");
+    hexdump(in, inputSize);
 
     uint64_t enbytes=stream ? internalSnappy::snappyCompressStream(in, out, inputSize) : internalSnappy::snappyCompressMM(in, out, inputSize);
 
     std::cout<<"After Snappy Compress: "<<std::endl;
-    hexdump(out, enbytes, "output_snappy");
+    hexdump(out, enbytes);
 
     return enbytes;
 }
 
 uint64_t snappyDecompress(uint8_t* in, uint8_t* out, uint64_t inputSize, bool stream){
     std::cout<<"Before Snappy Decompress: "<<std::endl;
-    hexdump(in, inputSize, "output_snappy");
+    hexdump(in, inputSize);
 
     uint64_t debytes = stream ? internalSnappy::snappyDecompressStream(in, out, inputSize) : internalSnappy::snappyDecompressMM(in, out, inputSize);
 
     std::cout<<"After Snappy Decompress: "<<std::endl;
-    hexdump(out, debytes, "output_snappy");
+    hexdump(out, debytes);
 
     return debytes;
 }
