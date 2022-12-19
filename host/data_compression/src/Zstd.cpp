@@ -15,18 +15,17 @@ ThreadSafeFIFO<uint8_t> decompressQueueInput, decompressQueueOutput;
 
 const uint64_t CHUNK_SIZE_IN_KB=16;
 const uint64_t CHUNK_SIZE_IN_BYTE=CHUNK_SIZE_IN_KB*1024;
-}
 
-void zstdCompressEngineStream(){
+void zstdCompressEngine(){
     cl_int err;
 
     // host allocated aligned memory
-    std::vector<uint8_t, aligned_allocator<uint8_t>> inBufferHost(internalZstd::CHUNK_SIZE_IN_BYTE);
-    std::vector<uint8_t, aligned_allocator<uint8_t>> outBufferHost(internalZstd::CHUNK_SIZE_IN_BYTE);
+    std::vector<uint8_t, aligned_allocator<uint8_t>> inBufferHost(CHUNK_SIZE_IN_BYTE);
+    std::vector<uint8_t, aligned_allocator<uint8_t>> outBufferHost(CHUNK_SIZE_IN_BYTE);
     std::vector<uint32_t, aligned_allocator<uint32_t>> outSizeBufferHost(1);
 
-    BufferPointer inBuffer(Application::getContext<Lib::ZSTD>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, internalZstd::CHUNK_SIZE_IN_BYTE, inBufferHost.data());
-    BufferPointer outBuffer(Application::getContext<Lib::ZSTD>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, internalZstd::CHUNK_SIZE_IN_BYTE, outBufferHost.data());
+    BufferPointer inBuffer(Application::getContext<Lib::ZSTD>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, CHUNK_SIZE_IN_BYTE, inBufferHost.data());
+    BufferPointer outBuffer(Application::getContext<Lib::ZSTD>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, CHUNK_SIZE_IN_BYTE, outBufferHost.data());
     BufferPointer outSizeBuffer(Application::getContext<Lib::ZSTD>(), CL_MEM_USE_HOST_PTR | CL_MEM_WRITE_ONLY, sizeof(uint32_t), outSizeBufferHost.data());
 
     // set consistent kernel arguments
@@ -49,7 +48,7 @@ void zstdCompressEngineStream(){
 
         // Copy input data
         // std::memcpy(inBufferHost.data(), in+inIdx, chunkSize);
-        uint32_t chunkSize=internalZstd::compressQueueInput.pop(inBufferHost.data(), internalZstd::CHUNK_SIZE_IN_BYTE, last);
+        uint32_t chunkSize=compressQueueInput.pop(inBufferHost.data(), CHUNK_SIZE_IN_BYTE, last);
         // std::cout<<"last: "<<last<<std::endl;
         // std::cout<<"get "<<chunkSize<<" [Bytes]"<<std::endl;
         // hexdump(inBufferHost.data(), chunkSize);
@@ -70,7 +69,7 @@ void zstdCompressEngineStream(){
         queue->finish();
 
         // std::cout<<"pushed "<<outSizeBufferHost[0]<<" [Bytes], last: "<<last<<std::endl;
-        internalZstd::compressQueueOutput.push(outBufferHost.data(), outSizeBufferHost[0], last);
+        compressQueueOutput.push(outBufferHost.data(), outSizeBufferHost[0], last);
         // auto compSize = outSizeBufferHost[0];
         // std::memcpy(out+outIdx, outBufferHost.data(), compSize);
         // enbytes += compSize;
@@ -80,7 +79,7 @@ void zstdCompressEngineStream(){
     // return enbytes;
 }
 
-void zstdDecompressEngineStream(){
+void zstdDecompressEngineSimple(){
     CommandQueuePointer chunkWriterQueue(Application::getContext<Lib::ZSTD>(), Application::getDevice<Lib::ZSTD>(), CL_QUEUE_PROFILING_ENABLE);
     CommandQueuePointer chunkReaderQueue(Application::getContext<Lib::ZSTD>(), Application::getDevice<Lib::ZSTD>(), CL_QUEUE_PROFILING_ENABLE);
 
@@ -88,11 +87,11 @@ void zstdDecompressEngineStream(){
     KernelPointer chunkReaderKernel(Application::getProgram<Lib::ZSTD>(), "xilS2MM:{xilS2MM_1}");
 
     //memory for compression
-    std::vector<uint8_t, aligned_allocator<uint8_t>> inputBufferHost(internalZstd::CHUNK_SIZE_IN_BYTE+4);
+    std::vector<uint8_t, aligned_allocator<uint8_t>> inputBufferHost(CHUNK_SIZE_IN_BYTE+4);
     BufferPointer inputBuffer(Application::getContext<Lib::ZSTD>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, inputBufferHost.size(), inputBufferHost.data());
 
     //memory for decompression
-    std::vector<uint8_t, aligned_allocator<uint8_t>> outputBufferHost(internalZstd::CHUNK_SIZE_IN_BYTE);
+    std::vector<uint8_t, aligned_allocator<uint8_t>> outputBufferHost(CHUNK_SIZE_IN_BYTE);
     std::vector<uint32_t, aligned_allocator<uint32_t>> outputSizeBufferHost(1);
     std::vector<uint32_t, aligned_allocator<uint32_t>> statusBufferHost(1);
 
@@ -112,7 +111,7 @@ void zstdDecompressEngineStream(){
     uint32_t endBufferHost=0;
     std::vector<uint8_t> window;
 
-    do{
+    do{ //per frame
         std::thread chunkWriter([&chunkWriterQueue, &chunkWriterKernel, &inputBufferHost, &inputBuffer, &last, &valid, &first, &endBufferHost, &window]{
             const uint32_t magicZstandardNumber=0xFD2FB528;
             const uint32_t magicSkippableNumberMin=0x184D2A50;
@@ -135,7 +134,7 @@ void zstdDecompressEngineStream(){
             };
 
             do{
-                auto [curVal, curLast]=internalZstd::decompressQueueInput.pop();
+                auto [curVal, curLast]=decompressQueueInput.pop();
                 last=curLast;
                 // std::cout<<std::hex<<"get a Byte: "<<(uint32_t)curVal<<" "<<curLast<<std::endl;
 
@@ -181,7 +180,7 @@ void zstdDecompressEngineStream(){
                     // if(magicSkippableNumberMin<=*(uint32_t*)window.data() && *(uint32_t*)window.data()<=magicSkippableNumberMax) valid=false;
 
                     //这一步保证上面的endBufferHost的值域是[0, CHUNK_SIZE_IN_BYTE)
-                    if(endBufferHost>=internalZstd::CHUNK_SIZE_IN_BYTE){
+                    if(endBufferHost>=CHUNK_SIZE_IN_BYTE){
                         // std::cout<<"execute 180"<<std::endl;
                         executeWrite(endBufferHost, false);
                         endBufferHost=0;
@@ -205,7 +204,7 @@ void zstdDecompressEngineStream(){
 
                 chunkReaderQueue->enqueueMigrateMemObjects({*outputBuffer}, CL_MIGRATE_MEM_OBJECT_HOST);
                 chunkReaderQueue->finish();
-                internalZstd::decompressQueueOutput.push(outputBufferHost.data(), outputSizeBufferHost[0], last);
+                decompressQueueOutput.push(outputBufferHost.data(), outputSizeBufferHost[0], last);
 
                 std::cout<<"read a chunk["<<outputSizeBufferHost[0]<<" Bytes]"<<std::endl;
             }while(!statusBufferHost[0]);
@@ -217,20 +216,191 @@ void zstdDecompressEngineStream(){
     }while(!last);
 }
 
-// uint64_t zstdCompress(uint8_t* in, uint8_t* out, uint64_t inputSize){
-//     uint64_t enbytes = internalZstd::zstdCompressEngineStream(in, out, inputSize);
-//     return enbytes;
-// }
+void zstdDecompressEngine(){
+    CommandQueuePointer chunkWriterQueue(Application::getContext<Lib::ZSTD>(), Application::getDevice<Lib::ZSTD>(), CL_QUEUE_PROFILING_ENABLE);
+    CommandQueuePointer chunkReaderQueue(Application::getContext<Lib::ZSTD>(), Application::getDevice<Lib::ZSTD>(), CL_QUEUE_PROFILING_ENABLE);
 
-// uint64_t zstdDecompress(uint8_t* in, uint8_t* out, uint64_t inputSize){
-//     uint64_t debytes = internalZstd::zstdDecompressEngineStream(in, out, inputSize);
-//     return debytes;
-// }
+    KernelPointer chunkWriterKernel(Application::getProgram<Lib::ZSTD>(), "xilMM2S:{xilMM2S_1}");
+    KernelPointer chunkReaderKernel(Application::getProgram<Lib::ZSTD>(), "xilS2MM:{xilS2MM_1}");
+
+    //memory for compression
+    std::vector<uint8_t, aligned_allocator<uint8_t>> inputBufferHost(CHUNK_SIZE_IN_BYTE);
+    BufferPointer inputBuffer(Application::getContext<Lib::ZSTD>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, inputBufferHost.size(), inputBufferHost.data());
+
+    //memory for decompression
+    std::vector<uint8_t, aligned_allocator<uint8_t>> outputBufferHost(CHUNK_SIZE_IN_BYTE);
+    std::vector<uint32_t, aligned_allocator<uint32_t>> outputSizeBufferHost(1);
+    std::vector<uint32_t, aligned_allocator<uint32_t>> statusBufferHost(1);
+
+    BufferPointer outputBuffer(Application::getContext<Lib::ZSTD>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, sizeof(uint8_t)*outputBufferHost.size(), outputBufferHost.data());
+    BufferPointer outputSizeBuffer(Application::getContext<Lib::ZSTD>(), CL_MEM_USE_HOST_PTR | CL_MEM_WRITE_ONLY, sizeof(uint32_t), outputSizeBufferHost.data());
+    BufferPointer statusBuffer(Application::getContext<Lib::ZSTD>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, sizeof(uint32_t), statusBufferHost.data());
+
+    //kernel args fixed setting
+    chunkWriterKernel->setArg(0, *inputBuffer);
+
+    chunkReaderKernel->setArg(0, *outputBuffer);
+    chunkReaderKernel->setArg(1, *outputSizeBuffer);
+    chunkReaderKernel->setArg(2, *statusBuffer);
+    chunkReaderKernel->setArg(3, (uint32_t)outputBufferHost.size());
+
+    bool last;
+    uint32_t endBufferHost;
+
+    do{ //per frame
+        endBufferHost=0;
+        std::thread chunkWriter([&]{
+            const uint32_t magicZstandardNumber=0xFD2FB528;
+            const uint32_t magicSkippableNumberMin=0x184D2A50;
+            const uint32_t magicSkippableNumberMax=0x184D2A5F;
+
+            auto executeWrite=[&](uint32_t size, bool last){
+                std::cout<<"start writing a block of "<<size<<", last: "<<last<<std::endl;
+                // hexdump(inputBufferHost.data(), size);
+
+                chunkWriterQueue->enqueueMigrateMemObjects({*inputBuffer}, 0);
+                chunkWriterQueue->finish();
+
+                chunkWriterKernel->setArg(1, size);
+                chunkWriterKernel->setArg(2, (uint32_t)last);
+
+                chunkWriterQueue->enqueueTask(*chunkWriterKernel);
+                chunkWriterQueue->finish();
+
+                std::cout<<"write a chunk["<<size<<" Bytes], last = "<<last<<std::endl;
+            };
+
+            auto safePushBack=[&](uint8_t value, bool last){
+                *(inputBufferHost.data()+endBufferHost)=value;
+                endBufferHost++;
+
+                if(endBufferHost==CHUNK_SIZE_IN_BYTE || last){
+                    executeWrite(endBufferHost, last);
+                    endBufferHost=0;
+                }
+            };
+
+            decompressQueueInput.pop(inputBufferHost.data(), 4, last);
+            std::cout<<"magic number: "<<std::hex<<*(uint32_t*)inputBufferHost.data()<<std::dec<<std::endl;
+            endBufferHost+=4;
+            if(*(uint32_t*)inputBufferHost.data()==magicZstandardNumber){
+                // Frame Header Descriptor 
+                decompressQueueInput.pop(inputBufferHost.data()+endBufferHost, 1, last);
+                uint8_t FHD=*(inputBufferHost.data()+endBufferHost);
+                endBufferHost++;
+
+                uint8_t frameContentSizeFlag=FHD>>6;
+                uint8_t singleSegmentFlag=(FHD>>5)&0b1;
+                uint8_t contentChecksumFlag=(FHD>>2)&0b1;
+                uint8_t dictionaryIDFlag=FHD&0b1;
+
+                uint32_t FCSFieldSize;
+                switch(frameContentSizeFlag){
+                    case 0: FCSFieldSize=singleSegmentFlag ? 1 : 0; break;
+                    case 1: FCSFieldSize=2; break;
+                    case 2: FCSFieldSize=4; break;
+                    case 3: FCSFieldSize=8; break;
+                }
+
+                // Window Descriptor
+                if(!singleSegmentFlag){
+                    decompressQueueInput.pop(inputBufferHost.data()+endBufferHost, 1, last);
+                    endBufferHost++;
+                }
+
+                // std::cout<<"frameContentSizeFlag: "<<(uint32_t)frameContentSizeFlag<<std::endl;
+                // std::cout<<"singleSegmentFlag: "<<(uint32_t)singleSegmentFlag<<std::endl;
+                // std::cout<<"contentChecksumFlag: "<<(uint32_t)contentChecksumFlag<<std::endl;
+                // std::cout<<"dictionaryIDFlag: "<<(uint32_t)dictionaryIDFlag<<std::endl;
+                // std::cout<<"FCSFieldSize: "<<FCSFieldSize<<std::endl;
+
+                // Dictionary ID
+                if(dictionaryIDFlag){
+                    decompressQueueInput.pop(inputBufferHost.data()+endBufferHost, dictionaryIDFlag, last);
+                    endBufferHost+=dictionaryIDFlag;
+                }
+
+                // Frame Content Size
+                if(FCSFieldSize){
+                    decompressQueueInput.pop(inputBufferHost.data()+endBufferHost, FCSFieldSize, last);
+                    endBufferHost+=FCSFieldSize;
+                }
+
+                bool lastBlock;
+                do{
+                    uint32_t b1=decompressQueueInput.pop(last);
+                    uint32_t b2=decompressQueueInput.pop(last);
+                    uint32_t b3=decompressQueueInput.pop(last);
+
+                    // std::cout<<std::dec<<b1<<" "<<b2<<" "<<b3<<std::endl;
+
+                    lastBlock=b1&0b1;
+                    uint32_t blockSize=(b1>>3)+(b2<<5)+((b3)<<13);
+                    // std::cout<<"blockSize: "<<std::dec<<blockSize<<std::endl;
+
+                    safePushBack(b1, false);
+                    safePushBack(b2, false);
+                    safePushBack(b3, false);
+
+                    for(uint32_t i=0;i<blockSize-1;i++) safePushBack(decompressQueueInput.pop(last), false);
+                    // for the last byte of the block
+                    if(lastBlock && !contentChecksumFlag) safePushBack(decompressQueueInput.pop(last), true);
+                    else if(lastBlock && contentChecksumFlag){
+                        safePushBack(decompressQueueInput.pop(last), false);
+                        uint32_t checksum;
+                        decompressQueueInput.pop(&checksum, 4, last);
+                        safePushBack(*((uint8_t*)(&checksum)+0), false);
+                        safePushBack(*((uint8_t*)(&checksum)+1), false);
+                        safePushBack(*((uint8_t*)(&checksum)+2), false);
+                        safePushBack(*((uint8_t*)(&checksum)+3), true);
+                    }
+                }while(!lastBlock);
+
+            }else if(magicSkippableNumberMin<=*(uint32_t*)inputBufferHost.data() && *(uint32_t*)inputBufferHost.data()<=magicSkippableNumberMax){
+                decompressQueueInput.pop(inputBufferHost.data()+endBufferHost, 4, last);
+                uint32_t frameSize=*(uint32_t*)(inputBufferHost.data()+endBufferHost);
+                endBufferHost+=4;
+
+                for(uint32_t i=0;i<frameSize-1;i++) safePushBack(decompressQueueInput.pop(last), false);
+                safePushBack(decompressQueueInput.pop(last), true);
+            }else{
+                std::cerr<<"magic number invalid!"<<std::endl;
+                exit(EXIT_FAILURE);
+            }
+
+            std::cout<<"finished write"<<std::endl;
+        });
+
+        statusBufferHost[0]=0;
+        std::thread chunkReader([&chunkReaderQueue, &chunkReaderKernel, &outputSizeBufferHost, &statusBufferHost, &outputBufferHost, &outputBuffer, &outputSizeBuffer, &statusBuffer, &last]{
+            do{
+                std::cout<<"start to read a chunk["<<std::dec<<outputBufferHost.size()<<" Bytes]"<<std::endl;
+                chunkReaderQueue->enqueueMigrateMemObjects({*statusBuffer}, 0);
+
+                chunkReaderQueue->enqueueTask(*chunkReaderKernel);
+
+                chunkReaderQueue->enqueueMigrateMemObjects({*outputSizeBuffer, *statusBuffer}, CL_MIGRATE_MEM_OBJECT_HOST);
+                chunkReaderQueue->finish();
+
+                chunkReaderQueue->enqueueMigrateMemObjects({*outputBuffer}, CL_MIGRATE_MEM_OBJECT_HOST);
+                chunkReaderQueue->finish();
+                decompressQueueOutput.push(outputBufferHost.data(), outputSizeBufferHost[0], last);
+
+                std::cout<<"read a chunk["<<outputSizeBufferHost[0]<<" Bytes]"<<std::endl;
+            }while(!statusBufferHost[0]);
+            std::cout<<"finished read"<<std::endl;
+        });
+
+        chunkWriter.join();
+        chunkReader.join();
+    }while(!last);
+}
+}
 
 void zstdCompressionInput(uint8_t *in, uint32_t inputSize, bool last){
     if(internalZstd::compressFunc==nullptr){
         internalZstd::compressFunc.reset(nullptr);
-        internalZstd::compressFunc=std::make_unique<std::thread>(&zstdCompressEngineStream);
+        internalZstd::compressFunc=std::make_unique<std::thread>(&internalZstd::zstdCompressEngine);
 
         internalZstd::compressInputs.resize(0);
         internalZstd::compressCur=internalZstd::compressIdx=0;
@@ -269,7 +439,7 @@ uint32_t zstdCompressionOutput(uint8_t *out, uint32_t outputSize, bool &last){
 void zstdDecompressionInput(uint8_t *in, uint32_t inputSize, bool last){
     if(internalZstd::decompressFunc==nullptr){
         internalZstd::decompressFunc.reset(nullptr);
-        internalZstd::decompressFunc=std::make_unique<std::thread>(&zstdDecompressEngineStream);
+        internalZstd::decompressFunc=std::make_unique<std::thread>(&internalZstd::zstdDecompressEngine);
 
         internalZstd::decompressInputs.resize(0);
         internalZstd::decompressCur=internalZstd::decompressIdx=0;
@@ -304,4 +474,15 @@ uint32_t zstdDecompressionOutput(uint8_t *out, uint32_t outputSize, bool &last){
 
     return size;
 }
+
+
+// uint64_t zstdCompress(uint8_t* in, uint8_t* out, uint64_t inputSize){
+//     uint64_t enbytes = internalZstd::zstdCompressEngineStream(in, out, inputSize);
+//     return enbytes;
+// }
+
+// uint64_t zstdDecompress(uint8_t* in, uint8_t* out, uint64_t inputSize){
+//     uint64_t debytes = internalZstd::zstdDecompressEngineStream(in, out, inputSize);
+//     return debytes;
+// }
 }

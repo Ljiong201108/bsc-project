@@ -20,6 +20,7 @@ public:
     ~ThreadSafeFIFO();
     void push(T val, bool last);
     std::pair<T, bool> pop();
+    T pop(bool &last);
     void push(void *val, uint32_t num, bool last);
     uint32_t pop(void *val, uint32_t num, bool &last);
 };
@@ -53,6 +54,17 @@ std::pair<T, bool> ThreadSafeFIFO<T>::pop() {
     queue.pop();
     cv.notify_all();
     return val;
+}
+
+template<typename T>
+T ThreadSafeFIFO<T>::pop(bool &last) {
+    std::unique_lock<std::mutex> lk(mut);
+    cv.wait(lk, [this] { return queue.size()>0; });
+    std::pair<T, bool> val=queue.front();
+    queue.pop();
+    last=val.second;
+    cv.notify_all();
+    return val.first;
 }
 
 template<typename T>

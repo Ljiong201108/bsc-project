@@ -208,7 +208,7 @@ void lz4DecompressEngine(){
 
             uint32_t bufferTotalBlock=0;
 
-            auto write=[&]{
+            auto executeWrite=[&]{
                 std::cout<<"start for decompressing blocks"<<std::endl;
                 decompress_kernel_lz4->setArg(0, *inputBuffer);
                 decompress_kernel_lz4->setArg(1, *outputBuffer);
@@ -247,7 +247,7 @@ void lz4DecompressEngine(){
                 // hexdump(inBufferHost.data()+bufferTotalBlock*block_size_in_bytes, compressedSize);
                 bufferTotalBlock++;
 
-                if(bufferTotalBlock==maxNumBlocks) write();
+                if(bufferTotalBlock==maxNumBlocks) executeWrite();
                 
                 uint32_t _;
                 if(blockChecksumFlg) decompressQueueInput.pop(&_, 4, last);
@@ -257,7 +257,7 @@ void lz4DecompressEngine(){
                 decompressQueueInput.pop(inBufferHost.data()+bufferTotalBlock*block_size_in_bytes, 4, last);
             }
 
-            if(bufferTotalBlock) write();
+            if(bufferTotalBlock) executeWrite();
 
             if(contentChecksumFlg) decompressQueueInput.pop(inBufferHost.data(), 4, last);
         }else if(0x184D2A50<=*(uint32_t*)inBufferHost.data() && *(uint32_t*)inBufferHost.data()<=0x184D2A5F){
@@ -267,7 +267,7 @@ void lz4DecompressEngine(){
             while(size--) decompressQueueInput.pop();
         }
 
-        //this one is special
+        //结束标识出现在输出之后，无法提前得知，所以需要多写一个，会在读出的时候被去掉
         if(last){
             decompressQueueOutput.push(0, true);
             std::cout<<"finish decompressing"<<std::endl;

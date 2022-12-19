@@ -47,7 +47,7 @@ inline void testGzip(){
 	last=0;
 	while(!last) outputSize2+=dataCompression::gzipZlibDecompressionOutput(out2.data()+outputSize2, 800, last);
 	std::cout<<"last = "<<last<<std::endl;
-	hexdump(out2.data(), outputSize2, "output_gz");
+	hexdump(out2.data(), outputSize2);
     std::cout<<"End test Gzip"<<std::endl;
 }
 

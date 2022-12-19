@@ -8,7 +8,7 @@ uint32_t writeGzipHeader(uint8_t* out);
 uint32_t writeGzipFooter(uint8_t* out, uint32_t compressSize, uint32_t fileSize);
 uint32_t writeZlibHeader(uint8_t *out);
 uint32_t writeZlibFooter(uint8_t *out, uint32_t idxAfterCompress);
-bool readGzipZlibHeader(uint8_t* in);
+bool checkGzipZlibHeader(uint8_t* in);
 void gzipZlibCompressionInput(uint8_t *in, uint32_t inputSize, bool last, bool isZlib=false);
 uint32_t gzipZlibCompressionOutput(uint8_t *out, uint32_t outputSize, bool &last, bool isZlib=false);
 void gzipZlibDecompressionInput(uint8_t *in, uint32_t inputSize, bool last, bool isZlib=false);
