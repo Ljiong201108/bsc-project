@@ -51,14 +51,16 @@ void snappyCoreDec(hls::stream<ap_uint<MULTIPLE_BYTES * 8> >& inStream,
 
 void snappyDec(const ap_uint<MULTIPLE_BYTES * 8>* in,
                ap_uint<MULTIPLE_BYTES * 8>* out,
+               uint32_t* dec_size,
                const uint32_t input_idx,
                const uint32_t input_size,
-               const uint32_t input_size1) {
+               const uint32_t input_size1,
+               uint32_t block_size_in_kb) {
     const int c_byteSize = 8;
     const int c_wordSize = (MULTIPLE_BYTES * 8) / c_byteSize;
     const uint8_t c_streamWidth = MULTIPLE_BYTES * 8;
 
-    uint32_t rIdx = input_idx / c_wordSize;
+    uint32_t rIdx = (input_idx * block_size_in_kb) / c_wordSize;
 
     hls::stream<ap_uint<MULTIPLE_BYTES * 8> > inStream;
     hls::stream<ap_uint<(MULTIPLE_BYTES * 8) + MULTIPLE_BYTES> > outStream;
@@ -75,7 +77,7 @@ void snappyDec(const ap_uint<MULTIPLE_BYTES * 8>* in,
     snappyCoreDec(inStream, outStream, input_size1);
 
     // Transfer data from kernel to global memory
-    xf::compression::details::s2mmEosStreamSimple<c_streamWidth, GMEM_BURST_SIZE>(&(out[rIdx]), outStream);
+    xf::compression::details::s2mmWithSize<c_streamWidth, GMEM_BURST_SIZE>(&(out[rIdx]), outStream, input_idx, dec_size);
 }
 
 //}//end of namepsace
@@ -111,10 +113,10 @@ void xilSnappyDecompressMM(const ap_uint<MULTIPLE_BYTES * 8>* in,
         uint32_t iSize = in_compress_size[i];
         compress_size = iSize;
         compress_size1 = iSize;
-        input_idx = i * max_block_size;
+        input_idx = i;
 
         // Single Engine LZ4 Decompression
-        snappyDec(in, out, input_idx, compress_size, compress_size1);
+        snappyDec(in, out, in_block_size, input_idx, compress_size, compress_size1, block_size_in_kb);
     }
 }
 }
