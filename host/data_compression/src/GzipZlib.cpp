@@ -2,18 +2,18 @@
 
 namespace dataCompression{
 namespace internalGzipZlib{
-std::mutex compressMtx, decompressMtx;
-std::condition_variable compressCV, decompressCV;
-std::vector<std::unique_ptr<std::thread>> compressInputs, decompressInputs;
+std::mutex compressInputMtx, compressOutputMtx, decompressInputMtx, decompressOutputMtx;
+std::condition_variable compressInputCV, compressOutputCV, decompressInputCV, decompressOutputCV;
+std::vector<std::unique_ptr<std::thread>> compressInputs, compressOutputs, decompressInputs, decompressOutputs;
 std::unique_ptr<std::thread> compressFunc, decompressFunc;
-uint32_t compressCur, decompressCur;
-uint32_t compressIdx, decompressIdx;
+uint32_t compressInputCur, compressOutputCur, decompressInputCur, decompressOutputCur;
+uint32_t compressInputIdx, compressOutputIdx, decompressInputIdx, decompressOutputIdx;
 uint32_t checksum;
 
 ThreadSafeFIFO<uint8_t> compressQueueInput, compressQueueOutput;
 ThreadSafeFIFO<uint8_t> decompressQueueInput, decompressQueueOutput;
 
-const uint64_t CHUNK_SIZE_IN_KB=32;
+const uint64_t CHUNK_SIZE_IN_KB=64*1024;
 const uint64_t CHUNK_SIZE_IN_BYTE=CHUNK_SIZE_IN_KB*1024;
 
 constexpr auto DEFLATE_METHOD = 8;
@@ -34,8 +34,8 @@ uint64_t gzipZlibCompressionEngine(bool isZlib){
         checksum_type = true;
     }
 
-    const uint64_t CHUNK_SIZE_IN_KB=32;
-    const uint64_t CHUNK_SIZE_IN_BYTE=CHUNK_SIZE_IN_KB*1024;
+    // const uint64_t CHUNK_SIZE_IN_KB=32;
+    // const uint64_t CHUNK_SIZE_IN_BYTE=CHUNK_SIZE_IN_KB*1024;
 	// uint64_t chunkNum=inputSize/CHUNK_SIZE_IN_BYTE+(inputSize%CHUNK_SIZE_IN_BYTE!=0);
 
     // Host Buffers
@@ -64,6 +64,7 @@ uint64_t gzipZlibCompressionEngine(bool isZlib){
     // compress the input block by block
     do{
         uint32_t chunkSize=internalGzipZlib::compressQueueInput.pop(inputBufferHost.data(), CHUNK_SIZE_IN_BYTE, last);
+        std::cout<<"inner reads a "<<chunkSize<<" Bytes block"<<std::endl;
 
         // set the kernel input size accordingly
         compressKernelMM->setArg(4, chunkSize);
@@ -84,6 +85,7 @@ uint64_t gzipZlibCompressionEngine(bool isZlib){
         OCL_CHECK(err, err=queue->enqueueMigrateMemObjects({*outputBuffer, *checksumDataBuffer}, CL_MIGRATE_MEM_OBJECT_HOST));
         queue->finish();
 
+        std::cout<<"inner writes a "<<compressedSizeBufferHost[0]<<" Bytes block"<<std::endl;
         internalGzipZlib::compressQueueOutput.push(outputBufferHost.data(), compressedSizeBufferHost[0], false);
         outIdx+=compressedSizeBufferHost[0];
 
@@ -101,11 +103,11 @@ uint64_t gzipZlibCompressionEngine(bool isZlib){
 }
 
 uint64_t gzipZlibDecompressionEngine(){
-    const uint64_t CHUNK_SIZE_IN_KB=32;
-    const uint64_t CHUNK_SIZE_IN_BYTE=CHUNK_SIZE_IN_KB*1024;
+    // const uint64_t CHUNK_SIZE_IN_KB=32*1024;
+    // const uint64_t CHUNK_SIZE_IN_BYTE=CHUNK_SIZE_IN_KB*1024;
     uint64_t outIdx=0;
 
-    std::thread chunkWriter([CHUNK_SIZE_IN_BYTE]{
+    std::thread chunkWriter([]{
         CommandQueuePointer chunkWriterQueue(Application::getContext<Lib::GZIP_ZLIB>(), Application::getDevice<Lib::GZIP_ZLIB>(), CL_QUEUE_PROFILING_ENABLE);
         KernelPointer chunkWriterKernel(Application::getProgram<Lib::GZIP_ZLIB>(), "xilMM2S:{xilMM2S_1}");
 
@@ -118,6 +120,7 @@ uint64_t gzipZlibDecompressionEngine(){
         bool last=0;
         do{
             uint32_t chunkSize=internalGzipZlib::decompressQueueInput.pop(inputBufferHost.data(), CHUNK_SIZE_IN_BYTE, last);
+            std::cout<<"inner reads a "<<chunkSize<<" Bytes block"<<std::endl;
 
             chunkWriterQueue->enqueueMigrateMemObjects({*inputBuffer}, 0);
             chunkWriterQueue->finish();
@@ -132,16 +135,16 @@ uint64_t gzipZlibDecompressionEngine(){
         }while(!last);
     });
 
-    std::thread chunkReader([CHUNK_SIZE_IN_BYTE]{
+    std::thread chunkReader([]{
         CommandQueuePointer chunkReaderQueue(Application::getContext<Lib::GZIP_ZLIB>(), Application::getDevice<Lib::GZIP_ZLIB>(), CL_QUEUE_PROFILING_ENABLE);
         KernelPointer chunkReaderKernel(Application::getProgram<Lib::GZIP_ZLIB>(), "xilS2MM:{xilS2MM_1}");
 
-        std::vector<uint8_t, aligned_allocator<uint8_t>> outputBufferHost(CHUNK_SIZE_IN_BYTE*2);
+        std::vector<uint8_t, aligned_allocator<uint8_t>> outputBufferHost(CHUNK_SIZE_IN_BYTE);
         std::vector<uint32_t, aligned_allocator<uint32_t>> outputSizeBufferHost(1);
         std::vector<uint32_t, aligned_allocator<uint32_t>> statusBufferHost(1);
         statusBufferHost[0]=0;
 
-        BufferPointer outputBuffer(Application::getContext<Lib::GZIP_ZLIB>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, sizeof(uint8_t)*outputBufferHost.size(), outputBufferHost.data());
+        BufferPointer outputBuffer(Application::getContext<Lib::GZIP_ZLIB>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, CHUNK_SIZE_IN_BYTE, outputBufferHost.data());
         BufferPointer outputSizeBuffer(Application::getContext<Lib::GZIP_ZLIB>(), CL_MEM_USE_HOST_PTR | CL_MEM_WRITE_ONLY, sizeof(uint32_t), outputSizeBufferHost.data());
         BufferPointer statusBuffer(Application::getContext<Lib::GZIP_ZLIB>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, sizeof(uint32_t), statusBufferHost.data());
 
@@ -152,8 +155,10 @@ uint64_t gzipZlibDecompressionEngine(){
 
         do{
             chunkReaderQueue->enqueueMigrateMemObjects({*statusBuffer}, 0);
+            chunkReaderQueue->finish();
 
             chunkReaderQueue->enqueueTask(*chunkReaderKernel);
+            chunkReaderQueue->finish();
 
             chunkReaderQueue->enqueueMigrateMemObjects({*outputSizeBuffer, *statusBuffer}, CL_MIGRATE_MEM_OBJECT_HOST);
             chunkReaderQueue->finish();
@@ -161,6 +166,7 @@ uint64_t gzipZlibDecompressionEngine(){
             chunkReaderQueue->enqueueMigrateMemObjects({*outputBuffer}, CL_MIGRATE_MEM_OBJECT_HOST);
             chunkReaderQueue->finish();
 
+            std::cout<<"inner writes a "<<outputSizeBufferHost[0]<<" Bytes block"<<std::endl;
             internalGzipZlib::decompressQueueOutput.push(outputBufferHost.data(), outputSizeBufferHost[0], statusBufferHost[0]);
         }while(!statusBufferHost[0]);
     });
@@ -185,8 +191,8 @@ uint32_t writeGzipHeader(uint8_t *out){
 	return outIdx;
 }
 
-uint32_t writeGzipFooter(uint8_t *out, uint32_t idxAfterCompress, uint32_t fileSize) {
-	uint32_t outIdx = idxAfterCompress;
+uint32_t writeGzipFooter(uint8_t *out, uint32_t fileSize) {
+	uint32_t outIdx = 0;
 
 	out[outIdx++] = internalGzipZlib::checksum;
 	out[outIdx++] = internalGzipZlib::checksum >> 8;
@@ -320,67 +326,145 @@ bool checkGzipZlibHeader(uint8_t* in){
     return true;
 }
 
-void gzipZlibCompressionInput(uint8_t *in, uint32_t inputSize, bool last, bool isZlib){
+void gzipZlibCompressionInputAsyc(uint8_t *in, uint32_t inputSize, bool last, bool isZlib){
     if(internalGzipZlib::compressFunc==nullptr){
         internalGzipZlib::compressFunc.reset(nullptr);
         internalGzipZlib::compressFunc=std::make_unique<std::thread>(&internalGzipZlib::gzipZlibCompressionEngine, isZlib);
 
         internalGzipZlib::compressInputs.resize(0);
-        internalGzipZlib::compressCur=internalGzipZlib::compressIdx=0;
+        internalGzipZlib::compressInputCur=internalGzipZlib::compressInputIdx=0;
     }
 
-    uint32_t compressIdx=internalGzipZlib::compressIdx++;
-    internalGzipZlib::compressInputs.push_back(std::make_unique<std::thread>([in, inputSize, last, compressIdx]{
-        std::cout<<"write thread "<<compressIdx<<" get in the function"<<std::endl;
-        std::unique_lock<std::mutex> lck(internalGzipZlib::compressMtx);
-        internalGzipZlib::compressCV.wait(lck, [compressIdx] {return internalGzipZlib::compressCur==compressIdx;});
+    uint32_t compressInputIdx=internalGzipZlib::compressInputIdx++;
+    internalGzipZlib::compressInputs.push_back(std::make_unique<std::thread>([in, inputSize, last, compressInputIdx]{
+        std::cout<<"write thread "<<compressInputIdx<<" get in the function"<<std::endl;
+        std::unique_lock<std::mutex> lck(internalGzipZlib::compressInputMtx);
+        internalGzipZlib::compressInputCV.wait(lck, [compressInputIdx] {return internalGzipZlib::compressInputCur==compressInputIdx;});
 
-        std::cout<<"write thread "<<compressIdx<<" start to write"<<std::endl;
+        std::cout<<"write thread "<<compressInputIdx<<" start to write"<<std::endl;
         internalGzipZlib::compressQueueInput.push(in, inputSize, last);
 
-        internalGzipZlib::compressCur++;
-        internalGzipZlib::compressCV.notify_all();
-        std::cout<<"write thread "<<compressIdx<<" finished"<<std::endl;
+        internalGzipZlib::compressInputCur++;
+        internalGzipZlib::compressInputCV.notify_all();
+        std::cout<<"write thread "<<compressInputIdx<<" finished"<<std::endl;
     }));
+}
+
+void gzipZlibCompressionInput(uint8_t *in, uint32_t inputSize, bool last, bool isZlib){
+    if(internalGzipZlib::compressFunc==nullptr){
+        internalGzipZlib::compressFunc.reset(nullptr);
+        internalGzipZlib::compressFunc=std::make_unique<std::thread>(&internalGzipZlib::gzipZlibCompressionEngine, isZlib);
+    }
+
+    internalGzipZlib::compressQueueInput.push(in, inputSize, last);
+}
+
+uint32_t gzipZlibCompressionOutputAsyc(uint8_t *out, uint32_t outputSize, bool &last, bool isZlib){
+    uint32_t size;
+
+    uint32_t compressOutputIdx=internalGzipZlib::compressOutputIdx++;
+    internalGzipZlib::compressOutputs.push_back(std::make_unique<std::thread>([out, outputSize, &last, compressOutputIdx, &size]{
+        std::cout<<"write thread "<<compressOutputIdx<<" get in the function"<<std::endl;
+        std::unique_lock<std::mutex> lck(internalGzipZlib::compressOutputMtx);
+        internalGzipZlib::compressOutputCV.wait(lck, [compressOutputIdx] {return internalGzipZlib::compressOutputCur==compressOutputIdx;});
+
+        std::cout<<"write thread "<<compressOutputIdx<<" start to write"<<std::endl;
+        size=internalGzipZlib::compressQueueOutput.pop(out, outputSize, last);
+
+        internalGzipZlib::compressOutputCur++;
+        internalGzipZlib::compressOutputCV.notify_all();
+        std::cout<<"write thread "<<compressOutputIdx<<" finished"<<std::endl;
+    }));
+
+    if(last){
+        for(auto &t : internalGzipZlib::compressInputs) t->join();
+        for(auto &t : internalGzipZlib::compressOutputs) t->join();
+        internalGzipZlib::compressFunc->join();
+
+        internalGzipZlib::compressFunc.reset(nullptr);
+        internalGzipZlib::compressInputs.resize(0);
+        internalGzipZlib::compressOutputs.resize(0);
+        internalGzipZlib::compressInputCur=internalGzipZlib::compressInputIdx=0;
+        internalGzipZlib::compressOutputCur=internalGzipZlib::compressOutputIdx=0;
+    }
+
+    return size;
 }
 
 uint32_t gzipZlibCompressionOutput(uint8_t *out, uint32_t outputSize, bool &last, bool isZlib){
     uint32_t size=internalGzipZlib::compressQueueOutput.pop(out, outputSize, last);
 
     if(last){
-        for(auto &t : internalGzipZlib::compressInputs) t->join();
         internalGzipZlib::compressFunc->join();
-
         internalGzipZlib::compressFunc.reset(nullptr);
-        internalGzipZlib::compressInputs.resize(0);
-        internalGzipZlib::compressCur=internalGzipZlib::compressIdx=0;
     }
 
     return size;
+}
+
+void gzipZlibDecompressionInputAsyc(uint8_t *in, uint32_t inputSize, bool last, bool isZlib){
+    if(internalGzipZlib::decompressFunc==nullptr){
+        internalGzipZlib::decompressFunc.reset(nullptr);
+        internalGzipZlib::decompressFunc=std::make_unique<std::thread>(&internalGzipZlib::gzipZlibDecompressionEngine);
+
+        internalGzipZlib::decompressInputs.resize(0);
+        internalGzipZlib::decompressInputCur=internalGzipZlib::decompressInputIdx=0;
+    }
+
+    uint32_t decompressInputIdx=internalGzipZlib::decompressInputIdx++;
+    internalGzipZlib::decompressInputs.push_back(std::make_unique<std::thread>([in, inputSize, last, decompressInputIdx]{
+        std::cout<<"write thread "<<decompressInputIdx<<" get in the function"<<std::endl;
+        std::unique_lock<std::mutex> lck(internalGzipZlib::decompressInputMtx);
+        internalGzipZlib::decompressInputCV.wait(lck, [decompressInputIdx] {return internalGzipZlib::decompressInputCur==decompressInputIdx;});
+
+        std::cout<<"write thread "<<decompressInputIdx<<" start to write"<<std::endl;
+        internalGzipZlib::decompressQueueInput.push(in, inputSize, last);
+
+        internalGzipZlib::decompressInputCur++;
+        internalGzipZlib::decompressInputCV.notify_all();
+        std::cout<<"write thread "<<decompressInputIdx<<" finished"<<std::endl;
+    }));
 }
 
 void gzipZlibDecompressionInput(uint8_t *in, uint32_t inputSize, bool last, bool isZlib){
     if(internalGzipZlib::decompressFunc==nullptr){
         internalGzipZlib::decompressFunc.reset(nullptr);
         internalGzipZlib::decompressFunc=std::make_unique<std::thread>(&internalGzipZlib::gzipZlibDecompressionEngine);
-
-        internalGzipZlib::decompressInputs.resize(0);
-        internalGzipZlib::decompressCur=internalGzipZlib::decompressIdx=0;
     }
 
-    uint32_t decompressIdx=internalGzipZlib::decompressIdx++;
-    internalGzipZlib::decompressInputs.push_back(std::make_unique<std::thread>([in, inputSize, last, decompressIdx]{
-        std::cout<<"write thread "<<decompressIdx<<" get in the function"<<std::endl;
-        std::unique_lock<std::mutex> lck(internalGzipZlib::decompressMtx);
-        internalGzipZlib::decompressCV.wait(lck, [decompressIdx] {return internalGzipZlib::decompressCur==decompressIdx;});
+    internalGzipZlib::decompressQueueInput.push(in, inputSize, last);
+}
 
-        std::cout<<"write thread "<<decompressIdx<<" start to write"<<std::endl;
-        internalGzipZlib::decompressQueueInput.push(in, inputSize, last);
+uint32_t gzipZlibDecompressionOutputAsyc(uint8_t *out, uint32_t outputSize, bool &last, bool isZlib){
+    uint32_t size;
 
-        internalGzipZlib::decompressCur++;
-        internalGzipZlib::decompressCV.notify_all();
-        std::cout<<"write thread "<<decompressIdx<<" finished"<<std::endl;
+    uint32_t decompressOutputIdx=internalGzipZlib::decompressOutputIdx++;
+    internalGzipZlib::decompressOutputs.push_back(std::make_unique<std::thread>([out, outputSize, &last, decompressOutputIdx, &size]{
+        std::cout<<"write thread "<<decompressOutputIdx<<" get in the function"<<std::endl;
+        std::unique_lock<std::mutex> lck(internalGzipZlib::decompressOutputMtx);
+        internalGzipZlib::decompressOutputCV.wait(lck, [decompressOutputIdx] {return internalGzipZlib::decompressOutputCur==decompressOutputIdx;});
+
+        std::cout<<"write thread "<<decompressOutputIdx<<" start to write"<<std::endl;
+        size=internalGzipZlib::decompressQueueOutput.pop(out, outputSize, last);
+
+        internalGzipZlib::decompressOutputCur++;
+        internalGzipZlib::decompressOutputCV.notify_all();
+        std::cout<<"write thread "<<decompressOutputIdx<<" finished"<<std::endl;
     }));
+
+    if(last){
+        for(auto &t : internalGzipZlib::decompressInputs) t->join();
+        for(auto &t : internalGzipZlib::decompressOutputs) t->join();
+        internalGzipZlib::decompressFunc->join();
+
+        internalGzipZlib::decompressFunc.reset(nullptr);
+        internalGzipZlib::decompressInputs.resize(0);
+        internalGzipZlib::decompressOutputs.resize(0);
+        internalGzipZlib::decompressInputCur=internalGzipZlib::decompressInputIdx=0;
+        internalGzipZlib::decompressOutputCur=internalGzipZlib::decompressOutputIdx=0;
+    }
+
+    return size;
 }
 
 uint32_t gzipZlibDecompressionOutput(uint8_t *out, uint32_t outputSize, bool &last, bool isZlib){
@@ -392,7 +476,7 @@ uint32_t gzipZlibDecompressionOutput(uint8_t *out, uint32_t outputSize, bool &la
 
         internalGzipZlib::decompressFunc.reset(nullptr);
         internalGzipZlib::decompressInputs.resize(0);
-        internalGzipZlib::decompressCur=internalGzipZlib::decompressIdx=0;
+        internalGzipZlib::decompressInputCur=internalGzipZlib::decompressInputIdx=0;
     }
 
     return size;

@@ -23,7 +23,7 @@ runU50: $(HOST_OUTPUT)
 	cp /home/jiong/bsc-project/tests/test/build/data_compression/lz4/lz4.xclbin .
 	cp /home/jiong/bsc-project/tests/test/build/data_compression/snappy/snappy.xclbin .
 	cp /home/jiong/bsc-project/tests/test/build/data_compression/zstd/zstd.xclbin .
-	./app
+	gdb ./app
 	rm -rf gzip_zlib.xclbin
 	rm -rf lz4.xclbin
 	rm -rf snappy.xclbin

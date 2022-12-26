@@ -116,7 +116,7 @@ void xilSnappyDecompressMM(const ap_uint<MULTIPLE_BYTES * 8>* in,
         input_idx = i;
 
         // Single Engine LZ4 Decompression
-        snappyDec(in, out, in_block_size, input_idx, compress_size, compress_size1, block_size_in_kb);
+        snappyDec(in, out, in_block_size, input_idx, compress_size, compress_size1, max_block_size);
     }
 }
 }

@@ -243,7 +243,7 @@ void snappyDecompressEngine(){
             queue->finish();
 
             // hexdump(outputBufferHost.data(), HOST_BUFFER_SIZE);
-            for(int i=0;i<maxNumBlocks;i++){
+            for(uint32_t i=0;i<maxNumBlocks;i++){
                 std::cout<<i<<" "<<decompressedSizeBufferHost[i]<<std::endl;
             }
 

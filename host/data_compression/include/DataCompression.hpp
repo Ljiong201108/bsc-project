@@ -21,7 +21,7 @@
 
 #include "HostCommon.hpp"
 
-constexpr uint64_t MCR=20;
+constexpr uint64_t MCR=2;
 
 inline void hexdump(void *ptr, unsigned int buflen) {
 	std::cout<<std::hex<<std::setfill('0');
