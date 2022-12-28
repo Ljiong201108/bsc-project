@@ -3,12 +3,12 @@
 
 namespace dataCompression{
 namespace internalLz4{
-std::mutex compressMtx, decompressMtx;
-std::condition_variable compressCV, decompressCV;
-std::vector<std::unique_ptr<std::thread>> compressInputs, decompressInputs;
+std::mutex compressInputMtx, compressOutputMtx, decompressInputMtx, decompressOutputMtx;
+std::condition_variable compressInputCV, compressOutputCV, decompressInputCV, decompressOutputCV;
+std::vector<std::unique_ptr<std::thread>> compressInputs, compressOutputs, decompressInputs, decompressOutputs;
 std::unique_ptr<std::thread> compressFunc, decompressFunc;
-uint32_t compressCur, decompressCur;
-uint32_t compressIdx, decompressIdx;
+uint32_t compressInputCur, compressOutputCur, decompressInputCur, decompressOutputCur;
+uint32_t compressInputIdx, compressOutputIdx, decompressInputIdx, decompressOutputIdx;
 uint32_t checksum;
 
 ThreadSafeFIFO<uint8_t> compressQueueInput, compressQueueOutput;
@@ -23,7 +23,7 @@ const auto BLOCK_SIZE_IN_KB = 64;
 // Maximum number of blocks based on host buffer size
 const auto MAX_NUMBER_BLOCKS = (HOST_BUFFER_SIZE / (BLOCK_SIZE_IN_KB * 1024));
 
-void lz4CompressEngine(){
+void lz4CompressionEngine(){
     uint32_t hostBufferSize = HOST_BUFFER_SIZE;
     uint32_t maxNumBlocks = (hostBufferSize) / (BLOCK_SIZE_IN_KB * 1024);
     std::vector<uint8_t, aligned_allocator<uint8_t>> inBufferHost(hostBufferSize);
@@ -117,7 +117,7 @@ void lz4CompressEngine(){
     }while(!last);
 }
 
-void lz4DecompressEngine(){
+void lz4DecompressionEngine(){
     uint64_t hostBufferSize = internalLz4::HOST_BUFFER_SIZE;
     std::vector<uint8_t, aligned_allocator<uint8_t>> inBufferHost(hostBufferSize);
     std::vector<uint8_t, aligned_allocator<uint8_t>> outBufferHost(hostBufferSize);
@@ -226,6 +226,10 @@ void lz4DecompressEngine(){
                 queue->enqueueMigrateMemObjects({*decompressdSizeBuffer, *outputBuffer}, CL_MIGRATE_MEM_OBJECT_HOST);
                 queue->finish();
 
+                for(uint32_t i=0;i<bufferTotalBlock;i++){
+                    std::cout<<i<<" "<<decompressSizeBufferHost[i]<<std::endl;
+                }
+
                 for(uint32_t blockIdx=0, decompressedSize=0;blockIdx<bufferTotalBlock;blockIdx++){
                     uint32_t blockSize=decompressSizeBufferHost[blockIdx];
                     decompressQueueOutput.push(outBufferHost.data()+decompressedSize, blockSize, false);
@@ -238,16 +242,17 @@ void lz4DecompressEngine(){
             };
 
             while(*(uint32_t*)(inBufferHost.data()+bufferTotalBlock*block_size_in_bytes)!=0x0){
-                std::cout<<"trying to read a block"<<std::endl;
                 uint32_t compressedSize=*(uint32_t*)(inBufferHost.data()+bufferTotalBlock*block_size_in_bytes);
                 if(compressedSize>>31) compressedSize=compressedSize&0x7FFFFFFF;
+                std::cout<<"trying to read a block, size: "<<std::dec<<compressedSize<<std::endl;
 
                 compressSizeBufferHost[bufferTotalBlock]=compressedSize;
                 decompressQueueInput.pop(inBufferHost.data()+bufferTotalBlock*block_size_in_bytes, compressedSize, last);
                 // hexdump(inBufferHost.data()+bufferTotalBlock*block_size_in_bytes, compressedSize);
                 bufferTotalBlock++;
 
-                if(bufferTotalBlock==maxNumBlocks) executeWrite();
+                //这里必须要减一，不然decompressedSize数据前面全是0，就最后一个是65536
+                if(bufferTotalBlock==maxNumBlocks-1) executeWrite();
                 
                 uint32_t _;
                 if(blockChecksumFlg) decompressQueueInput.pop(&_, 4, last);
@@ -408,67 +413,146 @@ uint8_t readLz4Header(uint8_t* in){
     return fileIdx;
 }
 
+void lz4CompressionInputAsyc(uint8_t *in, uint32_t inputSize, bool last){
+    if(internalLz4::compressFunc==nullptr){
+        internalLz4::compressFunc.reset(nullptr);
+        internalLz4::compressFunc=std::make_unique<std::thread>(&internalLz4::lz4CompressionEngine);
+
+        internalLz4::compressInputs.resize(0);
+        internalLz4::compressInputCur=internalLz4::compressInputIdx=0;
+    }
+
+    uint32_t compressInputIdx=internalLz4::compressInputIdx++;
+    internalLz4::compressInputs.push_back(std::make_unique<std::thread>([in, inputSize, last, compressInputIdx]{
+        std::cout<<"write thread "<<compressInputIdx<<" get in the function"<<std::endl;
+        std::unique_lock<std::mutex> lck(internalLz4::compressInputMtx);
+        internalLz4::compressInputCV.wait(lck, [compressInputIdx] {return internalLz4::compressInputCur==compressInputIdx;});
+
+        std::cout<<"write thread "<<compressInputIdx<<" start to write"<<std::endl;
+        internalLz4::compressQueueInput.push(in, inputSize, last);
+
+        internalLz4::compressInputCur++;
+        internalLz4::compressInputCV.notify_all();
+        std::cout<<"write thread "<<compressInputIdx<<" finished"<<std::endl;
+    }));
+}
+
 void lz4CompressionInput(uint8_t *in, uint32_t inputSize, bool last){
     if(internalLz4::compressFunc==nullptr){
         internalLz4::compressFunc.reset(nullptr);
-        internalLz4::compressFunc=std::make_unique<std::thread>(&internalLz4::lz4CompressEngine);
-
-        internalLz4::compressInputs.resize(0);
-        internalLz4::compressCur=internalLz4::compressIdx=0;
+        internalLz4::compressFunc=std::make_unique<std::thread>(&internalLz4::lz4CompressionEngine);
     }
 
-    uint32_t compressIdx=internalLz4::compressIdx++;
-    internalLz4::compressInputs.push_back(std::make_unique<std::thread>([in, inputSize, last, compressIdx]{
-        std::cout<<"write thread "<<compressIdx<<" get in the function"<<std::endl;
-        std::unique_lock<std::mutex> lck(internalLz4::compressMtx);
-        internalLz4::compressCV.wait(lck, [compressIdx] {return internalLz4::compressCur==compressIdx;});
+    internalLz4::compressQueueInput.push(in, inputSize, last);
+}
 
-        std::cout<<"write thread "<<compressIdx<<" start to write"<<std::endl;
-        internalLz4::compressQueueInput.push(in, inputSize, last);
+uint32_t lz4CompressionOutputAsyc(uint8_t *out, uint32_t outputSize, bool &last){
+    uint32_t size;
 
-        internalLz4::compressCur++;
-        internalLz4::compressCV.notify_all();
-        std::cout<<"write thread "<<compressIdx<<" finished"<<std::endl;
+    uint32_t compressOutputIdx=internalLz4::compressOutputIdx++;
+    internalLz4::compressOutputs.push_back(std::make_unique<std::thread>([out, outputSize, &last, compressOutputIdx, &size]{
+        std::cout<<"write thread "<<compressOutputIdx<<" get in the function"<<std::endl;
+        std::unique_lock<std::mutex> lck(internalLz4::compressOutputMtx);
+        internalLz4::compressOutputCV.wait(lck, [compressOutputIdx] {return internalLz4::compressOutputCur==compressOutputIdx;});
+
+        std::cout<<"write thread "<<compressOutputIdx<<" start to write"<<std::endl;
+        size=internalLz4::compressQueueOutput.pop(out, outputSize, last);
+
+        internalLz4::compressOutputCur++;
+        internalLz4::compressOutputCV.notify_all();
+        std::cout<<"write thread "<<compressOutputIdx<<" finished"<<std::endl;
     }));
+
+    if(last){
+        for(auto &t : internalLz4::compressInputs) t->join();
+        for(auto &t : internalLz4::compressOutputs) t->join();
+        internalLz4::compressFunc->join();
+
+        internalLz4::compressFunc.reset(nullptr);
+        internalLz4::compressInputs.resize(0);
+        internalLz4::compressOutputs.resize(0);
+        internalLz4::compressInputCur=internalLz4::compressInputIdx=0;
+        internalLz4::compressOutputCur=internalLz4::compressOutputIdx=0;
+    }
+
+    return size;
 }
 
 uint32_t lz4CompressionOutput(uint8_t *out, uint32_t outputSize, bool &last){
     uint32_t size=internalLz4::compressQueueOutput.pop(out, outputSize, last);
 
     if(last){
-        for(auto &t : internalLz4::compressInputs) t->join();
         internalLz4::compressFunc->join();
-
         internalLz4::compressFunc.reset(nullptr);
-        internalLz4::compressInputs.resize(0);
-        internalLz4::compressCur=internalLz4::compressIdx=0;
     }
 
     return size;
 }
 
+void lz4DecompressionInputAsyc(uint8_t *in, uint32_t inputSize, bool last){
+    if(internalLz4::decompressFunc==nullptr){
+        internalLz4::decompressFunc.reset(nullptr);
+        internalLz4::decompressFunc=std::make_unique<std::thread>(&internalLz4::lz4DecompressionEngine);
+
+        internalLz4::decompressInputs.resize(0);
+        internalLz4::decompressInputCur=internalLz4::decompressInputIdx=0;
+    }
+
+    uint32_t decompressInputIdx=internalLz4::decompressInputIdx++;
+    internalLz4::decompressInputs.push_back(std::make_unique<std::thread>([in, inputSize, last, decompressInputIdx]{
+        std::cout<<"write thread "<<decompressInputIdx<<" get in the function"<<std::endl;
+        std::unique_lock<std::mutex> lck(internalLz4::decompressInputMtx);
+        internalLz4::decompressInputCV.wait(lck, [decompressInputIdx] {return internalLz4::decompressInputCur==decompressInputIdx;});
+
+        std::cout<<"write thread "<<decompressInputIdx<<" start to write"<<std::endl;
+        internalLz4::decompressQueueInput.push(in, inputSize, last);
+
+        internalLz4::decompressInputCur++;
+        internalLz4::decompressInputCV.notify_all();
+        std::cout<<"write thread "<<decompressInputIdx<<" finished"<<std::endl;
+    }));
+}
+
 void lz4DecompressionInput(uint8_t *in, uint32_t inputSize, bool last){
     if(internalLz4::decompressFunc==nullptr){
         internalLz4::decompressFunc.reset(nullptr);
-        internalLz4::decompressFunc=std::make_unique<std::thread>(&internalLz4::lz4DecompressEngine);
-
-        internalLz4::decompressInputs.resize(0);
-        internalLz4::decompressCur=internalLz4::decompressIdx=0;
+        internalLz4::decompressFunc=std::make_unique<std::thread>(&internalLz4::lz4DecompressionEngine);
     }
 
-    uint32_t decompressIdx=internalLz4::decompressIdx++;
-    internalLz4::decompressInputs.push_back(std::make_unique<std::thread>([in, inputSize, last, decompressIdx]{
-        std::cout<<"write thread "<<decompressIdx<<" get in the function"<<std::endl;
-        std::unique_lock<std::mutex> lck(internalLz4::decompressMtx);
-        internalLz4::decompressCV.wait(lck, [decompressIdx] {return internalLz4::decompressCur==decompressIdx;});
+    internalLz4::decompressQueueInput.push(in, inputSize, last);
+}
 
-        std::cout<<"write thread "<<decompressIdx<<" start to write"<<std::endl;
-        internalLz4::decompressQueueInput.push(in, inputSize, last);
+uint32_t lz4DecompressionOutputAsyc(uint8_t *out, uint32_t outputSize, bool &last){
+    uint32_t size;
 
-        internalLz4::decompressCur++;
-        internalLz4::decompressCV.notify_all();
-        std::cout<<"write thread "<<decompressIdx<<" finished"<<std::endl;
+    uint32_t decompressOutputIdx=internalLz4::decompressOutputIdx++;
+    internalLz4::decompressOutputs.push_back(std::make_unique<std::thread>([out, outputSize, &last, decompressOutputIdx, &size]{
+        std::cout<<"write thread "<<decompressOutputIdx<<" get in the function"<<std::endl;
+        std::unique_lock<std::mutex> lck(internalLz4::decompressOutputMtx);
+        internalLz4::decompressOutputCV.wait(lck, [decompressOutputIdx] {return internalLz4::decompressOutputCur==decompressOutputIdx;});
+
+        std::cout<<"write thread "<<decompressOutputIdx<<" start to write"<<std::endl;
+        size=internalLz4::decompressQueueOutput.pop(out, outputSize, last);
+
+        internalLz4::decompressOutputCur++;
+        internalLz4::decompressOutputCV.notify_all();
+        std::cout<<"write thread "<<decompressOutputIdx<<" finished"<<std::endl;
     }));
+
+    if(last){
+        for(auto &t : internalLz4::decompressInputs) t->join();
+        for(auto &t : internalLz4::decompressOutputs) t->join();
+        internalLz4::decompressFunc->join();
+
+        internalLz4::decompressFunc.reset(nullptr);
+        internalLz4::decompressInputs.resize(0);
+        internalLz4::decompressOutputs.resize(0);
+        internalLz4::decompressInputCur=internalLz4::decompressInputIdx=0;
+        internalLz4::decompressOutputCur=internalLz4::decompressOutputIdx=0;
+    }
+
+    if(last) size--;
+    return size;
 }
 
 uint32_t lz4DecompressionOutput(uint8_t *out, uint32_t outputSize, bool &last){
@@ -480,7 +564,7 @@ uint32_t lz4DecompressionOutput(uint8_t *out, uint32_t outputSize, bool &last){
 
         internalLz4::decompressFunc.reset(nullptr);
         internalLz4::decompressInputs.resize(0);
-        internalLz4::decompressCur=internalLz4::decompressIdx=0;
+        internalLz4::decompressInputCur=internalLz4::decompressInputIdx=0;
     }
 
     if(last) size--;

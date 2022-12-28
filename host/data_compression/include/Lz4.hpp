@@ -77,9 +77,13 @@ uint8_t writeLz4Header(uint8_t* out, uint64_t inputSize);
 uint8_t writeLz4Footer(uint8_t* out);
 uint8_t readLz4Header(uint8_t* in);
 // uint64_t lz4Compress(uint8_t* in, uint8_t* out, uint64_t inputSize, bool stream=false);
-void lz4CompressionInput(uint8_t *in, uint32_t inputSize, bool last);
-uint32_t lz4CompressionOutput(uint8_t *out, uint32_t outputSize, bool &last);
 // uint64_t lz4Decompress(uint8_t* in, uint8_t* out, uint64_t inputSize, bool stream=false);
+void lz4CompressionInputAsyc(uint8_t *in, uint32_t inputSize, bool last);
+void lz4CompressionInput(uint8_t *in, uint32_t inputSize, bool last);
+uint32_t lz4CompressionOutputAsyc(uint8_t *out, uint32_t outputSize, bool &last);
+uint32_t lz4CompressionOutput(uint8_t *out, uint32_t outputSize, bool &last);
+void lz4DecompressionInputAsyc(uint8_t *in, uint32_t inputSize, bool last);
 void lz4DecompressionInput(uint8_t *in, uint32_t inputSize, bool last);
+uint32_t lz4DecompressionOutputAsyc(uint8_t *out, uint32_t outputSize, bool &last);
 uint32_t lz4DecompressionOutput(uint8_t *out, uint32_t outputSize, bool &last);
 }// dataCompression

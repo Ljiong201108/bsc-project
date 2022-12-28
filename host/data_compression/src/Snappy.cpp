@@ -2,34 +2,16 @@
 
 namespace dataCompression{
 namespace internalSnappy{
-std::mutex compressMtx, decompressMtx;
-std::condition_variable compressCV, decompressCV;
-std::vector<std::unique_ptr<std::thread>> compressInputs, decompressInputs;
+std::mutex compressInputMtx, compressOutputMtx, decompressInputMtx, decompressOutputMtx;
+std::condition_variable compressInputCV, compressOutputCV, decompressInputCV, decompressOutputCV;
+std::vector<std::unique_ptr<std::thread>> compressInputs, compressOutputs, decompressInputs, decompressOutputs;
 std::unique_ptr<std::thread> compressFunc, decompressFunc;
-uint32_t compressCur, decompressCur;
-uint32_t compressIdx, decompressIdx;
+uint32_t compressInputCur, compressOutputCur, decompressInputCur, decompressOutputCur;
+uint32_t compressInputIdx, compressOutputIdx, decompressInputIdx, decompressOutputIdx;
 uint32_t checksum;
 
 ThreadSafeFIFO<uint8_t> compressQueueInput, compressQueueOutput;
 ThreadSafeFIFO<uint8_t> decompressQueueInput, decompressQueueOutput;
-
-uint8_t writeHeader(uint8_t* out){
-    int fileIdx = 0;
-
-    // Snappy Stream Identifier
-    out[fileIdx++] = 0xff;
-    out[fileIdx++] = 0x06;
-    out[fileIdx++] = 0x00;
-    out[fileIdx++] = 0x00;
-    out[fileIdx++] = 0x73;
-    out[fileIdx++] = 0x4e;
-    out[fileIdx++] = 0x61;
-    out[fileIdx++] = 0x50;
-    out[fileIdx++] = 0x70;
-    out[fileIdx++] = 0x59;
-
-    return fileIdx;
-}
 
 uint8_t readHeader(uint8_t* in){
     uint8_t fileIdx = 0;
@@ -38,7 +20,7 @@ uint8_t readHeader(uint8_t* in){
     return fileIdx;
 }
 
-void snappyCompressEngine(){
+void snappyCompressionEngine(){
     KernelPointer compressKernel(Application::getProgram<Lib::SNAPPY>(), "xilSnappyCompressMM:{xilSnappyCompressMM_1}");
     CommandQueuePointer queue(Application::getContext<Lib::SNAPPY>(), Application::getDevice<Lib::SNAPPY>(), CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE | CL_QUEUE_PROFILING_ENABLE);
 
@@ -58,6 +40,7 @@ void snappyCompressEngine(){
         // else chunkSize = HOST_BUFFER_SIZE;
         // std::memcpy(inputBufferHost.data(), &in[inIdx], chunkSize);
         uint32_t chunkSize=compressQueueInput.pop(inputBufferHost.data(), HOST_BUFFER_SIZE, last);
+        std::cout<<"inner reads a "<<chunkSize<<" Bytes block"<<std::endl;
         
         uint32_t numBlocks=(chunkSize-1)/block_size_in_bytes+1;
         
@@ -151,7 +134,7 @@ void snappyCompressEngine(){
     }while(!last);
 }
 
-void snappyDecompressEngine(){
+void snappyDecompressionEngine(){
     KernelPointer decompress_kernel_snappy(Application::getProgram<Lib::SNAPPY>(), "xilSnappyDecompressMM:{xilSnappyDecompressMM_1}");
     CommandQueuePointer queue(Application::getContext<Lib::SNAPPY>(), Application::getDevice<Lib::SNAPPY>(), CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE | CL_QUEUE_PROFILING_ENABLE);
 
@@ -203,6 +186,39 @@ void snappyDecompressEngine(){
 
             decompressQueueInput.pop(inputBufferHost.data()+compressedBlockNum*block_size_in_byte, blockSize, last);
             compressedSizeBufferHost[compressedBlockNum]=blockSize;
+
+            //copied and modified from xilinx
+            uint8_t *curIn=inputBufferHost.data()+compressedBlockNum*block_size_in_byte;
+            uint8_t bval1 = curIn[0];
+            uint32_t final_size = 0;
+
+            if ((bval1 >> 7) == 1) {
+                uint8_t b1 = bval1 & 0x7F;
+                bval1 = curIn[1];
+                uint8_t b2 = bval1 & 0x7F;
+                if ((bval1 >> 7) == 1) {
+                    bval1 = curIn[2];
+                    uint8_t b3 = bval1 & 0x7F;
+                    uint32_t temp1 = b3;
+                    temp1 <<= 14;
+                    uint32_t temp2 = b2;
+                    temp2 <<= 7;
+                    uint32_t temp3 = b1;
+                    final_size |= temp1;
+                    final_size |= temp2;
+                    final_size |= temp3;
+                } else {
+                    uint32_t temp1 = b2;
+                    temp1 <<= 7;
+                    uint32_t temp2 = b1;
+                    final_size |= temp1;
+                    final_size |= temp2;
+                }
+            }
+            //end
+            decompressedSizeBufferHost[compressedBlockNum]=final_size;
+            std::cout<<"final_size: "<<final_size<<std::endl;
+
             isCompressed[blockNum]=1;
             compressedBlockNum++;
             blockNum++;
@@ -230,7 +246,12 @@ void snappyDecompressEngine(){
             exit(EXIT_FAILURE);
         }
 
-        if(compressedBlockNum+notCompressedBlockNum==maxNumBlocks || last){
+        assert(compressedBlockNum+notCompressedBlockNum==blockNum && "should be equal");
+        if(compressedBlockNum+notCompressedBlockNum==maxNumBlocks-1 || last){
+            std::cout<<"going to execute the kernel"<<std::endl;
+            std::cout<<"compressedBlockNum: "<<compressedBlockNum<<std::endl;
+            std::cout<<"notCompressedBlockNum: "<<notCompressedBlockNum<<std::endl;
+            std::cout<<"blockNum: "<<blockNum<<std::endl;
             decompress_kernel_snappy->setArg(5, compressedBlockNum);
 
             queue->enqueueMigrateMemObjects({*inputBuffer, *compressedSizeBuffer}, 0);
@@ -239,13 +260,16 @@ void snappyDecompressEngine(){
             queue->enqueueTask(*decompress_kernel_snappy);
             queue->finish();
 
-            queue->enqueueMigrateMemObjects({*decompressSizeBuffer, *outputBuffer}, CL_MIGRATE_MEM_OBJECT_HOST);
+            queue->enqueueMigrateMemObjects({*outputBuffer}, CL_MIGRATE_MEM_OBJECT_HOST);
             queue->finish();
 
+            // hexdump(outputBufferHost.data(), 65536);
+
             // hexdump(outputBufferHost.data(), HOST_BUFFER_SIZE);
-            for(uint32_t i=0;i<maxNumBlocks;i++){
+            for(uint32_t i=0;i<compressedBlockNum;i++){
                 std::cout<<i<<" "<<decompressedSizeBufferHost[i]<<std::endl;
             }
+            std::cout<<std::endl;
 
             uint32_t compressedIdx=0, notCompressedIdx=0;
             for(uint32_t blockIdx=0;blockIdx<blockNum;blockIdx++){
@@ -263,9 +287,30 @@ void snappyDecompressEngine(){
             }
 
             //reset everything
+            blockNum=0;
+            compressedBlockNum=0;
+            notCompressedBlockNum=0;
         }
     }
 }
+}
+
+uint8_t writeSnappyHeader(uint8_t* out){
+    int fileIdx = 0;
+
+    // Snappy Stream Identifier
+    out[fileIdx++] = 0xff;
+    out[fileIdx++] = 0x06;
+    out[fileIdx++] = 0x00;
+    out[fileIdx++] = 0x00;
+    out[fileIdx++] = 0x73;
+    out[fileIdx++] = 0x4e;
+    out[fileIdx++] = 0x61;
+    out[fileIdx++] = 0x50;
+    out[fileIdx++] = 0x70;
+    out[fileIdx++] = 0x59;
+
+    return fileIdx;
 }
 
 uint64_t snappyCompressEngineMM(uint8_t* in, uint8_t* out, uint64_t inputSize){
@@ -767,116 +812,145 @@ uint64_t snappyDecompressEngineStream(uint8_t* in, uint8_t* out, uint64_t inputS
     return uncompressedSize;
 }
 
-uint64_t snappyCompressMM(uint8_t* in, uint8_t* out, uint64_t inputSize){
-    uint32_t outIdx=internalSnappy::writeHeader(out);
-    uint64_t enbytes=snappyCompressEngineMM(in, out+outIdx, inputSize);
-    outIdx+=enbytes;
-    return outIdx;
-}
+void snappyCompressionInputAsyc(uint8_t *in, uint32_t inputSize, bool last){
+    if(internalSnappy::compressFunc==nullptr){
+        internalSnappy::compressFunc.reset(nullptr);
+        internalSnappy::compressFunc=std::make_unique<std::thread>(&internalSnappy::snappyCompressionEngine);
 
-uint64_t snappyCompressStream(uint8_t* in, uint8_t* out, uint32_t inputSize){
-    uint32_t outIdx=internalSnappy::writeHeader(out);
-    uint64_t enbytes=snappyCompressEngineStream(in, out+outIdx, inputSize);
-    outIdx+=enbytes;
-    return outIdx;
-}
+        internalSnappy::compressInputs.resize(0);
+        internalSnappy::compressInputCur=internalSnappy::compressInputIdx=0;
+    }
 
-uint64_t snappyDecompressMM(uint8_t* in, uint8_t* out, uint64_t inputSize){
-    uint8_t headerBytes = internalSnappy::readHeader(in);
-    uint64_t debytes = snappyDecompressEngineMM(in+headerBytes, out, inputSize-headerBytes);
-    return debytes;
-}
+    uint32_t compressInputIdx=internalSnappy::compressInputIdx++;
+    internalSnappy::compressInputs.push_back(std::make_unique<std::thread>([in, inputSize, last, compressInputIdx]{
+        std::cout<<"write thread "<<compressInputIdx<<" get in the function"<<std::endl;
+        std::unique_lock<std::mutex> lck(internalSnappy::compressInputMtx);
+        internalSnappy::compressInputCV.wait(lck, [compressInputIdx] {return internalSnappy::compressInputCur==compressInputIdx;});
 
-uint64_t snappyDecompressStream(uint8_t* in, uint8_t* out, uint32_t inputSize){
-    uint64_t debytes = snappyDecompressEngineStream(in, out, inputSize);
-    return debytes;
-}
+        std::cout<<"write thread "<<compressInputIdx<<" start to write"<<std::endl;
+        internalSnappy::compressQueueInput.push(in, inputSize, last);
 
-uint64_t snappyCompress(uint8_t* in, uint8_t* out, uint64_t inputSize, bool stream){
-    std::cout<<"Before Snappy Compress: "<<std::endl;
-    hexdump(in, inputSize);
-
-    uint64_t enbytes=stream ? snappyCompressStream(in, out, inputSize) : snappyCompressMM(in, out, inputSize);
-
-    std::cout<<"After Snappy Compress: "<<std::endl;
-    hexdump(out, enbytes);
-
-    return enbytes;
-}
-
-uint64_t snappyDecompress(uint8_t* in, uint8_t* out, uint64_t inputSize, bool stream){
-    std::cout<<"Before Snappy Decompress: "<<std::endl;
-    hexdump(in, inputSize);
-
-    uint64_t debytes = stream ? snappyDecompressStream(in, out, inputSize) : snappyDecompressMM(in, out, inputSize);
-
-    std::cout<<"After Snappy Decompress: "<<std::endl;
-    hexdump(out, debytes);
-
-    return debytes;
+        internalSnappy::compressInputCur++;
+        internalSnappy::compressInputCV.notify_all();
+        std::cout<<"write thread "<<compressInputIdx<<" finished"<<std::endl;
+    }));
 }
 
 void snappyCompressionInput(uint8_t *in, uint32_t inputSize, bool last){
     if(internalSnappy::compressFunc==nullptr){
         internalSnappy::compressFunc.reset(nullptr);
-        internalSnappy::compressFunc=std::make_unique<std::thread>(&internalSnappy::snappyCompressEngine);
-
-        internalSnappy::compressInputs.resize(0);
-        internalSnappy::compressCur=internalSnappy::compressIdx=0;
+        internalSnappy::compressFunc=std::make_unique<std::thread>(&internalSnappy::snappyCompressionEngine);
     }
 
-    uint32_t compressIdx=internalSnappy::compressIdx++;
-    internalSnappy::compressInputs.push_back(std::make_unique<std::thread>([in, inputSize, last, compressIdx]{
-        std::cout<<"write thread "<<compressIdx<<" get in the function"<<std::endl;
-        std::unique_lock<std::mutex> lck(internalSnappy::compressMtx);
-        internalSnappy::compressCV.wait(lck, [compressIdx] {return internalSnappy::compressCur==compressIdx;});
+    internalSnappy::compressQueueInput.push(in, inputSize, last);
+}
 
-        std::cout<<"write thread "<<compressIdx<<" start to write"<<std::endl;
-        internalSnappy::compressQueueInput.push(in, inputSize, last);
+uint32_t snappyCompressionOutputAsyc(uint8_t *out, uint32_t outputSize, bool &last){
+    uint32_t size;
 
-        internalSnappy::compressCur++;
-        internalSnappy::compressCV.notify_all();
-        std::cout<<"write thread "<<compressIdx<<" finished"<<std::endl;
+    uint32_t compressOutputIdx=internalSnappy::compressOutputIdx++;
+    internalSnappy::compressOutputs.push_back(std::make_unique<std::thread>([out, outputSize, &last, compressOutputIdx, &size]{
+        std::cout<<"write thread "<<compressOutputIdx<<" get in the function"<<std::endl;
+        std::unique_lock<std::mutex> lck(internalSnappy::compressOutputMtx);
+        internalSnappy::compressOutputCV.wait(lck, [compressOutputIdx] {return internalSnappy::compressOutputCur==compressOutputIdx;});
+
+        std::cout<<"write thread "<<compressOutputIdx<<" start to write"<<std::endl;
+        size=internalSnappy::compressQueueOutput.pop(out, outputSize, last);
+
+        internalSnappy::compressOutputCur++;
+        internalSnappy::compressOutputCV.notify_all();
+        std::cout<<"write thread "<<compressOutputIdx<<" finished"<<std::endl;
     }));
+
+    if(last){
+        for(auto &t : internalSnappy::compressInputs) t->join();
+        for(auto &t : internalSnappy::compressOutputs) t->join();
+        internalSnappy::compressFunc->join();
+
+        internalSnappy::compressFunc.reset(nullptr);
+        internalSnappy::compressInputs.resize(0);
+        internalSnappy::compressOutputs.resize(0);
+        internalSnappy::compressInputCur=internalSnappy::compressInputIdx=0;
+        internalSnappy::compressOutputCur=internalSnappy::compressOutputIdx=0;
+    }
+
+    return size;
 }
 
 uint32_t snappyCompressionOutput(uint8_t *out, uint32_t outputSize, bool &last){
     uint32_t size=internalSnappy::compressQueueOutput.pop(out, outputSize, last);
 
     if(last){
-        for(auto &t : internalSnappy::compressInputs) t->join();
         internalSnappy::compressFunc->join();
-
         internalSnappy::compressFunc.reset(nullptr);
-        internalSnappy::compressInputs.resize(0);
-        internalSnappy::compressCur=internalSnappy::compressIdx=0;
     }
 
     return size;
 }
 
+void snappyDecompressionInputAsyc(uint8_t *in, uint32_t inputSize, bool last){
+    if(internalSnappy::decompressFunc==nullptr){
+        internalSnappy::decompressFunc.reset(nullptr);
+        internalSnappy::decompressFunc=std::make_unique<std::thread>(&internalSnappy::snappyDecompressionEngine);
+
+        internalSnappy::decompressInputs.resize(0);
+        internalSnappy::decompressInputCur=internalSnappy::decompressInputIdx=0;
+    }
+
+    uint32_t decompressInputIdx=internalSnappy::decompressInputIdx++;
+    internalSnappy::decompressInputs.push_back(std::make_unique<std::thread>([in, inputSize, last, decompressInputIdx]{
+        std::cout<<"write thread "<<decompressInputIdx<<" get in the function"<<std::endl;
+        std::unique_lock<std::mutex> lck(internalSnappy::decompressInputMtx);
+        internalSnappy::decompressInputCV.wait(lck, [decompressInputIdx] {return internalSnappy::decompressInputCur==decompressInputIdx;});
+
+        std::cout<<"write thread "<<decompressInputIdx<<" start to write"<<std::endl;
+        internalSnappy::decompressQueueInput.push(in, inputSize, last);
+
+        internalSnappy::decompressInputCur++;
+        internalSnappy::decompressInputCV.notify_all();
+        std::cout<<"write thread "<<decompressInputIdx<<" finished"<<std::endl;
+    }));
+}
+
 void snappyDecompressionInput(uint8_t *in, uint32_t inputSize, bool last){
     if(internalSnappy::decompressFunc==nullptr){
         internalSnappy::decompressFunc.reset(nullptr);
-        internalSnappy::decompressFunc=std::make_unique<std::thread>(&internalSnappy::snappyDecompressEngine);
-
-        internalSnappy::decompressInputs.resize(0);
-        internalSnappy::decompressCur=internalSnappy::decompressIdx=0;
+        internalSnappy::decompressFunc=std::make_unique<std::thread>(&internalSnappy::snappyDecompressionEngine);
     }
 
-    uint32_t decompressIdx=internalSnappy::decompressIdx++;
-    internalSnappy::decompressInputs.push_back(std::make_unique<std::thread>([in, inputSize, last, decompressIdx]{
-        std::cout<<"write thread "<<decompressIdx<<" get in the function"<<std::endl;
-        std::unique_lock<std::mutex> lck(internalSnappy::decompressMtx);
-        internalSnappy::decompressCV.wait(lck, [decompressIdx] {return internalSnappy::decompressCur==decompressIdx;});
+    internalSnappy::decompressQueueInput.push(in, inputSize, last);
+}
 
-        std::cout<<"write thread "<<decompressIdx<<" start to write"<<std::endl;
-        internalSnappy::decompressQueueInput.push(in, inputSize, last);
+uint32_t snappyDecompressionOutputAsyc(uint8_t *out, uint32_t outputSize, bool &last){
+    uint32_t size;
 
-        internalSnappy::decompressCur++;
-        internalSnappy::decompressCV.notify_all();
-        std::cout<<"write thread "<<decompressIdx<<" finished"<<std::endl;
+    uint32_t decompressOutputIdx=internalSnappy::decompressOutputIdx++;
+    internalSnappy::decompressOutputs.push_back(std::make_unique<std::thread>([out, outputSize, &last, decompressOutputIdx, &size]{
+        std::cout<<"write thread "<<decompressOutputIdx<<" get in the function"<<std::endl;
+        std::unique_lock<std::mutex> lck(internalSnappy::decompressOutputMtx);
+        internalSnappy::decompressOutputCV.wait(lck, [decompressOutputIdx] {return internalSnappy::decompressOutputCur==decompressOutputIdx;});
+
+        std::cout<<"write thread "<<decompressOutputIdx<<" start to write"<<std::endl;
+        size=internalSnappy::decompressQueueOutput.pop(out, outputSize, last);
+
+        internalSnappy::decompressOutputCur++;
+        internalSnappy::decompressOutputCV.notify_all();
+        std::cout<<"write thread "<<decompressOutputIdx<<" finished"<<std::endl;
     }));
+
+    if(last){
+        for(auto &t : internalSnappy::decompressInputs) t->join();
+        for(auto &t : internalSnappy::decompressOutputs) t->join();
+        internalSnappy::decompressFunc->join();
+
+        internalSnappy::decompressFunc.reset(nullptr);
+        internalSnappy::decompressInputs.resize(0);
+        internalSnappy::decompressOutputs.resize(0);
+        internalSnappy::decompressInputCur=internalSnappy::decompressInputIdx=0;
+        internalSnappy::decompressOutputCur=internalSnappy::decompressOutputIdx=0;
+    }
+
+    return size;
 }
 
 uint32_t snappyDecompressionOutput(uint8_t *out, uint32_t outputSize, bool &last){
@@ -888,9 +962,58 @@ uint32_t snappyDecompressionOutput(uint8_t *out, uint32_t outputSize, bool &last
 
         internalSnappy::decompressFunc.reset(nullptr);
         internalSnappy::decompressInputs.resize(0);
-        internalSnappy::decompressCur=internalSnappy::decompressIdx=0;
+        internalSnappy::decompressInputCur=internalSnappy::decompressInputIdx=0;
     }
 
     return size;
 }
+
+// uint64_t snappyCompressMM(uint8_t* in, uint8_t* out, uint64_t inputSize){
+//     uint32_t outIdx=internalSnappy::writeHeader(out);
+//     uint64_t enbytes=snappyCompressEngineMM(in, out+outIdx, inputSize);
+//     outIdx+=enbytes;
+//     return outIdx;
+// }
+
+// uint64_t snappyCompressStream(uint8_t* in, uint8_t* out, uint32_t inputSize){
+//     uint32_t outIdx=internalSnappy::writeHeader(out);
+//     uint64_t enbytes=snappyCompressEngineStream(in, out+outIdx, inputSize);
+//     outIdx+=enbytes;
+//     return outIdx;
+// }
+
+// uint64_t snappyDecompressMM(uint8_t* in, uint8_t* out, uint64_t inputSize){
+//     uint8_t headerBytes = internalSnappy::readHeader(in);
+//     uint64_t debytes = snappyDecompressEngineMM(in+headerBytes, out, inputSize-headerBytes);
+//     return debytes;
+// }
+
+// uint64_t snappyDecompressStream(uint8_t* in, uint8_t* out, uint32_t inputSize){
+//     uint64_t debytes = snappyDecompressEngineStream(in, out, inputSize);
+//     return debytes;
+// }
+
+// uint64_t snappyCompress(uint8_t* in, uint8_t* out, uint64_t inputSize, bool stream){
+//     std::cout<<"Before Snappy Compress: "<<std::endl;
+//     hexdump(in, inputSize);
+
+//     uint64_t enbytes=stream ? snappyCompressStream(in, out, inputSize) : snappyCompressMM(in, out, inputSize);
+
+//     std::cout<<"After Snappy Compress: "<<std::endl;
+//     hexdump(out, enbytes);
+
+//     return enbytes;
+// }
+
+// uint64_t snappyDecompress(uint8_t* in, uint8_t* out, uint64_t inputSize, bool stream){
+//     std::cout<<"Before Snappy Decompress: "<<std::endl;
+//     hexdump(in, inputSize);
+
+//     uint64_t debytes = stream ? snappyDecompressStream(in, out, inputSize) : snappyDecompressMM(in, out, inputSize);
+
+//     std::cout<<"After Snappy Decompress: "<<std::endl;
+//     hexdump(out, debytes);
+
+//     return debytes;
+// }
 } //dataCompression

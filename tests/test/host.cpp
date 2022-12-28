@@ -7,11 +7,20 @@
 
 int main(int argc, char **argv){
     // testGzip::testGzipCompress();
-    testGzip::testGzipDecompress();
+    // testGzip::testGzipDecompress();
     // testGzip::testGzipSimple();
     // testGzip::testZlib();
-    // testSnappy::testSnappy(argc, argv);
-    // testLz4::testLz4(argc, argv);
-    // testZstd::testZstd(argc, argv);
+
+    // testSnappy::testSnappySimple(argc, argv);
+    // testSnappy::testSnappyCompress();
+    testSnappy::testSnappyDecompress();
+
+    // testLz4::testLz4Simple(argc, argv);
+    // testLz4::testLz4Compress();
+    // testLz4::testLz4Decompress();
+
+    // testZstd::testZstdSimple(argc, argv);
+    // testZstd::testZstdCompress();
+    // testZstd::testZstdDecompress();
     return 0;
 }
