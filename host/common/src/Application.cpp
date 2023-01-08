@@ -1,6 +1,6 @@
 #include "Application.hpp"
 
-void Application::get_xilinx_devices(){
+void Application::getXilinxDevices(){
     std::vector<cl::Platform> platforms;
     OCL_CHECK(m_err, m_err = cl::Platform::get(&platforms))
     cl::Platform platform;
@@ -24,7 +24,7 @@ void Application::get_xilinx_devices(){
     exit(EXIT_FAILURE);
 }
 
-void Application::read_binary_file(const std::string &xclbin_file_name){
+void Application::loadBinaryFile(const std::string &&xclbin_file_name){
     if (access(xclbin_file_name.c_str(), R_OK)!=0){
         printf("ERROR: %s xclbin not available please build\n", xclbin_file_name.c_str());
         exit(EXIT_FAILURE);
@@ -34,21 +34,39 @@ void Application::read_binary_file(const std::string &xclbin_file_name){
     bin_file.seekg(0, bin_file.end);
     m_xclbinBufferSize = bin_file.tellg();
     bin_file.seekg(0, bin_file.beg);
-    m_xclbinBuffer = new char[m_xclbinBufferSize];
-    std::cout<<"Size: "<<m_xclbinBufferSize<<std::endl;
+    if(!m_xclbinBuffer) m_xclbinBuffer = new char[m_xclbinBufferSize];
+    else{
+        delete[] m_xclbinBuffer;
+        m_xclbinBuffer = new char[m_xclbinBufferSize];
+    }
     bin_file.read(m_xclbinBuffer, m_xclbinBufferSize);
+
+    cl::Program::Binaries bins{{m_xclbinBuffer, m_xclbinBufferSize}};
+    OCL_CHECK(m_err, m_program=std::make_unique<cl::Program>(m_context, (std::vector<cl::Device>){m_device}, bins, (std::vector<cl_int>*)NULL, &m_err))
 }
 
-Application::Application(const std::string &binaryFileName){
-    get_xilinx_devices();
+Application::Application(){
+    getXilinxDevices();
     OCL_CHECK(m_err, m_context=cl::Context(m_device, NULL, NULL, NULL, &m_err))
-    read_binary_file(binaryFileName);
-    cl::Program::Binaries bins{{m_xclbinBuffer, m_xclbinBufferSize}};
-    OCL_CHECK(m_err, m_program=cl::Program(m_context, {m_device}, bins, NULL, &m_err))
+    m_lib=Lib::EMPTY;
+    m_xclbinBuffer=NULL;
 }
 
 Application::~Application(){
     delete[] m_xclbinBuffer;
+}
+
+Application& Application::getInstance(){
+    static Application instance;
+    return instance;
+}
+
+cl::Device& Application::getDevice(){
+    return getInstance().m_device;
+}
+
+cl::Context& Application::getContext(){
+    return getInstance().m_context;
 }
 
 // CommandQueuePointer &Application::getOrCreateCommandQueue(const std::string &identifier, cl_command_queue_properties properties){

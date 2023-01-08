@@ -1,0 +1,386 @@
+v++ -c -k  reEngineKernel -I/home/jiong/bsc-project/components/data_analytics/include/hw -I/home/jiong/bsc-project/kernels/data_analytics/include/hw -I/home/jiong/bsc-project/kernels/data_analytics/include /home/jiong/bsc-project/kernels/data_analytics/src/reEngineKernel.cpp -o reEngineKernel.xo -t hw -g --platform /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm --log_dir log --report_dir report
+Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ compile can be found at:
+	Reports: /home/jiong/bsc-project/xclbin/build/data_analytics_U50/re_engine/report/reEngineKernel
+	Log files: /home/jiong/bsc-project/xclbin/build/data_analytics_U50/re_engine/log/reEngineKernel
+Running Dispatch Server on port:45381
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/xclbin/build/data_analytics_U50/re_engine/reEngineKernel.xo.compile_summary, at Fri Jan  6 18:17:33 2023
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Fri Jan  6 18:17:33 2023
+Running Rule Check Server on port:36303
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/xclbin/build/data_analytics_U50/re_engine/report/reEngineKernel/v++_compile_reEngineKernel_guidance.html', at Fri Jan  6 18:17:36 2023
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
+INFO: [v++ 74-74] Compiler Version string: 2020.2
+INFO: [v++ 60-585] Compiling for hardware target
+INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [v++ 60-242] Creating kernel: 'reEngineKernel'
+WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
+
+===>The following messages were generated while  performing high-level synthesis for kernel: reEngineKernel Log file: /home/jiong/bsc-project/xclbin/build/data_analytics_U50/re_engine/_x/reEngineKernel/reEngineKernel/vitis_hls.log :
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_107_1'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 3, loop 'VITIS_LOOP_107_1'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_54_1'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 3, loop 'VITIS_LOOP_54_1'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_63_3'.
+WARNING: [v++ 200-885] Unable to schedule 'store' operation ('bitset_buff_addr_1_write_ln71', /home/jiong/bsc-project/kernels/data_analytics/include/hw/xf_data_analytics/text/re_engine.hpp:71) of variable 'in_hp.V' on array 'bitset_buff' due to limited memory ports. Please consider using a memory core with more ports or partitioning the array 'bitset_buff'.
+Resolution: For help on HLS 200-885 see www.xilinx.com/cgi-bin/docs/rdoc?v=2020.2;t=hls+guidance;d=200-885.html
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 2, Depth = 3, loop 'VITIS_LOOP_63_3'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_107_1'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 3, loop 'VITIS_LOOP_107_1'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_90_2'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 3, loop 'VITIS_LOOP_90_2'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_168_2'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 2, loop 'VITIS_LOOP_168_2'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_244_3'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 2, loop 'VITIS_LOOP_244_3'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_294_2_VITIS_LOOP_295_3'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 2, Final II = 2, Depth = 7, loop 'VITIS_LOOP_294_2_VITIS_LOOP_295_3'
+INFO: [v++ 204-61] Pipelining loop 'LOOP_VM'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 3, Final II = 3, Depth = 6, loop 'LOOP_VM'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_522_1'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 1, loop 'VITIS_LOOP_522_1'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_320_2'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 3, loop 'VITIS_LOOP_320_2'
+INFO: [v++ 200-789] **** Estimated Fmax: 208.12 MHz
+INFO: [v++ 60-594] Finished kernel compilation
+INFO: [v++ 60-244] Generating system estimate report...
+INFO: [v++ 60-1092] Generated system estimate report: /home/jiong/bsc-project/xclbin/build/data_analytics_U50/re_engine/report/reEngineKernel/system_estimate_reEngineKernel.xtxt
+INFO: [v++ 60-586] Created reEngineKernel.xo
+INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
+    vitis_analyzer /home/jiong/bsc-project/xclbin/build/data_analytics_U50/re_engine/reEngineKernel.xo.compile_summary 
+INFO: [v++ 60-791] Total elapsed time: 0h 12m 16s
+INFO: [v++ 60-1653] Closing dispatch client.
+v++ -l reEngineKernel.xo -o re_engine.xclbin -t hw -g --platform /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm --config config_link.cfg --optimize 2
+Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ link can be found at:
+	Reports: /home/jiong/bsc-project/xclbin/build/data_analytics_U50/re_engine/_x/reports/link
+	Log files: /home/jiong/bsc-project/xclbin/build/data_analytics_U50/re_engine/_x/logs/link
+Running Dispatch Server on port:36337
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/xclbin/build/data_analytics_U50/re_engine/re_engine.xclbin.link_summary, at Fri Jan  6 18:29:54 2023
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Fri Jan  6 18:29:54 2023
+Running Rule Check Server on port:38215
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/xclbin/build/data_analytics_U50/re_engine/_x/reports/link/v++_link_re_engine_guidance.html', at Fri Jan  6 18:29:58 2023
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
+INFO: [v++ 74-74] Compiler Version string: 2020.2
+INFO: [v++ 60-629] Linking for hardware target
+INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [v++ 60-1332] Run 'run_link' status: Not started
+INFO: [v++ 60-1443] [18:30:07] Run run_link: Step system_link: Started
+INFO: [v++ 60-1453] Command Line: system_link --xo /home/jiong/bsc-project/xclbin/build/data_analytics_U50/re_engine/reEngineKernel.xo --config /home/jiong/bsc-project/xclbin/build/data_analytics_U50/re_engine/_x/link/int/syslinkConfig.ini --xpfm /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm --target hw --output_dir /home/jiong/bsc-project/xclbin/build/data_analytics_U50/re_engine/_x/link/int --temp_dir /home/jiong/bsc-project/xclbin/build/data_analytics_U50/re_engine/_x/link/sys_link
+INFO: [v++ 60-1454] Run Directory: /home/jiong/bsc-project/xclbin/build/data_analytics_U50/re_engine/_x/link/run_link
+INFO: [SYSTEM_LINK 60-1316] Initiating connection to rulecheck server, at Fri Jan  6 18:30:09 2023
+INFO: [SYSTEM_LINK 82-70] Extracting xo v3 file /home/jiong/bsc-project/xclbin/build/data_analytics_U50/re_engine/reEngineKernel.xo
+INFO: [SYSTEM_LINK 82-53] Creating IP database /home/jiong/bsc-project/xclbin/build/data_analytics_U50/re_engine/_x/link/sys_link/_sysl/.cdb/xd_ip_db.xml
+INFO: [SYSTEM_LINK 82-38] [18:30:09] build_xd_ip_db started: /share/xilinx/Vitis/2020.2/bin/build_xd_ip_db -ip_search 0  -sds-pf /home/jiong/bsc-project/xclbin/build/data_analytics_U50/re_engine/_x/link/sys_link/hw.hpfm -clkid 0 -ip /home/jiong/bsc-project/xclbin/build/data_analytics_U50/re_engine/_x/link/sys_link/iprepo/xilinx_com_hls_reEngineKernel_1_0,reEngineKernel -o /home/jiong/bsc-project/xclbin/build/data_analytics_U50/re_engine/_x/link/sys_link/_sysl/.cdb/xd_ip_db.xml
+INFO: [SYSTEM_LINK 82-37] [18:30:17] build_xd_ip_db finished successfully
+Time (s): cpu = 00:00:12 ; elapsed = 00:00:08 . Memory (MB): peak = 1620.574 ; gain = 0.000 ; free physical = 113428 ; free virtual = 213890
+INFO: [SYSTEM_LINK 82-51] Create system connectivity graph
+INFO: [SYSTEM_LINK 82-102] Applying explicit connections to the system connectivity graph: /home/jiong/bsc-project/xclbin/build/data_analytics_U50/re_engine/_x/link/sys_link/cfgraph/cfgen_cfgraph.xml
+INFO: [SYSTEM_LINK 82-38] [18:30:17] cfgen started: /share/xilinx/Vitis/2020.2/bin/cfgen  -sp reEngineKernel_1.cfg_buff:HBM[0] -sp reEngineKernel_1.msg_buff:HBM[0] -sp reEngineKernel_1.len_buff:HBM[0] -sp reEngineKernel_1.out_buff:HBM[1] -dmclkid 0 -r /home/jiong/bsc-project/xclbin/build/data_analytics_U50/re_engine/_x/link/sys_link/_sysl/.cdb/xd_ip_db.xml -o /home/jiong/bsc-project/xclbin/build/data_analytics_U50/re_engine/_x/link/sys_link/cfgraph/cfgen_cfgraph.xml
+INFO: [CFGEN 83-0] Kernel Specs: 
+INFO: [CFGEN 83-0]   kernel: reEngineKernel, num: 1  {reEngineKernel_1}
+INFO: [CFGEN 83-0] Port Specs: 
+INFO: [CFGEN 83-0]   kernel: reEngineKernel_1, k_port: cfg_buff, sptag: HBM[0]
+INFO: [CFGEN 83-0]   kernel: reEngineKernel_1, k_port: msg_buff, sptag: HBM[0]
+INFO: [CFGEN 83-0]   kernel: reEngineKernel_1, k_port: len_buff, sptag: HBM[0]
+INFO: [CFGEN 83-0]   kernel: reEngineKernel_1, k_port: out_buff, sptag: HBM[1]
+INFO: [CFGEN 83-2228] Creating mapping for argument reEngineKernel_1.cfg_buff to HBM[0] for directive reEngineKernel_1.cfg_buff:HBM[0]
+INFO: [CFGEN 83-2228] Creating mapping for argument reEngineKernel_1.msg_buff to HBM[0] for directive reEngineKernel_1.msg_buff:HBM[0]
+INFO: [CFGEN 83-2228] Creating mapping for argument reEngineKernel_1.len_buff to HBM[0] for directive reEngineKernel_1.len_buff:HBM[0]
+INFO: [CFGEN 83-2228] Creating mapping for argument reEngineKernel_1.out_buff to HBM[1] for directive reEngineKernel_1.out_buff:HBM[1]
+INFO: [SYSTEM_LINK 82-37] [18:30:26] cfgen finished successfully
+Time (s): cpu = 00:00:09 ; elapsed = 00:00:09 . Memory (MB): peak = 1620.574 ; gain = 0.000 ; free physical = 113245 ; free virtual = 213707
+INFO: [SYSTEM_LINK 82-52] Create top-level block diagram
+INFO: [SYSTEM_LINK 82-38] [18:30:26] cf2bd started: /share/xilinx/Vitis/2020.2/bin/cf2bd  --linux --trace_buffer 1024 --input_file /home/jiong/bsc-project/xclbin/build/data_analytics_U50/re_engine/_x/link/sys_link/cfgraph/cfgen_cfgraph.xml --ip_db /home/jiong/bsc-project/xclbin/build/data_analytics_U50/re_engine/_x/link/sys_link/_sysl/.cdb/xd_ip_db.xml --cf_name dr --working_dir /home/jiong/bsc-project/xclbin/build/data_analytics_U50/re_engine/_x/link/sys_link/_sysl/.xsd --temp_dir /home/jiong/bsc-project/xclbin/build/data_analytics_U50/re_engine/_x/link/sys_link --output_dir /home/jiong/bsc-project/xclbin/build/data_analytics_U50/re_engine/_x/link/int --target_bd ulp.bd
+INFO: [CF2BD 82-31] Launching cf2xd: cf2xd -linux -trace-buffer 1024 -i /home/jiong/bsc-project/xclbin/build/data_analytics_U50/re_engine/_x/link/sys_link/cfgraph/cfgen_cfgraph.xml -r /home/jiong/bsc-project/xclbin/build/data_analytics_U50/re_engine/_x/link/sys_link/_sysl/.cdb/xd_ip_db.xml -o dr.xml
+INFO: [CF2BD 82-28] cf2xd finished successfully
+INFO: [CF2BD 82-31] Launching cf_xsd: cf_xsd -disable-address-gen -bd ulp.bd -dn dr -dp /home/jiong/bsc-project/xclbin/build/data_analytics_U50/re_engine/_x/link/sys_link/_sysl/.xsd
+INFO: [CF2BD 82-28] cf_xsd finished successfully
+INFO: [SYSTEM_LINK 82-37] [18:30:31] cf2bd finished successfully
+Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 1620.574 ; gain = 0.000 ; free physical = 113123 ; free virtual = 213590
+INFO: [v++ 60-1441] [18:30:31] Run run_link: Step system_link: Completed
+Time (s): cpu = 00:00:28 ; elapsed = 00:00:24 . Memory (MB): peak = 1579.391 ; gain = 0.000 ; free physical = 113180 ; free virtual = 213642
+INFO: [v++ 60-1443] [18:30:31] Run run_link: Step cf2sw: Started
+INFO: [v++ 60-1453] Command Line: cf2sw -sdsl /home/jiong/bsc-project/xclbin/build/data_analytics_U50/re_engine/_x/link/int/sdsl.dat -rtd /home/jiong/bsc-project/xclbin/build/data_analytics_U50/re_engine/_x/link/int/cf2sw.rtd -nofilter /home/jiong/bsc-project/xclbin/build/data_analytics_U50/re_engine/_x/link/int/cf2sw_full.rtd -xclbin /home/jiong/bsc-project/xclbin/build/data_analytics_U50/re_engine/_x/link/int/xclbin_orig.xml -o /home/jiong/bsc-project/xclbin/build/data_analytics_U50/re_engine/_x/link/int/xclbin_orig.1.xml
+INFO: [v++ 60-1454] Run Directory: /home/jiong/bsc-project/xclbin/build/data_analytics_U50/re_engine/_x/link/run_link
+INFO: [v++ 60-1441] [18:30:38] Run run_link: Step cf2sw: Completed
+Time (s): cpu = 00:00:07 ; elapsed = 00:00:07 . Memory (MB): peak = 1579.391 ; gain = 0.000 ; free physical = 113142 ; free virtual = 213607
+INFO: [v++ 60-1443] [18:30:38] Run run_link: Step rtd2_system_diagram: Started
+INFO: [v++ 60-1453] Command Line: rtd2SystemDiagram
+INFO: [v++ 60-1454] Run Directory: /home/jiong/bsc-project/xclbin/build/data_analytics_U50/re_engine/_x/link/run_link
+INFO: [v++ 60-1441] [18:30:42] Run run_link: Step rtd2_system_diagram: Completed
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:04 . Memory (MB): peak = 1579.391 ; gain = 0.000 ; free physical = 112374 ; free virtual = 212876
+INFO: [v++ 60-1443] [18:30:42] Run run_link: Step vpl: Started
+INFO: [v++ 60-1453] Command Line: vpl -t hw -f /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm -g --remote_ip_cache /home/jiong/bsc-project/xclbin/build/data_analytics_U50/re_engine/.ipcache --output_dir /home/jiong/bsc-project/xclbin/build/data_analytics_U50/re_engine/_x/link/int --log_dir /home/jiong/bsc-project/xclbin/build/data_analytics_U50/re_engine/_x/logs/link --report_dir /home/jiong/bsc-project/xclbin/build/data_analytics_U50/re_engine/_x/reports/link --config /home/jiong/bsc-project/xclbin/build/data_analytics_U50/re_engine/_x/link/int/vplConfig.ini -k /home/jiong/bsc-project/xclbin/build/data_analytics_U50/re_engine/_x/link/int/kernel_info.dat --webtalk_flag Vitis --temp_dir /home/jiong/bsc-project/xclbin/build/data_analytics_U50/re_engine/_x/link --no-info --iprepo /home/jiong/bsc-project/xclbin/build/data_analytics_U50/re_engine/_x/link/int/xo/ip_repo/xilinx_com_hls_reEngineKernel_1_0 --messageDb /home/jiong/bsc-project/xclbin/build/data_analytics_U50/re_engine/_x/link/run_link/vpl.pb /home/jiong/bsc-project/xclbin/build/data_analytics_U50/re_engine/_x/link/int/dr.bd.tcl
+INFO: [v++ 60-1454] Run Directory: /home/jiong/bsc-project/xclbin/build/data_analytics_U50/re_engine/_x/link/run_link
+
+****** vpl v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [VPL 60-839] Read in kernel information from file '/home/jiong/bsc-project/xclbin/build/data_analytics_U50/re_engine/_x/link/int/kernel_info.dat'.
+INFO: [VPL 74-74] Compiler Version string: 2020.2
+INFO: [VPL 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [VPL 60-1032] Extracting hardware platform to /home/jiong/bsc-project/xclbin/build/data_analytics_U50/re_engine/_x/link/vivado/vpl/.local/hw_platform
+WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
+[18:31:29] Run vpl: Step create_project: Started
+Creating Vivado project.
+[18:31:36] Run vpl: Step create_project: Completed
+[18:31:36] Run vpl: Step create_bd: Started
+[18:32:53] Run vpl: Step create_bd: RUNNING...
+[18:33:15] Run vpl: Step create_bd: Completed
+[18:33:15] Run vpl: Step update_bd: Started
+[18:33:17] Run vpl: Step update_bd: Completed
+[18:33:17] Run vpl: Step generate_target: Started
+[18:34:33] Run vpl: Step generate_target: RUNNING...
+[18:35:34] Run vpl: Step generate_target: Completed
+[18:35:34] Run vpl: Step config_hw_runs: Started
+[18:35:39] Run vpl: Step config_hw_runs: Completed
+[18:35:39] Run vpl: Step synth: Started
+[18:36:10] Block-level synthesis in progress, 0 of 11 jobs complete, 8 jobs running.
+[18:36:41] Block-level synthesis in progress, 0 of 11 jobs complete, 8 jobs running.
+[18:37:11] Block-level synthesis in progress, 0 of 11 jobs complete, 8 jobs running.
+[18:37:42] Block-level synthesis in progress, 1 of 11 jobs complete, 7 jobs running.
+[18:38:12] Block-level synthesis in progress, 2 of 11 jobs complete, 6 jobs running.
+[18:38:42] Block-level synthesis in progress, 4 of 11 jobs complete, 5 jobs running.
+[18:39:12] Block-level synthesis in progress, 5 of 11 jobs complete, 5 jobs running.
+[18:39:42] Block-level synthesis in progress, 6 of 11 jobs complete, 4 jobs running.
+[18:40:13] Block-level synthesis in progress, 6 of 11 jobs complete, 4 jobs running.
+[18:40:43] Block-level synthesis in progress, 6 of 11 jobs complete, 4 jobs running.
+[18:41:13] Block-level synthesis in progress, 9 of 11 jobs complete, 1 job running.
+[18:41:43] Block-level synthesis in progress, 9 of 11 jobs complete, 2 jobs running.
+[18:42:13] Block-level synthesis in progress, 9 of 11 jobs complete, 2 jobs running.
+[18:42:44] Block-level synthesis in progress, 9 of 11 jobs complete, 2 jobs running.
+[18:43:14] Block-level synthesis in progress, 9 of 11 jobs complete, 2 jobs running.
+[18:43:44] Block-level synthesis in progress, 9 of 11 jobs complete, 2 jobs running.
+[18:44:15] Block-level synthesis in progress, 9 of 11 jobs complete, 2 jobs running.
+[18:44:45] Block-level synthesis in progress, 10 of 11 jobs complete, 1 job running.
+[18:45:15] Block-level synthesis in progress, 10 of 11 jobs complete, 1 job running.
+[18:45:45] Block-level synthesis in progress, 10 of 11 jobs complete, 1 job running.
+[18:46:15] Block-level synthesis in progress, 10 of 11 jobs complete, 1 job running.
+[18:46:45] Block-level synthesis in progress, 10 of 11 jobs complete, 1 job running.
+[18:47:15] Block-level synthesis in progress, 10 of 11 jobs complete, 1 job running.
+[18:47:45] Block-level synthesis in progress, 10 of 11 jobs complete, 1 job running.
+[18:48:15] Block-level synthesis in progress, 10 of 11 jobs complete, 1 job running.
+[18:48:45] Block-level synthesis in progress, 10 of 11 jobs complete, 1 job running.
+[18:49:16] Block-level synthesis in progress, 10 of 11 jobs complete, 1 job running.
+[18:49:46] Block-level synthesis in progress, 10 of 11 jobs complete, 1 job running.
+[18:50:16] Block-level synthesis in progress, 10 of 11 jobs complete, 1 job running.
+[18:50:46] Block-level synthesis in progress, 10 of 11 jobs complete, 1 job running.
+[18:51:16] Block-level synthesis in progress, 10 of 11 jobs complete, 1 job running.
+[18:51:46] Block-level synthesis in progress, 10 of 11 jobs complete, 1 job running.
+[18:52:16] Block-level synthesis in progress, 11 of 11 jobs complete, 0 jobs running.
+[18:52:46] Top-level synthesis in progress.
+[18:53:17] Top-level synthesis in progress.
+[18:53:47] Top-level synthesis in progress.
+[18:54:18] Top-level synthesis in progress.
+[18:54:48] Top-level synthesis in progress.
+[18:55:14] Run vpl: Step synth: Completed
+[18:55:14] Run vpl: Step impl: Started
+[19:03:51] Finished 2nd of 6 tasks (FPGA linking synthesized kernels to platform). Elapsed time: 00h 33m 04s 
+
+[19:03:51] Starting logic optimization..
+[19:05:22] Phase 1 Retarget
+[19:05:52] Phase 2 Constant propagation
+[19:06:22] Phase 3 Sweep
+[19:07:54] Phase 4 BUFG optimization
+[19:07:54] Phase 5 Shift Register Optimization
+[19:08:24] Phase 6 Post Processing Netlist
+[19:11:26] Finished 3rd of 6 tasks (FPGA logic optimization). Elapsed time: 00h 07m 35s 
+
+[19:11:26] Starting logic placement..
+[19:12:58] Phase 1 Placer Initialization
+[19:12:58] Phase 1.1 Placer Initialization Netlist Sorting
+[19:18:31] Phase 1.2 IO Placement/ Clock Placement/ Build Placer Device
+[19:20:01] Phase 1.3 Build Placer Netlist Model
+[19:22:03] Phase 1.4 Constrain Clocks/Macros
+[19:22:33] Phase 2 Global Placement
+[19:22:33] Phase 2.1 Floorplanning
+[19:23:34] Phase 2.1.1 Partition Driven Placement
+[19:23:34] Phase 2.1.1.1 PBP: Partition Driven Placement
+[19:25:05] Phase 2.1.1.2 PBP: Clock Region Placement
+[19:28:39] Phase 2.1.1.3 PBP: Compute Congestion
+[19:28:39] Phase 2.1.1.4 PBP: UpdateTiming
+[19:29:09] Phase 2.1.1.5 PBP: Add part constraints
+[19:29:09] Phase 2.2 Update Timing before SLR Path Opt
+[19:29:09] Phase 2.3 Global Placement Core
+[19:38:18] Phase 2.3.1 Physical Synthesis In Placer
+[19:41:51] Phase 3 Detail Placement
+[19:41:51] Phase 3.1 Commit Multi Column Macros
+[19:41:51] Phase 3.2 Commit Most Macros & LUTRAMs
+[19:43:23] Phase 3.3 Small Shape DP
+[19:43:23] Phase 3.3.1 Small Shape Clustering
+[19:44:24] Phase 3.3.2 Flow Legalize Slice Clusters
+[19:44:54] Phase 3.3.3 Slice Area Swap
+[19:46:25] Phase 3.4 Place Remaining
+[19:46:56] Phase 3.5 Re-assign LUT pins
+[19:47:26] Phase 3.6 Pipeline Register Optimization
+[19:47:26] Phase 3.7 Fast Optimization
+[19:49:58] Phase 4 Post Placement Optimization and Clean-Up
+[19:49:58] Phase 4.1 Post Commit Optimization
+[19:50:59] Phase 4.1.1 Post Placement Optimization
+[19:51:29] Phase 4.1.1.1 BUFG Insertion
+[19:51:29] Phase 1 Physical Synthesis Initialization
+[19:52:00] Phase 4.1.1.2 BUFG Replication
+[19:54:31] Phase 4.1.1.3 Replication
+[19:56:01] Phase 4.2 Post Placement Cleanup
+[19:56:32] Phase 4.3 Placer Reporting
+[19:56:32] Phase 4.3.1 Print Estimated Congestion
+[19:57:02] Phase 4.4 Final Placement Cleanup
+[20:06:10] Finished 4th of 6 tasks (FPGA logic placement). Elapsed time: 00h 54m 43s 
+
+[20:06:10] Starting logic routing..
+[20:07:42] Phase 1 Build RT Design
+[20:10:14] Phase 2 Router Initialization
+[20:10:14] Phase 2.1 Fix Topology Constraints
+[20:14:49] Phase 2.2 Pre Route Cleanup
+[20:15:19] Phase 2.3 Global Clock Net Routing
+[20:16:20] Phase 2.4 Update Timing
+[20:18:22] Phase 2.5 Update Timing for Bus Skew
+[20:18:22] Phase 2.5.1 Update Timing
+[20:19:23] Phase 3 Initial Routing
+[20:19:23] Phase 3.1 Global Routing
+[20:21:24] Phase 4 Rip-up And Reroute
+[20:21:24] Phase 4.1 Global Iteration 0
+[20:28:00] Phase 4.2 Global Iteration 1
+[20:30:02] Phase 4.3 Global Iteration 2
+[20:32:03] Phase 4.4 Global Iteration 3
+[20:35:06] Phase 4.5 Global Iteration 4
+[20:36:37] Phase 5 Delay and Skew Optimization
+[20:36:37] Phase 5.1 Delay CleanUp
+[20:36:37] Phase 5.1.1 Update Timing
+[20:37:38] Phase 5.1.2 Update Timing
+[20:38:39] Phase 5.2 Clock Skew Optimization
+[20:39:10] Phase 6 Post Hold Fix
+[20:39:10] Phase 6.1 Hold Fix Iter
+[20:39:10] Phase 6.1.1 Update Timing
+[20:40:11] Phase 7 Leaf Clock Prog Delay Opt
+[20:44:15] Phase 7.1 Delay CleanUp
+[20:44:15] Phase 7.1.1 Update Timing
+[20:45:16] Phase 7.1.2 Update Timing
+[20:46:47] Phase 7.2 Hold Fix Iter
+[20:46:47] Phase 7.2.1 Update Timing
+[20:47:48] Phase 7.3 Additional Hold Fix
+[20:50:21] Phase 8 Route finalize
+[20:50:51] Phase 9 Verifying routed nets
+[20:50:51] Phase 10 Depositing Routes
+[20:51:51] Phase 11 Post Router Timing
+[20:52:52] Phase 12 Physical Synthesis in Router
+[20:52:52] Phase 12.1 Physical Synthesis Initialization
+[20:54:23] Phase 12.2 Critical Path Optimization
+[20:55:55] Finished 5th of 6 tasks (FPGA routing). Elapsed time: 00h 49m 44s 
+
+[20:55:55] Starting bitstream generation..
+[21:14:44] Creating bitmap...
+[21:26:55] Writing bitstream ./level0_i_ulp_my_rm_partial.bit...
+[21:26:55] Finished 6th of 6 tasks (FPGA bitstream generation). Elapsed time: 00h 31m 00s 
+[21:28:54] Run vpl: Step impl: Completed
+[21:28:55] Run vpl: FINISHED. Run Status: impl Complete!
+INFO: [v++ 60-1441] [21:28:55] Run run_link: Step vpl: Completed
+Time (s): cpu = 00:02:16 ; elapsed = 02:58:13 . Memory (MB): peak = 1579.391 ; gain = 0.000 ; free physical = 81158 ; free virtual = 183567
+INFO: [v++ 60-1443] [21:28:55] Run run_link: Step rtdgen: Started
+INFO: [v++ 60-1453] Command Line: rtdgen
+INFO: [v++ 60-1454] Run Directory: /home/jiong/bsc-project/xclbin/build/data_analytics_U50/re_engine/_x/link/run_link
+INFO: [v++ 60-991] clock name 'clk_kernel2_in' (clock ID '1') is being mapped to clock name 'KERNEL_CLK' in the xclbin
+INFO: [v++ 60-991] clock name 'clk_kernel_in' (clock ID '0') is being mapped to clock name 'DATA_CLK' in the xclbin
+INFO: [v++ 60-991] clock name 'hbm_aclk' (clock ID '') is being mapped to clock name 'hbm_aclk' in the xclbin
+INFO: [v++ 60-1230] The compiler selected the following frequencies for the runtime controllable kernel clock(s) and scalable system clock(s): System (SYSTEM) clock: hbm_aclk = 450, Kernel (KERNEL) clock: clk_kernel2_in = 500, Kernel (DATA) clock: clk_kernel_in = 260
+INFO: [v++ 60-1453] Command Line: cf2sw -a /home/jiong/bsc-project/xclbin/build/data_analytics_U50/re_engine/_x/link/int/address_map.xml -sdsl /home/jiong/bsc-project/xclbin/build/data_analytics_U50/re_engine/_x/link/int/sdsl.dat -xclbin /home/jiong/bsc-project/xclbin/build/data_analytics_U50/re_engine/_x/link/int/xclbin_orig.xml -rtd /home/jiong/bsc-project/xclbin/build/data_analytics_U50/re_engine/_x/link/int/re_engine.rtd -o /home/jiong/bsc-project/xclbin/build/data_analytics_U50/re_engine/_x/link/int/re_engine.xml
+INFO: [v++ 60-1652] Cf2sw returned exit code: 0
+INFO: [v++ 60-2311] HPISystemDiagram::writeSystemDiagramAfterRunningVivado, rtdInputFilePath: /home/jiong/bsc-project/xclbin/build/data_analytics_U50/re_engine/_x/link/int/re_engine.rtd
+INFO: [v++ 60-2312] HPISystemDiagram::writeSystemDiagramAfterRunningVivado, systemDiagramOutputFilePath: /home/jiong/bsc-project/xclbin/build/data_analytics_U50/re_engine/_x/link/int/systemDiagramModelSlrBaseAddress.json
+INFO: [v++ 60-1618] Launching 
+INFO: [v++ 60-1441] [21:29:02] Run run_link: Step rtdgen: Completed
+Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 1579.391 ; gain = 0.000 ; free physical = 83474 ; free virtual = 185934
+INFO: [v++ 60-1443] [21:29:02] Run run_link: Step xclbinutil: Started
+INFO: [v++ 60-1453] Command Line: xclbinutil --add-section BITSTREAM:RAW:/home/jiong/bsc-project/xclbin/build/data_analytics_U50/re_engine/_x/link/int/partial.bit --force --target hw --key-value SYS:dfx_enable:true --add-section :JSON:/home/jiong/bsc-project/xclbin/build/data_analytics_U50/re_engine/_x/link/int/re_engine.rtd --append-section :JSON:/home/jiong/bsc-project/xclbin/build/data_analytics_U50/re_engine/_x/link/int/appendSection.rtd --add-section CLOCK_FREQ_TOPOLOGY:JSON:/home/jiong/bsc-project/xclbin/build/data_analytics_U50/re_engine/_x/link/int/re_engine_xml.rtd --add-section BUILD_METADATA:JSON:/home/jiong/bsc-project/xclbin/build/data_analytics_U50/re_engine/_x/link/int/re_engine_build.rtd --add-section EMBEDDED_METADATA:RAW:/home/jiong/bsc-project/xclbin/build/data_analytics_U50/re_engine/_x/link/int/re_engine.xml --add-section SYSTEM_METADATA:RAW:/home/jiong/bsc-project/xclbin/build/data_analytics_U50/re_engine/_x/link/int/systemDiagramModelSlrBaseAddress.json --key-value SYS:PlatformVBNV:xilinx_u50_gen3x16_xdma_201920_3 --output /home/jiong/bsc-project/xclbin/build/data_analytics_U50/re_engine/re_engine.xclbin
+INFO: [v++ 60-1454] Run Directory: /home/jiong/bsc-project/xclbin/build/data_analytics_U50/re_engine/_x/link/run_link
+XRT Build Version: 2.12.427 (2021.2)
+       Build Date: 2021-10-08 22:06:50
+          Hash ID: 2719b6027e185000fc49783171631db03fc0ef79
+Creating a default 'in-memory' xclbin image.
+
+Section: 'BITSTREAM'(0) was successfully added.
+Size   : 32550600 bytes
+Format : RAW
+File   : '/home/jiong/bsc-project/xclbin/build/data_analytics_U50/re_engine/_x/link/int/partial.bit'
+
+Section: 'MEM_TOPOLOGY'(6) was successfully added.
+Format : JSON
+File   : 'mem_topology'
+
+Section: 'IP_LAYOUT'(8) was successfully added.
+Format : JSON
+File   : 'ip_layout'
+
+Section: 'CONNECTIVITY'(7) was successfully added.
+Format : JSON
+File   : 'connectivity'
+
+Section: 'CLOCK_FREQ_TOPOLOGY'(11) was successfully added.
+Size   : 410 bytes
+Format : JSON
+File   : '/home/jiong/bsc-project/xclbin/build/data_analytics_U50/re_engine/_x/link/int/re_engine_xml.rtd'
+
+Section: 'BUILD_METADATA'(14) was successfully added.
+Size   : 2579 bytes
+Format : JSON
+File   : '/home/jiong/bsc-project/xclbin/build/data_analytics_U50/re_engine/_x/link/int/re_engine_build.rtd'
+
+Section: 'EMBEDDED_METADATA'(2) was successfully added.
+Size   : 165279 bytes
+Format : RAW
+File   : '/home/jiong/bsc-project/xclbin/build/data_analytics_U50/re_engine/_x/link/int/re_engine.xml'
+
+Section: 'SYSTEM_METADATA'(22) was successfully added.
+Size   : 13407 bytes
+Format : RAW
+File   : '/home/jiong/bsc-project/xclbin/build/data_analytics_U50/re_engine/_x/link/int/systemDiagramModelSlrBaseAddress.json'
+
+Section: 'PARTITION_METADATA'(20) was successfully appended to.
+Format : JSON
+File   : 'partition_metadata'
+
+Section: 'IP_LAYOUT'(8) was successfully appended to.
+Format : JSON
+File   : 'ip_layout'
+Successfully wrote (32758984 bytes) to the output file: /home/jiong/bsc-project/xclbin/build/data_analytics_U50/re_engine/re_engine.xclbin
+Leaving xclbinutil.
+INFO: [v++ 60-1441] [21:29:02] Run run_link: Step xclbinutil: Completed
+Time (s): cpu = 00:00:00.25 ; elapsed = 00:00:00.38 . Memory (MB): peak = 1579.391 ; gain = 0.000 ; free physical = 83442 ; free virtual = 185934
+INFO: [v++ 60-1443] [21:29:02] Run run_link: Step xclbinutilinfo: Started
+INFO: [v++ 60-1453] Command Line: xclbinutil --quiet --force --info /home/jiong/bsc-project/xclbin/build/data_analytics_U50/re_engine/re_engine.xclbin.info --input /home/jiong/bsc-project/xclbin/build/data_analytics_U50/re_engine/re_engine.xclbin
+INFO: [v++ 60-1454] Run Directory: /home/jiong/bsc-project/xclbin/build/data_analytics_U50/re_engine/_x/link/run_link
+INFO: [v++ 60-1441] [21:29:03] Run run_link: Step xclbinutilinfo: Completed
+Time (s): cpu = 00:00:01 ; elapsed = 00:00:01 . Memory (MB): peak = 1579.391 ; gain = 0.000 ; free physical = 83435 ; free virtual = 185935
+INFO: [v++ 60-1443] [21:29:03] Run run_link: Step generate_sc_driver: Started
+INFO: [v++ 60-1453] Command Line: 
+INFO: [v++ 60-1454] Run Directory: /home/jiong/bsc-project/xclbin/build/data_analytics_U50/re_engine/_x/link/run_link
+INFO: [v++ 60-1441] [21:29:03] Run run_link: Step generate_sc_driver: Completed
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.01 . Memory (MB): peak = 1579.391 ; gain = 0.000 ; free physical = 83435 ; free virtual = 185934
+INFO: [v++ 60-244] Generating system estimate report...
+INFO: [v++ 60-1092] Generated system estimate report: /home/jiong/bsc-project/xclbin/build/data_analytics_U50/re_engine/_x/reports/link/system_estimate_re_engine.xtxt
+INFO: [v++ 60-586] Created /home/jiong/bsc-project/xclbin/build/data_analytics_U50/re_engine/re_engine.ltx
+INFO: [v++ 60-586] Created re_engine.xclbin
+INFO: [v++ 60-1307] Run completed. Additional information can be found in:
+	Guidance: /home/jiong/bsc-project/xclbin/build/data_analytics_U50/re_engine/_x/reports/link/v++_link_re_engine_guidance.html
+	Timing Report: /home/jiong/bsc-project/xclbin/build/data_analytics_U50/re_engine/_x/reports/link/imp/impl_1_hw_bb_locked_timing_summary_routed.rpt
+	Vivado Log: /home/jiong/bsc-project/xclbin/build/data_analytics_U50/re_engine/_x/logs/link/vivado.log
+	Steps Log File: /home/jiong/bsc-project/xclbin/build/data_analytics_U50/re_engine/_x/logs/link/link.steps.log
+
+INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
+    vitis_analyzer /home/jiong/bsc-project/xclbin/build/data_analytics_U50/re_engine/re_engine.xclbin.link_summary 
+INFO: [v++ 60-791] Total elapsed time: 2h 59m 19s
+INFO: [v++ 60-1653] Closing dispatch client.
+rm -rf _x .Xil log report *.log

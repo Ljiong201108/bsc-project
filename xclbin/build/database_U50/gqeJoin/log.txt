@@ -1,0 +1,1405 @@
+v++ -c -k  gqeJoin  -I/home/jiong/bsc-project/components/database/include/hw  -I/home/jiong/bsc-project/components/utils/include -I/home/jiong/bsc-project/kernels/database/include/hw  -I/home/jiong/bsc-project/kernels/database/src/hw /home/jiong/bsc-project/kernels/database/src/hw/gqe_kernel_join_v2.cpp -o gqeJoin.xo -t hw --config /home/jiong/bsc-project/tests/test/config_kernel.cfg -g --platform /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm --log_dir log --report_dir report
+Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ compile can be found at:
+	Reports: /home/jiong/bsc-project/tests/test/build/database/gqeJoin/report/gqeJoin
+	Log files: /home/jiong/bsc-project/tests/test/build/database/gqeJoin/log/gqeJoin
+Running Dispatch Server on port:34627
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/tests/test/build/database/gqeJoin/gqeJoin.xo.compile_summary, at Mon Jan  2 03:17:52 2023
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Mon Jan  2 03:17:52 2023
+Running Rule Check Server on port:36871
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/tests/test/build/database/gqeJoin/report/gqeJoin/v++_compile_gqeJoin_guidance.html', at Mon Jan  2 03:17:55 2023
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
+INFO: [v++ 74-74] Compiler Version string: 2020.2
+INFO: [v++ 60-585] Compiling for hardware target
+INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [v++ 60-242] Creating kernel: 'gqeJoin'
+WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
+
+===>The following messages were generated while  performing high-level synthesis for kernel: gqeJoin Log file: /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/gqeJoin/gqeJoin/vitis_hls.log :
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_89_1'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 3, loop 'VITIS_LOOP_89_1'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_149_4'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 1, loop 'VITIS_LOOP_149_4'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_166_5'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 1, loop 'VITIS_LOOP_166_5'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_191_6'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 3, loop 'VITIS_LOOP_191_6'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_195_7'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 3, loop 'VITIS_LOOP_195_7'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_253_12'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 2, loop 'VITIS_LOOP_253_12'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_257_13'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 2, loop 'VITIS_LOOP_257_13'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_231_9'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 2, loop 'VITIS_LOOP_231_9'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_236_10'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 2, loop 'VITIS_LOOP_236_10'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_240_11'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 2, loop 'VITIS_LOOP_240_11'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_38_1'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 2, loop 'VITIS_LOOP_38_1'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_91_2'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 3, loop 'VITIS_LOOP_91_2'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_96_3'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 3, loop 'VITIS_LOOP_96_3'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_104_4'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 1, loop 'VITIS_LOOP_104_4'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_112_5'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 3, loop 'VITIS_LOOP_112_5'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_117_6'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 3, loop 'VITIS_LOOP_117_6'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_125_7'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 1, loop 'VITIS_LOOP_125_7'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_192_18'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 2, loop 'VITIS_LOOP_192_18'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_196_19'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 1, loop 'VITIS_LOOP_196_19'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_163_14'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 3, loop 'VITIS_LOOP_163_14'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_171_15'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 1, loop 'VITIS_LOOP_171_15'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_179_16'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 3, loop 'VITIS_LOOP_179_16'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_187_17'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 1, loop 'VITIS_LOOP_187_17'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_132_9'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 3, loop 'VITIS_LOOP_132_9'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_140_10'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 1, loop 'VITIS_LOOP_140_10'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_148_11'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 3, loop 'VITIS_LOOP_148_11'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_156_12'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 1, loop 'VITIS_LOOP_156_12'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_91_2'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 3, loop 'VITIS_LOOP_91_2'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_96_3'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 3, loop 'VITIS_LOOP_96_3'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_104_4'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 1, loop 'VITIS_LOOP_104_4'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_112_5'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 3, loop 'VITIS_LOOP_112_5'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_117_6'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 3, loop 'VITIS_LOOP_117_6'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_125_7'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 1, loop 'VITIS_LOOP_125_7'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_192_18'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 2, loop 'VITIS_LOOP_192_18'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_196_19'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 1, loop 'VITIS_LOOP_196_19'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_163_14'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 3, loop 'VITIS_LOOP_163_14'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_171_15'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 1, loop 'VITIS_LOOP_171_15'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_179_16'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 3, loop 'VITIS_LOOP_179_16'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_187_17'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 1, loop 'VITIS_LOOP_187_17'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_132_9'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 3, loop 'VITIS_LOOP_132_9'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_140_10'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 1, loop 'VITIS_LOOP_140_10'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_148_11'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 3, loop 'VITIS_LOOP_148_11'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_156_12'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 1, loop 'VITIS_LOOP_156_12'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_91_2'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 3, loop 'VITIS_LOOP_91_2'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_96_3'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 3, loop 'VITIS_LOOP_96_3'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_104_4'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 1, loop 'VITIS_LOOP_104_4'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_112_5'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 3, loop 'VITIS_LOOP_112_5'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_117_6'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 3, loop 'VITIS_LOOP_117_6'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_125_7'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 1, loop 'VITIS_LOOP_125_7'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_192_18'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 2, loop 'VITIS_LOOP_192_18'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_196_19'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 1, loop 'VITIS_LOOP_196_19'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_163_14'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 3, loop 'VITIS_LOOP_163_14'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_171_15'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 1, loop 'VITIS_LOOP_171_15'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_179_16'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 3, loop 'VITIS_LOOP_179_16'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_187_17'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 1, loop 'VITIS_LOOP_187_17'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_132_9'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 3, loop 'VITIS_LOOP_132_9'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_140_10'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 1, loop 'VITIS_LOOP_140_10'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_148_11'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 3, loop 'VITIS_LOOP_148_11'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_156_12'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 1, loop 'VITIS_LOOP_156_12'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_91_2'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 3, loop 'VITIS_LOOP_91_2'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_96_3'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 3, loop 'VITIS_LOOP_96_3'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_104_4'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 1, loop 'VITIS_LOOP_104_4'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_112_5'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 3, loop 'VITIS_LOOP_112_5'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_117_6'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 3, loop 'VITIS_LOOP_117_6'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_125_7'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 1, loop 'VITIS_LOOP_125_7'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_192_18'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 2, loop 'VITIS_LOOP_192_18'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_196_19'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 1, loop 'VITIS_LOOP_196_19'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_163_14'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 3, loop 'VITIS_LOOP_163_14'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_171_15'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 1, loop 'VITIS_LOOP_171_15'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_179_16'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 3, loop 'VITIS_LOOP_179_16'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_187_17'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 1, loop 'VITIS_LOOP_187_17'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_132_9'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 3, loop 'VITIS_LOOP_132_9'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_140_10'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 1, loop 'VITIS_LOOP_140_10'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_148_11'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 3, loop 'VITIS_LOOP_148_11'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_156_12'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 1, loop 'VITIS_LOOP_156_12'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_357_1.1'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 1, loop 'VITIS_LOOP_357_1.1'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_213_1'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 2, loop 'VITIS_LOOP_213_1'
+INFO: [v++ 204-61] Pipelining loop 'L_VEC_SPLIT'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 2, Depth = 3, loop 'L_VEC_SPLIT'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_268_10'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 2, Depth = 3, loop 'VITIS_LOOP_268_10'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_37_1'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 2, loop 'VITIS_LOOP_37_1'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_53_1'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 2, loop 'VITIS_LOOP_53_1'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_79_1'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 2, loop 'VITIS_LOOP_79_1'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_410_1'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 3, Depth = 4, loop 'VITIS_LOOP_410_1'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_436_4'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 3, loop 'VITIS_LOOP_436_4'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_458_5'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 2, loop 'VITIS_LOOP_458_5'
+INFO: [v++ 204-61] Pipelining function 'var_const_cmp<32>'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 1, function 'var_const_cmp<32>'
+INFO: [v++ 204-61] Pipelining function 'var_var_cmp<32>'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 1, function 'var_var_cmp<32>'
+INFO: [v++ 204-61] Pipelining loop 'FILTER_MAIN_LOOP'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 4, loop 'FILTER_MAIN_LOOP'
+INFO: [v++ 204-61] Pipelining loop 'TRUE_TABLE_INIT32'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 1, loop 'TRUE_TABLE_INIT32'
+INFO: [v++ 204-61] Pipelining loop 'TRUE_TABLE_READ'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 3, loop 'TRUE_TABLE_READ'
+INFO: [v++ 204-61] Pipelining loop 'FILTER_PRED_PASS'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 3, loop 'FILTER_PRED_PASS'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_83_1'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 2, loop 'VITIS_LOOP_83_1'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_53_1'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 2, loop 'VITIS_LOOP_53_1'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_79_1'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 2, loop 'VITIS_LOOP_79_1'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_410_1'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 3, Depth = 4, loop 'VITIS_LOOP_410_1'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_436_4'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 3, loop 'VITIS_LOOP_436_4'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_458_5'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 2, loop 'VITIS_LOOP_458_5'
+INFO: [v++ 204-61] Pipelining loop 'FILTER_MAIN_LOOP'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 4, loop 'FILTER_MAIN_LOOP'
+INFO: [v++ 204-61] Pipelining loop 'TRUE_TABLE_INIT32'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 1, loop 'TRUE_TABLE_INIT32'
+INFO: [v++ 204-61] Pipelining loop 'TRUE_TABLE_READ'.
+INFO: [v++ 17-14] Message 'v++ 204-61' appears 100 times and further instances of the messages will be disabled.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 3, loop 'TRUE_TABLE_READ'
+INFO: [v++ 17-14] Message 'v++ 200-1470' appears 100 times and further instances of the messages will be disabled.
+INFO: [v++ 200-790] **** Loop Constraint Status: All loop constraints were satisfied.
+INFO: [v++ 200-789] **** Estimated Fmax: 209.07 MHz
+INFO: [v++ 60-594] Finished kernel compilation
+INFO: [v++ 60-244] Generating system estimate report...
+INFO: [v++ 60-1092] Generated system estimate report: /home/jiong/bsc-project/tests/test/build/database/gqeJoin/report/gqeJoin/system_estimate_gqeJoin.xtxt
+INFO: [v++ 60-586] Created gqeJoin.xo
+INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
+    vitis_analyzer /home/jiong/bsc-project/tests/test/build/database/gqeJoin/gqeJoin.xo.compile_summary 
+INFO: [v++ 60-791] Total elapsed time: 1h 20m 25s
+INFO: [v++ 60-1653] Closing dispatch client.
+v++ -l gqeJoin.xo -o gqeJoin.xclbin -t hw -g --platform /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm --config config_link.cfg
+Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ link can be found at:
+	Reports: /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/reports/link
+	Log files: /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/logs/link
+Running Dispatch Server on port:38815
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/tests/test/build/database/gqeJoin/gqeJoin.xclbin.link_summary, at Mon Jan  2 04:38:24 2023
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Mon Jan  2 04:38:24 2023
+Running Rule Check Server on port:39799
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/reports/link/v++_link_gqeJoin_guidance.html', at Mon Jan  2 04:38:26 2023
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
+INFO: [v++ 74-74] Compiler Version string: 2020.2
+INFO: [v++ 60-629] Linking for hardware target
+INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [v++ 60-1332] Run 'run_link' status: Not started
+INFO: [v++ 60-1443] [04:38:49] Run run_link: Step system_link: Started
+INFO: [v++ 60-1453] Command Line: system_link --xo /home/jiong/bsc-project/tests/test/build/database/gqeJoin/gqeJoin.xo --config /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/int/syslinkConfig.ini --xpfm /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm --target hw --output_dir /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/int --temp_dir /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/sys_link
+INFO: [v++ 60-1454] Run Directory: /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/run_link
+INFO: [SYSTEM_LINK 60-1316] Initiating connection to rulecheck server, at Mon Jan  2 04:38:53 2023
+INFO: [SYSTEM_LINK 82-70] Extracting xo v3 file /home/jiong/bsc-project/tests/test/build/database/gqeJoin/gqeJoin.xo
+INFO: [SYSTEM_LINK 82-53] Creating IP database /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/sys_link/_sysl/.cdb/xd_ip_db.xml
+INFO: [SYSTEM_LINK 82-38] [04:38:56] build_xd_ip_db started: /share/xilinx/Vitis/2020.2/bin/build_xd_ip_db -ip_search 0  -sds-pf /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/sys_link/hw.hpfm -clkid 0 -ip /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/sys_link/iprepo/xilinx_com_hls_gqeJoin_1_0,gqeJoin -o /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/sys_link/_sysl/.cdb/xd_ip_db.xml
+INFO: [SYSTEM_LINK 82-37] [04:39:09] build_xd_ip_db finished successfully
+Time (s): cpu = 00:00:16 ; elapsed = 00:00:13 . Memory (MB): peak = 1684.059 ; gain = 0.000 ; free physical = 75927 ; free virtual = 181185
+INFO: [SYSTEM_LINK 82-51] Create system connectivity graph
+INFO: [SYSTEM_LINK 82-102] Applying explicit connections to the system connectivity graph: /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/sys_link/cfgraph/cfgen_cfgraph.xml
+INFO: [SYSTEM_LINK 82-38] [04:39:09] cfgen started: /share/xilinx/Vitis/2020.2/bin/cfgen  -sp gqeJoin_1.buf_A1:HBM[31] -sp gqeJoin_1.buf_A2:HBM[31] -sp gqeJoin_1.buf_A3:HBM[31] -sp gqeJoin_1.buf_A4:HBM[31] -sp gqeJoin_1.buf_A5:HBM[31] -sp gqeJoin_1.buf_A6:HBM[31] -sp gqeJoin_1.buf_A7:HBM[31] -sp gqeJoin_1.buf_A8:HBM[31] -sp gqeJoin_1.tin_meta:HBM[31] -sp gqeJoin_1.tout_meta:HBM[30] -sp gqeJoin_1.buf_C1:HBM[30] -sp gqeJoin_1.buf_C2:HBM[30] -sp gqeJoin_1.buf_C3:HBM[30] -sp gqeJoin_1.buf_C4:HBM[30] -sp gqeJoin_1.buf_C5:HBM[30] -sp gqeJoin_1.buf_C6:HBM[30] -sp gqeJoin_1.buf_C7:HBM[30] -sp gqeJoin_1.buf_C8:HBM[30] -sp gqeJoin_1.buf_D:HBM[31] -sp gqeJoin_1.htb_buf0:HBM[0] -sp gqeJoin_1.htb_buf1:HBM[2] -sp gqeJoin_1.htb_buf2:HBM[6] -sp gqeJoin_1.htb_buf3:HBM[8] -sp gqeJoin_1.htb_buf4:HBM[12] -sp gqeJoin_1.htb_buf5:HBM[22] -sp gqeJoin_1.htb_buf6:HBM[24] -sp gqeJoin_1.htb_buf7:HBM[28] -sp gqeJoin_1.stb_buf0:HBM[1] -sp gqeJoin_1.stb_buf1:HBM[3] -sp gqeJoin_1.stb_buf2:HBM[7] -sp gqeJoin_1.stb_buf3:HBM[9] -sp gqeJoin_1.stb_buf4:HBM[13] -sp gqeJoin_1.stb_buf5:HBM[23] -sp gqeJoin_1.stb_buf6:HBM[25] -sp gqeJoin_1.stb_buf7:HBM[29] -dmclkid 0 -r /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/sys_link/_sysl/.cdb/xd_ip_db.xml -o /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/sys_link/cfgraph/cfgen_cfgraph.xml
+INFO: [CFGEN 83-0] Kernel Specs: 
+INFO: [CFGEN 83-0]   kernel: gqeJoin, num: 1  {gqeJoin_1}
+INFO: [CFGEN 83-0] Port Specs: 
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: buf_A1, sptag: HBM[31]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: buf_A2, sptag: HBM[31]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: buf_A3, sptag: HBM[31]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: buf_A4, sptag: HBM[31]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: buf_A5, sptag: HBM[31]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: buf_A6, sptag: HBM[31]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: buf_A7, sptag: HBM[31]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: buf_A8, sptag: HBM[31]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: tin_meta, sptag: HBM[31]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: tout_meta, sptag: HBM[30]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: buf_C1, sptag: HBM[30]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: buf_C2, sptag: HBM[30]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: buf_C3, sptag: HBM[30]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: buf_C4, sptag: HBM[30]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: buf_C5, sptag: HBM[30]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: buf_C6, sptag: HBM[30]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: buf_C7, sptag: HBM[30]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: buf_C8, sptag: HBM[30]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: buf_D, sptag: HBM[31]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: htb_buf0, sptag: HBM[0]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: htb_buf1, sptag: HBM[2]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: htb_buf2, sptag: HBM[6]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: htb_buf3, sptag: HBM[8]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: htb_buf4, sptag: HBM[12]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: htb_buf5, sptag: HBM[22]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: htb_buf6, sptag: HBM[24]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: htb_buf7, sptag: HBM[28]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: stb_buf0, sptag: HBM[1]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: stb_buf1, sptag: HBM[3]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: stb_buf2, sptag: HBM[7]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: stb_buf3, sptag: HBM[9]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: stb_buf4, sptag: HBM[13]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: stb_buf5, sptag: HBM[23]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: stb_buf6, sptag: HBM[25]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: stb_buf7, sptag: HBM[29]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.buf_A1 to HBM[31] for directive gqeJoin_1.buf_A1:HBM[31]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.buf_A2 to HBM[31] for directive gqeJoin_1.buf_A2:HBM[31]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.buf_A3 to HBM[31] for directive gqeJoin_1.buf_A3:HBM[31]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.buf_A4 to HBM[31] for directive gqeJoin_1.buf_A4:HBM[31]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.buf_A5 to HBM[31] for directive gqeJoin_1.buf_A5:HBM[31]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.buf_A6 to HBM[31] for directive gqeJoin_1.buf_A6:HBM[31]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.buf_A7 to HBM[31] for directive gqeJoin_1.buf_A7:HBM[31]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.buf_A8 to HBM[31] for directive gqeJoin_1.buf_A8:HBM[31]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.tin_meta to HBM[31] for directive gqeJoin_1.tin_meta:HBM[31]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.tout_meta to HBM[30] for directive gqeJoin_1.tout_meta:HBM[30]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.buf_C1 to HBM[30] for directive gqeJoin_1.buf_C1:HBM[30]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.buf_C2 to HBM[30] for directive gqeJoin_1.buf_C2:HBM[30]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.buf_C3 to HBM[30] for directive gqeJoin_1.buf_C3:HBM[30]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.buf_C4 to HBM[30] for directive gqeJoin_1.buf_C4:HBM[30]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.buf_C5 to HBM[30] for directive gqeJoin_1.buf_C5:HBM[30]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.buf_C6 to HBM[30] for directive gqeJoin_1.buf_C6:HBM[30]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.buf_C7 to HBM[30] for directive gqeJoin_1.buf_C7:HBM[30]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.buf_C8 to HBM[30] for directive gqeJoin_1.buf_C8:HBM[30]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.buf_D to HBM[31] for directive gqeJoin_1.buf_D:HBM[31]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.htb_buf0 to HBM[0] for directive gqeJoin_1.htb_buf0:HBM[0]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.htb_buf1 to HBM[2] for directive gqeJoin_1.htb_buf1:HBM[2]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.htb_buf2 to HBM[6] for directive gqeJoin_1.htb_buf2:HBM[6]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.htb_buf3 to HBM[8] for directive gqeJoin_1.htb_buf3:HBM[8]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.htb_buf4 to HBM[12] for directive gqeJoin_1.htb_buf4:HBM[12]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.htb_buf5 to HBM[22] for directive gqeJoin_1.htb_buf5:HBM[22]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.htb_buf6 to HBM[24] for directive gqeJoin_1.htb_buf6:HBM[24]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.htb_buf7 to HBM[28] for directive gqeJoin_1.htb_buf7:HBM[28]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.stb_buf0 to HBM[1] for directive gqeJoin_1.stb_buf0:HBM[1]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.stb_buf1 to HBM[3] for directive gqeJoin_1.stb_buf1:HBM[3]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.stb_buf2 to HBM[7] for directive gqeJoin_1.stb_buf2:HBM[7]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.stb_buf3 to HBM[9] for directive gqeJoin_1.stb_buf3:HBM[9]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.stb_buf4 to HBM[13] for directive gqeJoin_1.stb_buf4:HBM[13]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.stb_buf5 to HBM[23] for directive gqeJoin_1.stb_buf5:HBM[23]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.stb_buf6 to HBM[25] for directive gqeJoin_1.stb_buf6:HBM[25]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.stb_buf7 to HBM[29] for directive gqeJoin_1.stb_buf7:HBM[29]
+INFO: [SYSTEM_LINK 82-37] [04:39:16] cfgen finished successfully
+Time (s): cpu = 00:00:07 ; elapsed = 00:00:07 . Memory (MB): peak = 1684.059 ; gain = 0.000 ; free physical = 75554 ; free virtual = 180803
+INFO: [SYSTEM_LINK 82-52] Create top-level block diagram
+INFO: [SYSTEM_LINK 82-38] [04:39:16] cf2bd started: /share/xilinx/Vitis/2020.2/bin/cf2bd  --linux --trace_buffer 1024 --input_file /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/sys_link/cfgraph/cfgen_cfgraph.xml --ip_db /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/sys_link/_sysl/.cdb/xd_ip_db.xml --cf_name dr --working_dir /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/sys_link/_sysl/.xsd --temp_dir /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/sys_link --output_dir /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/int --target_bd ulp.bd
+INFO: [CF2BD 82-31] Launching cf2xd: cf2xd -linux -trace-buffer 1024 -i /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/sys_link/cfgraph/cfgen_cfgraph.xml -r /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/sys_link/_sysl/.cdb/xd_ip_db.xml -o dr.xml
+INFO: [CF2BD 82-28] cf2xd finished successfully
+INFO: [CF2BD 82-31] Launching cf_xsd: cf_xsd -disable-address-gen -bd ulp.bd -dn dr -dp /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/sys_link/_sysl/.xsd
+INFO: [CF2BD 82-28] cf_xsd finished successfully
+INFO: [SYSTEM_LINK 82-37] [04:39:24] cf2bd finished successfully
+Time (s): cpu = 00:00:08 ; elapsed = 00:00:08 . Memory (MB): peak = 1684.059 ; gain = 0.000 ; free physical = 75358 ; free virtual = 180612
+INFO: [v++ 60-1441] [04:39:24] Run run_link: Step system_link: Completed
+Time (s): cpu = 00:00:39 ; elapsed = 00:00:36 . Memory (MB): peak = 1582.656 ; gain = 0.000 ; free physical = 75462 ; free virtual = 180711
+INFO: [v++ 60-1443] [04:39:24] Run run_link: Step cf2sw: Started
+INFO: [v++ 60-1453] Command Line: cf2sw -sdsl /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/int/sdsl.dat -rtd /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/int/cf2sw.rtd -nofilter /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/int/cf2sw_full.rtd -xclbin /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/int/xclbin_orig.xml -o /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/int/xclbin_orig.1.xml
+INFO: [v++ 60-1454] Run Directory: /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/run_link
+INFO: [v++ 60-1441] [04:39:35] Run run_link: Step cf2sw: Completed
+Time (s): cpu = 00:00:10 ; elapsed = 00:00:11 . Memory (MB): peak = 1582.656 ; gain = 0.000 ; free physical = 74464 ; free virtual = 179715
+INFO: [v++ 60-1443] [04:39:35] Run run_link: Step rtd2_system_diagram: Started
+INFO: [v++ 60-1453] Command Line: rtd2SystemDiagram
+INFO: [v++ 60-1454] Run Directory: /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/run_link
+INFO: [v++ 60-1441] [04:39:39] Run run_link: Step rtd2_system_diagram: Completed
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:04 . Memory (MB): peak = 1582.656 ; gain = 0.000 ; free physical = 73851 ; free virtual = 179022
+INFO: [v++ 60-1443] [04:39:39] Run run_link: Step vpl: Started
+INFO: [v++ 60-1453] Command Line: vpl -t hw -f /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm -g --remote_ip_cache /home/jiong/bsc-project/tests/test/build/database/gqeJoin/.ipcache --output_dir /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/int --log_dir /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/logs/link --report_dir /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/reports/link --config /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/int/vplConfig.ini -k /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/int/kernel_info.dat --webtalk_flag Vitis --temp_dir /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link --no-info --iprepo /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/int/xo/ip_repo/xilinx_com_hls_gqeJoin_1_0 --messageDb /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/run_link/vpl.pb /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/int/dr.bd.tcl
+INFO: [v++ 60-1454] Run Directory: /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/run_link
+
+****** vpl v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [VPL 60-839] Read in kernel information from file '/home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/int/kernel_info.dat'.
+INFO: [VPL 74-74] Compiler Version string: 2020.2
+INFO: [VPL 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [VPL 60-1032] Extracting hardware platform to /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/vivado/vpl/.local/hw_platform
+WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
+[04:40:26] Run vpl: Step create_project: Started
+Creating Vivado project.
+[04:40:31] Run vpl: Step create_project: Completed
+[04:40:31] Run vpl: Step create_bd: Started
+[04:41:49] Run vpl: Step create_bd: RUNNING...
+[04:43:04] Run vpl: Step create_bd: RUNNING...
+[04:43:25] Run vpl: Step create_bd: Completed
+[04:43:25] Run vpl: Step update_bd: Started
+[04:43:27] Run vpl: Step update_bd: Completed
+[04:43:27] Run vpl: Step generate_target: Started
+[04:44:42] Run vpl: Step generate_target: RUNNING...
+[04:45:58] Run vpl: Step generate_target: RUNNING...
+[04:47:13] Run vpl: Step generate_target: RUNNING...
+[04:48:28] Run vpl: Step generate_target: RUNNING...
+[04:49:23] Run vpl: Step generate_target: Completed
+[04:49:23] Run vpl: Step config_hw_runs: Started
+[04:49:37] Run vpl: Step config_hw_runs: Completed
+[04:49:37] Run vpl: Step synth: Started
+[04:50:08] Block-level synthesis in progress, 0 of 35 jobs complete, 1 job running.
+[04:50:38] Block-level synthesis in progress, 0 of 35 jobs complete, 8 jobs running.
+[04:51:09] Block-level synthesis in progress, 0 of 35 jobs complete, 8 jobs running.
+[04:51:40] Block-level synthesis in progress, 0 of 35 jobs complete, 8 jobs running.
+[04:52:10] Block-level synthesis in progress, 0 of 35 jobs complete, 8 jobs running.
+[04:52:41] Block-level synthesis in progress, 0 of 35 jobs complete, 8 jobs running.
+[04:53:11] Block-level synthesis in progress, 1 of 35 jobs complete, 7 jobs running.
+[04:53:42] Block-level synthesis in progress, 1 of 35 jobs complete, 8 jobs running.
+[04:54:13] Block-level synthesis in progress, 1 of 35 jobs complete, 8 jobs running.
+[04:54:43] Block-level synthesis in progress, 5 of 35 jobs complete, 4 jobs running.
+[04:55:14] Block-level synthesis in progress, 6 of 35 jobs complete, 7 jobs running.
+[04:55:44] Block-level synthesis in progress, 6 of 35 jobs complete, 8 jobs running.
+[04:56:15] Block-level synthesis in progress, 7 of 35 jobs complete, 7 jobs running.
+[04:56:46] Block-level synthesis in progress, 8 of 35 jobs complete, 7 jobs running.
+[04:57:16] Block-level synthesis in progress, 8 of 35 jobs complete, 8 jobs running.
+[04:57:47] Block-level synthesis in progress, 8 of 35 jobs complete, 8 jobs running.
+[04:58:18] Block-level synthesis in progress, 8 of 35 jobs complete, 8 jobs running.
+[04:58:48] Block-level synthesis in progress, 9 of 35 jobs complete, 8 jobs running.
+[04:59:19] Block-level synthesis in progress, 11 of 35 jobs complete, 6 jobs running.
+[04:59:49] Block-level synthesis in progress, 13 of 35 jobs complete, 6 jobs running.
+[05:00:20] Block-level synthesis in progress, 14 of 35 jobs complete, 7 jobs running.
+[05:00:51] Block-level synthesis in progress, 14 of 35 jobs complete, 8 jobs running.
+[05:01:22] Block-level synthesis in progress, 15 of 35 jobs complete, 7 jobs running.
+[05:01:52] Block-level synthesis in progress, 16 of 35 jobs complete, 7 jobs running.
+[05:02:22] Block-level synthesis in progress, 17 of 35 jobs complete, 7 jobs running.
+[05:02:53] Block-level synthesis in progress, 17 of 35 jobs complete, 8 jobs running.
+[05:03:24] Block-level synthesis in progress, 18 of 35 jobs complete, 7 jobs running.
+[05:03:55] Block-level synthesis in progress, 19 of 35 jobs complete, 7 jobs running.
+[05:04:25] Block-level synthesis in progress, 20 of 35 jobs complete, 7 jobs running.
+[05:04:56] Block-level synthesis in progress, 20 of 35 jobs complete, 8 jobs running.
+[05:05:27] Block-level synthesis in progress, 21 of 35 jobs complete, 7 jobs running.
+[05:05:58] Block-level synthesis in progress, 22 of 35 jobs complete, 7 jobs running.
+[05:06:29] Block-level synthesis in progress, 22 of 35 jobs complete, 8 jobs running.
+[05:07:00] Block-level synthesis in progress, 24 of 35 jobs complete, 7 jobs running.
+[05:07:31] Block-level synthesis in progress, 25 of 35 jobs complete, 8 jobs running.
+[05:08:02] Block-level synthesis in progress, 26 of 35 jobs complete, 7 jobs running.
+[05:08:33] Block-level synthesis in progress, 26 of 35 jobs complete, 7 jobs running.
+[05:09:04] Block-level synthesis in progress, 28 of 35 jobs complete, 6 jobs running.
+[05:09:34] Block-level synthesis in progress, 29 of 35 jobs complete, 5 jobs running.
+[05:10:05] Block-level synthesis in progress, 31 of 35 jobs complete, 3 jobs running.
+[05:10:35] Block-level synthesis in progress, 31 of 35 jobs complete, 3 jobs running.
+[05:11:06] Block-level synthesis in progress, 33 of 35 jobs complete, 2 jobs running.
+[05:11:37] Block-level synthesis in progress, 33 of 35 jobs complete, 2 jobs running.
+[05:12:08] Block-level synthesis in progress, 33 of 35 jobs complete, 2 jobs running.
+[05:12:39] Block-level synthesis in progress, 33 of 35 jobs complete, 2 jobs running.
+[05:13:10] Block-level synthesis in progress, 33 of 35 jobs complete, 2 jobs running.
+[05:13:41] Block-level synthesis in progress, 33 of 35 jobs complete, 2 jobs running.
+[05:14:12] Block-level synthesis in progress, 33 of 35 jobs complete, 2 jobs running.
+[05:14:43] Block-level synthesis in progress, 33 of 35 jobs complete, 2 jobs running.
+[05:15:13] Block-level synthesis in progress, 33 of 35 jobs complete, 2 jobs running.
+[05:15:44] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[05:16:15] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[05:16:46] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[05:17:17] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[05:17:48] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[05:18:19] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[05:18:50] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[05:19:20] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[05:19:51] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[05:20:22] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[05:20:52] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[05:21:23] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[05:21:53] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[05:22:24] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[05:22:54] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[05:23:25] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[05:23:56] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[05:24:27] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[05:24:58] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[05:25:28] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[05:25:59] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[05:26:30] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[05:27:01] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[05:27:32] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[05:28:03] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[05:28:34] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[05:29:05] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[05:29:35] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[05:30:06] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[05:30:38] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[05:31:08] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[05:31:39] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[05:32:10] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[05:32:41] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[05:33:12] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[05:33:43] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[05:34:14] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[05:34:45] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[05:35:16] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[05:35:46] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[05:36:17] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[05:36:48] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[05:37:18] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[05:37:49] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[05:38:20] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[05:38:51] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[05:39:22] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[05:39:53] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[05:40:24] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[05:40:55] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[05:41:26] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[05:41:57] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[05:42:27] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[05:42:58] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[05:43:29] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[05:44:00] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[05:44:30] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[05:45:01] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[05:45:32] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[05:46:03] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[05:46:34] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[05:47:04] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[05:47:35] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[05:48:06] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[05:48:37] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[05:49:08] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[05:49:39] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[05:50:10] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[05:50:41] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[05:51:12] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[05:51:43] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[05:52:13] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[05:52:44] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[05:53:15] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[05:53:46] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[05:54:17] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[05:54:48] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[05:55:19] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[05:55:50] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[05:56:21] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[05:56:51] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[05:57:21] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[05:57:52] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[05:58:23] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[05:58:54] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[05:59:25] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[05:59:56] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[06:00:27] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[06:00:58] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[06:01:28] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[06:01:58] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[06:02:29] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[06:03:01] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[06:03:32] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[06:04:02] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[06:04:33] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[06:05:04] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[06:05:35] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[06:06:06] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[06:06:36] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[06:07:07] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[06:07:38] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[06:08:09] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[06:08:40] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[06:09:11] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[06:09:41] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[06:10:12] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[06:10:42] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[06:11:13] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[06:11:44] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[06:12:15] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[06:12:46] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[06:13:17] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[06:13:47] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[06:14:18] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[06:14:49] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[06:15:20] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[06:15:51] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[06:16:22] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[06:16:53] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[06:17:24] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[06:17:54] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[06:18:25] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[06:18:56] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[06:19:27] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[06:19:58] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[06:20:29] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[06:21:00] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[06:21:31] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[06:22:02] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[06:22:33] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[06:23:04] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[06:23:34] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[06:24:05] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[06:24:36] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[06:25:07] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[06:25:38] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[06:26:09] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[06:26:40] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[06:27:11] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[06:27:42] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[06:28:13] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[06:28:44] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[06:29:15] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[06:29:46] Block-level synthesis in progress, 34 of 35 jobs complete, 1 job running.
+[06:30:17] Block-level synthesis in progress, 35 of 35 jobs complete, 0 jobs running.
+[06:30:48] Top-level synthesis in progress.
+[06:31:19] Top-level synthesis in progress.
+[06:31:50] Top-level synthesis in progress.
+[06:32:21] Top-level synthesis in progress.
+[06:32:52] Top-level synthesis in progress.
+[06:33:02] Run vpl: Step synth: Completed
+[06:33:02] Run vpl: Step impl: Started
+[07:02:54] Finished 2nd of 6 tasks (FPGA linking synthesized kernels to platform). Elapsed time: 02h 23m 09s 
+
+[07:02:54] Starting logic optimization..
+[07:06:30] Phase 1 Retarget
+[07:07:32] Phase 2 Constant propagation
+[07:08:02] Phase 3 Sweep
+[07:13:12] Phase 4 BUFG optimization
+[07:14:14] Phase 5 Shift Register Optimization
+[07:14:45] Phase 6 Post Processing Netlist
+[07:21:58] Finished 3rd of 6 tasks (FPGA logic optimization). Elapsed time: 00h 19m 04s 
+
+[07:21:58] Starting logic placement..
+[07:25:03] Phase 1 Placer Initialization
+[07:25:03] Phase 1.1 Placer Initialization Netlist Sorting
+[07:31:13] Phase 1.2 IO Placement/ Clock Placement/ Build Placer Device
+[07:35:51] Phase 1.3 Build Placer Netlist Model
+[07:42:03] Phase 1.4 Constrain Clocks/Macros
+[07:44:07] Phase 2 Global Placement
+[07:44:07] Phase 2.1 Floorplanning
+[07:49:17] Phase 2.1.1 Partition Driven Placement
+[07:49:17] Phase 2.1.1.1 PBP: Partition Driven Placement
+[08:00:39] Phase 2.1.1.2 PBP: Clock Region Placement
+[08:07:56] Phase 2.1.1.3 PBP: Discrete Incremental
+[08:07:56] Phase 2.1.1.4 PBP: Compute Congestion
+[08:08:27] Phase 2.1.1.5 PBP: Macro Placement
+[08:08:27] Phase 2.1.1.6 PBP: UpdateTiming
+[08:10:01] Phase 2.1.1.7 PBP: Add part constraints
+[08:10:01] Phase 2.2 Update Timing before SLR Path Opt
+[08:10:01] Phase 2.3 Global Placement Core
+[08:35:37] Phase 2.3.1 Physical Synthesis In Placer
+[08:53:21] Phase 3 Detail Placement
+[08:53:21] Phase 3.1 Commit Multi Column Macros
+[08:53:52] Phase 3.2 Commit Most Macros & LUTRAMs
+[09:01:08] Phase 3.3 Small Shape DP
+[09:01:08] Phase 3.3.1 Small Shape Clustering
+[09:06:20] Phase 3.3.2 Flow Legalize Slice Clusters
+[09:06:51] Phase 3.3.3 Slice Area Swap
+[09:14:09] Phase 3.4 Place Remaining
+[09:14:40] Phase 3.5 Re-assign LUT pins
+[09:17:48] Phase 3.6 Pipeline Register Optimization
+[09:18:19] Phase 3.7 Fast Optimization
+[09:22:28] Phase 4 Post Placement Optimization and Clean-Up
+[09:22:28] Phase 4.1 Post Commit Optimization
+[09:27:41] Phase 4.1.1 Post Placement Optimization
+[09:28:13] Phase 4.1.1.1 BUFG Insertion
+[09:28:13] Phase 1 Physical Synthesis Initialization
+[09:29:47] Phase 4.1.1.2 BUFG Replication
+[09:43:17] Phase 4.1.1.3 Replication
+[09:47:56] Phase 4.2 Post Placement Cleanup
+[09:47:56] Phase 4.3 Placer Reporting
+[09:47:56] Phase 4.3.1 Print Estimated Congestion
+[09:48:59] Phase 4.4 Final Placement Cleanup
+[10:19:50] Finished 4th of 6 tasks (FPGA logic placement). Elapsed time: 02h 57m 51s 
+
+[10:19:50] Starting logic routing..
+[10:22:58] Phase 1 Build RT Design
+[10:30:48] Phase 2 Router Initialization
+[10:30:48] Phase 2.1 Fix Topology Constraints
+[10:40:11] Phase 2.2 Pre Route Cleanup
+[10:41:13] Phase 2.3 Global Clock Net Routing
+[10:43:18] Phase 2.4 Update Timing
+[10:52:14] Phase 2.5 Update Timing for Bus Skew
+[10:52:14] Phase 2.5.1 Update Timing
+[10:54:20] Phase 3 Initial Routing
+[10:54:20] Phase 3.1 Global Routing
+[10:54:20] Phase 3.1.1 Global Routing
+[10:54:20] Phase 3.1.1.1 Build GR Node Graph
+[10:58:32] Phase 3.1.1.2 Run Global Routing
+[11:35:08] Phase 4 Initial Routing Verification
+[11:36:41] Phase 5 Rip-up And Reroute
+[11:36:41] Phase 5.1 Global Iteration 0
+[12:39:19] Phase 5.2 Global Iteration 1
+[12:51:17] Phase 5.3 Global Iteration 2
+[13:00:41] Phase 5.4 Global Iteration 3
+[13:09:29] Phase 5.5 Global Iteration 4
+[13:23:08] Phase 5.6 Global Iteration 5
+[13:33:34] Phase 6 Delay and Skew Optimization
+[13:33:34] Phase 6.1 Delay CleanUp
+[13:33:34] Phase 6.1.1 Update Timing
+[13:36:41] Phase 6.1.2 Update Timing
+[13:38:47] Phase 6.2 Clock Skew Optimization
+[13:39:51] Phase 7 Post Hold Fix
+[13:39:51] Phase 7.1 Hold Fix Iter
+[13:39:51] Phase 7.1.1 Update Timing
+[13:45:05] Phase 8 Leaf Clock Prog Delay Opt
+[13:54:59] Phase 8.1 Delay CleanUp
+[13:54:59] Phase 8.1.1 Update Timing
+[13:58:06] Phase 8.1.2 Update Timing
+[14:01:45] Phase 8.2 Hold Fix Iter
+[14:01:45] Phase 8.2.1 Update Timing
+[14:11:40] Phase 9 Route finalize
+[14:12:42] Phase 10 Verifying routed nets
+[14:13:45] Phase 11 Depositing Routes
+[14:53:39] Run vpl: Step impl: Failed
+[14:53:40] Run vpl: FINISHED. Run Status: impl ERROR
+
+===>The following messages were generated while  Compiling (bitstream) accelerator binary: gqeJoin Log file: /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/vivado/vpl/prj/prj.runs/impl_1/runme.log  :
+ERROR: [VPL RTSTAT-1] Unrouted nets: 1 net(s) are unrouted. The problem bus(es) and/or net(s) are level0_i/ulp/hmss_0/inst/hbm_inst/inst/TWO_STACK.u_hbm_top/TWO_STACK_HBM.hbm_two_stack_intf/HBM_ONE_STACK_INTF<1>_INST/AXI_13_RDATA[223].
+ERROR: [VPL 12-1345] Error(s) found during DRC. Bitgen not run.
+ERROR: [VPL 60-773] In '/home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/vivado/vpl/runme.log', caught Tcl error:  problem implementing dynamic region, impl_1: write_bitstream ERROR, please look at the run log file '/home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/vivado/vpl/prj/prj.runs/impl_1/runme.log' for more information
+WARNING: [VPL 60-732] Link warning: No monitor points found for BD automation.
+WARNING: [VPL 60-732] Link warning: One or more timing paths failed timing targeting 300.000000 MHz for kernel clock 'clk_kernel_in'. The frequency is being automatically changed to 216.3 MHz to enable proper functionality
+WARNING: [VPL 60-732] Link warning: One or more timing paths failed timing targeting 450 MHz for system clock 'hbm_aclk'. The frequency is being automatically changed to 358.9 MHz to enable proper functionality
+ERROR: [VPL 60-704] Integration error, problem implementing dynamic region, impl_1: write_bitstream ERROR, please look at the run log file '/home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/vivado/vpl/prj/prj.runs/impl_1/runme.log' for more information
+ERROR: [VPL 60-1328] Vpl run 'vpl' failed
+ERROR: [VPL 60-806] Failed to finish platform linker
+INFO: [v++ 60-1442] [14:53:42] Run run_link: Step vpl: Failed
+Time (s): cpu = 00:20:08 ; elapsed = 10:14:03 . Memory (MB): peak = 1582.656 ; gain = 0.000 ; free physical = 57836 ; free virtual = 169581
+ERROR: [v++ 60-661] v++ link run 'run_link' failed
+ERROR: [v++ 60-626] Kernel link failed to complete
+ERROR: [v++ 60-703] Failed to finish linking
+INFO: [v++ 60-1653] Closing dispatch client.
+
+v++ -l gqeJoin.xo -o gqeJoin.xclbin -t hw -g --platform /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm --config config_link.cfg --optimize 2
+Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ link can be found at:
+	Reports: /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/reports/link
+	Log files: /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/logs/link
+Running Dispatch Server on port:43039
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/tests/test/build/database/gqeJoin/gqeJoin.xclbin.link_summary, at Mon Jan  2 16:16:32 2023
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Mon Jan  2 16:16:32 2023
+Running Rule Check Server on port:44433
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/reports/link/v++_link_gqeJoin_guidance.html', at Mon Jan  2 16:16:34 2023
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
+INFO: [v++ 74-74] Compiler Version string: 2020.2
+INFO: [v++ 60-629] Linking for hardware target
+INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [v++ 60-1332] Run 'run_link' status: Not started
+INFO: [v++ 60-1443] [16:16:51] Run run_link: Step system_link: Started
+INFO: [v++ 60-1453] Command Line: system_link --xo /home/jiong/bsc-project/tests/test/build/database/gqeJoin/gqeJoin.xo --config /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/int/syslinkConfig.ini --xpfm /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm --target hw --output_dir /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/int --temp_dir /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/sys_link
+INFO: [v++ 60-1454] Run Directory: /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/run_link
+INFO: [SYSTEM_LINK 60-1316] Initiating connection to rulecheck server, at Mon Jan  2 16:16:56 2023
+INFO: [SYSTEM_LINK 82-70] Extracting xo v3 file /home/jiong/bsc-project/tests/test/build/database/gqeJoin/gqeJoin.xo
+INFO: [SYSTEM_LINK 82-53] Creating IP database /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/sys_link/_sysl/.cdb/xd_ip_db.xml
+INFO: [SYSTEM_LINK 82-38] [16:16:58] build_xd_ip_db started: /share/xilinx/Vitis/2020.2/bin/build_xd_ip_db -ip_search 0  -sds-pf /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/sys_link/hw.hpfm -clkid 0 -ip /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/sys_link/iprepo/xilinx_com_hls_gqeJoin_1_0,gqeJoin -o /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/sys_link/_sysl/.cdb/xd_ip_db.xml
+INFO: [SYSTEM_LINK 82-37] [16:17:15] build_xd_ip_db finished successfully
+Time (s): cpu = 00:00:20 ; elapsed = 00:00:17 . Memory (MB): peak = 1684.059 ; gain = 0.000 ; free physical = 53781 ; free virtual = 162521
+INFO: [SYSTEM_LINK 82-51] Create system connectivity graph
+INFO: [SYSTEM_LINK 82-102] Applying explicit connections to the system connectivity graph: /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/sys_link/cfgraph/cfgen_cfgraph.xml
+INFO: [SYSTEM_LINK 82-38] [16:17:16] cfgen started: /share/xilinx/Vitis/2020.2/bin/cfgen  -sp gqeJoin_1.buf_A1:HBM[1] -sp gqeJoin_1.buf_A2:HBM[1] -sp gqeJoin_1.buf_A3:HBM[1] -sp gqeJoin_1.buf_A4:HBM[1] -sp gqeJoin_1.buf_A5:HBM[1] -sp gqeJoin_1.buf_A6:HBM[1] -sp gqeJoin_1.buf_A7:HBM[1] -sp gqeJoin_1.buf_A8:HBM[1] -sp gqeJoin_1.tin_meta:HBM[1] -sp gqeJoin_1.tout_meta:HBM[0] -sp gqeJoin_1.buf_C1:HBM[0] -sp gqeJoin_1.buf_C2:HBM[0] -sp gqeJoin_1.buf_C3:HBM[0] -sp gqeJoin_1.buf_C4:HBM[0] -sp gqeJoin_1.buf_C5:HBM[0] -sp gqeJoin_1.buf_C6:HBM[0] -sp gqeJoin_1.buf_C7:HBM[0] -sp gqeJoin_1.buf_C8:HBM[0] -sp gqeJoin_1.buf_D:HBM[1] -sp gqeJoin_1.htb_buf0:HBM[0] -sp gqeJoin_1.htb_buf1:HBM[0] -sp gqeJoin_1.htb_buf2:HBM[0] -sp gqeJoin_1.htb_buf3:HBM[0] -sp gqeJoin_1.htb_buf4:HBM[0] -sp gqeJoin_1.htb_buf5:HBM[0] -sp gqeJoin_1.htb_buf6:HBM[0] -sp gqeJoin_1.htb_buf7:HBM[0] -sp gqeJoin_1.stb_buf0:HBM[1] -sp gqeJoin_1.stb_buf1:HBM[1] -sp gqeJoin_1.stb_buf2:HBM[1] -sp gqeJoin_1.stb_buf3:HBM[1] -sp gqeJoin_1.stb_buf4:HBM[1] -sp gqeJoin_1.stb_buf5:HBM[1] -sp gqeJoin_1.stb_buf6:HBM[1] -sp gqeJoin_1.stb_buf7:HBM[1] -dmclkid 0 -r /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/sys_link/_sysl/.cdb/xd_ip_db.xml -o /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/sys_link/cfgraph/cfgen_cfgraph.xml
+INFO: [CFGEN 83-0] Kernel Specs: 
+INFO: [CFGEN 83-0]   kernel: gqeJoin, num: 1  {gqeJoin_1}
+INFO: [CFGEN 83-0] Port Specs: 
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: buf_A1, sptag: HBM[1]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: buf_A2, sptag: HBM[1]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: buf_A3, sptag: HBM[1]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: buf_A4, sptag: HBM[1]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: buf_A5, sptag: HBM[1]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: buf_A6, sptag: HBM[1]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: buf_A7, sptag: HBM[1]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: buf_A8, sptag: HBM[1]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: tin_meta, sptag: HBM[1]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: tout_meta, sptag: HBM[0]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: buf_C1, sptag: HBM[0]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: buf_C2, sptag: HBM[0]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: buf_C3, sptag: HBM[0]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: buf_C4, sptag: HBM[0]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: buf_C5, sptag: HBM[0]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: buf_C6, sptag: HBM[0]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: buf_C7, sptag: HBM[0]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: buf_C8, sptag: HBM[0]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: buf_D, sptag: HBM[1]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: htb_buf0, sptag: HBM[0]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: htb_buf1, sptag: HBM[0]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: htb_buf2, sptag: HBM[0]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: htb_buf3, sptag: HBM[0]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: htb_buf4, sptag: HBM[0]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: htb_buf5, sptag: HBM[0]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: htb_buf6, sptag: HBM[0]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: htb_buf7, sptag: HBM[0]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: stb_buf0, sptag: HBM[1]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: stb_buf1, sptag: HBM[1]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: stb_buf2, sptag: HBM[1]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: stb_buf3, sptag: HBM[1]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: stb_buf4, sptag: HBM[1]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: stb_buf5, sptag: HBM[1]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: stb_buf6, sptag: HBM[1]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: stb_buf7, sptag: HBM[1]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.buf_A1 to HBM[1] for directive gqeJoin_1.buf_A1:HBM[1]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.buf_A2 to HBM[1] for directive gqeJoin_1.buf_A2:HBM[1]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.buf_A3 to HBM[1] for directive gqeJoin_1.buf_A3:HBM[1]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.buf_A4 to HBM[1] for directive gqeJoin_1.buf_A4:HBM[1]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.buf_A5 to HBM[1] for directive gqeJoin_1.buf_A5:HBM[1]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.buf_A6 to HBM[1] for directive gqeJoin_1.buf_A6:HBM[1]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.buf_A7 to HBM[1] for directive gqeJoin_1.buf_A7:HBM[1]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.buf_A8 to HBM[1] for directive gqeJoin_1.buf_A8:HBM[1]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.tin_meta to HBM[1] for directive gqeJoin_1.tin_meta:HBM[1]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.tout_meta to HBM[0] for directive gqeJoin_1.tout_meta:HBM[0]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.buf_C1 to HBM[0] for directive gqeJoin_1.buf_C1:HBM[0]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.buf_C2 to HBM[0] for directive gqeJoin_1.buf_C2:HBM[0]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.buf_C3 to HBM[0] for directive gqeJoin_1.buf_C3:HBM[0]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.buf_C4 to HBM[0] for directive gqeJoin_1.buf_C4:HBM[0]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.buf_C5 to HBM[0] for directive gqeJoin_1.buf_C5:HBM[0]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.buf_C6 to HBM[0] for directive gqeJoin_1.buf_C6:HBM[0]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.buf_C7 to HBM[0] for directive gqeJoin_1.buf_C7:HBM[0]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.buf_C8 to HBM[0] for directive gqeJoin_1.buf_C8:HBM[0]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.buf_D to HBM[1] for directive gqeJoin_1.buf_D:HBM[1]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.htb_buf0 to HBM[0] for directive gqeJoin_1.htb_buf0:HBM[0]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.htb_buf1 to HBM[0] for directive gqeJoin_1.htb_buf1:HBM[0]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.htb_buf2 to HBM[0] for directive gqeJoin_1.htb_buf2:HBM[0]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.htb_buf3 to HBM[0] for directive gqeJoin_1.htb_buf3:HBM[0]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.htb_buf4 to HBM[0] for directive gqeJoin_1.htb_buf4:HBM[0]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.htb_buf5 to HBM[0] for directive gqeJoin_1.htb_buf5:HBM[0]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.htb_buf6 to HBM[0] for directive gqeJoin_1.htb_buf6:HBM[0]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.htb_buf7 to HBM[0] for directive gqeJoin_1.htb_buf7:HBM[0]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.stb_buf0 to HBM[1] for directive gqeJoin_1.stb_buf0:HBM[1]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.stb_buf1 to HBM[1] for directive gqeJoin_1.stb_buf1:HBM[1]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.stb_buf2 to HBM[1] for directive gqeJoin_1.stb_buf2:HBM[1]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.stb_buf3 to HBM[1] for directive gqeJoin_1.stb_buf3:HBM[1]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.stb_buf4 to HBM[1] for directive gqeJoin_1.stb_buf4:HBM[1]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.stb_buf5 to HBM[1] for directive gqeJoin_1.stb_buf5:HBM[1]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.stb_buf6 to HBM[1] for directive gqeJoin_1.stb_buf6:HBM[1]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.stb_buf7 to HBM[1] for directive gqeJoin_1.stb_buf7:HBM[1]
+INFO: [SYSTEM_LINK 82-37] [16:17:26] cfgen finished successfully
+Time (s): cpu = 00:00:10 ; elapsed = 00:00:10 . Memory (MB): peak = 1684.059 ; gain = 0.000 ; free physical = 53390 ; free virtual = 162130
+INFO: [SYSTEM_LINK 82-52] Create top-level block diagram
+INFO: [SYSTEM_LINK 82-38] [16:17:26] cf2bd started: /share/xilinx/Vitis/2020.2/bin/cf2bd  --linux --trace_buffer 1024 --input_file /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/sys_link/cfgraph/cfgen_cfgraph.xml --ip_db /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/sys_link/_sysl/.cdb/xd_ip_db.xml --cf_name dr --working_dir /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/sys_link/_sysl/.xsd --temp_dir /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/sys_link --output_dir /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/int --target_bd ulp.bd
+INFO: [CF2BD 82-31] Launching cf2xd: cf2xd -linux -trace-buffer 1024 -i /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/sys_link/cfgraph/cfgen_cfgraph.xml -r /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/sys_link/_sysl/.cdb/xd_ip_db.xml -o dr.xml
+INFO: [CF2BD 82-28] cf2xd finished successfully
+INFO: [CF2BD 82-31] Launching cf_xsd: cf_xsd -disable-address-gen -bd ulp.bd -dn dr -dp /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/sys_link/_sysl/.xsd
+INFO: [CF2BD 82-28] cf_xsd finished successfully
+INFO: [SYSTEM_LINK 82-37] [16:17:35] cf2bd finished successfully
+Time (s): cpu = 00:00:09 ; elapsed = 00:00:09 . Memory (MB): peak = 1684.059 ; gain = 0.000 ; free physical = 53608 ; free virtual = 162315
+INFO: [v++ 60-1441] [16:17:35] Run run_link: Step system_link: Completed
+Time (s): cpu = 00:00:48 ; elapsed = 00:00:44 . Memory (MB): peak = 1580.773 ; gain = 0.000 ; free physical = 53719 ; free virtual = 162424
+INFO: [v++ 60-1443] [16:17:35] Run run_link: Step cf2sw: Started
+INFO: [v++ 60-1453] Command Line: cf2sw -sdsl /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/int/sdsl.dat -rtd /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/int/cf2sw.rtd -nofilter /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/int/cf2sw_full.rtd -xclbin /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/int/xclbin_orig.xml -o /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/int/xclbin_orig.1.xml
+INFO: [v++ 60-1454] Run Directory: /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/run_link
+INFO: [v++ 60-1441] [16:17:46] Run run_link: Step cf2sw: Completed
+Time (s): cpu = 00:00:11 ; elapsed = 00:00:11 . Memory (MB): peak = 1580.773 ; gain = 0.000 ; free physical = 53667 ; free virtual = 162372
+INFO: [v++ 60-1443] [16:17:46] Run run_link: Step rtd2_system_diagram: Started
+INFO: [v++ 60-1453] Command Line: rtd2SystemDiagram
+INFO: [v++ 60-1454] Run Directory: /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/run_link
+INFO: [v++ 60-1441] [16:17:51] Run run_link: Step rtd2_system_diagram: Completed
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:05 . Memory (MB): peak = 1580.773 ; gain = 0.000 ; free physical = 52883 ; free virtual = 161588
+INFO: [v++ 60-1443] [16:17:51] Run run_link: Step vpl: Started
+INFO: [v++ 60-1453] Command Line: vpl -t hw -f /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm -g --remote_ip_cache /home/jiong/bsc-project/tests/test/build/database/gqeJoin/.ipcache --output_dir /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/int --log_dir /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/logs/link --report_dir /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/reports/link --config /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/int/vplConfig.ini -k /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/int/kernel_info.dat --webtalk_flag Vitis --temp_dir /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link --no-info --iprepo /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/int/xo/ip_repo/xilinx_com_hls_gqeJoin_1_0 --messageDb /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/run_link/vpl.pb /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/int/dr.bd.tcl
+INFO: [v++ 60-1454] Run Directory: /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/run_link
+
+****** vpl v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [VPL 60-839] Read in kernel information from file '/home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/int/kernel_info.dat'.
+INFO: [VPL 74-74] Compiler Version string: 2020.2
+INFO: [VPL 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [VPL 60-1032] Extracting hardware platform to /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/vivado/vpl/.local/hw_platform
+WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
+[16:18:39] Run vpl: Step create_project: Started
+Creating Vivado project.
+[16:18:45] Run vpl: Step create_project: Completed
+[16:18:45] Run vpl: Step create_bd: Started
+[16:20:02] Run vpl: Step create_bd: RUNNING...
+[16:20:48] Run vpl: Step create_bd: Completed
+[16:20:48] Run vpl: Step update_bd: Started
+[16:20:50] Run vpl: Step update_bd: Completed
+[16:20:50] Run vpl: Step generate_target: Started
+[16:22:05] Run vpl: Step generate_target: RUNNING...
+[16:23:21] Run vpl: Step generate_target: RUNNING...
+[16:24:36] Run vpl: Step generate_target: RUNNING...
+[16:25:52] Run vpl: Step generate_target: RUNNING...
+[16:26:23] Run vpl: Step generate_target: Completed
+[16:26:23] Run vpl: Step config_hw_runs: Started
+[16:26:34] Run vpl: Step config_hw_runs: Completed
+[16:26:34] Run vpl: Step synth: Started
+[16:27:36] Block-level synthesis in progress, 0 of 26 jobs complete, 2 jobs running.
+[16:28:06] Block-level synthesis in progress, 0 of 26 jobs complete, 8 jobs running.
+[16:28:37] Block-level synthesis in progress, 0 of 26 jobs complete, 8 jobs running.
+[16:29:08] Block-level synthesis in progress, 0 of 26 jobs complete, 8 jobs running.
+[16:29:38] Block-level synthesis in progress, 0 of 26 jobs complete, 8 jobs running.
+[16:30:08] Block-level synthesis in progress, 0 of 26 jobs complete, 8 jobs running.
+[16:30:39] Block-level synthesis in progress, 0 of 26 jobs complete, 8 jobs running.
+[16:31:09] Block-level synthesis in progress, 0 of 26 jobs complete, 8 jobs running.
+[16:31:39] Block-level synthesis in progress, 1 of 26 jobs complete, 7 jobs running.
+[16:32:10] Block-level synthesis in progress, 6 of 26 jobs complete, 3 jobs running.
+[16:32:40] Block-level synthesis in progress, 7 of 26 jobs complete, 7 jobs running.
+[16:33:11] Block-level synthesis in progress, 7 of 26 jobs complete, 8 jobs running.
+[16:33:41] Block-level synthesis in progress, 7 of 26 jobs complete, 8 jobs running.
+[16:34:12] Block-level synthesis in progress, 7 of 26 jobs complete, 8 jobs running.
+[16:34:42] Block-level synthesis in progress, 8 of 26 jobs complete, 7 jobs running.
+[16:35:12] Block-level synthesis in progress, 8 of 26 jobs complete, 8 jobs running.
+[16:35:43] Block-level synthesis in progress, 8 of 26 jobs complete, 8 jobs running.
+[16:36:14] Block-level synthesis in progress, 10 of 26 jobs complete, 6 jobs running.
+[16:36:44] Block-level synthesis in progress, 11 of 26 jobs complete, 7 jobs running.
+[16:37:15] Block-level synthesis in progress, 14 of 26 jobs complete, 6 jobs running.
+[16:37:45] Block-level synthesis in progress, 16 of 26 jobs complete, 6 jobs running.
+[16:38:16] Block-level synthesis in progress, 16 of 26 jobs complete, 8 jobs running.
+[16:38:46] Block-level synthesis in progress, 16 of 26 jobs complete, 8 jobs running.
+[16:39:17] Block-level synthesis in progress, 16 of 26 jobs complete, 8 jobs running.
+[16:39:48] Block-level synthesis in progress, 16 of 26 jobs complete, 8 jobs running.
+[16:40:18] Block-level synthesis in progress, 16 of 26 jobs complete, 8 jobs running.
+[16:40:49] Block-level synthesis in progress, 17 of 26 jobs complete, 7 jobs running.
+[16:41:19] Block-level synthesis in progress, 21 of 26 jobs complete, 3 jobs running.
+[16:41:50] Block-level synthesis in progress, 23 of 26 jobs complete, 1 job running.
+[16:42:21] Block-level synthesis in progress, 24 of 26 jobs complete, 1 job running.
+[16:42:51] Block-level synthesis in progress, 24 of 26 jobs complete, 1 job running.
+[16:43:22] Block-level synthesis in progress, 24 of 26 jobs complete, 1 job running.
+[16:43:52] Block-level synthesis in progress, 24 of 26 jobs complete, 1 job running.
+[16:44:23] Block-level synthesis in progress, 24 of 26 jobs complete, 1 job running.
+[16:44:53] Block-level synthesis in progress, 24 of 26 jobs complete, 1 job running.
+[16:45:24] Block-level synthesis in progress, 24 of 26 jobs complete, 1 job running.
+[16:45:54] Block-level synthesis in progress, 24 of 26 jobs complete, 1 job running.
+[16:46:25] Block-level synthesis in progress, 24 of 26 jobs complete, 1 job running.
+[16:46:55] Block-level synthesis in progress, 24 of 26 jobs complete, 1 job running.
+[16:47:26] Block-level synthesis in progress, 25 of 26 jobs complete, 0 jobs running.
+[16:47:57] Block-level synthesis in progress, 25 of 26 jobs complete, 1 job running.
+[16:48:27] Block-level synthesis in progress, 25 of 26 jobs complete, 1 job running.
+[16:48:58] Block-level synthesis in progress, 25 of 26 jobs complete, 1 job running.
+[16:49:29] Block-level synthesis in progress, 25 of 26 jobs complete, 1 job running.
+[16:49:59] Block-level synthesis in progress, 25 of 26 jobs complete, 1 job running.
+[16:50:30] Block-level synthesis in progress, 25 of 26 jobs complete, 1 job running.
+[16:51:01] Block-level synthesis in progress, 25 of 26 jobs complete, 1 job running.
+[16:51:32] Run vpl: Step synth: Completed
+[16:51:32] Run vpl: Step impl: Started
+[17:17:03] Finished 2nd of 6 tasks (FPGA linking synthesized kernels to platform). Elapsed time: 00h 59m 08s 
+
+[17:17:03] Starting logic optimization..
+[17:21:09] Phase 1 Retarget
+[17:22:40] Phase 2 Constant propagation
+[17:23:10] Phase 3 Sweep
+[17:27:16] Phase 4 BUFG optimization
+[17:28:48] Phase 5 Shift Register Optimization
+[17:28:48] Phase 6 Post Processing Netlist
+[17:34:57] Finished 3rd of 6 tasks (FPGA logic optimization). Elapsed time: 00h 17m 54s 
+
+[17:34:57] Starting logic placement..
+[17:38:32] Phase 1 Placer Initialization
+[17:38:32] Phase 1.1 Placer Initialization Netlist Sorting
+[17:44:09] Phase 1.2 IO Placement/ Clock Placement/ Build Placer Device
+[17:48:46] Phase 1.3 Build Placer Netlist Model
+[17:55:25] Phase 1.4 Constrain Clocks/Macros
+[17:57:28] Phase 2 Global Placement
+[17:57:28] Phase 2.1 Floorplanning
+[18:02:35] Phase 2.1.1 Partition Driven Placement
+[18:02:35] Phase 2.1.1.1 PBP: Partition Driven Placement
+[18:12:19] Phase 2.1.1.2 PBP: Clock Region Placement
+[18:19:04] Phase 2.1.1.3 PBP: Discrete Incremental
+[18:19:04] Phase 2.1.1.4 PBP: Compute Congestion
+[18:19:35] Phase 2.1.1.5 PBP: Macro Placement
+[18:19:35] Phase 2.1.1.6 PBP: UpdateTiming
+[18:20:36] Phase 2.1.1.7 PBP: Add part constraints
+[18:20:36] Phase 2.2 Update Timing before SLR Path Opt
+[18:21:07] Phase 2.3 Global Placement Core
+[18:49:41] Phase 2.3.1 Physical Synthesis In Placer
+[19:08:51] Phase 3 Detail Placement
+[19:08:51] Phase 3.1 Commit Multi Column Macros
+[19:09:22] Phase 3.2 Commit Most Macros & LUTRAMs
+[19:17:07] Phase 3.3 Small Shape DP
+[19:17:07] Phase 3.3.1 Small Shape Clustering
+[19:22:45] Phase 3.3.2 Flow Legalize Slice Clusters
+[19:23:17] Phase 3.3.3 Slice Area Swap
+[19:31:01] Phase 3.4 Place Remaining
+[19:31:01] Phase 3.5 Re-assign LUT pins
+[19:33:36] Phase 3.6 Pipeline Register Optimization
+[19:33:36] Phase 3.7 Fast Optimization
+[19:38:16] Phase 4 Post Placement Optimization and Clean-Up
+[19:38:16] Phase 4.1 Post Commit Optimization
+[19:41:21] Phase 4.1.1 Post Placement Optimization
+[19:41:52] Phase 4.1.1.1 BUFG Insertion
+[19:41:52] Phase 1 Physical Synthesis Initialization
+[19:43:25] Phase 4.1.1.2 BUFG Replication
+[20:04:04] Phase 4.1.1.3 Replication
+[20:07:10] Phase 4.2 Post Placement Cleanup
+[20:07:41] Phase 4.3 Placer Reporting
+[20:07:41] Phase 4.3.1 Print Estimated Congestion
+[20:07:41] Phase 4.4 Final Placement Cleanup
+[20:37:38] Finished 4th of 6 tasks (FPGA logic placement). Elapsed time: 03h 02m 40s 
+
+[20:37:38] Starting logic routing..
+[20:41:13] Phase 1 Build RT Design
+[20:48:58] Phase 2 Router Initialization
+[20:49:30] Phase 2.1 Fix Topology Constraints
+[20:54:08] Phase 2.2 Pre Route Cleanup
+[20:54:39] Phase 2.3 Global Clock Net Routing
+[20:55:41] Phase 2.4 Update Timing
+[21:05:00] Phase 2.5 Update Timing for Bus Skew
+[21:05:00] Phase 2.5.1 Update Timing
+[21:09:39] Phase 3 Initial Routing
+[21:09:39] Phase 3.1 Global Routing
+[21:09:39] Phase 3.1.1 Global Routing
+[21:09:39] Phase 3.1.1.1 Build GR Node Graph
+[21:13:16] Phase 3.1.1.2 Run Global Routing
+[22:01:29] Phase 4 Rip-up And Reroute
+[22:01:29] Phase 4.1 Global Iteration 0
+
+v++ -l gqeJoin.xo -o gqeJoin.xclbin -t hw -g --platform /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm --config config_link.cfg --optimize 2
+Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ link can be found at:
+	Reports: /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/reports/link
+	Log files: /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/logs/link
+Running Dispatch Server on port:39049
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/tests/test/build/database/gqeJoin/gqeJoin.xclbin.link_summary, at Mon Jan  2 22:45:26 2023
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Mon Jan  2 22:45:26 2023
+Running Rule Check Server on port:36917
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/reports/link/v++_link_gqeJoin_guidance.html', at Mon Jan  2 22:45:29 2023
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
+INFO: [v++ 74-74] Compiler Version string: 2020.2
+INFO: [v++ 60-629] Linking for hardware target
+INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [v++ 60-1332] Run 'run_link' status: Not started
+INFO: [v++ 60-1443] [22:45:58] Run run_link: Step system_link: Started
+INFO: [v++ 60-1453] Command Line: system_link --xo /home/jiong/bsc-project/tests/test/build/database/gqeJoin/gqeJoin.xo --config /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/int/syslinkConfig.ini --xpfm /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm --target hw --output_dir /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/int --temp_dir /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/sys_link
+INFO: [v++ 60-1454] Run Directory: /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/run_link
+INFO: [SYSTEM_LINK 60-1316] Initiating connection to rulecheck server, at Mon Jan  2 22:46:00 2023
+INFO: [SYSTEM_LINK 82-70] Extracting xo v3 file /home/jiong/bsc-project/tests/test/build/database/gqeJoin/gqeJoin.xo
+INFO: [SYSTEM_LINK 82-53] Creating IP database /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/sys_link/_sysl/.cdb/xd_ip_db.xml
+INFO: [SYSTEM_LINK 82-38] [22:46:02] build_xd_ip_db started: /share/xilinx/Vitis/2020.2/bin/build_xd_ip_db -ip_search 0  -sds-pf /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/sys_link/hw.hpfm -clkid 0 -ip /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/sys_link/iprepo/xilinx_com_hls_gqeJoin_1_0,gqeJoin -o /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/sys_link/_sysl/.cdb/xd_ip_db.xml
+INFO: [SYSTEM_LINK 82-37] [22:46:19] build_xd_ip_db finished successfully
+Time (s): cpu = 00:00:20 ; elapsed = 00:00:17 . Memory (MB): peak = 1665.176 ; gain = 0.000 ; free physical = 93173 ; free virtual = 211875
+INFO: [SYSTEM_LINK 82-51] Create system connectivity graph
+INFO: [SYSTEM_LINK 82-102] Applying explicit connections to the system connectivity graph: /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/sys_link/cfgraph/cfgen_cfgraph.xml
+INFO: [SYSTEM_LINK 82-38] [22:46:20] cfgen started: /share/xilinx/Vitis/2020.2/bin/cfgen  -sp gqeJoin_1.buf_A1:HBM[1] -sp gqeJoin_1.buf_A2:HBM[1] -sp gqeJoin_1.buf_A3:HBM[1] -sp gqeJoin_1.buf_A4:HBM[1] -sp gqeJoin_1.buf_A5:HBM[1] -sp gqeJoin_1.buf_A6:HBM[1] -sp gqeJoin_1.buf_A7:HBM[1] -sp gqeJoin_1.buf_A8:HBM[1] -sp gqeJoin_1.tin_meta:HBM[1] -sp gqeJoin_1.tout_meta:HBM[0] -sp gqeJoin_1.buf_C1:HBM[0] -sp gqeJoin_1.buf_C2:HBM[0] -sp gqeJoin_1.buf_C3:HBM[0] -sp gqeJoin_1.buf_C4:HBM[0] -sp gqeJoin_1.buf_C5:HBM[0] -sp gqeJoin_1.buf_C6:HBM[0] -sp gqeJoin_1.buf_C7:HBM[0] -sp gqeJoin_1.buf_C8:HBM[0] -sp gqeJoin_1.buf_D:HBM[1] -sp gqeJoin_1.htb_buf0:HBM[2] -sp gqeJoin_1.htb_buf1:HBM[4] -sp gqeJoin_1.htb_buf2:HBM[6] -sp gqeJoin_1.htb_buf3:HBM[8] -sp gqeJoin_1.htb_buf4:HBM[10] -sp gqeJoin_1.htb_buf5:HBM[12] -sp gqeJoin_1.htb_buf6:HBM[14] -sp gqeJoin_1.htb_buf7:HBM[16] -sp gqeJoin_1.stb_buf1:HBM[3] -sp gqeJoin_1.stb_buf2:HBM[5] -sp gqeJoin_1.stb_buf3:HBM[7] -sp gqeJoin_1.stb_buf4:HBM[9] -sp gqeJoin_1.stb_buf5:HBM[11] -sp gqeJoin_1.stb_buf6:HBM[13] -sp gqeJoin_1.stb_buf7:HBM[15] -sp gqeJoin_1.stb_buf0:HBM[17] -dmclkid 0 -r /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/sys_link/_sysl/.cdb/xd_ip_db.xml -o /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/sys_link/cfgraph/cfgen_cfgraph.xml
+INFO: [CFGEN 83-0] Kernel Specs: 
+INFO: [CFGEN 83-0]   kernel: gqeJoin, num: 1  {gqeJoin_1}
+INFO: [CFGEN 83-0] Port Specs: 
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: buf_A1, sptag: HBM[1]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: buf_A2, sptag: HBM[1]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: buf_A3, sptag: HBM[1]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: buf_A4, sptag: HBM[1]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: buf_A5, sptag: HBM[1]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: buf_A6, sptag: HBM[1]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: buf_A7, sptag: HBM[1]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: buf_A8, sptag: HBM[1]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: tin_meta, sptag: HBM[1]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: tout_meta, sptag: HBM[0]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: buf_C1, sptag: HBM[0]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: buf_C2, sptag: HBM[0]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: buf_C3, sptag: HBM[0]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: buf_C4, sptag: HBM[0]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: buf_C5, sptag: HBM[0]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: buf_C6, sptag: HBM[0]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: buf_C7, sptag: HBM[0]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: buf_C8, sptag: HBM[0]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: buf_D, sptag: HBM[1]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: htb_buf0, sptag: HBM[2]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: htb_buf1, sptag: HBM[4]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: htb_buf2, sptag: HBM[6]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: htb_buf3, sptag: HBM[8]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: htb_buf4, sptag: HBM[10]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: htb_buf5, sptag: HBM[12]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: htb_buf6, sptag: HBM[14]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: htb_buf7, sptag: HBM[16]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: stb_buf1, sptag: HBM[3]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: stb_buf2, sptag: HBM[5]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: stb_buf3, sptag: HBM[7]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: stb_buf4, sptag: HBM[9]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: stb_buf5, sptag: HBM[11]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: stb_buf6, sptag: HBM[13]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: stb_buf7, sptag: HBM[15]
+INFO: [CFGEN 83-0]   kernel: gqeJoin_1, k_port: stb_buf0, sptag: HBM[17]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.buf_A1 to HBM[1] for directive gqeJoin_1.buf_A1:HBM[1]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.buf_A2 to HBM[1] for directive gqeJoin_1.buf_A2:HBM[1]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.buf_A3 to HBM[1] for directive gqeJoin_1.buf_A3:HBM[1]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.buf_A4 to HBM[1] for directive gqeJoin_1.buf_A4:HBM[1]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.buf_A5 to HBM[1] for directive gqeJoin_1.buf_A5:HBM[1]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.buf_A6 to HBM[1] for directive gqeJoin_1.buf_A6:HBM[1]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.buf_A7 to HBM[1] for directive gqeJoin_1.buf_A7:HBM[1]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.buf_A8 to HBM[1] for directive gqeJoin_1.buf_A8:HBM[1]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.tin_meta to HBM[1] for directive gqeJoin_1.tin_meta:HBM[1]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.tout_meta to HBM[0] for directive gqeJoin_1.tout_meta:HBM[0]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.buf_C1 to HBM[0] for directive gqeJoin_1.buf_C1:HBM[0]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.buf_C2 to HBM[0] for directive gqeJoin_1.buf_C2:HBM[0]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.buf_C3 to HBM[0] for directive gqeJoin_1.buf_C3:HBM[0]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.buf_C4 to HBM[0] for directive gqeJoin_1.buf_C4:HBM[0]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.buf_C5 to HBM[0] for directive gqeJoin_1.buf_C5:HBM[0]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.buf_C6 to HBM[0] for directive gqeJoin_1.buf_C6:HBM[0]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.buf_C7 to HBM[0] for directive gqeJoin_1.buf_C7:HBM[0]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.buf_C8 to HBM[0] for directive gqeJoin_1.buf_C8:HBM[0]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.buf_D to HBM[1] for directive gqeJoin_1.buf_D:HBM[1]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.htb_buf0 to HBM[2] for directive gqeJoin_1.htb_buf0:HBM[2]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.htb_buf1 to HBM[4] for directive gqeJoin_1.htb_buf1:HBM[4]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.htb_buf2 to HBM[6] for directive gqeJoin_1.htb_buf2:HBM[6]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.htb_buf3 to HBM[8] for directive gqeJoin_1.htb_buf3:HBM[8]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.htb_buf4 to HBM[10] for directive gqeJoin_1.htb_buf4:HBM[10]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.htb_buf5 to HBM[12] for directive gqeJoin_1.htb_buf5:HBM[12]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.htb_buf6 to HBM[14] for directive gqeJoin_1.htb_buf6:HBM[14]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.htb_buf7 to HBM[16] for directive gqeJoin_1.htb_buf7:HBM[16]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.stb_buf0 to HBM[17] for directive gqeJoin_1.stb_buf0:HBM[17]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.stb_buf1 to HBM[3] for directive gqeJoin_1.stb_buf1:HBM[3]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.stb_buf2 to HBM[5] for directive gqeJoin_1.stb_buf2:HBM[5]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.stb_buf3 to HBM[7] for directive gqeJoin_1.stb_buf3:HBM[7]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.stb_buf4 to HBM[9] for directive gqeJoin_1.stb_buf4:HBM[9]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.stb_buf5 to HBM[11] for directive gqeJoin_1.stb_buf5:HBM[11]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.stb_buf6 to HBM[13] for directive gqeJoin_1.stb_buf6:HBM[13]
+INFO: [CFGEN 83-2228] Creating mapping for argument gqeJoin_1.stb_buf7 to HBM[15] for directive gqeJoin_1.stb_buf7:HBM[15]
+INFO: [SYSTEM_LINK 82-37] [22:46:30] cfgen finished successfully
+Time (s): cpu = 00:00:10 ; elapsed = 00:00:10 . Memory (MB): peak = 1665.176 ; gain = 0.000 ; free physical = 93124 ; free virtual = 211844
+INFO: [SYSTEM_LINK 82-52] Create top-level block diagram
+INFO: [SYSTEM_LINK 82-38] [22:46:30] cf2bd started: /share/xilinx/Vitis/2020.2/bin/cf2bd  --linux --trace_buffer 1024 --input_file /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/sys_link/cfgraph/cfgen_cfgraph.xml --ip_db /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/sys_link/_sysl/.cdb/xd_ip_db.xml --cf_name dr --working_dir /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/sys_link/_sysl/.xsd --temp_dir /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/sys_link --output_dir /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/int --target_bd ulp.bd
+INFO: [CF2BD 82-31] Launching cf2xd: cf2xd -linux -trace-buffer 1024 -i /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/sys_link/cfgraph/cfgen_cfgraph.xml -r /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/sys_link/_sysl/.cdb/xd_ip_db.xml -o dr.xml
+INFO: [CF2BD 82-28] cf2xd finished successfully
+INFO: [CF2BD 82-31] Launching cf_xsd: cf_xsd -disable-address-gen -bd ulp.bd -dn dr -dp /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/sys_link/_sysl/.xsd
+INFO: [CF2BD 82-28] cf_xsd finished successfully
+INFO: [SYSTEM_LINK 82-37] [22:46:39] cf2bd finished successfully
+Time (s): cpu = 00:00:09 ; elapsed = 00:00:09 . Memory (MB): peak = 1665.176 ; gain = 0.000 ; free physical = 93057 ; free virtual = 211851
+INFO: [v++ 60-1441] [22:46:39] Run run_link: Step system_link: Completed
+Time (s): cpu = 00:00:44 ; elapsed = 00:00:41 . Memory (MB): peak = 1581.668 ; gain = 0.000 ; free physical = 93167 ; free virtual = 211956
+INFO: [v++ 60-1443] [22:46:39] Run run_link: Step cf2sw: Started
+INFO: [v++ 60-1453] Command Line: cf2sw -sdsl /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/int/sdsl.dat -rtd /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/int/cf2sw.rtd -nofilter /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/int/cf2sw_full.rtd -xclbin /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/int/xclbin_orig.xml -o /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/int/xclbin_orig.1.xml
+INFO: [v++ 60-1454] Run Directory: /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/run_link
+INFO: [v++ 60-1441] [22:46:50] Run run_link: Step cf2sw: Completed
+Time (s): cpu = 00:00:10 ; elapsed = 00:00:10 . Memory (MB): peak = 1581.668 ; gain = 0.000 ; free physical = 93041 ; free virtual = 211840
+INFO: [v++ 60-1443] [22:46:50] Run run_link: Step rtd2_system_diagram: Started
+INFO: [v++ 60-1453] Command Line: rtd2SystemDiagram
+INFO: [v++ 60-1454] Run Directory: /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/run_link
+INFO: [v++ 60-1441] [22:46:54] Run run_link: Step rtd2_system_diagram: Completed
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:05 . Memory (MB): peak = 1581.668 ; gain = 0.000 ; free physical = 92268 ; free virtual = 211088
+INFO: [v++ 60-1443] [22:46:54] Run run_link: Step vpl: Started
+INFO: [v++ 60-1453] Command Line: vpl -t hw -f /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm -g --remote_ip_cache /home/jiong/bsc-project/tests/test/build/database/gqeJoin/.ipcache --output_dir /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/int --log_dir /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/logs/link --report_dir /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/reports/link --config /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/int/vplConfig.ini -k /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/int/kernel_info.dat --webtalk_flag Vitis --temp_dir /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link --no-info --iprepo /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/int/xo/ip_repo/xilinx_com_hls_gqeJoin_1_0 --messageDb /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/run_link/vpl.pb /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/int/dr.bd.tcl
+INFO: [v++ 60-1454] Run Directory: /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/run_link
+
+****** vpl v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [VPL 60-839] Read in kernel information from file '/home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/int/kernel_info.dat'.
+INFO: [VPL 74-74] Compiler Version string: 2020.2
+INFO: [VPL 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [VPL 60-1032] Extracting hardware platform to /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/vivado/vpl/.local/hw_platform
+WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
+[22:47:36] Run vpl: Step create_project: Started
+Creating Vivado project.
+[22:47:42] Run vpl: Step create_project: Completed
+[22:47:42] Run vpl: Step create_bd: Started
+[22:48:59] Run vpl: Step create_bd: RUNNING...
+[22:50:15] Run vpl: Step create_bd: RUNNING...
+[22:50:28] Run vpl: Step create_bd: Completed
+[22:50:28] Run vpl: Step update_bd: Started
+[22:50:28] Run vpl: Step update_bd: Completed
+[22:50:28] Run vpl: Step generate_target: Started
+[22:51:44] Run vpl: Step generate_target: RUNNING...
+[22:52:59] Run vpl: Step generate_target: RUNNING...
+[22:54:15] Run vpl: Step generate_target: RUNNING...
+[22:55:30] Run vpl: Step generate_target: RUNNING...
+[22:56:10] Run vpl: Step generate_target: Completed
+[22:56:10] Run vpl: Step config_hw_runs: Started
+[22:56:23] Run vpl: Step config_hw_runs: Completed
+[22:56:23] Run vpl: Step synth: Started
+[22:57:23] Block-level synthesis in progress, 0 of 26 jobs complete, 2 jobs running.
+[22:57:54] Block-level synthesis in progress, 0 of 26 jobs complete, 8 jobs running.
+[22:58:25] Block-level synthesis in progress, 0 of 26 jobs complete, 8 jobs running.
+[22:58:55] Block-level synthesis in progress, 0 of 26 jobs complete, 8 jobs running.
+[22:59:26] Block-level synthesis in progress, 0 of 26 jobs complete, 8 jobs running.
+[22:59:56] Block-level synthesis in progress, 0 of 26 jobs complete, 8 jobs running.
+[23:00:26] Block-level synthesis in progress, 0 of 26 jobs complete, 8 jobs running.
+[23:00:57] Block-level synthesis in progress, 1 of 26 jobs complete, 7 jobs running.
+[23:01:27] Block-level synthesis in progress, 2 of 26 jobs complete, 8 jobs running.
+[23:01:57] Block-level synthesis in progress, 3 of 26 jobs complete, 7 jobs running.
+[23:02:28] Block-level synthesis in progress, 5 of 26 jobs complete, 6 jobs running.
+[23:02:58] Block-level synthesis in progress, 6 of 26 jobs complete, 8 jobs running.
+[23:03:29] Block-level synthesis in progress, 8 of 26 jobs complete, 8 jobs running.
+[23:03:59] Block-level synthesis in progress, 8 of 26 jobs complete, 8 jobs running.
+[23:04:30] Block-level synthesis in progress, 8 of 26 jobs complete, 8 jobs running.
+[23:05:00] Block-level synthesis in progress, 8 of 26 jobs complete, 8 jobs running.
+[23:05:31] Block-level synthesis in progress, 9 of 26 jobs complete, 7 jobs running.
+[23:06:01] Block-level synthesis in progress, 9 of 26 jobs complete, 8 jobs running.
+[23:06:32] Block-level synthesis in progress, 11 of 26 jobs complete, 6 jobs running.
+[23:07:02] Block-level synthesis in progress, 12 of 26 jobs complete, 7 jobs running.
+[23:07:33] Block-level synthesis in progress, 14 of 26 jobs complete, 6 jobs running.
+[23:08:04] Block-level synthesis in progress, 16 of 26 jobs complete, 7 jobs running.
+[23:08:34] Block-level synthesis in progress, 16 of 26 jobs complete, 8 jobs running.
+[23:09:05] Block-level synthesis in progress, 16 of 26 jobs complete, 8 jobs running.
+[23:09:35] Block-level synthesis in progress, 16 of 26 jobs complete, 8 jobs running.
+[23:10:06] Block-level synthesis in progress, 16 of 26 jobs complete, 8 jobs running.
+[23:10:36] Block-level synthesis in progress, 18 of 26 jobs complete, 6 jobs running.
+[23:11:07] Block-level synthesis in progress, 19 of 26 jobs complete, 5 jobs running.
+[23:11:37] Block-level synthesis in progress, 21 of 26 jobs complete, 3 jobs running.
+[23:12:08] Block-level synthesis in progress, 21 of 26 jobs complete, 3 jobs running.
+[23:12:38] Block-level synthesis in progress, 23 of 26 jobs complete, 1 job running.
+[23:13:09] Block-level synthesis in progress, 23 of 26 jobs complete, 1 job running.
+[23:13:40] Block-level synthesis in progress, 24 of 26 jobs complete, 0 jobs running.
+[23:14:11] Block-level synthesis in progress, 24 of 26 jobs complete, 1 job running.
+[23:14:41] Block-level synthesis in progress, 24 of 26 jobs complete, 1 job running.
+[23:15:12] Block-level synthesis in progress, 24 of 26 jobs complete, 1 job running.
+[23:15:43] Block-level synthesis in progress, 24 of 26 jobs complete, 1 job running.
+[23:16:13] Block-level synthesis in progress, 24 of 26 jobs complete, 1 job running.
+[23:16:44] Block-level synthesis in progress, 24 of 26 jobs complete, 1 job running.
+[23:17:15] Block-level synthesis in progress, 24 of 26 jobs complete, 1 job running.
+[23:17:46] Block-level synthesis in progress, 24 of 26 jobs complete, 1 job running.
+[23:18:16] Block-level synthesis in progress, 24 of 26 jobs complete, 1 job running.
+[23:18:47] Block-level synthesis in progress, 24 of 26 jobs complete, 1 job running.
+[23:19:17] Block-level synthesis in progress, 25 of 26 jobs complete, 0 jobs running.
+[23:19:48] Block-level synthesis in progress, 25 of 26 jobs complete, 1 job running.
+[23:20:18] Block-level synthesis in progress, 25 of 26 jobs complete, 1 job running.
+[23:20:48] Block-level synthesis in progress, 25 of 26 jobs complete, 1 job running.
+[23:21:18] Block-level synthesis in progress, 25 of 26 jobs complete, 1 job running.
+[23:21:49] Block-level synthesis in progress, 25 of 26 jobs complete, 1 job running.
+[23:22:19] Block-level synthesis in progress, 25 of 26 jobs complete, 1 job running.
+[23:22:49] Block-level synthesis in progress, 25 of 26 jobs complete, 1 job running.
+[23:23:20] Block-level synthesis in progress, 25 of 26 jobs complete, 1 job running.
+[23:23:32] Run vpl: Step synth: Completed
+[23:23:32] Run vpl: Step impl: Started
+[23:55:11] Finished 2nd of 6 tasks (FPGA linking synthesized kernels to platform). Elapsed time: 01h 08m 15s 
+
+[23:55:11] Starting logic optimization..
+[23:59:14] Phase 1 Retarget
+[00:00:46] Phase 2 Constant propagation
+[00:01:16] Phase 3 Sweep
+[00:05:23] Phase 4 BUFG optimization
+[00:06:54] Phase 5 Shift Register Optimization
+[00:06:54] Phase 6 Post Processing Netlist
+[00:14:35] Finished 3rd of 6 tasks (FPGA logic optimization). Elapsed time: 00h 19m 23s 
+
+[00:14:35] Starting logic placement..
+[00:16:38] Phase 1 Placer Initialization
+[00:16:38] Phase 1.1 Placer Initialization Netlist Sorting
+[00:23:17] Phase 1.2 IO Placement/ Clock Placement/ Build Placer Device
+[00:28:24] Phase 1.3 Build Placer Netlist Model
+[00:35:36] Phase 1.4 Constrain Clocks/Macros
+[00:37:40] Phase 2 Global Placement
+[00:38:11] Phase 2.1 Floorplanning
+[00:43:17] Phase 2.1.1 Partition Driven Placement
+[00:43:17] Phase 2.1.1.1 PBP: Partition Driven Placement
+[00:52:27] Phase 2.1.1.2 PBP: Clock Region Placement
+[00:59:40] Phase 2.1.1.3 PBP: Discrete Incremental
+[00:59:40] Phase 2.1.1.4 PBP: Compute Congestion
+[00:59:40] Phase 2.1.1.5 PBP: Macro Placement
+[01:00:11] Phase 2.1.1.6 PBP: UpdateTiming
+[01:00:42] Phase 2.1.1.7 PBP: Add part constraints
+[01:01:13] Phase 2.2 Update Timing before SLR Path Opt
+[01:01:13] Phase 2.3 Global Placement Core
+[01:30:42] Phase 2.3.1 Physical Synthesis In Placer
+[01:54:27] Phase 3 Detail Placement
+[01:54:27] Phase 3.1 Commit Multi Column Macros
+[01:54:58] Phase 3.2 Commit Most Macros & LUTRAMs
+[02:02:43] Phase 3.3 Small Shape DP
+[02:02:43] Phase 3.3.1 Small Shape Clustering
+[02:06:22] Phase 3.3.2 Flow Legalize Slice Clusters
+[02:06:53] Phase 3.3.3 Slice Area Swap
+[02:16:14] Phase 3.4 Place Remaining
+[02:16:45] Phase 3.5 Re-assign LUT pins
+[02:19:52] Phase 3.6 Pipeline Register Optimization
+[02:20:24] Phase 3.7 Fast Optimization
+[02:23:31] Phase 4 Post Placement Optimization and Clean-Up
+[02:23:31] Phase 4.1 Post Commit Optimization
+[02:28:10] Phase 4.1.1 Post Placement Optimization
+[02:28:10] Phase 4.1.1.1 BUFG Insertion
+[02:28:10] Phase 1 Physical Synthesis Initialization
+[02:30:15] Phase 4.1.1.2 BUFG Replication
+[02:41:03] Phase 4.1.1.3 Replication
+[02:43:37] Phase 4.2 Post Placement Cleanup
+[02:43:37] Phase 4.3 Placer Reporting
+[02:43:37] Phase 4.3.1 Print Estimated Congestion
+[02:43:37] Phase 4.4 Final Placement Cleanup
+[03:12:39] Finished 4th of 6 tasks (FPGA logic placement). Elapsed time: 02h 58m 03s 
+
+[03:12:39] Starting logic routing..
+[03:14:44] Phase 1 Build RT Design
+[03:23:03] Phase 2 Router Initialization
+[03:23:03] Phase 2.1 Fix Topology Constraints
+[03:32:12] Phase 2.2 Pre Route Cleanup
+[03:33:13] Phase 2.3 Global Clock Net Routing
+[03:35:45] Phase 2.4 Update Timing
+[03:44:30] Phase 2.5 Update Timing for Bus Skew
+[03:44:30] Phase 2.5.1 Update Timing
+[03:48:34] Phase 3 Initial Routing
+[03:48:34] Phase 3.1 Global Routing
+[03:48:34] Phase 3.1.1 Global Routing
+[03:48:34] Phase 3.1.1.1 Build GR Node Graph
+[03:52:41] Phase 3.1.1.2 Run Global Routing
+[04:31:28] Phase 4 Rip-up And Reroute
+[04:31:28] Phase 4.1 Global Iteration 0
+[05:45:22] Phase 4.2 Global Iteration 1
+[05:52:06] Phase 4.3 Global Iteration 2
+[06:06:43] Phase 4.4 Global Iteration 3
+[06:31:06] Phase 4.5 Global Iteration 4
+[06:43:34] Phase 4.6 Global Iteration 5
+[06:49:17] Phase 5 Delay and Skew Optimization
+[06:49:17] Phase 5.1 Delay CleanUp
+[06:49:17] Phase 5.1.1 Update Timing
+[06:52:25] Phase 5.1.2 Update Timing
+[06:55:32] Phase 5.2 Clock Skew Optimization
+[06:56:35] Phase 6 Post Hold Fix
+[06:56:35] Phase 6.1 Hold Fix Iter
+[06:56:35] Phase 6.1.1 Update Timing
+[07:01:43] Phase 7 Leaf Clock Prog Delay Opt
+[07:08:30] Phase 7.1 Delay CleanUp
+[07:08:30] Phase 7.1.1 Update Timing
+[07:11:38] Phase 7.1.2 Update Timing
+[07:15:16] Phase 7.2 Hold Fix Iter
+[07:15:16] Phase 7.2.1 Update Timing
+[07:23:04] Phase 7.3 Global Iteration for Hold
+[07:23:04] Phase 7.3.1 Update Timing
+[07:32:24] Phase 8 Route finalize
+[07:33:27] Phase 9 Verifying routed nets
+[07:33:58] Phase 10 Depositing Routes
+[07:37:06] Phase 11 Post Router Timing
+[07:39:42] Phase 12 Physical Synthesis in Router
+[07:39:42] Phase 12.1 Physical Synthesis Initialization
+[07:43:21] Phase 12.2 Critical Path Optimization
+[07:46:59] Finished 5th of 6 tasks (FPGA routing). Elapsed time: 04h 34m 20s 
+
+[07:46:59] Starting bitstream generation..
+[08:30:02] Creating bitmap...
+[08:50:47] Writing bitstream ./level0_i_ulp_my_rm_partial.bit...
+[08:50:47] Finished 6th of 6 tasks (FPGA bitstream generation). Elapsed time: 01h 03m 48s 
+[08:55:47] Run vpl: Step impl: Completed
+[08:55:48] Run vpl: FINISHED. Run Status: impl Complete!
+INFO: [v++ 60-1441] [08:55:48] Run run_link: Step vpl: Completed
+Time (s): cpu = 00:16:36 ; elapsed = 10:08:54 . Memory (MB): peak = 1581.668 ; gain = 0.000 ; free physical = 89948 ; free virtual = 211623
+INFO: [v++ 60-1443] [08:55:48] Run run_link: Step rtdgen: Started
+INFO: [v++ 60-1453] Command Line: rtdgen
+INFO: [v++ 60-1454] Run Directory: /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/run_link
+INFO: [v++ 60-991] clock name 'clk_kernel2_in' (clock ID '1') is being mapped to clock name 'KERNEL_CLK' in the xclbin
+INFO: [v++ 60-991] clock name 'clk_kernel_in' (clock ID '0') is being mapped to clock name 'DATA_CLK' in the xclbin
+INFO: [v++ 60-991] clock name 'hbm_aclk' (clock ID '') is being mapped to clock name 'hbm_aclk' in the xclbin
+INFO: [v++ 60-1230] The compiler selected the following frequencies for the runtime controllable kernel clock(s) and scalable system clock(s): System (SYSTEM) clock: hbm_aclk = 445, Kernel (KERNEL) clock: clk_kernel2_in = 500, Kernel (DATA) clock: clk_kernel_in = 239
+INFO: [v++ 60-1453] Command Line: cf2sw -a /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/int/address_map.xml -sdsl /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/int/sdsl.dat -xclbin /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/int/xclbin_orig.xml -rtd /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/int/gqeJoin.rtd -o /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/int/gqeJoin.xml
+INFO: [v++ 60-1652] Cf2sw returned exit code: 0
+INFO: [v++ 60-2311] HPISystemDiagram::writeSystemDiagramAfterRunningVivado, rtdInputFilePath: /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/int/gqeJoin.rtd
+INFO: [v++ 60-2312] HPISystemDiagram::writeSystemDiagramAfterRunningVivado, systemDiagramOutputFilePath: /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/int/systemDiagramModelSlrBaseAddress.json
+INFO: [v++ 60-1618] Launching 
+INFO: [v++ 60-1441] [08:55:58] Run run_link: Step rtdgen: Completed
+Time (s): cpu = 00:00:10 ; elapsed = 00:00:10 . Memory (MB): peak = 1581.668 ; gain = 0.000 ; free physical = 92882 ; free virtual = 214558
+INFO: [v++ 60-1443] [08:55:58] Run run_link: Step xclbinutil: Started
+INFO: [v++ 60-1453] Command Line: xclbinutil --add-section BITSTREAM:RAW:/home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/int/partial.bit --force --target hw --key-value SYS:dfx_enable:true --add-section :JSON:/home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/int/gqeJoin.rtd --append-section :JSON:/home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/int/appendSection.rtd --add-section CLOCK_FREQ_TOPOLOGY:JSON:/home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/int/gqeJoin_xml.rtd --add-section BUILD_METADATA:JSON:/home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/int/gqeJoin_build.rtd --add-section EMBEDDED_METADATA:RAW:/home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/int/gqeJoin.xml --add-section SYSTEM_METADATA:RAW:/home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/int/systemDiagramModelSlrBaseAddress.json --key-value SYS:PlatformVBNV:xilinx_u50_gen3x16_xdma_201920_3 --output /home/jiong/bsc-project/tests/test/build/database/gqeJoin/gqeJoin.xclbin
+INFO: [v++ 60-1454] Run Directory: /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/run_link
+XRT Build Version: 2.12.427 (2021.2)
+       Build Date: 2021-10-08 22:06:50
+          Hash ID: 2719b6027e185000fc49783171631db03fc0ef79
+Creating a default 'in-memory' xclbin image.
+
+Section: 'BITSTREAM'(0) was successfully added.
+Size   : 50473520 bytes
+Format : RAW
+File   : '/home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/int/partial.bit'
+
+Section: 'MEM_TOPOLOGY'(6) was successfully added.
+Format : JSON
+File   : 'mem_topology'
+
+Section: 'IP_LAYOUT'(8) was successfully added.
+Format : JSON
+File   : 'ip_layout'
+
+Section: 'CONNECTIVITY'(7) was successfully added.
+Format : JSON
+File   : 'connectivity'
+
+Section: 'CLOCK_FREQ_TOPOLOGY'(11) was successfully added.
+Size   : 410 bytes
+Format : JSON
+File   : '/home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/int/gqeJoin_xml.rtd'
+
+Section: 'BUILD_METADATA'(14) was successfully added.
+Size   : 11235 bytes
+Format : JSON
+File   : '/home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/int/gqeJoin_build.rtd'
+
+Section: 'EMBEDDED_METADATA'(2) was successfully added.
+Size   : 1096507 bytes
+Format : RAW
+File   : '/home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/int/gqeJoin.xml'
+
+Section: 'SYSTEM_METADATA'(22) was successfully added.
+Size   : 38978 bytes
+Format : RAW
+File   : '/home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/int/systemDiagramModelSlrBaseAddress.json'
+
+Section: 'PARTITION_METADATA'(20) was successfully appended to.
+Format : JSON
+File   : 'partition_metadata'
+
+Section: 'IP_LAYOUT'(8) was successfully appended to.
+Format : JSON
+File   : 'ip_layout'
+Successfully wrote (51663083 bytes) to the output file: /home/jiong/bsc-project/tests/test/build/database/gqeJoin/gqeJoin.xclbin
+Leaving xclbinutil.
+INFO: [v++ 60-1441] [08:55:59] Run run_link: Step xclbinutil: Completed
+Time (s): cpu = 00:00:00.19 ; elapsed = 00:00:00.37 . Memory (MB): peak = 1581.668 ; gain = 0.000 ; free physical = 92838 ; free virtual = 214563
+INFO: [v++ 60-1443] [08:55:59] Run run_link: Step xclbinutilinfo: Started
+INFO: [v++ 60-1453] Command Line: xclbinutil --quiet --force --info /home/jiong/bsc-project/tests/test/build/database/gqeJoin/gqeJoin.xclbin.info --input /home/jiong/bsc-project/tests/test/build/database/gqeJoin/gqeJoin.xclbin
+INFO: [v++ 60-1454] Run Directory: /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/run_link
+INFO: [v++ 60-1441] [08:56:00] Run run_link: Step xclbinutilinfo: Completed
+Time (s): cpu = 00:00:02 ; elapsed = 00:00:02 . Memory (MB): peak = 1581.668 ; gain = 0.000 ; free physical = 92840 ; free virtual = 214565
+INFO: [v++ 60-1443] [08:56:00] Run run_link: Step generate_sc_driver: Started
+INFO: [v++ 60-1453] Command Line: 
+INFO: [v++ 60-1454] Run Directory: /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/link/run_link
+INFO: [v++ 60-1441] [08:56:00] Run run_link: Step generate_sc_driver: Completed
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1581.668 ; gain = 0.000 ; free physical = 92840 ; free virtual = 214565
+INFO: [v++ 60-244] Generating system estimate report...
+INFO: [v++ 60-1092] Generated system estimate report: /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/reports/link/system_estimate_gqeJoin.xtxt
+INFO: [v++ 60-586] Created /home/jiong/bsc-project/tests/test/build/database/gqeJoin/gqeJoin.ltx
+INFO: [v++ 60-586] Created gqeJoin.xclbin
+INFO: [v++ 60-1307] Run completed. Additional information can be found in:
+	Guidance: /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/reports/link/v++_link_gqeJoin_guidance.html
+	Timing Report: /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/reports/link/imp/impl_1_hw_bb_locked_timing_summary_routed.rpt
+	Vivado Log: /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/logs/link/vivado.log
+	Steps Log File: /home/jiong/bsc-project/tests/test/build/database/gqeJoin/_x/logs/link/link.steps.log
+
+INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
+    vitis_analyzer /home/jiong/bsc-project/tests/test/build/database/gqeJoin/gqeJoin.xclbin.link_summary 
+INFO: [v++ 60-791] Total elapsed time: 10h 10m 48s
+INFO: [v++ 60-1653] Closing dispatch client.
+rm -rf _x .Xil log report *.log

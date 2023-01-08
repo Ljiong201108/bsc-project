@@ -11,6 +11,7 @@
 // const std::string xclbinFileName="fpga.xclbin";
 
 enum class Lib{
+    EMPTY,
     DES, 
     AES128, 
     AES192, 
@@ -18,10 +19,14 @@ enum class Lib{
     GZIP_ZLIB, 
     SNAPPY, 
     LZ4, 
-    ZSTD
+    ZSTD,
+    PART,
+    JOIN,
+    AGGR
 };
 
 const std::string xclbinFileNames[]={
+    "",
     "des.xclbin", 
     "aes128.xclbin", 
     "aes192.xclbin", 
@@ -29,7 +34,10 @@ const std::string xclbinFileNames[]={
     "gzip_zlib.xclbin", 
     "snappy.xclbin", 
     "lz4.xclbin", 
-    "zstd.xclbin"
+    "zstd.xclbin",
+    "gqePart.xclbin",
+    "gqeJoin.xclbin",
+    "gqeAggr.xclbin"
 };
 
 class Application{
@@ -37,53 +45,45 @@ private:
     cl_int m_err;
     cl::Device m_device;
     cl::Context m_context;
-    cl::Program m_program;
+    std::unique_ptr<cl::Program> m_program;
     unsigned m_xclbinBufferSize;
     char *m_xclbinBuffer;
 
-    Application(const std::string &binaryFileName);
+    Lib m_lib;
+
+    Application();
     
 public:
     Application(const Application&)=delete;
     Application& operator=(const Application&)=delete;
 
-    template<Lib L>
     static Application& getInstance();
 
     ~Application();
 
     //getters
-    template<Lib L>
     static cl::Device &getDevice();
+
+    static cl::Context &getContext();
 
     template<Lib L>
     static cl::Program &getProgram();
 
-    template<Lib L>
-    static cl::Context &getContext();
-
     //helper functions
-    void get_xilinx_devices();
-    void read_binary_file(const std::string &xclbin_file_name);
+    void getXilinxDevices();
+    void loadBinaryFile(const std::string &&xclbin_file_name);
 };
 
 template<Lib L>
-Application& Application::getInstance(){
-    static Application instance(xclbinFileNames[(int)L]);
-    return instance;
-}
+cl::Program& Application::getProgram(){
+    static_assert(L!=Lib::EMPTY && "Cannot switch to EMPTY xclbin file!");
 
-template<Lib L>
-cl::Device &Application::getDevice(){
-    return getInstance<L>().m_device;
-}
+    if(L!=getInstance().m_lib){
+        getInstance().m_program.reset(nullptr);
+        getInstance().loadBinaryFile(xclbinPath()+"/"+xclbinFileNames[(int)L]);
+        getInstance().m_lib=L;
+        std::cout<<"change the xclbin file to "<<xclbinFileNames[(int)L]<<std::endl;
+    }
 
-template<Lib L>
-cl::Program &Application::getProgram(){
-    return getInstance<L>().m_program;
-}
-
-template<Lib L>
-cl::Context &Application::getContext(){
-    return getInstance<L>().m_context;
+    return *getInstance().m_program;
 }

@@ -1,0 +1,13 @@
+#-----------------------------------------------------------
+# Vitis Analyzer v2020.2 (64-bit)
+# SW Build 3064766 on Wed Nov 18 09:12:47 MST 2020
+# 
+# Start of session at: Fri Jan  6 19:16:45 2023
+# Process ID: 3291238
+# Current directory: /home/jiong/bsc-project/xclbin/build/database_U50/gqeJoin
+# Command line: vitis_analyzer gqeJoin.xo.compile_summary
+# Log file: /home/jiong/bsc-project/xclbin/build/database_U50/gqeJoin/vitis_analyzer.log
+# Journal file: /home/jiong/bsc-project/xclbin/build/database_U50/gqeJoin/vitis_analyzer.jou
+#-----------------------------------------------------------
+start_gui
+create_project dummy

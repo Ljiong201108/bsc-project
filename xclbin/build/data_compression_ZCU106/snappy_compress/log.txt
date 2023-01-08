@@ -1,0 +1,414 @@
+v++ -c -k  xilSnappyCompressMM -I/home/jiong/bsc-project/components/security/include -I/home/jiong/bsc-project/kernels/security/include -I/home/jiong/bsc-project/components/data_compression/include -I/home/jiong/bsc-project/kernels/data_compression/include /home/jiong/bsc-project/kernels/data_compression/src/xilSnappyCompressMM.cpp -o xilSnappyCompressMM.xo -t hw -g --platform /share/xilinx/platform_repo/xilinx_zcu106_base_202010_1/export/xilinx_zcu106_base_202010_1/xilinx_zcu106_base_202010_1.xpfm --log_dir log --report_dir report
+Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ compile can be found at:
+	Reports: /home/jiong/bsc-project/xclbin/build/data_compression_ZCU106/snappy_compress/report/xilSnappyCompressMM
+	Log files: /home/jiong/bsc-project/xclbin/build/data_compression_ZCU106/snappy_compress/log/xilSnappyCompressMM
+Running Dispatch Server on port:45817
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/xclbin/build/data_compression_ZCU106/snappy_compress/xilSnappyCompressMM.xo.compile_summary, at Sun Jan  8 00:47:38 2023
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Sun Jan  8 00:47:38 2023
+Running Rule Check Server on port:41493
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/xclbin/build/data_compression_ZCU106/snappy_compress/report/xilSnappyCompressMM/v++_compile_xilSnappyCompressMM_guidance.html', at Sun Jan  8 00:47:41 2023
+INFO: [v++ 60-895]   Target platform: /share/xilinx/platform_repo/xilinx_zcu106_base_202010_1/export/xilinx_zcu106_base_202010_1/xilinx_zcu106_base_202010_1.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/share/xilinx/platform_repo/xilinx_zcu106_base_202010_1/export/xilinx_zcu106_base_202010_1/hw/xilinx_zcu106_base_202010_1.xsa'
+INFO: [v++ 60-585] Compiling for hardware target
+INFO: [v++ 60-423]   Target device: xilinx_zcu106_base_202010_1
+INFO: [v++ 60-242] Creating kernel: 'xilSnappyCompressMM'
+WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
+
+===>The following messages were generated while  performing high-level synthesis for kernel: xilSnappyCompressMM Log file: /home/jiong/bsc-project/xclbin/build/data_compression_ZCU106/snappy_compress/_x/xilSnappyCompressMM/xilSnappyCompressMM/vitis_hls.log :
+INFO: [v++ 204-61] Pipelining loop 'gmem_read'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 3, loop 'gmem_read'
+INFO: [v++ 204-61] Pipelining loop 'downsizer_assign'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 3, loop 'downsizer_assign'
+INFO: [v++ 204-61] Pipelining loop 'downsizer_assign'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 3, loop 'downsizer_assign'
+INFO: [v++ 204-61] Pipelining loop 'downsizer_assign'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 3, loop 'downsizer_assign'
+INFO: [v++ 204-61] Pipelining loop 'downsizer_assign'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 3, loop 'downsizer_assign'
+INFO: [v++ 204-61] Pipelining loop 'downsizer_assign'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 3, loop 'downsizer_assign'
+INFO: [v++ 204-61] Pipelining loop 'downsizer_assign'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 3, loop 'downsizer_assign'
+INFO: [v++ 204-61] Pipelining loop 'downsizer_assign'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 3, loop 'downsizer_assign'
+INFO: [v++ 204-61] Pipelining loop 'downsizer_assign'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 3, loop 'downsizer_assign'
+INFO: [v++ 204-61] Pipelining loop 'dict_flush'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 1, loop 'dict_flush'
+INFO: [v++ 204-61] Pipelining loop 'lz_compress'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 5, loop 'lz_compress'
+INFO: [v++ 204-61] Pipelining loop 'lz_compress_leftover'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 2, loop 'lz_compress_leftover'
+INFO: [v++ 204-61] Pipelining loop 'lz_left_bytes'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 2, loop 'lz_left_bytes'
+INFO: [v++ 204-61] Pipelining loop 'lz_bestMatchFilter'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 3, loop 'lz_bestMatchFilter'
+INFO: [v++ 204-61] Pipelining loop 'lz_booster'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 4, loop 'lz_booster'
+INFO: [v++ 204-61] Pipelining loop 'snappy_divide'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 2, loop 'snappy_divide'
+INFO: [v++ 204-61] Pipelining loop 'snappy_compress'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 3, loop 'snappy_compress'
+INFO: [v++ 204-61] Pipelining loop 'dict_flush'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 1, loop 'dict_flush'
+INFO: [v++ 204-61] Pipelining loop 'lz_compress'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 5, loop 'lz_compress'
+INFO: [v++ 204-61] Pipelining loop 'lz_compress_leftover'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 2, loop 'lz_compress_leftover'
+INFO: [v++ 204-61] Pipelining loop 'lz_left_bytes'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 2, loop 'lz_left_bytes'
+INFO: [v++ 204-61] Pipelining loop 'lz_bestMatchFilter'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 3, loop 'lz_bestMatchFilter'
+INFO: [v++ 204-61] Pipelining loop 'lz_booster'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 4, loop 'lz_booster'
+INFO: [v++ 204-61] Pipelining loop 'snappy_divide'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 2, loop 'snappy_divide'
+INFO: [v++ 204-61] Pipelining loop 'snappy_compress'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 3, loop 'snappy_compress'
+INFO: [v++ 204-61] Pipelining loop 'dict_flush'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 1, loop 'dict_flush'
+INFO: [v++ 204-61] Pipelining loop 'lz_compress'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 5, loop 'lz_compress'
+INFO: [v++ 204-61] Pipelining loop 'lz_compress_leftover'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 2, loop 'lz_compress_leftover'
+INFO: [v++ 204-61] Pipelining loop 'lz_left_bytes'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 2, loop 'lz_left_bytes'
+INFO: [v++ 204-61] Pipelining loop 'lz_bestMatchFilter'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 3, loop 'lz_bestMatchFilter'
+INFO: [v++ 204-61] Pipelining loop 'lz_booster'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 4, loop 'lz_booster'
+INFO: [v++ 204-61] Pipelining loop 'snappy_divide'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 2, loop 'snappy_divide'
+INFO: [v++ 204-61] Pipelining loop 'snappy_compress'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 3, loop 'snappy_compress'
+INFO: [v++ 204-61] Pipelining loop 'dict_flush'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 1, loop 'dict_flush'
+INFO: [v++ 204-61] Pipelining loop 'lz_compress'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 5, loop 'lz_compress'
+INFO: [v++ 204-61] Pipelining loop 'lz_compress_leftover'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 2, loop 'lz_compress_leftover'
+INFO: [v++ 204-61] Pipelining loop 'lz_left_bytes'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 2, loop 'lz_left_bytes'
+INFO: [v++ 204-61] Pipelining loop 'lz_bestMatchFilter'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 3, loop 'lz_bestMatchFilter'
+INFO: [v++ 204-61] Pipelining loop 'lz_booster'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 4, loop 'lz_booster'
+INFO: [v++ 204-61] Pipelining loop 'snappy_divide'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 2, loop 'snappy_divide'
+INFO: [v++ 204-61] Pipelining loop 'snappy_compress'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 3, loop 'snappy_compress'
+INFO: [v++ 204-61] Pipelining loop 'dict_flush'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 1, loop 'dict_flush'
+INFO: [v++ 204-61] Pipelining loop 'lz_compress'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 5, loop 'lz_compress'
+INFO: [v++ 204-61] Pipelining loop 'lz_compress_leftover'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 2, loop 'lz_compress_leftover'
+INFO: [v++ 204-61] Pipelining loop 'lz_left_bytes'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 2, loop 'lz_left_bytes'
+INFO: [v++ 204-61] Pipelining loop 'lz_bestMatchFilter'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 3, loop 'lz_bestMatchFilter'
+INFO: [v++ 204-61] Pipelining loop 'lz_booster'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 4, loop 'lz_booster'
+INFO: [v++ 204-61] Pipelining loop 'snappy_divide'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 2, loop 'snappy_divide'
+INFO: [v++ 204-61] Pipelining loop 'snappy_compress'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 3, loop 'snappy_compress'
+INFO: [v++ 204-61] Pipelining loop 'dict_flush'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 1, loop 'dict_flush'
+INFO: [v++ 204-61] Pipelining loop 'lz_compress'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 5, loop 'lz_compress'
+INFO: [v++ 204-61] Pipelining loop 'lz_compress_leftover'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 2, loop 'lz_compress_leftover'
+INFO: [v++ 204-61] Pipelining loop 'lz_left_bytes'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 2, loop 'lz_left_bytes'
+INFO: [v++ 204-61] Pipelining loop 'lz_bestMatchFilter'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 3, loop 'lz_bestMatchFilter'
+INFO: [v++ 204-61] Pipelining loop 'lz_booster'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 4, loop 'lz_booster'
+INFO: [v++ 204-61] Pipelining loop 'snappy_divide'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 2, loop 'snappy_divide'
+INFO: [v++ 204-61] Pipelining loop 'snappy_compress'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 3, loop 'snappy_compress'
+INFO: [v++ 204-61] Pipelining loop 'dict_flush'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 1, loop 'dict_flush'
+INFO: [v++ 204-61] Pipelining loop 'lz_compress'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 5, loop 'lz_compress'
+INFO: [v++ 204-61] Pipelining loop 'lz_compress_leftover'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 2, loop 'lz_compress_leftover'
+INFO: [v++ 204-61] Pipelining loop 'lz_left_bytes'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 2, loop 'lz_left_bytes'
+INFO: [v++ 204-61] Pipelining loop 'lz_bestMatchFilter'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 3, loop 'lz_bestMatchFilter'
+INFO: [v++ 204-61] Pipelining loop 'lz_booster'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 4, loop 'lz_booster'
+INFO: [v++ 204-61] Pipelining loop 'snappy_divide'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 2, loop 'snappy_divide'
+INFO: [v++ 204-61] Pipelining loop 'snappy_compress'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 3, loop 'snappy_compress'
+INFO: [v++ 204-61] Pipelining loop 'dict_flush'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 1, loop 'dict_flush'
+INFO: [v++ 204-61] Pipelining loop 'lz_compress'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 5, loop 'lz_compress'
+INFO: [v++ 204-61] Pipelining loop 'lz_compress_leftover'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 2, loop 'lz_compress_leftover'
+INFO: [v++ 204-61] Pipelining loop 'lz_left_bytes'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 2, loop 'lz_left_bytes'
+INFO: [v++ 204-61] Pipelining loop 'lz_bestMatchFilter'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 3, loop 'lz_bestMatchFilter'
+INFO: [v++ 204-61] Pipelining loop 'lz_booster'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 4, loop 'lz_booster'
+INFO: [v++ 204-61] Pipelining loop 'snappy_divide'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 2, loop 'snappy_divide'
+INFO: [v++ 204-61] Pipelining loop 'snappy_compress'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 3, loop 'snappy_compress'
+INFO: [v++ 204-61] Pipelining loop 'stream_upsizer'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 2, loop 'stream_upsizer'
+INFO: [v++ 204-61] Pipelining loop 'stream_upsizer'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 2, loop 'stream_upsizer'
+INFO: [v++ 204-61] Pipelining loop 'stream_upsizer'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 2, loop 'stream_upsizer'
+INFO: [v++ 204-61] Pipelining loop 'stream_upsizer'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 2, loop 'stream_upsizer'
+INFO: [v++ 204-61] Pipelining loop 'stream_upsizer'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 2, loop 'stream_upsizer'
+INFO: [v++ 204-61] Pipelining loop 'stream_upsizer'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 2, loop 'stream_upsizer'
+INFO: [v++ 204-61] Pipelining loop 'stream_upsizer'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 2, loop 'stream_upsizer'
+INFO: [v++ 204-61] Pipelining loop 'stream_upsizer'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 2, loop 'stream_upsizer'
+INFO: [v++ 204-61] Pipelining loop 'gmem_write'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 3, loop 'gmem_write'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_202_4'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 2, loop 'VITIS_LOOP_202_4'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_144_2'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 73, loop 'VITIS_LOOP_144_2'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_169_3'.
+WARNING: [v++ 200-885] Unable to schedule bus request on port 'gmem1' (/home/jiong/bsc-project/kernels/data_compression/src/xilSnappyCompressMM.cpp:177) due to limited memory ports. Please consider using a memory core with more ports or partitioning the array.
+Resolution: For help on HLS 200-885 see www.xilinx.com/cgi-bin/docs/rdoc?v=2020.2;t=hls+guidance;d=200-885.html
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 2, Depth = 72, loop 'VITIS_LOOP_169_3'
+INFO: [v++ 200-790] **** Loop Constraint Status: All loop constraints were NOT satisfied.
+INFO: [v++ 200-789] **** Estimated Fmax: 204.62 MHz
+INFO: [v++ 60-594] Finished kernel compilation
+INFO: [v++ 60-244] Generating system estimate report...
+INFO: [v++ 60-1092] Generated system estimate report: /home/jiong/bsc-project/xclbin/build/data_compression_ZCU106/snappy_compress/report/xilSnappyCompressMM/system_estimate_xilSnappyCompressMM.xtxt
+INFO: [v++ 60-586] Created xilSnappyCompressMM.xo
+INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
+    vitis_analyzer /home/jiong/bsc-project/xclbin/build/data_compression_ZCU106/snappy_compress/xilSnappyCompressMM.xo.compile_summary 
+INFO: [v++ 60-791] Total elapsed time: 0h 13m 21s
+INFO: [v++ 60-1653] Closing dispatch client.
+v++ -l xilSnappyCompressMM.xo -o snappy_compress.xclbin -t hw -g --platform /share/xilinx/platform_repo/xilinx_zcu106_base_202010_1/export/xilinx_zcu106_base_202010_1/xilinx_zcu106_base_202010_1.xpfm --config config_link.cfg --optimize 2
+Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+ERROR: [v++ 60-633] Failed to collect compute units: The number specified and the list of compute units do not match: xilSnappyCompressMM:2:xilSnappyCompressMM_1, xilSnappyCompressMM_2
+INFO: [v++ 60-1662] Stopping dispatch session having empty uuid.
+INFO: [v++ 60-1653] Closing dispatch client.
+v++ -l xilSnappyCompressMM.xo -o snappy_compress.xclbin -t hw -g --platform /share/xilinx/platform_repo/xilinx_zcu106_base_202010_1/export/xilinx_zcu106_base_202010_1/xilinx_zcu106_base_202010_1.xpfm --config config_link.cfg --optimize 2
+Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ link can be found at:
+	Reports: /home/jiong/bsc-project/xclbin/build/data_compression_ZCU106/snappy_compress/_x/reports/link
+	Log files: /home/jiong/bsc-project/xclbin/build/data_compression_ZCU106/snappy_compress/_x/logs/link
+Running Dispatch Server on port:36497
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/xclbin/build/data_compression_ZCU106/snappy_compress/snappy_compress.xclbin.link_summary, at Sun Jan  8 01:07:33 2023
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Sun Jan  8 01:07:33 2023
+Running Rule Check Server on port:45569
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/xclbin/build/data_compression_ZCU106/snappy_compress/_x/reports/link/v++_link_snappy_compress_guidance.html', at Sun Jan  8 01:07:36 2023
+INFO: [v++ 60-895]   Target platform: /share/xilinx/platform_repo/xilinx_zcu106_base_202010_1/export/xilinx_zcu106_base_202010_1/xilinx_zcu106_base_202010_1.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/share/xilinx/platform_repo/xilinx_zcu106_base_202010_1/export/xilinx_zcu106_base_202010_1/hw/xilinx_zcu106_base_202010_1.xsa'
+INFO: [v++ 60-629] Linking for hardware target
+INFO: [v++ 60-423]   Target device: xilinx_zcu106_base_202010_1
+INFO: [v++ 60-1332] Run 'run_link' status: Not started
+INFO: [v++ 60-1443] [01:07:38] Run run_link: Step system_link: Started
+INFO: [v++ 60-1453] Command Line: system_link --xo /home/jiong/bsc-project/xclbin/build/data_compression_ZCU106/snappy_compress/xilSnappyCompressMM.xo --config /home/jiong/bsc-project/xclbin/build/data_compression_ZCU106/snappy_compress/_x/link/int/syslinkConfig.ini --xpfm /share/xilinx/platform_repo/xilinx_zcu106_base_202010_1/export/xilinx_zcu106_base_202010_1/xilinx_zcu106_base_202010_1.xpfm --target hw --output_dir /home/jiong/bsc-project/xclbin/build/data_compression_ZCU106/snappy_compress/_x/link/int --temp_dir /home/jiong/bsc-project/xclbin/build/data_compression_ZCU106/snappy_compress/_x/link/sys_link
+INFO: [v++ 60-1454] Run Directory: /home/jiong/bsc-project/xclbin/build/data_compression_ZCU106/snappy_compress/_x/link/run_link
+INFO: [SYSTEM_LINK 60-1316] Initiating connection to rulecheck server, at Sun Jan  8 01:07:42 2023
+INFO: [SYSTEM_LINK 82-70] Extracting xo v3 file /home/jiong/bsc-project/xclbin/build/data_compression_ZCU106/snappy_compress/xilSnappyCompressMM.xo
+INFO: [SYSTEM_LINK 82-53] Creating IP database /home/jiong/bsc-project/xclbin/build/data_compression_ZCU106/snappy_compress/_x/link/sys_link/_sysl/.cdb/xd_ip_db.xml
+INFO: [SYSTEM_LINK 82-38] [01:07:43] build_xd_ip_db started: /share/xilinx/Vitis/2020.2/bin/build_xd_ip_db -ip_search 0  -sds-pf /home/jiong/bsc-project/xclbin/build/data_compression_ZCU106/snappy_compress/_x/link/sys_link/xilinx_zcu106_base_202010_1.hpfm -clkid 0 -ip /home/jiong/bsc-project/xclbin/build/data_compression_ZCU106/snappy_compress/_x/link/sys_link/iprepo/xilinx_com_hls_xilSnappyCompressMM_1_0,xilSnappyCompressMM -o /home/jiong/bsc-project/xclbin/build/data_compression_ZCU106/snappy_compress/_x/link/sys_link/_sysl/.cdb/xd_ip_db.xml
+INFO: [SYSTEM_LINK 82-37] [01:07:59] build_xd_ip_db finished successfully
+Time (s): cpu = 00:00:20 ; elapsed = 00:00:16 . Memory (MB): peak = 1620.562 ; gain = 0.000 ; free physical = 104504 ; free virtual = 210434
+INFO: [SYSTEM_LINK 82-51] Create system connectivity graph
+INFO: [SYSTEM_LINK 82-102] Applying explicit connections to the system connectivity graph: /home/jiong/bsc-project/xclbin/build/data_compression_ZCU106/snappy_compress/_x/link/sys_link/cfgraph/cfgen_cfgraph.xml
+INFO: [SYSTEM_LINK 82-38] [01:07:59] cfgen started: /share/xilinx/Vitis/2020.2/bin/cfgen  -nk xilSnappyCompressMM:2:xilSnappyCompressMM_1.xilSnappyCompressMM_2 -dmclkid 0 -r /home/jiong/bsc-project/xclbin/build/data_compression_ZCU106/snappy_compress/_x/link/sys_link/_sysl/.cdb/xd_ip_db.xml -o /home/jiong/bsc-project/xclbin/build/data_compression_ZCU106/snappy_compress/_x/link/sys_link/cfgraph/cfgen_cfgraph.xml
+INFO: [CFGEN 83-0] Kernel Specs: 
+INFO: [CFGEN 83-0]   kernel: xilSnappyCompressMM, num: 2  {xilSnappyCompressMM_1 xilSnappyCompressMM_2}
+INFO: [CFGEN 83-2226] Inferring mapping for argument xilSnappyCompressMM_1.in to HP0
+INFO: [CFGEN 83-2226] Inferring mapping for argument xilSnappyCompressMM_1.out to HP0
+INFO: [CFGEN 83-2226] Inferring mapping for argument xilSnappyCompressMM_1.compressd_size to HP0
+INFO: [CFGEN 83-2226] Inferring mapping for argument xilSnappyCompressMM_1.in_block_size to HP0
+INFO: [CFGEN 83-2226] Inferring mapping for argument xilSnappyCompressMM_2.in to HP0
+INFO: [CFGEN 83-2226] Inferring mapping for argument xilSnappyCompressMM_2.out to HP0
+INFO: [CFGEN 83-2226] Inferring mapping for argument xilSnappyCompressMM_2.compressd_size to HP0
+INFO: [CFGEN 83-2226] Inferring mapping for argument xilSnappyCompressMM_2.in_block_size to HP0
+INFO: [SYSTEM_LINK 82-37] [01:08:08] cfgen finished successfully
+Time (s): cpu = 00:00:09 ; elapsed = 00:00:09 . Memory (MB): peak = 1620.562 ; gain = 0.000 ; free physical = 102027 ; free virtual = 207967
+INFO: [SYSTEM_LINK 82-52] Create top-level block diagram
+INFO: [SYSTEM_LINK 82-38] [01:08:08] cf2bd started: /share/xilinx/Vitis/2020.2/bin/cf2bd  --linux --trace_buffer 1024 --input_file /home/jiong/bsc-project/xclbin/build/data_compression_ZCU106/snappy_compress/_x/link/sys_link/cfgraph/cfgen_cfgraph.xml --ip_db /home/jiong/bsc-project/xclbin/build/data_compression_ZCU106/snappy_compress/_x/link/sys_link/_sysl/.cdb/xd_ip_db.xml --cf_name dr --working_dir /home/jiong/bsc-project/xclbin/build/data_compression_ZCU106/snappy_compress/_x/link/sys_link/_sysl/.xsd --temp_dir /home/jiong/bsc-project/xclbin/build/data_compression_ZCU106/snappy_compress/_x/link/sys_link --output_dir /home/jiong/bsc-project/xclbin/build/data_compression_ZCU106/snappy_compress/_x/link/int
+INFO: [CF2BD 82-31] Launching cf2xd: cf2xd -linux -trace-buffer 1024 -i /home/jiong/bsc-project/xclbin/build/data_compression_ZCU106/snappy_compress/_x/link/sys_link/cfgraph/cfgen_cfgraph.xml -r /home/jiong/bsc-project/xclbin/build/data_compression_ZCU106/snappy_compress/_x/link/sys_link/_sysl/.cdb/xd_ip_db.xml -o dr.xml
+INFO: [CF2BD 82-28] cf2xd finished successfully
+INFO: [CF2BD 82-31] Launching cf_xsd: cf_xsd -disable-address-gen -dn dr -dp /home/jiong/bsc-project/xclbin/build/data_compression_ZCU106/snappy_compress/_x/link/sys_link/_sysl/.xsd
+INFO: [CF2BD 82-28] cf_xsd finished successfully
+INFO: [SYSTEM_LINK 82-37] [01:08:18] cf2bd finished successfully
+Time (s): cpu = 00:00:09 ; elapsed = 00:00:10 . Memory (MB): peak = 1620.562 ; gain = 0.000 ; free physical = 98833 ; free virtual = 204790
+INFO: [v++ 60-1441] [01:08:18] Run run_link: Step system_link: Completed
+Time (s): cpu = 00:00:44 ; elapsed = 00:00:40 . Memory (MB): peak = 1578.875 ; gain = 0.000 ; free physical = 98864 ; free virtual = 204818
+INFO: [v++ 60-1443] [01:08:18] Run run_link: Step cf2sw: Started
+INFO: [v++ 60-1453] Command Line: cf2sw -sdsl /home/jiong/bsc-project/xclbin/build/data_compression_ZCU106/snappy_compress/_x/link/int/sdsl.dat -rtd /home/jiong/bsc-project/xclbin/build/data_compression_ZCU106/snappy_compress/_x/link/int/cf2sw.rtd -nofilter /home/jiong/bsc-project/xclbin/build/data_compression_ZCU106/snappy_compress/_x/link/int/cf2sw_full.rtd -xclbin /home/jiong/bsc-project/xclbin/build/data_compression_ZCU106/snappy_compress/_x/link/int/xclbin_orig.xml -o /home/jiong/bsc-project/xclbin/build/data_compression_ZCU106/snappy_compress/_x/link/int/xclbin_orig.1.xml
+INFO: [v++ 60-1454] Run Directory: /home/jiong/bsc-project/xclbin/build/data_compression_ZCU106/snappy_compress/_x/link/run_link
+INFO: [v++ 60-1441] [01:08:29] Run run_link: Step cf2sw: Completed
+Time (s): cpu = 00:00:11 ; elapsed = 00:00:11 . Memory (MB): peak = 1578.875 ; gain = 0.000 ; free physical = 93976 ; free virtual = 200033
+INFO: [v++ 60-1443] [01:08:29] Run run_link: Step rtd2_system_diagram: Started
+INFO: [v++ 60-1453] Command Line: rtd2SystemDiagram
+INFO: [v++ 60-1454] Run Directory: /home/jiong/bsc-project/xclbin/build/data_compression_ZCU106/snappy_compress/_x/link/run_link
+INFO: [v++ 60-1441] [01:08:33] Run run_link: Step rtd2_system_diagram: Completed
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:04 . Memory (MB): peak = 1578.875 ; gain = 0.000 ; free physical = 94544 ; free virtual = 200605
+INFO: [v++ 60-1443] [01:08:33] Run run_link: Step vpl: Started
+INFO: [v++ 60-1453] Command Line: vpl -t hw -f /share/xilinx/platform_repo/xilinx_zcu106_base_202010_1/export/xilinx_zcu106_base_202010_1/xilinx_zcu106_base_202010_1.xpfm -g --remote_ip_cache /home/jiong/bsc-project/xclbin/build/data_compression_ZCU106/snappy_compress/.ipcache --output_dir /home/jiong/bsc-project/xclbin/build/data_compression_ZCU106/snappy_compress/_x/link/int --log_dir /home/jiong/bsc-project/xclbin/build/data_compression_ZCU106/snappy_compress/_x/logs/link --report_dir /home/jiong/bsc-project/xclbin/build/data_compression_ZCU106/snappy_compress/_x/reports/link --config /home/jiong/bsc-project/xclbin/build/data_compression_ZCU106/snappy_compress/_x/link/int/vplConfig.ini -k /home/jiong/bsc-project/xclbin/build/data_compression_ZCU106/snappy_compress/_x/link/int/kernel_info.dat --webtalk_flag Vitis --temp_dir /home/jiong/bsc-project/xclbin/build/data_compression_ZCU106/snappy_compress/_x/link --no-info --iprepo /home/jiong/bsc-project/xclbin/build/data_compression_ZCU106/snappy_compress/_x/link/int/xo/ip_repo/xilinx_com_hls_xilSnappyCompressMM_1_0 --messageDb /home/jiong/bsc-project/xclbin/build/data_compression_ZCU106/snappy_compress/_x/link/run_link/vpl.pb /home/jiong/bsc-project/xclbin/build/data_compression_ZCU106/snappy_compress/_x/link/int/dr.bd.tcl
+INFO: [v++ 60-1454] Run Directory: /home/jiong/bsc-project/xclbin/build/data_compression_ZCU106/snappy_compress/_x/link/run_link
+
+****** vpl v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [VPL 60-839] Read in kernel information from file '/home/jiong/bsc-project/xclbin/build/data_compression_ZCU106/snappy_compress/_x/link/int/kernel_info.dat'.
+INFO: [VPL 60-423]   Target device: xilinx_zcu106_base_202010_1
+INFO: [VPL 60-1032] Extracting hardware platform to /home/jiong/bsc-project/xclbin/build/data_compression_ZCU106/snappy_compress/_x/link/vivado/vpl/.local/hw_platform
+WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
+[01:09:03] Run vpl: Step create_project: Started
+Creating Vivado project.
+[01:09:21] Run vpl: Step create_project: Completed
+[01:09:21] Run vpl: Step create_bd: Started
+[01:09:45] Run vpl: Step create_bd: Completed
+[01:09:45] Run vpl: Step update_bd: Started
+[01:09:45] Run vpl: Step update_bd: Completed
+[01:09:45] Run vpl: Step generate_target: Started
+[01:11:01] Run vpl: Step generate_target: RUNNING...
+[01:11:34] Run vpl: Step generate_target: Completed
+[01:11:34] Run vpl: Step config_hw_runs: Started
+[01:11:40] Run vpl: Step config_hw_runs: Completed
+[01:11:40] Run vpl: Step synth: Started
+[01:12:11] Block-level synthesis in progress, 0 of 21 jobs complete, 2 jobs running.
+[01:12:41] Block-level synthesis in progress, 0 of 21 jobs complete, 8 jobs running.
+[01:13:12] Block-level synthesis in progress, 0 of 21 jobs complete, 8 jobs running.
+[01:13:42] Block-level synthesis in progress, 0 of 21 jobs complete, 8 jobs running.
+[01:14:12] Block-level synthesis in progress, 0 of 21 jobs complete, 8 jobs running.
+[01:14:43] Block-level synthesis in progress, 0 of 21 jobs complete, 8 jobs running.
+[01:15:13] Block-level synthesis in progress, 0 of 21 jobs complete, 8 jobs running.
+[01:15:43] Block-level synthesis in progress, 2 of 21 jobs complete, 7 jobs running.
+[01:16:13] Block-level synthesis in progress, 3 of 21 jobs complete, 7 jobs running.
+[01:16:43] Block-level synthesis in progress, 5 of 21 jobs complete, 6 jobs running.
+[01:17:13] Block-level synthesis in progress, 7 of 21 jobs complete, 6 jobs running.
+[01:17:44] Block-level synthesis in progress, 8 of 21 jobs complete, 8 jobs running.
+[01:18:14] Block-level synthesis in progress, 9 of 21 jobs complete, 7 jobs running.
+[01:18:44] Block-level synthesis in progress, 9 of 21 jobs complete, 8 jobs running.
+[01:19:14] Block-level synthesis in progress, 10 of 21 jobs complete, 7 jobs running.
+[01:19:44] Block-level synthesis in progress, 11 of 21 jobs complete, 7 jobs running.
+[01:20:15] Block-level synthesis in progress, 13 of 21 jobs complete, 5 jobs running.
+[01:20:45] Block-level synthesis in progress, 14 of 21 jobs complete, 5 jobs running.
+[01:21:15] Block-level synthesis in progress, 16 of 21 jobs complete, 4 jobs running.
+[01:21:46] Block-level synthesis in progress, 16 of 21 jobs complete, 4 jobs running.
+[01:22:16] Block-level synthesis in progress, 16 of 21 jobs complete, 4 jobs running.
+[01:22:46] Block-level synthesis in progress, 17 of 21 jobs complete, 3 jobs running.
+[01:23:17] Block-level synthesis in progress, 18 of 21 jobs complete, 2 jobs running.
+[01:23:47] Block-level synthesis in progress, 19 of 21 jobs complete, 1 job running.
+[01:24:17] Block-level synthesis in progress, 19 of 21 jobs complete, 1 job running.
+[01:24:48] Block-level synthesis in progress, 19 of 21 jobs complete, 1 job running.
+[01:25:18] Block-level synthesis in progress, 19 of 21 jobs complete, 1 job running.
+[01:25:48] Block-level synthesis in progress, 19 of 21 jobs complete, 1 job running.
+[01:26:19] Block-level synthesis in progress, 19 of 21 jobs complete, 1 job running.
+[01:26:49] Block-level synthesis in progress, 19 of 21 jobs complete, 1 job running.
+[01:27:19] Block-level synthesis in progress, 19 of 21 jobs complete, 1 job running.
+[01:27:49] Block-level synthesis in progress, 19 of 21 jobs complete, 1 job running.
+[01:28:19] Block-level synthesis in progress, 19 of 21 jobs complete, 1 job running.
+[01:28:49] Block-level synthesis in progress, 19 of 21 jobs complete, 1 job running.
+[01:29:20] Block-level synthesis in progress, 19 of 21 jobs complete, 1 job running.
+[01:29:50] Block-level synthesis in progress, 19 of 21 jobs complete, 1 job running.
+[01:30:20] Block-level synthesis in progress, 19 of 21 jobs complete, 1 job running.
+[01:30:50] Block-level synthesis in progress, 19 of 21 jobs complete, 1 job running.
+[01:31:21] Block-level synthesis in progress, 19 of 21 jobs complete, 1 job running.
+[01:31:51] Block-level synthesis in progress, 19 of 21 jobs complete, 1 job running.
+[01:32:21] Block-level synthesis in progress, 19 of 21 jobs complete, 1 job running.
+[01:32:51] Block-level synthesis in progress, 19 of 21 jobs complete, 1 job running.
+[01:33:22] Block-level synthesis in progress, 19 of 21 jobs complete, 1 job running.
+[01:33:52] Block-level synthesis in progress, 19 of 21 jobs complete, 1 job running.
+[01:34:22] Block-level synthesis in progress, 19 of 21 jobs complete, 1 job running.
+[01:34:52] Block-level synthesis in progress, 19 of 21 jobs complete, 1 job running.
+[01:35:23] Block-level synthesis in progress, 19 of 21 jobs complete, 1 job running.
+[01:35:53] Block-level synthesis in progress, 19 of 21 jobs complete, 1 job running.
+[01:36:23] Block-level synthesis in progress, 19 of 21 jobs complete, 1 job running.
+[01:36:53] Block-level synthesis in progress, 19 of 21 jobs complete, 1 job running.
+[01:37:24] Block-level synthesis in progress, 19 of 21 jobs complete, 1 job running.
+[01:37:54] Block-level synthesis in progress, 19 of 21 jobs complete, 1 job running.
+[01:38:24] Block-level synthesis in progress, 19 of 21 jobs complete, 1 job running.
+[01:38:54] Block-level synthesis in progress, 19 of 21 jobs complete, 1 job running.
+[01:39:24] Block-level synthesis in progress, 19 of 21 jobs complete, 1 job running.
+[01:39:55] Block-level synthesis in progress, 19 of 21 jobs complete, 1 job running.
+[01:40:25] Block-level synthesis in progress, 19 of 21 jobs complete, 1 job running.
+[01:40:55] Block-level synthesis in progress, 19 of 21 jobs complete, 1 job running.
+[01:41:25] Block-level synthesis in progress, 19 of 21 jobs complete, 1 job running.
+[01:41:56] Block-level synthesis in progress, 19 of 21 jobs complete, 1 job running.
+[01:42:26] Block-level synthesis in progress, 19 of 21 jobs complete, 1 job running.
+[01:42:56] Block-level synthesis in progress, 19 of 21 jobs complete, 1 job running.
+[01:43:27] Block-level synthesis in progress, 19 of 21 jobs complete, 1 job running.
+[01:43:57] Block-level synthesis in progress, 19 of 21 jobs complete, 1 job running.
+[01:44:27] Block-level synthesis in progress, 19 of 21 jobs complete, 1 job running.
+[01:44:58] Block-level synthesis in progress, 19 of 21 jobs complete, 1 job running.
+[01:45:28] Block-level synthesis in progress, 19 of 21 jobs complete, 1 job running.
+[01:45:58] Block-level synthesis in progress, 19 of 21 jobs complete, 1 job running.
+[01:46:29] Block-level synthesis in progress, 20 of 21 jobs complete, 1 job running.
+[01:46:59] Block-level synthesis in progress, 21 of 21 jobs complete, 0 jobs running.
+[01:47:29] Top-level synthesis in progress.
+[01:47:59] Top-level synthesis in progress.
+[01:48:30] Top-level synthesis in progress.
+[01:49:00] Top-level synthesis in progress.
+[01:49:30] Top-level synthesis in progress.
+[01:49:40] Run vpl: Step synth: Completed
+[01:49:40] Run vpl: Step impl: Started
+[01:54:44] Finished 2nd of 6 tasks (FPGA linking synthesized kernels to platform). Elapsed time: 00h 46m 06s 
+
+[01:54:44] Starting logic optimization..
+[01:55:15] Phase 1 Retarget
+[01:55:15] Phase 2 Constant propagation
+[01:55:15] Phase 3 Sweep
+[01:55:45] Phase 4 BUFG optimization
+[01:55:45] Phase 5 Shift Register Optimization
+[01:55:45] Phase 6 Post Processing Netlist
+[01:58:47] Finished 3rd of 6 tasks (FPGA logic optimization). Elapsed time: 00h 04m 02s 
+
+[01:58:47] Starting logic placement..
+[01:58:47] Phase 1 Placer Initialization
+[01:58:47] Phase 1.1 Placer Initialization Netlist Sorting
+[01:58:47] Phase 1.2 IO Placement/ Clock Placement/ Build Placer Device
+[01:59:18] Phase 1.3 Build Placer Netlist Model
+[02:00:18] Phase 1.4 Constrain Clocks/Macros
+[02:00:49] Phase 2 Global Placement
+[02:00:49] Phase 2.1 Floorplanning
+[02:00:49] Phase 2.1.1 Partition Driven Placement
+[02:00:49] Phase 2.1.1.1 PBP: Partition Driven Placement
+[02:03:50] Phase 2.1.1.2 PBP: Clock Region Placement
+[02:03:50] Phase 2.1.1.3 PBP: Discrete Incremental
+[02:03:50] Phase 2.1.1.4 PBP: Compute Congestion
+[02:04:21] Phase 2.1.1.5 PBP: Macro Placement
+[02:04:21] Phase 2.1.1.6 PBP: UpdateTiming
+[02:04:21] Phase 2.1.1.7 PBP: Add part constraints
+[02:04:21] Phase 2.2 Update Timing before SLR Path Opt
+[02:04:21] Phase 2.3 Global Placement Core
+[02:07:53] Phase 2.3.1 Physical Synthesis In Placer
+[02:10:26] Phase 3 Detail Placement
+[02:10:26] Phase 3.1 Commit Multi Column Macros
+[02:10:26] Phase 3.2 Commit Most Macros & LUTRAMs

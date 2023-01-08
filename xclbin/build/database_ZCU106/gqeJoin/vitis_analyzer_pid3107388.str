@@ -1,0 +1,101 @@
+/*
+
+Xilinx Vitis Analyzer v2020.2 (64-bit) [Major: 2020, Minor: 2]
+SW Build: 3064766 on Wed Nov 18 09:12:47 MST 2020
+
+Process ID (PID): 3107388
+License: Customer
+Mode: GUI Mode
+
+Current time: 	Fri Jan 06 00:10:25 CET 2023
+Time zone: 	Central European Standard Time (Europe/Berlin)
+
+OS: Ubuntu
+OS Version: 5.8.0-55-generic
+OS Architecture: amd64
+Available processors (cores): 56
+
+Display: 2.0
+Screen size: 1920x1080
+Screen resolution (DPI): 100
+Available screens: 1
+Default font: family=Dialog,name=Dialog,style=plain,size=12
+Scale size: 12
+
+Java version: 	11.0.2 64-bit
+Java home: 	/share/xilinx/Vitis/2020.2/tps/lnx64/jre11.0.2
+Java executable location: 	/share/xilinx/Vitis/2020.2/tps/lnx64/jre11.0.2/bin/java
+Java initial memory (-Xms): 	128 MB
+Java maximum memory (-Xmx):	 3 GB
+
+
+User name: 	jiong
+User home directory: /home/jiong
+User working directory: /home/jiong/bsc-project/xclbin/build/database_ZCU106/gqeJoin
+User country: 	US
+User language: 	en
+User locale: 	en_US
+
+RDI_BASEROOT: /share/xilinx/Vitis
+HDI_APPROOT: /share/xilinx/Vitis/2020.2
+RDI_DATADIR: /share/xilinx/Vitis/2020.2/data
+RDI_BINDIR: /share/xilinx/Vitis/2020.2/bin
+
+Vitis Analyzer preferences file location: /home/jiong/.Xilinx/vitis_analyzer/2020.2/vitis_analyzer.xml
+Vitis Analyzer preferences directory: /home/jiong/.Xilinx/vitis_analyzer/2020.2/
+Vitis Analyzer layouts directory: /home/jiong/.Xilinx/vitis_analyzer/2020.2/data/layouts
+PlanAhead jar file location: 	/share/xilinx/Vitis/2020.2/lib/classes/frank.jar
+Vitis Analyzer log file location: 	/home/jiong/bsc-project/xclbin/build/database_ZCU106/gqeJoin/vitis_analyzer.log
+Vitis Analyzer journal file location: 	/home/jiong/bsc-project/xclbin/build/database_ZCU106/gqeJoin/vitis_analyzer.jou
+Engine tmp dir: 	./.Xil/vitis_analyzer-3107388-hinoki
+
+Xilinx Environment Variables
+----------------------------
+XILINX_DSP: 
+XILINX_HLS: /share/xilinx/Vitis_HLS/2020.2
+XILINX_PLANAHEAD: /share/xilinx/Vitis/2020.2
+XILINX_SDK: /share/xilinx/Vitis/2020.2
+XILINX_VITIS: /share/xilinx/Vitis/2020.2
+XILINX_VITIS_AIETOOLS: /share/xilinx/Vitis/2020.2/cardano
+XILINX_VIVADO: /share/xilinx/Vivado/2020.2
+XILINX_VIVADO_HLS: /share/xilinx/Vivado/2020.2
+XILINX_XRT: /opt/xilinx/xrt
+
+
+GUI allocated memory:	128 MB
+GUI max memory:		3,072 MB
+Engine allocated memory: 1,501 MB
+
+Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+*/
+
+// TclEventType: START_GUI
+// Tcl Message: start_gui 
+// Command line args: 
+// Vitis Analyzer Command Line Arguments: gqeJoin.xo.compile_summary
+// bz (cs):  Open Files : addNotify
+dismissDialog("Open Files"); // bz
+// Tcl Command: 'create_project dummy'
+// TclEventType: PROJECT_NEW
+// Opening Summary: Resource{value=FrankResource.FrankReportHolderType_COMPILE_SUMMARY}Type{value=COMPILE_SUMMARY},SummaryFile{file=/home/jiong/bsc-project/xclbin/build/database_ZCU106/gqeJoin/gqeJoin.xo.compile_summary}
+// bz (cs):  Open Summary : addNotify
+// WARNING: HEventQueue.dispatchEvent() is taking  1608 ms.
+// Tcl Message: create_project dummy 
+dismissDialog("Open Summary"); // bz
+// [GUI Memory]: 109 MB (+111622kb) [00:00:22]
+// [Engine Memory]: 1,495 MB (+1415629kb) [00:00:22]
+// HMemoryUtils.trashcanNow. Engine heap size: 1,514 MB. GUI used memory: 51 MB. Current time: 1/6/23, 12:10:26 AM CET
+selectTree(FrankResource.ReportNavigatorTreePanel_REPORT_NAVIGATOR_TREE, "[root, Resource{value=FrankResource.FrankViewType_KERNEL_ESTIMATE}Type{value=KERNEL_ESTIMATE_REPORT},SummaryFile{file=gqeJoin.xo.compile_summary isArchive=false},ReportFile{file=gqeJoin/system_estimate_gqeJoin.xtxt}]", 2, false); // b
+// Opening Report: Resource{value=FrankResource.FrankViewType_KERNEL_ESTIMATE}Type{value=KERNEL_ESTIMATE_REPORT},SummaryFile{file=gqeJoin.xo.compile_summary isArchive=false},ReportFile{file=gqeJoin/system_estimate_gqeJoin.xtxt}
+// Elapsed time: 103 seconds
+selectTree(FrankResource.ReportNavigatorTreePanel_REPORT_NAVIGATOR_TREE, "[root, Resource{value=FrankResource.FrankViewType_KERNEL_GUIDANCE}Type{value=KERNEL_GUIDANCE_REPORT},SummaryFile{file=gqeJoin.xo.compile_summary isArchive=false},ReportFile{file=_x/v++_compile_gqeJoin_guidance.pb}]", 3, false); // b
+// Opening Report: Resource{value=FrankResource.FrankViewType_KERNEL_GUIDANCE}Type{value=KERNEL_GUIDANCE_REPORT},SummaryFile{file=gqeJoin.xo.compile_summary isArchive=false},ReportFile{file=_x/v++_compile_gqeJoin_guidance.pb}
+// bz (cs):  Open Kernel Guidance Report [gqeJoin.xo.compile_summary] : addNotify
+dismissDialog("Open Kernel Guidance Report [gqeJoin.xo.compile_summary]"); // bz
+// Elapsed time: 29 seconds
+selectTree(FrankResource.ReportNavigatorTreePanel_REPORT_NAVIGATOR_TREE, "[root, Resource{value=FrankResource.FrankViewType_HLS_SYNTHESIS}Type{value=HLS_REPORT},SummaryFile{file=gqeJoin.xo.compile_summary isArchive=false},ReportFile{file=db/gqeJoin.design.xml}]", 4, false); // b
+// t (cs): Missing Report File: addNotify
+selectButton(PAResourceAtoD.CmdMsgDialog_OK, "OK"); // f
+dismissDialog("Missing Report File"); // t
+selectTree(FrankResource.ReportNavigatorTreePanel_REPORT_NAVIGATOR_TREE, "[root, Resource{value=FrankResource.FrankViewType_KERNEL_ESTIMATE}Type{value=KERNEL_ESTIMATE_REPORT},SummaryFile{file=gqeJoin.xo.compile_summary isArchive=false},ReportFile{file=gqeJoin/system_estimate_gqeJoin.xtxt}]", 2, false); // b

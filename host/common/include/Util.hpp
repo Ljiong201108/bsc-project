@@ -3,6 +3,7 @@
 #include <iostream>
 #include <memory>
 #include <stdint.h>
+#include <stdlib.h>
 // #include <chorno>
 
 #define CL_HPP_CL_1_2_DEFAULT_BUILD                                    
@@ -131,4 +132,9 @@ inline std::unique_ptr<uint64_t[]> arrayAlignedPadding(uint8_t *array, uint32_t 
     std::memcpy(newArray.get(), array, sizeInByte);
     std::fill(newArray.get()+sizeInByte, newArray.get()+newSizeInByte, (uint8_t)(newSizeInByte-sizeInByte));
     return newArray;
+}
+
+inline std::string xclbinPath(){
+    char *pathvar=getenv("XCLBIN_PATH");
+    return std::string(pathvar);
 }
