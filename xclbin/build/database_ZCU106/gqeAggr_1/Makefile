@@ -17,7 +17,6 @@ LING_FLG+=--report_dir $(REPORT_DIR)
 
 $(OUTPUT).xclbin: $(patsubst %, %.xo, $(KERNELS))
 	v++ -l $^ -o $@ $(LINK_FLG)
-	rm -rf _x .Xil log report *.log
 
 KNRL_INC= 
 # KNRL_INC+=-I/home/jiong/Vitis_Library/Vitis_Libraries_2021/database/L1/include/hw 

@@ -93,14 +93,14 @@ void streamShuffle(hls::stream<ap_uint<8 * _ONstrm> >& order_cfg,
 
     ap_int<8> route[_ONstrm];
 // #pragma HLS resource variable = route core = RAM_2P_URAM
-#pragma HLS ARRAY_PARTITION variable = route complete
+// #pragma HLS ARRAY_PARTITION variable = route complete
 
     _TIn reg_i[_INStrm];
 // #pragma HLS resource variable = reg_i core = RAM_2P_URAM
-#pragma HLS ARRAY_PARTITION variable = reg_i complete
+// #pragma HLS ARRAY_PARTITION variable = reg_i complete
     _TIn reg_o[_ONstrm];
 // #pragma HLS resource variable = reg_o core = RAM_2P_URAM
-#pragma HLS ARRAY_PARTITION variable = reg_o complete
+// #pragma HLS ARRAY_PARTITION variable = reg_o complete
 
     ap_uint<8 * _ONstrm> orders = order_cfg.read();
 // #pragma HLS resource variable = orders core = RAM_2P_URAM
@@ -115,23 +115,23 @@ void streamShuffle(hls::stream<ap_uint<8 * _ONstrm> >& order_cfg,
 #pragma HLS PIPELINE II = 1
 
         for (int i = 0; i < _INStrm; i++) {
-#pragma HLS UNROLL
+// #pragma HLS UNROLL
             reg_i[i] = istrms[i].read();
         }
         e = e_istrm.read();
 
         for (int i = 0; i < _ONstrm; i++) {
-#pragma HLS UNROLL
+// #pragma HLS UNROLL
             reg_o[i] = 0;
         }
 
         for (int i = 0; i < _ONstrm; i++) {
-#pragma HLS UNROLL
+// #pragma HLS UNROLL
             if (!route[i][7]) reg_o[i] = reg_i[route[i]]; // critical path
         }
 
         for (int i = 0; i < _ONstrm; i++) {
-#pragma HLS UNROLL
+// #pragma HLS UNROLL
             ostrms[i].write(reg_o[i]);
         }
 

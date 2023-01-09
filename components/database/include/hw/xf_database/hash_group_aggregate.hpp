@@ -356,9 +356,9 @@ void input_mux(
 
     if (round == 0) { // use data from extern input
         COLUMN_DATA<_WKey, _KeyNM> key;
-#pragma HLS array_partition variable = key complete
+// #pragma HLS array_partition variable = key complete
         COLUMN_DATA<_WPay, _PayNM> pld;
-#pragma HLS array_partition variable = pld complete
+// #pragma HLS array_partition variable = pld complete
 
         bool e = ein_strm.read();
         while (!e) {
@@ -2265,84 +2265,84 @@ void hash_aggr_top(
     // Channel1
     hls::stream<COLUMN_DATA<_WKey, _KeyNM> > k1_strm_arry_c0[PU];
 #pragma HLS stream variable = k1_strm_arry_c0 depth = 8
-#pragma HLS array_partition variable = k1_strm_arry_c0 complete
+// #pragma HLS array_partition variable = k1_strm_arry_c0 complete
 #pragma HLS resource variable = k1_strm_arry_c0 core = FIFO_SRL
     hls::stream<COLUMN_DATA<_WPay, _PayNM> > p1_strm_arry_c0[PU];
 #pragma HLS stream variable = p1_strm_arry_c0 depth = 8
-#pragma HLS array_partition variable = p1_strm_arry_c0 complete
+// #pragma HLS array_partition variable = p1_strm_arry_c0 complete
 #pragma HLS resource variable = p1_strm_arry_c0 core = FIFO_SRL
     hls::stream<ap_uint<_WHashLow> > hash_strm_arry_c0[PU];
 #pragma HLS stream variable = hash_strm_arry_c0 depth = 8
-#pragma HLS array_partition variable = hash_strm_arry_c0 complete
+// #pragma HLS array_partition variable = hash_strm_arry_c0 complete
 #pragma HLS resource variable = hash_strm_arry_c0 core = FIFO_SRL
     hls::stream<bool> e1_strm_arry_c0[PU];
 #pragma HLS stream variable = e1_strm_arry_c0 depth = 8
-#pragma HLS array_partition variable = e1_strm_arry_c0 complete
+// #pragma HLS array_partition variable = e1_strm_arry_c0 complete
 
     // Channel2
-    hls::stream<COLUMN_DATA<_WKey, _KeyNM> > k1_strm_arry_c1[PU];
-#pragma HLS stream variable = k1_strm_arry_c1 depth = 8
-#pragma HLS array_partition variable = k1_strm_arry_c1 complete
-#pragma HLS resource variable = k1_strm_arry_c1 core = FIFO_SRL
-    hls::stream<COLUMN_DATA<_WPay, _PayNM> > p1_strm_arry_c1[PU];
-#pragma HLS stream variable = p1_strm_arry_c1 depth = 8
-#pragma HLS array_partition variable = p1_strm_arry_c1 complete
-#pragma HLS resource variable = p1_strm_arry_c1 core = FIFO_SRL
-    hls::stream<ap_uint<_WHashLow> > hash_strm_arry_c1[PU];
-#pragma HLS stream variable = hash_strm_arry_c1 depth = 8
-#pragma HLS array_partition variable = hash_strm_arry_c1 complete
-#pragma HLS resource variable = hash_strm_arry_c1 core = FIFO_SRL
-    hls::stream<bool> e1_strm_arry_c1[PU];
-#pragma HLS stream variable = e1_strm_arry_c1 depth = 8
-#pragma HLS array_partition variable = e1_strm_arry_c1 complete
+//     hls::stream<COLUMN_DATA<_WKey, _KeyNM> > k1_strm_arry_c1[PU];
+// #pragma HLS stream variable = k1_strm_arry_c1 depth = 8
+// #pragma HLS array_partition variable = k1_strm_arry_c1 complete
+// #pragma HLS resource variable = k1_strm_arry_c1 core = FIFO_SRL
+//     hls::stream<COLUMN_DATA<_WPay, _PayNM> > p1_strm_arry_c1[PU];
+// #pragma HLS stream variable = p1_strm_arry_c1 depth = 8
+// #pragma HLS array_partition variable = p1_strm_arry_c1 complete
+// #pragma HLS resource variable = p1_strm_arry_c1 core = FIFO_SRL
+//     hls::stream<ap_uint<_WHashLow> > hash_strm_arry_c1[PU];
+// #pragma HLS stream variable = hash_strm_arry_c1 depth = 8
+// #pragma HLS array_partition variable = hash_strm_arry_c1 complete
+// #pragma HLS resource variable = hash_strm_arry_c1 core = FIFO_SRL
+//     hls::stream<bool> e1_strm_arry_c1[PU];
+// #pragma HLS stream variable = e1_strm_arry_c1 depth = 8
+// #pragma HLS array_partition variable = e1_strm_arry_c1 complete
 
     // Channel3
-    hls::stream<COLUMN_DATA<_WKey, _KeyNM> > k1_strm_arry_c2[PU];
-#pragma HLS stream variable = k1_strm_arry_c2 depth = 8
-#pragma HLS array_partition variable = k1_strm_arry_c2 complete
-#pragma HLS resource variable = k1_strm_arry_c2 core = FIFO_SRL
-    hls::stream<COLUMN_DATA<_WPay, _PayNM> > p1_strm_arry_c2[PU];
-#pragma HLS stream variable = p1_strm_arry_c2 depth = 8
-#pragma HLS array_partition variable = p1_strm_arry_c2 complete
-#pragma HLS resource variable = p1_strm_arry_c2 core = FIFO_SRL
-    hls::stream<ap_uint<_WHashLow> > hash_strm_arry_c2[PU];
-#pragma HLS stream variable = hash_strm_arry_c2 depth = 8
-#pragma HLS array_partition variable = hash_strm_arry_c2 complete
-#pragma HLS resource variable = hash_strm_arry_c2 core = FIFO_SRL
-    hls::stream<bool> e1_strm_arry_c2[PU];
-#pragma HLS stream variable = e1_strm_arry_c2 depth = 8
-#pragma HLS array_partition variable = e1_strm_arry_c2 complete
+//     hls::stream<COLUMN_DATA<_WKey, _KeyNM> > k1_strm_arry_c2[PU];
+// #pragma HLS stream variable = k1_strm_arry_c2 depth = 8
+// #pragma HLS array_partition variable = k1_strm_arry_c2 complete
+// #pragma HLS resource variable = k1_strm_arry_c2 core = FIFO_SRL
+//     hls::stream<COLUMN_DATA<_WPay, _PayNM> > p1_strm_arry_c2[PU];
+// #pragma HLS stream variable = p1_strm_arry_c2 depth = 8
+// #pragma HLS array_partition variable = p1_strm_arry_c2 complete
+// #pragma HLS resource variable = p1_strm_arry_c2 core = FIFO_SRL
+//     hls::stream<ap_uint<_WHashLow> > hash_strm_arry_c2[PU];
+// #pragma HLS stream variable = hash_strm_arry_c2 depth = 8
+// #pragma HLS array_partition variable = hash_strm_arry_c2 complete
+// #pragma HLS resource variable = hash_strm_arry_c2 core = FIFO_SRL
+//     hls::stream<bool> e1_strm_arry_c2[PU];
+// #pragma HLS stream variable = e1_strm_arry_c2 depth = 8
+// #pragma HLS array_partition variable = e1_strm_arry_c2 complete
 
     // Channel4
-    hls::stream<COLUMN_DATA<_WKey, _KeyNM> > k1_strm_arry_c3[PU];
-#pragma HLS stream variable = k1_strm_arry_c3 depth = 8
-#pragma HLS array_partition variable = k1_strm_arry_c3 complete
-#pragma HLS resource variable = k1_strm_arry_c3 core = FIFO_SRL
-    hls::stream<COLUMN_DATA<_WPay, _PayNM> > p1_strm_arry_c3[PU];
-#pragma HLS stream variable = p1_strm_arry_c3 depth = 8
-#pragma HLS array_partition variable = p1_strm_arry_c3 complete
-#pragma HLS resource variable = p1_strm_arry_c3 core = FIFO_SRL
-    hls::stream<ap_uint<_WHashLow> > hash_strm_arry_c3[PU];
-#pragma HLS stream variable = hash_strm_arry_c3 depth = 8
-#pragma HLS array_partition variable = hash_strm_arry_c3 complete
-#pragma HLS resource variable = hash_strm_arry_c3 core = FIFO_SRL
-    hls::stream<bool> e1_strm_arry_c3[PU];
-#pragma HLS stream variable = e1_strm_arry_c3 depth = 8
-#pragma HLS array_partition variable = e1_strm_arry_c3 complete
+//     hls::stream<COLUMN_DATA<_WKey, _KeyNM> > k1_strm_arry_c3[PU];
+// #pragma HLS stream variable = k1_strm_arry_c3 depth = 8
+// #pragma HLS array_partition variable = k1_strm_arry_c3 complete
+// #pragma HLS resource variable = k1_strm_arry_c3 core = FIFO_SRL
+//     hls::stream<COLUMN_DATA<_WPay, _PayNM> > p1_strm_arry_c3[PU];
+// #pragma HLS stream variable = p1_strm_arry_c3 depth = 8
+// #pragma HLS array_partition variable = p1_strm_arry_c3 complete
+// #pragma HLS resource variable = p1_strm_arry_c3 core = FIFO_SRL
+//     hls::stream<ap_uint<_WHashLow> > hash_strm_arry_c3[PU];
+// #pragma HLS stream variable = hash_strm_arry_c3 depth = 8
+// #pragma HLS array_partition variable = hash_strm_arry_c3 complete
+// #pragma HLS resource variable = hash_strm_arry_c3 core = FIFO_SRL
+//     hls::stream<bool> e1_strm_arry_c3[PU];
+// #pragma HLS stream variable = e1_strm_arry_c3 depth = 8
+// #pragma HLS array_partition variable = e1_strm_arry_c3 complete
 
     // merge channel1-channel4 to here, then mux HBM data as input of hash
     // aggregate PU
     hls::stream<COLUMN_DATA<_WKey, _KeyNM> > k1_strm_arry[PU];
 #pragma HLS stream variable = k1_strm_arry depth = 8
-#pragma HLS array_partition variable = k1_strm_arry complete
+// #pragma HLS array_partition variable = k1_strm_arry complete
 #pragma HLS resource variable = k1_strm_arry core = FIFO_SRL
     hls::stream<COLUMN_DATA<_WPay, _PayNM> > p1_strm_arry[PU];
 #pragma HLS stream variable = p1_strm_arry depth = 8
-#pragma HLS array_partition variable = p1_strm_arry complete
+// #pragma HLS array_partition variable = p1_strm_arry complete
 #pragma HLS resource variable = p1_strm_arry core = FIFO_SRL
     hls::stream<ap_uint<_WHashLow> > hash1_strm_arry[PU];
 #pragma HLS stream variable = hash1_strm_arry depth = 8
-#pragma HLS array_partition variable = hash1_strm_arry complete
+// #pragma HLS array_partition variable = hash1_strm_arry complete
 #pragma HLS resource variable = hash1_strm_arry core = FIFO_SRL
     hls::stream<bool> e1_strm_arry[PU];
 #pragma HLS stream variable = e1_strm_arry depth = 8
@@ -2351,26 +2351,27 @@ void hash_aggr_top(
     // output aggregate result of PU
     hls::stream<COLUMN_DATA<_WKey, _KeyNM> > aggr_key_arry[PU];
 #pragma HLS stream variable = aggr_key_arry depth = 64
-#pragma HLS array_partition variable = aggr_key_arry complete
+// #pragma HLS array_partition variable = aggr_key_arry complete
 #pragma HLS resource variable = aggr_key_arry core = FIFO_SRL
     hls::stream<COLUMN_DATA<_WPay, _PayNM> > aggr_pld_array[PU][3];
 #pragma HLS stream variable = aggr_pld_arry depth = 8
-#pragma HLS array_partition variable = aggr_pld_arry complete
+// #pragma HLS array_partition variable = aggr_pld_arry complete
 #pragma HLS resource variable = aggr_pld_arry core = FIFO_SRL
     hls::stream<bool> e2_strm_arry[PU];
 #pragma HLS stream variable = e2_strm_arry depth = 8
-#pragma HLS array_partition variable = e2_strm_arry complete
+// #pragma HLS array_partition variable = e2_strm_arry complete
 
     // output of collect pu
     hls::stream<COLUMN_DATA<_WKey, _KeyNM> > collect_key;
 #pragma HLS stream variable = collect_key depth = 512
-#pragma HLS resource variable = collect_key core = FIFO_BRAM
+#pragma HLS resource variable = collect_key core = FIFO_LUTRAM
     hls::stream<COLUMN_DATA<_WPay, _PayNM> > collect_pld[3];
 #pragma HLS stream variable = collect_pld depth = 512
-#pragma HLS array_partition variable = collect_pld complete
-#pragma HLS resource variable = collect_pld core = FIFO_BRAM
+// #pragma HLS array_partition variable = collect_pld complete
+#pragma HLS resource variable = collect_pld core = FIFO_LUTRAM
     hls::stream<bool> e3_strm;
 #pragma HLS stream variable = e3_strm depth = 512
+#pragma HLS resource variable = e3_strm core = FIFO_LUTRAM
 
 //---------------------------------dispatch PU-------------------------------
 #ifndef __SYNTHESIS__
@@ -2379,31 +2380,31 @@ void hash_aggr_top(
 #endif
 #endif
 
-    if (_CHNM >= 1) {
+    // if (_CHNM >= 1) {
         details::hash_group_aggregate::dispatch_wrapper<_HashMode, _WKey, _KeyNM, _WPay, _PayNM, _WHashHigh, _WHashLow,
                                                         PU, _WBuffer, _BurstLenR>(
             strm_key_in[0], strm_pld_in[0], strm_e_in[0], in_buf0, unhandle_cnt_r[0], round, k1_strm_arry_c0,
             p1_strm_arry_c0, hash_strm_arry_c0, e1_strm_arry_c0);
-    }
+    // }
 
-    if (_CHNM >= 2) {
-        details::hash_group_aggregate::dispatch_wrapper<_HashMode, _WKey, _KeyNM, _WPay, _PayNM, _WHashHigh, _WHashLow,
-                                                        PU, _WBuffer, _BurstLenR>(
-            strm_key_in[1], strm_pld_in[1], strm_e_in[1], in_buf1, unhandle_cnt_r[1], round, k1_strm_arry_c1,
-            p1_strm_arry_c1, hash_strm_arry_c1, e1_strm_arry_c1);
-    }
+    // if (_CHNM >= 2) {
+    //     details::hash_group_aggregate::dispatch_wrapper<_HashMode, _WKey, _KeyNM, _WPay, _PayNM, _WHashHigh, _WHashLow,
+    //                                                     PU, _WBuffer, _BurstLenR>(
+    //         strm_key_in[1], strm_pld_in[1], strm_e_in[1], in_buf1, unhandle_cnt_r[1], round, k1_strm_arry_c1,
+    //         p1_strm_arry_c1, hash_strm_arry_c1, e1_strm_arry_c1);
+    // }
 
-    if (_CHNM >= 4) {
-        details::hash_group_aggregate::dispatch_wrapper<_HashMode, _WKey, _KeyNM, _WPay, _PayNM, _WHashHigh, _WHashLow,
-                                                        PU, _WBuffer, _BurstLenR>(
-            strm_key_in[2], strm_pld_in[2], strm_e_in[2], in_buf2, unhandle_cnt_r[2], round, k1_strm_arry_c2,
-            p1_strm_arry_c2, hash_strm_arry_c2, e1_strm_arry_c2);
+    // if (_CHNM >= 4) {
+    //     details::hash_group_aggregate::dispatch_wrapper<_HashMode, _WKey, _KeyNM, _WPay, _PayNM, _WHashHigh, _WHashLow,
+    //                                                     PU, _WBuffer, _BurstLenR>(
+    //         strm_key_in[2], strm_pld_in[2], strm_e_in[2], in_buf2, unhandle_cnt_r[2], round, k1_strm_arry_c2,
+    //         p1_strm_arry_c2, hash_strm_arry_c2, e1_strm_arry_c2);
 
-        details::hash_group_aggregate::dispatch_wrapper<_HashMode, _WKey, _KeyNM, _WPay, _PayNM, _WHashHigh, _WHashLow,
-                                                        PU, _WBuffer, _BurstLenR>(
-            strm_key_in[3], strm_pld_in[3], strm_e_in[3], in_buf3, unhandle_cnt_r[3], round, k1_strm_arry_c3,
-            p1_strm_arry_c3, hash_strm_arry_c3, e1_strm_arry_c3);
-    }
+    //     details::hash_group_aggregate::dispatch_wrapper<_HashMode, _WKey, _KeyNM, _WPay, _PayNM, _WHashHigh, _WHashLow,
+    //                                                     PU, _WBuffer, _BurstLenR>(
+    //         strm_key_in[3], strm_pld_in[3], strm_e_in[3], in_buf3, unhandle_cnt_r[3], round, k1_strm_arry_c3,
+    //         p1_strm_arry_c3, hash_strm_arry_c3, e1_strm_arry_c3);
+    // }
 
 //---------------------------------merge PU---------------------------------
 
@@ -2413,33 +2414,33 @@ void hash_aggr_top(
 #endif
 #endif
 
-    if (_CHNM == 1) {
+    // if (_CHNM == 1) {
         for (int p = 0; p < PU; ++p) {
 #pragma HLS unroll
             details::hash_group_aggregate::merge1_1<_WKey, _KeyNM, _WPay, _PayNM, _WHashLow>(
                 k1_strm_arry_c0[p], p1_strm_arry_c0[p], hash_strm_arry_c0[p], e1_strm_arry_c0[p], k1_strm_arry[p],
                 p1_strm_arry[p], hash1_strm_arry[p], e1_strm_arry[p]);
         }
-    } else if (_CHNM == 2) {
-        for (int p = 0; p < PU; p++) {
-#pragma HLS unroll
-            details::hash_group_aggregate::merge2_1<_WKey, _KeyNM, _WPay, _PayNM, _WHashLow>(
-                k1_strm_arry_c0[p], k1_strm_arry_c1[p], p1_strm_arry_c0[p], p1_strm_arry_c1[p], hash_strm_arry_c0[p],
-                hash_strm_arry_c1[p], e1_strm_arry_c0[p], e1_strm_arry_c1[p], k1_strm_arry[p], p1_strm_arry[p],
-                hash1_strm_arry[p], e1_strm_arry[p]);
-        }
-    } else {
-        // _CHNM == 4
-        for (int p = 0; p < PU; p++) {
-#pragma HLS unroll
-        details:
-            hash_group_aggregate::merge4_1<_WKey, _KeyNM, _WPay, _PayNM, _WHashLow>(
-                k1_strm_arry_c0[p], k1_strm_arry_c1[p], k1_strm_arry_c2[p], k1_strm_arry_c3[p], p1_strm_arry_c0[p],
-                p1_strm_arry_c1[p], p1_strm_arry_c2[p], p1_strm_arry_c3[p], hash_strm_arry_c0[p], hash_strm_arry_c1[p],
-                hash_strm_arry_c2[p], hash_strm_arry_c3[p], e1_strm_arry_c0[p], e1_strm_arry_c1[p], e1_strm_arry_c2[p],
-                e1_strm_arry_c3[p], k1_strm_arry[p], p1_strm_arry[p], hash1_strm_arry[p], e1_strm_arry[p]);
-        }
-    }
+//     } else if (_CHNM == 2) {
+//         for (int p = 0; p < PU; p++) {
+// #pragma HLS unroll
+//             details::hash_group_aggregate::merge2_1<_WKey, _KeyNM, _WPay, _PayNM, _WHashLow>(
+//                 k1_strm_arry_c0[p], k1_strm_arry_c1[p], p1_strm_arry_c0[p], p1_strm_arry_c1[p], hash_strm_arry_c0[p],
+//                 hash_strm_arry_c1[p], e1_strm_arry_c0[p], e1_strm_arry_c1[p], k1_strm_arry[p], p1_strm_arry[p],
+//                 hash1_strm_arry[p], e1_strm_arry[p]);
+//         }
+//     } else {
+//         // _CHNM == 4
+//         for (int p = 0; p < PU; p++) {
+// #pragma HLS unroll
+//         details:
+//             hash_group_aggregate::merge4_1<_WKey, _KeyNM, _WPay, _PayNM, _WHashLow>(
+//                 k1_strm_arry_c0[p], k1_strm_arry_c1[p], k1_strm_arry_c2[p], k1_strm_arry_c3[p], p1_strm_arry_c0[p],
+//                 p1_strm_arry_c1[p], p1_strm_arry_c2[p], p1_strm_arry_c3[p], hash_strm_arry_c0[p], hash_strm_arry_c1[p],
+//                 hash_strm_arry_c2[p], hash_strm_arry_c3[p], e1_strm_arry_c0[p], e1_strm_arry_c1[p], e1_strm_arry_c2[p],
+//                 e1_strm_arry_c3[p], k1_strm_arry[p], p1_strm_arry[p], hash1_strm_arry[p], e1_strm_arry[p]);
+//         }
+//     }
 
 //---------------------------------aggregate PU---------------------------------
 
@@ -2450,7 +2451,7 @@ void hash_aggr_top(
 #endif
 
     // hash aggregate processing unit
-    if (PU >= 1) {
+    // if (PU >= 1) {
 #ifndef __SYNTHESIS__
 #ifdef DEBUG_AGGR
         std::cout << "-------------------------PU0----------------------------" << std::endl;
@@ -2467,44 +2468,44 @@ void hash_aggr_top(
             round,                                                 // loop cnt
             unhandle_cnt_w[0],                                     // overflow cnt
             aggr_key_arry[0], aggr_pld_array[0], e2_strm_arry[0]); // output stream
-    }
+    // }
 
-    if (PU >= 2) {
+    // if (PU >= 2) {
 #ifndef __SYNTHESIS__
 #ifdef DEBUG_AGGR
         std::cout << "-------------------------PU1----------------------------" << std::endl;
 #endif
 #endif
 
-        details::hash_group_aggregate::hash_aggr_pu_wrapper<_HashMode, _WHashLow, _WKey, _KeyNM, _WPay, _PayNM, _Wcnt,
-                                                            _WBuffer, _BurstLenW>(
-            hash1_strm_arry[1], k1_strm_arry[1], p1_strm_arry[1],
-            e1_strm_arry[1],                                       // input stream
-            out_buf1,                                              // buffer
-            op_type[1],                                            // operation
-            key_column, pld_column,                                // column number
-            round,                                                 // loop cnt
-            unhandle_cnt_w[1],                                     // overflow cnt
-            aggr_key_arry[1], aggr_pld_array[1], e2_strm_arry[1]); // output stream
-    }
+    //     details::hash_group_aggregate::hash_aggr_pu_wrapper<_HashMode, _WHashLow, _WKey, _KeyNM, _WPay, _PayNM, _Wcnt,
+    //                                                         _WBuffer, _BurstLenW>(
+    //         hash1_strm_arry[1], k1_strm_arry[1], p1_strm_arry[1],
+    //         e1_strm_arry[1],                                       // input stream
+    //         out_buf1,                                              // buffer
+    //         op_type[1],                                            // operation
+    //         key_column, pld_column,                                // column number
+    //         round,                                                 // loop cnt
+    //         unhandle_cnt_w[1],                                     // overflow cnt
+    //         aggr_key_arry[1], aggr_pld_array[1], e2_strm_arry[1]); // output stream
+    // }
 
-    if (PU >= 4) {
+    // if (PU >= 4) {
 #ifndef __SYNTHESIS__
 #ifdef DEBUG_AGGR
         std::cout << "-------------------------PU2----------------------------" << std::endl;
 #endif
 #endif
 
-        details::hash_group_aggregate::hash_aggr_pu_wrapper<_HashMode, _WHashLow, _WKey, _KeyNM, _WPay, _PayNM, _Wcnt,
-                                                            _WBuffer, _BurstLenW>(
-            hash1_strm_arry[2], k1_strm_arry[2], p1_strm_arry[2],
-            e1_strm_arry[2],                                       // input stream
-            out_buf2,                                              // buffer
-            op_type[2],                                            // operation
-            key_column, pld_column,                                // column number
-            round,                                                 // loop cnt
-            unhandle_cnt_w[2],                                     // overflow cnt
-            aggr_key_arry[2], aggr_pld_array[2], e2_strm_arry[2]); // output stream
+        // details::hash_group_aggregate::hash_aggr_pu_wrapper<_HashMode, _WHashLow, _WKey, _KeyNM, _WPay, _PayNM, _Wcnt,
+        //                                                     _WBuffer, _BurstLenW>(
+        //     hash1_strm_arry[2], k1_strm_arry[2], p1_strm_arry[2],
+        //     e1_strm_arry[2],                                       // input stream
+        //     out_buf2,                                              // buffer
+        //     op_type[2],                                            // operation
+        //     key_column, pld_column,                                // column number
+        //     round,                                                 // loop cnt
+        //     unhandle_cnt_w[2],                                     // overflow cnt
+        //     aggr_key_arry[2], aggr_pld_array[2], e2_strm_arry[2]); // output stream
 
 #ifndef __SYNTHESIS__
 #ifdef DEBUG_AGGR
@@ -2512,17 +2513,17 @@ void hash_aggr_top(
 #endif
 #endif
 
-        details::hash_group_aggregate::hash_aggr_pu_wrapper<_HashMode, _WHashLow, _WKey, _KeyNM, _WPay, _PayNM, _Wcnt,
-                                                            _WBuffer, _BurstLenW>(
-            hash1_strm_arry[3], k1_strm_arry[3], p1_strm_arry[3],
-            e1_strm_arry[3],                                       // input stream
-            out_buf3,                                              // buffer
-            op_type[3],                                            // operation
-            key_column, pld_column,                                // column number
-            round,                                                 // loop cnt
-            unhandle_cnt_w[3],                                     // overflow cnt
-            aggr_key_arry[3], aggr_pld_array[3], e2_strm_arry[3]); // output stream
-    }
+    //     details::hash_group_aggregate::hash_aggr_pu_wrapper<_HashMode, _WHashLow, _WKey, _KeyNM, _WPay, _PayNM, _Wcnt,
+    //                                                         _WBuffer, _BurstLenW>(
+    //         hash1_strm_arry[3], k1_strm_arry[3], p1_strm_arry[3],
+    //         e1_strm_arry[3],                                       // input stream
+    //         out_buf3,                                              // buffer
+    //         op_type[3],                                            // operation
+    //         key_column, pld_column,                                // column number
+    //         round,                                                 // loop cnt
+    //         unhandle_cnt_w[3],                                     // overflow cnt
+    //         aggr_key_arry[3], aggr_pld_array[3], e2_strm_arry[3]); // output stream
+    // }
 
 //---------------------------------collect-----------------------------------
 
@@ -2663,9 +2664,9 @@ void hashGroupAggregate(
     ap_uint<32> aggr_num;
     ap_uint<32> round = 0;
     ap_uint<32> unhandle_cnt_r[8] = {0, 0, 0, 0, 0, 0, 0, 0};
-#pragma HLS ARRAY_PARTITION variable = unhandle_cnt_r complete
+// #pragma HLS ARRAY_PARTITION variable = unhandle_cnt_r complete
     ap_uint<32> unhandle_cnt_w[8] = {0, 0, 0, 0, 0, 0, 0, 0};
-#pragma HLS ARRAY_PARTITION variable = unhandle_cnt_w complete
+// #pragma HLS ARRAY_PARTITION variable = unhandle_cnt_w complete
 
     details::hash_group_aggregate::read_config<32>(config, op, key_column, pld_column, aggr_num);
 
@@ -2679,7 +2680,7 @@ void hashGroupAggregate(
 
     do {
 // clang-format off
-#pragma HLS ALLOCATION function instances = hash_aggr_top<_WKey, _KeyNM, _WPay, _PayNM, _HashMode, _WHashHigh,  _WHashLow, _CHNM, _Wcnt, _WBuffer, _BurstLenW, _BurstLenR> limit = 1
+// #pragma HLS ALLOCATION function instances = hash_aggr_top<_WKey, _KeyNM, _WPay, _PayNM, _HashMode, _WHashHigh,  _WHashLow, _CHNM, _Wcnt, _WBuffer, _BurstLenW, _BurstLenR> limit = 1
 // clang-format on
 
 #ifndef __SYNTHESIS__

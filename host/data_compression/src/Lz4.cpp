@@ -34,7 +34,7 @@ void lz4CompressionEngine(){
     uint32_t block_size_in_kb = BLOCK_SIZE_IN_KB;
     uint32_t block_size_in_bytes = block_size_in_kb * 1024;
 
-    CommandQueuePointer queue(Application::getContext<Lib::LZ4>(), Application::getDevice<Lib::LZ4>(), CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE | CL_QUEUE_PROFILING_ENABLE);
+    CommandQueuePointer queue(Application::getContext(), Application::getDevice(), CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE | CL_QUEUE_PROFILING_ENABLE);
     KernelPointer lz4CompressKernel(Application::getProgram<Lib::LZ4>(), "xilLz4CompressMM:{xilLz4CompressMM_1}");
     bool last;
 
@@ -57,10 +57,10 @@ void lz4CompressionEngine(){
         uint32_t bufferSize = ((chunkSize - 1) / BLOCK_SIZE_IN_KB + 1) * BLOCK_SIZE_IN_KB;
 
         // Device buffer allocation
-        BufferPointer inputBuffer(Application::getContext<Lib::LZ4>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, bufferSize, inBufferHost.data());
-        BufferPointer outputBuffer(Application::getContext<Lib::LZ4>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, bufferSize, outBufferHost.data());
-        BufferPointer compressdSizeBuffer(Application::getContext<Lib::LZ4>(), CL_MEM_USE_HOST_PTR | CL_MEM_WRITE_ONLY, sizeof(uint32_t) * numBlocks, compressSizeBufferHost.data());
-        BufferPointer buffer_block_size(Application::getContext<Lib::LZ4>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, sizeof(uint32_t) * numBlocks, blockSizeBufferHost.data());
+        BufferPointer inputBuffer(Application::getContext(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, bufferSize, inBufferHost.data());
+        BufferPointer outputBuffer(Application::getContext(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, bufferSize, outBufferHost.data());
+        BufferPointer compressdSizeBuffer(Application::getContext(), CL_MEM_USE_HOST_PTR | CL_MEM_WRITE_ONLY, sizeof(uint32_t) * numBlocks, compressSizeBufferHost.data());
+        BufferPointer buffer_block_size(Application::getContext(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, sizeof(uint32_t) * numBlocks, blockSizeBufferHost.data());
 
         // Set kernel arguments
         uint32_t narg = 0;
@@ -122,7 +122,7 @@ void lz4DecompressionEngine(){
     std::vector<uint8_t, aligned_allocator<uint8_t>> inBufferHost(hostBufferSize);
     std::vector<uint8_t, aligned_allocator<uint8_t>> outBufferHost(hostBufferSize);
 
-    CommandQueuePointer queue(Application::getContext<Lib::LZ4>(), Application::getDevice<Lib::LZ4>(), CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE | CL_QUEUE_PROFILING_ENABLE);
+    CommandQueuePointer queue(Application::getContext(), Application::getDevice(), CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE | CL_QUEUE_PROFILING_ENABLE);
     KernelPointer decompress_kernel_lz4(Application::getProgram<Lib::LZ4>(), "xilLz4DecompressMM:{xilLz4DecompressMM_1}");
 
     bool last;
@@ -192,10 +192,10 @@ void lz4DecompressionEngine(){
             std::vector<uint32_t, aligned_allocator<uint32_t>> compressSizeBufferHost(maxNumBlocks);
 
             // Device buffer allocation
-            BufferPointer inputBuffer(Application::getContext<Lib::LZ4>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, hostBufferSize, inBufferHost.data());
-            BufferPointer outputBuffer(Application::getContext<Lib::LZ4>(), CL_MEM_USE_HOST_PTR | CL_MEM_WRITE_ONLY, hostBufferSize, outBufferHost.data());
-            BufferPointer decompressdSizeBuffer(Application::getContext<Lib::LZ4>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, sizeof(uint32_t)*maxNumBlocks, decompressSizeBufferHost.data());
-            BufferPointer compressdSizeBuffer(Application::getContext<Lib::LZ4>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, sizeof(uint32_t)*maxNumBlocks, compressSizeBufferHost.data());
+            BufferPointer inputBuffer(Application::getContext(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, hostBufferSize, inBufferHost.data());
+            BufferPointer outputBuffer(Application::getContext(), CL_MEM_USE_HOST_PTR | CL_MEM_WRITE_ONLY, hostBufferSize, outBufferHost.data());
+            BufferPointer decompressdSizeBuffer(Application::getContext(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, sizeof(uint32_t)*maxNumBlocks, decompressSizeBufferHost.data());
+            BufferPointer compressdSizeBuffer(Application::getContext(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, sizeof(uint32_t)*maxNumBlocks, compressSizeBufferHost.data());
             
             //content size
             if(contentSizeFlg) decompressQueueInput.pop(inBufferHost.data(), 4, last);

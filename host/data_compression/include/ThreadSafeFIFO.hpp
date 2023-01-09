@@ -6,8 +6,9 @@
 #include <condition_variable>
 #include <stdint.h>
 #include <iostream>
+#include <assert.h>
 
-#define MAX_SIZE (64*1024*1024)
+#define DEFAULT_MAX_SIZE (128)
 
 template<typename T>
 class ThreadSafeFIFO {
@@ -15,8 +16,11 @@ private:
     mutable std::mutex mut;
     std::queue<std::pair<T, bool>> queue;
     std::condition_variable cv;
+    uint64_t maxSize;
 
 public:
+    ThreadSafeFIFO();
+    ThreadSafeFIFO(uint64_t maxSize);
     ~ThreadSafeFIFO();
     void push(T val, bool last);
     std::pair<T, bool> pop();
@@ -26,14 +30,20 @@ public:
 };
 
 template<typename T>
+ThreadSafeFIFO<T>::ThreadSafeFIFO(uint64_t maxSize) : maxSize(maxSize){}
+
+template<typename T>
+ThreadSafeFIFO<T>::ThreadSafeFIFO() : ThreadSafeFIFO(DEFAULT_MAX_SIZE){}
+
+template<typename T>
 ThreadSafeFIFO<T>::~ThreadSafeFIFO(){
-    if(!queue.empty()) std::cout<<"FIFO is not empty!"<<std::endl;
+    if(!queue.empty()) std::cout<<"Warning: FIFO is not empty!"<<std::endl;
 }
 
 template<typename T>
 void ThreadSafeFIFO<T>::push(T val, bool last) {
     std::unique_lock<std::mutex> lk(mut);
-    cv.wait(lk, [this] { return queue.size()<MAX_SIZE; });
+    cv.wait(lk, [this] { return queue.size()<maxSize; });
     queue.emplace(val, last);
     cv.notify_all();
 }

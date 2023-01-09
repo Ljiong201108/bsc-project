@@ -189,39 +189,49 @@ void dynamic_eval_wrapper(ap_uint<289> alu_cfg,
     hls::stream<ap_uint<WStrm> > split0_strm[ColNM - 4];
 #pragma HLS stream variable = split0_strm depth = 512
 #pragma HLS array_partition variable = split0_strm complete
-#pragma HLS resource variable = split0_strm core = FIFO_BRAM
+#pragma HLS resource variable = split0_strm core = FIFO_LUTRAM //FIFO_BRAM
     hls::stream<ap_uint<WStrm> > split1_strm[4];
 #pragma HLS stream variable = split1_strm depth = 8
 #pragma HLS array_partition variable = split1_strm complete
+#pragma HLS resource variable = split1_strm core = FIFO_LUTRAM
     hls::stream<bool> e0_strm;
 #pragma HLS stream variable = e0_strm depth = 8
+#pragma HLS resource variable = e0_strm core = FIFO_LUTRAM
 
     const unsigned int choose[4] = {0, 1, 2, 3};
     hls::stream<ap_uint<WStrm> > dup0_strm[4];
 #pragma HLS stream variable = dup0_strm depth = 512
 #pragma HLS array_partition variable = dup0_strm complete
-#pragma HLS resource variable = dup0_strm core = FIFO_BRAM
+#pragma HLS resource variable = dup0_strm core = FIFO_LUTRAM //FIFO_BRAM
     hls::stream<ap_uint<WStrm> > dup1_strm[1][4];
 #pragma HLS stream variable = dup1_strm depth = 8
 #pragma HLS array_partition variable = dup1_strm complete
+#pragma HLS resource variable = dup1_strm core = FIFO_LUTRAM
     hls::stream<bool> e1_strm;
 #pragma HLS stream variable = e1_strm depth = 8
+#pragma HLS resource variable = e1_strm core = FIFO_LUTRAM
 
     hls::stream<ap_uint<2 * WStrm> > eval_strm;
 #pragma HLS stream variable = eval_strm depth = 16
+#pragma HLS resource variable = eval_strm core = FIFO_LUTRAM
     hls::stream<bool> e2_strm;
 #pragma HLS stream variable = e2_strm depth = 16
+#pragma HLS resource variable = e2_strm core = FIFO_LUTRAM
 
     hls::stream<ap_uint<WStrm> > scaling_strm[1];
 #pragma HLS stream variable = scaling_strm depth = 8
+#pragma HLS resource variable = scaling_strm core = FIFO_LUTRAM
     hls::stream<bool> e3_strm;
 #pragma HLS stream variable = e3_strm depth = 8
+#pragma HLS resource variable = e3_strm core = FIFO_LUTRAM
 
     hls::stream<ap_uint<WStrm> > combine_strm[ColNM + 1];
 #pragma HLS stream variable = combine_strm depth = 8
 #pragma HLS array_partition variable = combine_strm complete
+#pragma HLS resource variable = combine_strm core = FIFO_LUTRAM
     hls::stream<bool> e4_strm;
 #pragma HLS stream variable = e4_strm depth = 8
+#pragma HLS resource variable = e4_strm core = FIFO_LUTRAM
 
     // split col for duplicate
     split<WStrm, 4, ColNM - 4>(in_strm, e_in_strm, split1_strm, split0_strm, e0_strm);

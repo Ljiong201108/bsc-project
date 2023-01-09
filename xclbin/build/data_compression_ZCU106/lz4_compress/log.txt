@@ -422,3 +422,121 @@ Creating Vivado project.
 [02:13:46] Phase 4.3 Placer Reporting
 [02:13:46] Phase 4.3.1 Print Estimated Congestion
 [02:13:46] Phase 4.4 Final Placement Cleanup
+[02:14:47] Finished 4th of 6 tasks (FPGA logic placement). Elapsed time: 00h 21m 47s 
+
+[02:14:47] Starting logic routing..
+[02:15:48] Phase 1 Build RT Design
+[02:16:19] Phase 2 Router Initialization
+[02:16:19] Phase 2.1 Fix Topology Constraints
+[02:16:19] Phase 2.2 Pre Route Cleanup
+[02:16:19] Phase 2.3 Global Clock Net Routing
+[02:16:49] Phase 2.4 Update Timing
+[02:18:51] Phase 3 Initial Routing
+[02:18:51] Phase 3.1 Global Routing
+[02:20:22] Phase 4 Rip-up And Reroute
+[02:20:22] Phase 4.1 Global Iteration 0
+[02:29:29] Phase 4.2 Global Iteration 1
+[02:29:59] Phase 5 Delay and Skew Optimization
+[02:29:59] Phase 5.1 Delay CleanUp
+[02:29:59] Phase 5.1.1 Update Timing
+[02:31:00] Phase 5.2 Clock Skew Optimization
+[02:31:00] Phase 6 Post Hold Fix
+[02:31:00] Phase 6.1 Hold Fix Iter
+[02:31:00] Phase 6.1.1 Update Timing
+[02:31:00] Phase 7 Route finalize
+[02:31:30] Phase 8 Verifying routed nets
+[02:31:30] Phase 9 Depositing Routes
+[02:32:01] Phase 10 Post Router Timing
+[02:32:01] Finished 5th of 6 tasks (FPGA routing). Elapsed time: 00h 17m 13s 
+
+[02:32:01] Starting bitstream generation..
+[02:36:34] Creating bitmap...
+[02:37:29] Writing bitstream ./zcu106_base_wrapper.bit...
+[02:37:29] Finished 6th of 6 tasks (FPGA bitstream generation). Elapsed time: 00h 05m 28s 
+[02:37:28] Run vpl: Step impl: Completed
+[02:37:30] Run vpl: FINISHED. Run Status: impl Complete!
+INFO: [v++ 60-1441] [02:37:30] Run run_link: Step vpl: Completed
+Time (s): cpu = 00:01:09 ; elapsed = 01:31:15 . Memory (MB): peak = 1578.871 ; gain = 0.000 ; free physical = 103999 ; free virtual = 212312
+INFO: [v++ 60-1443] [02:37:30] Run run_link: Step rtdgen: Started
+INFO: [v++ 60-1453] Command Line: rtdgen
+INFO: [v++ 60-1454] Run Directory: /home/jiong/bsc-project/xclbin/build/data_compression_ZCU106/lz4_compress/_x/link/run_link
+INFO: [v++ 60-1453] Command Line: cf2sw -a /home/jiong/bsc-project/xclbin/build/data_compression_ZCU106/lz4_compress/_x/link/int/address_map.xml -sdsl /home/jiong/bsc-project/xclbin/build/data_compression_ZCU106/lz4_compress/_x/link/int/sdsl.dat -xclbin /home/jiong/bsc-project/xclbin/build/data_compression_ZCU106/lz4_compress/_x/link/int/xclbin_orig.xml -rtd /home/jiong/bsc-project/xclbin/build/data_compression_ZCU106/lz4_compress/_x/link/int/lz4_compress.rtd -o /home/jiong/bsc-project/xclbin/build/data_compression_ZCU106/lz4_compress/_x/link/int/lz4_compress.xml
+INFO: [v++ 60-1652] Cf2sw returned exit code: 0
+INFO: [v++ 60-2311] HPISystemDiagram::writeSystemDiagramAfterRunningVivado, rtdInputFilePath: /home/jiong/bsc-project/xclbin/build/data_compression_ZCU106/lz4_compress/_x/link/int/lz4_compress.rtd
+INFO: [v++ 60-2312] HPISystemDiagram::writeSystemDiagramAfterRunningVivado, systemDiagramOutputFilePath: /home/jiong/bsc-project/xclbin/build/data_compression_ZCU106/lz4_compress/_x/link/int/systemDiagramModelSlrBaseAddress.json
+INFO: [v++ 60-1618] Launching 
+INFO: [v++ 60-1441] [02:37:36] Run run_link: Step rtdgen: Completed
+Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 1578.871 ; gain = 0.000 ; free physical = 105693 ; free virtual = 213660
+INFO: [v++ 60-1443] [02:37:36] Run run_link: Step xclbinutil: Started
+INFO: [v++ 60-1453] Command Line: xclbinutil --add-section BITSTREAM:RAW:/home/jiong/bsc-project/xclbin/build/data_compression_ZCU106/lz4_compress/_x/link/int/system.bit --force --target hw --key-value SYS:dfx_enable:false --add-section :JSON:/home/jiong/bsc-project/xclbin/build/data_compression_ZCU106/lz4_compress/_x/link/int/lz4_compress.rtd --add-section CLOCK_FREQ_TOPOLOGY:JSON:/home/jiong/bsc-project/xclbin/build/data_compression_ZCU106/lz4_compress/_x/link/int/lz4_compress_xml.rtd --add-section BUILD_METADATA:JSON:/home/jiong/bsc-project/xclbin/build/data_compression_ZCU106/lz4_compress/_x/link/int/lz4_compress_build.rtd --add-section EMBEDDED_METADATA:RAW:/home/jiong/bsc-project/xclbin/build/data_compression_ZCU106/lz4_compress/_x/link/int/lz4_compress.xml --add-section SYSTEM_METADATA:RAW:/home/jiong/bsc-project/xclbin/build/data_compression_ZCU106/lz4_compress/_x/link/int/systemDiagramModelSlrBaseAddress.json --key-value SYS:PlatformVBNV:xilinx_zcu106_zcu106_base_1_0 --output /home/jiong/bsc-project/xclbin/build/data_compression_ZCU106/lz4_compress/lz4_compress.xclbin
+INFO: [v++ 60-1454] Run Directory: /home/jiong/bsc-project/xclbin/build/data_compression_ZCU106/lz4_compress/_x/link/run_link
+XRT Build Version: 2.12.427 (2021.2)
+       Build Date: 2021-10-08 22:06:50
+          Hash ID: 2719b6027e185000fc49783171631db03fc0ef79
+Creating a default 'in-memory' xclbin image.
+
+Section: 'BITSTREAM'(0) was successfully added.
+Size   : 19311216 bytes
+Format : RAW
+File   : '/home/jiong/bsc-project/xclbin/build/data_compression_ZCU106/lz4_compress/_x/link/int/system.bit'
+
+Section: 'MEM_TOPOLOGY'(6) was successfully added.
+Format : JSON
+File   : 'mem_topology'
+
+Section: 'IP_LAYOUT'(8) was successfully added.
+Format : JSON
+File   : 'ip_layout'
+
+Section: 'CONNECTIVITY'(7) was successfully added.
+Format : JSON
+File   : 'connectivity'
+WARNING: Skipping CLOCK_FREQ_TOPOLOGY section for count size is zero.
+WARNING: Section 'CLOCK_FREQ_TOPOLOGY' content is empty.  No data in the given JSON file.
+
+Section: 'CLOCK_FREQ_TOPOLOGY'(11) was empty.  No action taken.
+Format : JSON
+File   : '/home/jiong/bsc-project/xclbin/build/data_compression_ZCU106/lz4_compress/_x/link/int/lz4_compress_xml.rtd'
+
+Section: 'BUILD_METADATA'(14) was successfully added.
+Size   : 2722 bytes
+Format : JSON
+File   : '/home/jiong/bsc-project/xclbin/build/data_compression_ZCU106/lz4_compress/_x/link/int/lz4_compress_build.rtd'
+
+Section: 'EMBEDDED_METADATA'(2) was successfully added.
+Size   : 91948 bytes
+Format : RAW
+File   : '/home/jiong/bsc-project/xclbin/build/data_compression_ZCU106/lz4_compress/_x/link/int/lz4_compress.xml'
+
+Section: 'SYSTEM_METADATA'(22) was successfully added.
+Size   : 10032 bytes
+Format : RAW
+File   : '/home/jiong/bsc-project/xclbin/build/data_compression_ZCU106/lz4_compress/_x/link/int/systemDiagramModelSlrBaseAddress.json'
+Successfully wrote (19425339 bytes) to the output file: /home/jiong/bsc-project/xclbin/build/data_compression_ZCU106/lz4_compress/lz4_compress.xclbin
+Leaving xclbinutil.
+INFO: [v++ 60-1441] [02:37:36] Run run_link: Step xclbinutil: Completed
+Time (s): cpu = 00:00:00.19 ; elapsed = 00:00:00.30 . Memory (MB): peak = 1578.871 ; gain = 0.000 ; free physical = 105660 ; free virtual = 213646
+INFO: [v++ 60-1443] [02:37:36] Run run_link: Step xclbinutilinfo: Started
+INFO: [v++ 60-1453] Command Line: xclbinutil --quiet --force --info /home/jiong/bsc-project/xclbin/build/data_compression_ZCU106/lz4_compress/lz4_compress.xclbin.info --input /home/jiong/bsc-project/xclbin/build/data_compression_ZCU106/lz4_compress/lz4_compress.xclbin
+INFO: [v++ 60-1454] Run Directory: /home/jiong/bsc-project/xclbin/build/data_compression_ZCU106/lz4_compress/_x/link/run_link
+INFO: [v++ 60-1441] [02:37:37] Run run_link: Step xclbinutilinfo: Completed
+Time (s): cpu = 00:00:00.65 ; elapsed = 00:00:00.74 . Memory (MB): peak = 1578.871 ; gain = 0.000 ; free physical = 105644 ; free virtual = 213631
+INFO: [v++ 60-1443] [02:37:37] Run run_link: Step generate_sc_driver: Started
+INFO: [v++ 60-1453] Command Line: 
+INFO: [v++ 60-1454] Run Directory: /home/jiong/bsc-project/xclbin/build/data_compression_ZCU106/lz4_compress/_x/link/run_link
+INFO: [v++ 60-1441] [02:37:37] Run run_link: Step generate_sc_driver: Completed
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1578.871 ; gain = 0.000 ; free physical = 105644 ; free virtual = 213630
+INFO: [v++ 60-244] Generating system estimate report...
+INFO: [v++ 60-1092] Generated system estimate report: /home/jiong/bsc-project/xclbin/build/data_compression_ZCU106/lz4_compress/_x/reports/link/system_estimate_lz4_compress.xtxt
+INFO: [v++ 60-2397] Platform default or user specified output type sd_card detected but is not a supported output for v++ --link. Use the v++ --package option instead to create SD card output.
+INFO: [v++ 60-586] Created lz4_compress.xclbin
+INFO: [v++ 60-1307] Run completed. Additional information can be found in:
+	Guidance: /home/jiong/bsc-project/xclbin/build/data_compression_ZCU106/lz4_compress/_x/reports/link/v++_link_lz4_compress_guidance.html
+	Timing Report: /home/jiong/bsc-project/xclbin/build/data_compression_ZCU106/lz4_compress/_x/reports/link/imp/impl_1_zcu106_base_wrapper_timing_summary_routed.rpt
+	Vivado Log: /home/jiong/bsc-project/xclbin/build/data_compression_ZCU106/lz4_compress/_x/logs/link/vivado.log
+	Steps Log File: /home/jiong/bsc-project/xclbin/build/data_compression_ZCU106/lz4_compress/_x/logs/link/link.steps.log
+
+INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
+    vitis_analyzer /home/jiong/bsc-project/xclbin/build/data_compression_ZCU106/lz4_compress/lz4_compress.xclbin.link_summary 
+INFO: [v++ 60-791] Total elapsed time: 1h 32m 31s
+INFO: [v++ 60-1653] Closing dispatch client.

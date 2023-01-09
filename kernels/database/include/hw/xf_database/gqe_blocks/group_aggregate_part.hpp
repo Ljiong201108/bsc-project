@@ -41,7 +41,7 @@ void dup_strm(hls::stream<ap_uint<WStrm> > in_strm[COL_NM],
 #pragma HLS pipeline II = 1
         e = e_in_strm.read();
         for (int i = 0; i < COL_NM; i++) {
-#pragma HLS unroll
+// #pragma HLS unroll
             ap_uint<WStrm> tmp = in_strm[i].read();
             out_strm1[i].write(tmp);
             out_strm2[i].write(tmp);
@@ -255,44 +255,44 @@ void group_aggregate_wrapper(
     hls::stream<ap_uint<_WStrm> > dup0_strm[_CHNM][_ColNM];
 #pragma HLS stream variable = dup0_strm depth = 8
 // #pragma HLS array_partition variable = dup0_strm complete
-#pragma HLS resource variable = dup0_strm core = FIFO_LUTRAM
+#pragma HLS resource variable = dup0_strm core = FIFO_SRL
     hls::stream<ap_uint<_WStrm> > dup1_strm[_CHNM][_ColNM];
 #pragma HLS stream variable = dup1_strm depth = 8
 // #pragma HLS array_partition variable = dup1_strm complete
-#pragma HLS resource variable = dup1_strm core = FIFO_LUTRAM
+#pragma HLS resource variable = dup1_strm core = FIFO_SRL
     hls::stream<bool> e0_strm[_CHNM];
 #pragma HLS stream variable = e0_strm depth = 8
 // #pragma HLS array_partition variable = e0_strm complete
-#pragma HLS resource variable = e0_strm core = FIFO_LUTRAM
+#pragma HLS resource variable = e0_strm core = FIFO_SRL
     hls::stream<bool> e1_strm[_CHNM];
 #pragma HLS stream variable = e1_strm depth = 8
 // #pragma HLS array_partition variable = e1_strm complete
-#pragma HLS resource variable = e1_strm core = FIFO_LUTRAM
+#pragma HLS resource variable = e1_strm core = FIFO_SRL
 
     hls::stream<ap_uint<_WStrm> > strm_key_in[_CHNM][_ColNM];
 #pragma HLS stream variable = strm_key_in depth = 8
 // #pragma HLS array_partition variable = strm_key_in complete
-#pragma HLS resource variable = strm_key_in core = FIFO_LUTRAM
+#pragma HLS resource variable = strm_key_in core = FIFO_SRL
     hls::stream<ap_uint<_WStrm> > strm_pld_in[_CHNM][_ColNM];
 #pragma HLS stream variable = strm_pld_in depth = 8
 // #pragma HLS array_partition variable = strm_pld_in complete
-#pragma HLS resource variable = strm_pld_in core = FIFO_LUTRAM
+#pragma HLS resource variable = strm_pld_in core = FIFO_SRL
     hls::stream<bool> e2_strm[_CHNM];
 #pragma HLS stream variable = e2_strm depth = 8
 // #pragma HLS array_partition variable = e2_strm complete
-#pragma HLS resource variable = e1_strm core = FIFO_LUTRAM
+#pragma HLS resource variable = e1_strm core = FIFO_SRL
     hls::stream<bool> e3_strm[_CHNM];
 #pragma HLS stream variable = e3_strm depth = 8
-#pragma HLS resource variable = e3_strm core = FIFO_LUTRAM
+#pragma HLS resource variable = e3_strm core = FIFO_SRL
 
     hls::stream<ap_uint<_WStrm> > strm_key_out[_ColNM];
 #pragma HLS stream variable = strm_key_out depth = 512
 // #pragma HLS array_partition variable = strm_key_out complete
-#pragma HLS resource variable = strm_key_out core = FIFO_BRAM
+#pragma HLS resource variable = strm_key_out core = FIFO_LUTRAM
     hls::stream<ap_uint<_WStrm> > strm_pld_out[3][_ColNM];
 #pragma HLS stream variable = strm_pld_out depth = 512
 // #pragma HLS array_partition variable = strm_pld_out complete
-#pragma HLS resource variable = strm_pld_out core = FIFO_BRAM
+#pragma HLS resource variable = strm_pld_out core = FIFO_LUTRAM
     hls::stream<bool> e4_strm;
 #pragma HLS stream variable = e4_strm depth = 512
 #pragma HLS resource variable = e4_strm core = FIFO_LUTRAM

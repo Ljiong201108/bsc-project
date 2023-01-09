@@ -288,12 +288,12 @@ extern "C" void gqeAggr(                                         //
 
     hls::stream<ap_uint<8 * TPCH_INT_SZ> > scan_strms[n_channel][n_column];
 #pragma HLS stream variable = scan_strms depth = 8
-#pragma HLS array_partition variable = scan_strms complete
+// #pragma HLS array_partition variable = scan_strms complete
 #pragma HLS resource variable = scan_strms core = FIFO_SRL
 
     hls::stream<bool> e_scan_strms[n_channel];
 #pragma HLS stream variable = e_scan_strms depth = 8
-#pragma HLS array_partition variable = e_scan_strms complete
+// #pragma HLS array_partition variable = e_scan_strms complete
 #pragma HLS resource variable = e_scan_strms core = FIFO_SRL
 
     hls::stream<int> nrow_strm;
@@ -393,7 +393,7 @@ extern "C" void gqeAggr(                                         //
     hls::stream<ap_uint<8 * TPCH_INT_SZ> > flt_strms[n_channel][n_column];
 #pragma HLS stream variable = flt_strms depth = 512
 // #pragma HLS array_partition variable = flt_strms complete
-#pragma HLS resource variable = flt_strms core = FIFO_BRAM
+#pragma HLS resource variable = flt_strms core = FIFO_LUTRAM
     hls::stream<bool> e_flt_strms[n_channel];
 #pragma HLS stream variable = e_flt_strms depth = 128
 // #pragma HLS array_partition variable = e_flt_strms complete
@@ -453,7 +453,7 @@ extern "C" void gqeAggr(                                         //
 #pragma HLS RESOURCE variable = result_info_strm core = FIFO_SRL
     hls::stream<ap_uint<8 * TPCH_INT_SZ> > aggr_strms[2 * n_column];
 #pragma HLS stream variable = aggr_strms depth = 8
-#pragma HLS array_partition variable = aggr_pld_strms complete
+// #pragma HLS array_partition variable = aggr_pld_strms complete
 #pragma HLS resource variable = aggr_pld_strms core = FIFO_SRL
     hls::stream<bool> e_aggr_strms;
 #pragma HLS stream variable = e_aggr_strms depth = 8
@@ -465,7 +465,7 @@ extern "C" void gqeAggr(                                         //
     printf("******************************\n");
 #endif
 
-    group_aggregate_wrapper<8 * TPCH_INT_SZ, n_column, 1, 2, 17, n_channel, n_column, 8 * TPCH_INT_SZ * VEC_LEN, 32,
+    group_aggregate_wrapper<8 * TPCH_INT_SZ, n_column, 1, 0, 17, n_channel, n_column, 8 * TPCH_INT_SZ * VEC_LEN, 32,
                             32>(flt_strms, e_flt_strms, shuffle3_cfg_strm, shuffle4_cfg_strm, merge_column_cfg_strm,
                                 group_aggr_cfg_strm, result_info_strm, ping_buf0, ping_buf1, ping_buf2, ping_buf3,
                                 pong_buf0, pong_buf1, pong_buf2, pong_buf3, aggr_strms, e_aggr_strms);

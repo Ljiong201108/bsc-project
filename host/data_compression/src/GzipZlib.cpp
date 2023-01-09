@@ -22,7 +22,7 @@ uint64_t gzipZlibCompressionEngine(bool isZlib){
 	cl_int err;
 
 	std::vector<uint32_t, aligned_allocator<uint32_t>> checksumDataBufferHost(1);
-	BufferPointer checksumDataBuffer(Application::getContext<Lib::GZIP_ZLIB>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, sizeof(uint32_t), checksumDataBufferHost.data());
+	BufferPointer checksumDataBuffer(Application::getContext(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, sizeof(uint32_t), checksumDataBufferHost.data());
 	
     bool checksum_type;
 
@@ -44,9 +44,9 @@ uint64_t gzipZlibCompressionEngine(bool isZlib){
     std::vector<uint32_t, aligned_allocator<uint32_t>> compressedSizeBufferHost(1);
 
     // Device buffers
-    BufferPointer inputBuffer(Application::getContext<Lib::GZIP_ZLIB>(), CL_MEM_READ_ONLY | CL_MEM_USE_HOST_PTR, sizeof(uint8_t)*inputBufferHost.size(), inputBufferHost.data());
-    BufferPointer outputBuffer(Application::getContext<Lib::GZIP_ZLIB>(), CL_MEM_READ_WRITE | CL_MEM_USE_HOST_PTR, sizeof(uint8_t)*outputBufferHost.size(), outputBufferHost.data());
-    BufferPointer compressedSizeBuffer(Application::getContext<Lib::GZIP_ZLIB>(), CL_MEM_READ_WRITE | CL_MEM_USE_HOST_PTR, sizeof(uint32_t), compressedSizeBufferHost.data());
+    BufferPointer inputBuffer(Application::getContext(), CL_MEM_READ_ONLY | CL_MEM_USE_HOST_PTR, sizeof(uint8_t)*inputBufferHost.size(), inputBufferHost.data());
+    BufferPointer outputBuffer(Application::getContext(), CL_MEM_READ_WRITE | CL_MEM_USE_HOST_PTR, sizeof(uint8_t)*outputBufferHost.size(), outputBufferHost.data());
+    BufferPointer compressedSizeBuffer(Application::getContext(), CL_MEM_READ_WRITE | CL_MEM_USE_HOST_PTR, sizeof(uint32_t), compressedSizeBufferHost.data());
 
     KernelPointer compressKernelMM(Application::getProgram<Lib::GZIP_ZLIB>(), "xilGzipZlibCompressMM:{xilGzipZlibCompressMM_1}");
     compressKernelMM->setArg(0, *inputBuffer);
@@ -55,7 +55,7 @@ uint64_t gzipZlibCompressionEngine(bool isZlib){
     compressKernelMM->setArg(3, *checksumDataBuffer);
     compressKernelMM->setArg(5, checksum_type);
 
-    CommandQueuePointer queue(Application::getContext<Lib::GZIP_ZLIB>(), Application::getDevice<Lib::GZIP_ZLIB>(), CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE);
+    CommandQueuePointer queue(Application::getContext(), Application::getDevice(), CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE);
 
     uint64_t outIdx=0;
 
@@ -89,7 +89,7 @@ uint64_t gzipZlibCompressionEngine(bool isZlib){
         internalGzipZlib::compressQueueOutput.push(outputBufferHost.data(), compressedSizeBufferHost[0], false);
         outIdx+=compressedSizeBufferHost[0];
 
-        // if(checksum_type) checksumDataBufferHost.data()[0] = ~checksumDataBufferHost.data()[0];
+        if(checksum_type) checksumDataBufferHost.data()[0] = ~checksumDataBufferHost.data()[0];
     }while(!last);
 
 	// Add last block header
@@ -108,12 +108,12 @@ uint64_t gzipZlibDecompressionEngine(){
     uint64_t outIdx=0;
 
     std::thread chunkWriter([]{
-        CommandQueuePointer chunkWriterQueue(Application::getContext<Lib::GZIP_ZLIB>(), Application::getDevice<Lib::GZIP_ZLIB>(), CL_QUEUE_PROFILING_ENABLE);
+        CommandQueuePointer chunkWriterQueue(Application::getContext(), Application::getDevice(), CL_QUEUE_PROFILING_ENABLE);
         KernelPointer chunkWriterKernel(Application::getProgram<Lib::GZIP_ZLIB>(), "xilMM2S:{xilMM2S_1}");
 
         // host allocated aligned memory
         std::vector<uint8_t, aligned_allocator<uint8_t>> inputBufferHost(CHUNK_SIZE_IN_BYTE);
-        BufferPointer inputBuffer(Application::getContext<Lib::GZIP_ZLIB>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, CHUNK_SIZE_IN_BYTE, inputBufferHost.data());
+        BufferPointer inputBuffer(Application::getContext(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, CHUNK_SIZE_IN_BYTE, inputBufferHost.data());
         
         chunkWriterKernel->setArg(0, *inputBuffer);
 
@@ -136,7 +136,7 @@ uint64_t gzipZlibDecompressionEngine(){
     });
 
     std::thread chunkReader([]{
-        CommandQueuePointer chunkReaderQueue(Application::getContext<Lib::GZIP_ZLIB>(), Application::getDevice<Lib::GZIP_ZLIB>(), CL_QUEUE_PROFILING_ENABLE);
+        CommandQueuePointer chunkReaderQueue(Application::getContext(), Application::getDevice(), CL_QUEUE_PROFILING_ENABLE);
         KernelPointer chunkReaderKernel(Application::getProgram<Lib::GZIP_ZLIB>(), "xilS2MM:{xilS2MM_1}");
 
         std::vector<uint8_t, aligned_allocator<uint8_t>> outputBufferHost(CHUNK_SIZE_IN_BYTE);
@@ -144,9 +144,9 @@ uint64_t gzipZlibDecompressionEngine(){
         std::vector<uint32_t, aligned_allocator<uint32_t>> statusBufferHost(1);
         statusBufferHost[0]=0;
 
-        BufferPointer outputBuffer(Application::getContext<Lib::GZIP_ZLIB>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, CHUNK_SIZE_IN_BYTE, outputBufferHost.data());
-        BufferPointer outputSizeBuffer(Application::getContext<Lib::GZIP_ZLIB>(), CL_MEM_USE_HOST_PTR | CL_MEM_WRITE_ONLY, sizeof(uint32_t), outputSizeBufferHost.data());
-        BufferPointer statusBuffer(Application::getContext<Lib::GZIP_ZLIB>(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, sizeof(uint32_t), statusBufferHost.data());
+        BufferPointer outputBuffer(Application::getContext(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, CHUNK_SIZE_IN_BYTE, outputBufferHost.data());
+        BufferPointer outputSizeBuffer(Application::getContext(), CL_MEM_USE_HOST_PTR | CL_MEM_WRITE_ONLY, sizeof(uint32_t), outputSizeBufferHost.data());
+        BufferPointer statusBuffer(Application::getContext(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, sizeof(uint32_t), statusBufferHost.data());
 
         chunkReaderKernel->setArg(0, *outputBuffer);
         chunkReaderKernel->setArg(1, *outputSizeBuffer);

@@ -48,6 +48,7 @@ void Application::loadBinaryFile(const std::string &&xclbin_file_name){
 Application::Application(){
     getXilinxDevices();
     OCL_CHECK(m_err, m_context=cl::Context(m_device, NULL, NULL, NULL, &m_err))
+	std::cout<<"created device and context"<<std::endl;
     m_lib=Lib::EMPTY;
     m_xclbinBuffer=NULL;
 }

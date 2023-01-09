@@ -272,10 +272,10 @@ void multi_probe_wrapper(ap_uint<32>& depth,
     // for probe_addr_gen
     hls::stream<ap_uint<ARW> > base_addr_strm;
 #pragma HLS stream variable = base_addr_strm depth = 512
-#pragma HLS resource variable = base_addr_strm core = FIFO_BRAM
+#pragma HLS resource variable = base_addr_strm core = FIFO_LUTRAM // FIFO_BRAM
     hls::stream<ap_uint<ARW> > nm0_strm;
 #pragma HLS stream variable = nm0_strm depth = 512
-#pragma HLS resource variable = nm0_strm core = FIFO_BRAM
+#pragma HLS resource variable = nm0_strm core = FIFO_LUTRAM //FIFO_BRAM
     hls::stream<bool> e0_strm;
 #pragma HLS stream variable = e0_strm depth = 512
 #pragma HLS resource variable = e0_strm core = FIFO_SRL
@@ -720,13 +720,13 @@ void multi_join_unit(
 
     hls::stream<ap_uint<KEYW> > i1_t_key_strm;
 #pragma HLS STREAM variable = i1_t_key_strm depth = 1024
-#pragma HLS resource variable = i1_t_key_strm core = FIFO_BRAM
+#pragma HLS resource variable = i1_t_key_strm core = FIFO_LUTRAM //FIFO_BRAM
     hls::stream<ap_uint<T_PW> > i1_t_pld_strm;
 #pragma HLS STREAM variable = i1_t_pld_strm depth = 1024
-#pragma HLS resource variable = i1_t_pld_strm core = FIFO_BRAM
+#pragma HLS resource variable = i1_t_pld_strm core = FIFO_LUTRAM //FIFO_BRAM
     hls::stream<ap_uint<ARW> > i1_nm_strm;
 #pragma HLS STREAM variable = i1_nm_strm depth = 1024
-#pragma HLS resource variable = i1_nm_strm core = FIFO_BRAM
+#pragma HLS resource variable = i1_nm_strm core = FIFO_LUTRAM //FIFO_BRAM
     hls::stream<ap_uint<3> > join1_flag_strm;
 #pragma HLS STREAM variable = join1_flag_strm depth = 16
 #pragma HLS resource variable = join1_flag_strm core = FIFO_SRL

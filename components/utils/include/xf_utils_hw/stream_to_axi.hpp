@@ -157,6 +157,8 @@ void streamToAxi(ap_uint<_WAxi>* wbuf, hls::stream<ap_uint<_WStrm> >& istrm, hls
     hls::stream<ap_uint<8> > nb_strm;
 #pragma HLS stream variable = nb_strm depth = 2
 #pragma HLS stream variable = axi_strm depth = fifo_buf
+#pragma HLS resource variable = nb_strm core = FIFO_LUTRAM
+#pragma HLS resource variable = axi_strm core = FIFO_LUTRAM
 
     details::countForBurst<_WAxi, _WStrm, _BurstLen>(istrm, e_istrm, axi_strm, nb_strm);
 

@@ -285,7 +285,7 @@ void load_config(ap_uint<8 * TPCH_INT_SZ>* ptr,
     nrow_strm.write(nrow);
 
     ap_uint<8 * TPCH_INT_SZ> config[128];
-#pragma HLS resource variable = config core = RAM_1P_BRAM
+#pragma HLS resource variable = config core = RAM_1P_LUTRAM
 
     int8_t col_id[8];
     ap_uint<32> alu1_cfg[10];

@@ -1,5 +1,3 @@
-#pragma once
-
 #ifdef XILINX
 #include "lz4App.hpp"
 #include "lz4OCLHost.hpp"
@@ -77,10 +75,10 @@ void testLz4Compress(){
 	std::ofstream ofile;
     std::ifstream ifile;
 
-	ifile.open("/share/xilinx/dt_1G.txt", std::ios::binary);
-	ofile.open("sample/dt_1G.txt.lz4", std::ios::binary);
-	// ifile.open("sample/sample.txt", std::ios::binary);
-	// ofile.open("sample/sample.txt.lz4", std::ios::binary);
+	// ifile.open("/share/xilinx/dt_1G.txt", std::ios::binary);
+	// ofile.open("sample/dt_1G.txt.lz4", std::ios::binary);
+	ifile.open("sample/sample.txt", std::ios::binary);
+	ofile.open("sample/sample.txt.lz4", std::ios::binary);
 
 	ifile.seekg(0, std::ios_base::end);
 	uint64_t fileSize=ifile.tellg();
@@ -173,3 +171,7 @@ inline void testLz4Decompress(){
     ofile.close();
 }
 } //testSnappy
+
+int main(){
+	testLz4::testLz4Compress();
+}

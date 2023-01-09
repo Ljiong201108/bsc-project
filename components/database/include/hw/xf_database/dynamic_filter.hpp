@@ -305,6 +305,7 @@ void true_table(hls::stream<ap_uint<32> >& cfg_strm,
     //
     const size_t addr_width = (size_t)true_table_info<NCOL>::addr_width;
     bool truetable[(1 << addr_width)];
+#pragma HLS RESOURCE variable = truetable core = RAM_2P_LUTRAM
     // XXX break config into multiple 32-bit words, to avoid too wide stream.
     for (unsigned i = 0; i < true_table_info<NCOL>::dwords_num; ++i) {
         ap_uint<32> dw = cfg_strm.read();
