@@ -132,8 +132,8 @@ void GzipZlibCompressionKernelExecutor::process(){
 GzipZlibCompressionKernelExecutor::GzipZlibCompressionKernelExecutor(
 	int idx,
 	bool isZlib,
-	ThreadSafeQueue<GzipZlibCompressionItem> &inputQueue, 
-	GeneralQueue &outputQueue,  GzipZlibCompressionWorkshop &workshop) 
+	Stream<GzipZlibCompressionItem> &inputQueue, 
+	ByteQueue &outputQueue,  GzipZlibCompressionWorkshop &workshop) 
 	: KernelExecutor<GzipZlibCompressionItem>(idx, inputQueue, outputQueue), workshop(workshop), isZlib(isZlib){
 
 }

@@ -1,28 +1,28 @@
-#include "ThreadSafeQueue.hpp"
+#include "Stream.hpp"
 
-GeneralItem::GeneralItem(uint32_t size, uint8_t *payload, bool last) : size(size), used(0), payload(payload), last(last){}
+ByteItem::ByteItem(uint32_t size, uint8_t *payload, bool last) : size(size), used(0), payload(payload), last(last){}
 
-uint32_t GeneralItem::available(){
+uint32_t ByteItem::available(){
 	return size-used;
 }
 
-void GeneralItem::use(uint8_t *dest, uint32_t size){
+void ByteItem::use(uint8_t *dest, uint32_t size){
 	assert(size<=available() && "size should smaller than available");
 
-	std::cout<<"using item for "<<size<<" Bytes: size="<<this->size<<" used="<<this->used<<std::endl;
+	// std::cout<<"using item for "<<size<<" Bytes: size="<<this->size<<" used="<<this->used<<" last="<<last<<std::endl;
 	std::memcpy(dest, payload+used, size);
 	used+=size;
 }
 
-bool GeneralItem::empty(){
+bool ByteItem::empty(){
 	return size==used;
 }
 
-GeneralQueue::GeneralQueue(std::string name) : ThreadSafeQueue<GeneralItem>(name){}
+ByteStream::ByteStream(std::string name) : Stream<ByteItem>(name){}
 
-GeneralQueue::GeneralQueue(std::string name, uint64_t maxSize) : ThreadSafeQueue<GeneralItem>(name, maxSize){}
+ByteStream::ByteStream(std::string name, uint64_t maxSize) : Stream<ByteItem>(name, maxSize){}
 
-void GeneralQueue::push(void *SRC, uint32_t size, bool last){
+void ByteStream::push(void *SRC, uint32_t size, bool last){
 	uint8_t *src=(uint8_t*)SRC;
 	uint8_t *payload=new uint8_t[size];
 	memcpy(payload, src, size);
@@ -32,13 +32,13 @@ void GeneralQueue::push(void *SRC, uint32_t size, bool last){
 	cv.notify_all();
 }
 
-uint32_t GeneralQueue::pop(void *DEST, uint32_t size, bool &last){
+uint32_t ByteStream::pop(void *DEST, uint32_t size, bool &last){
 	uint8_t *dest=(uint8_t*)DEST;
 	std::unique_lock<std::mutex> lk(mut);
 	uint32_t popped=0;
 	while(size){
 		cv.wait(lk, [this] { return queue.size()>0; });
-		GeneralItem &item=queue.front();
+		ByteItem &item=queue.front();
 		uint32_t canUse=std::min(size, item.available());
 		item.use(dest, canUse);
 		dest+=canUse;
@@ -46,16 +46,16 @@ uint32_t GeneralQueue::pop(void *DEST, uint32_t size, bool &last){
 		size-=canUse;
 		if(item.empty()){
 			delete[] item.payload;
-			queue.pop();
-			cv.notify_all();
 			if(item.last){
 				last=true;
+				queue.pop();
 				return popped;
 			}
+			queue.pop();
+			cv.notify_all();
 		}
 	}
 
-	std::cout<<"exit last=false"<<std::endl;
 	last=false;
 	return popped;
 }

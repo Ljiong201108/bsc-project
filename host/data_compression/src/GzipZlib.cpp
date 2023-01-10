@@ -48,7 +48,7 @@ uint64_t gzipZlibCompressionEngine(bool isZlib){
     BufferPointer outputBuffer(Application::getContext(), CL_MEM_READ_WRITE | CL_MEM_USE_HOST_PTR, sizeof(uint8_t)*outputBufferHost.size(), outputBufferHost.data());
     BufferPointer compressedSizeBuffer(Application::getContext(), CL_MEM_READ_WRITE | CL_MEM_USE_HOST_PTR, sizeof(uint32_t), compressedSizeBufferHost.data());
 
-    KernelPointer compressKernelMM(Application::getProgram<Lib::GZIP_ZLIB>(), "xilGzipZlibCompressMM:{xilGzipZlibCompressMM_1}");
+    KernelPointer compressKernelMM(Application::getProgram<Lib::GZIP_ZLIB_COMPRESSION>(), "xilGzipZlibCompressMM:{xilGzipZlibCompressMM_1}");
     compressKernelMM->setArg(0, *inputBuffer);
     compressKernelMM->setArg(1, *outputBuffer);
     compressKernelMM->setArg(2, *compressedSizeBuffer);
@@ -109,7 +109,7 @@ uint64_t gzipZlibDecompressionEngine(){
 
     std::thread chunkWriter([]{
         CommandQueuePointer chunkWriterQueue(Application::getContext(), Application::getDevice(), CL_QUEUE_PROFILING_ENABLE);
-        KernelPointer chunkWriterKernel(Application::getProgram<Lib::GZIP_ZLIB>(), "xilMM2S:{xilMM2S_1}");
+        KernelPointer chunkWriterKernel(Application::getProgram<Lib::GZIP_ZLIB_DECOMPRESSION>(), "xilMM2S:{xilMM2S_1}");
 
         // host allocated aligned memory
         std::vector<uint8_t, aligned_allocator<uint8_t>> inputBufferHost(CHUNK_SIZE_IN_BYTE);
@@ -137,7 +137,7 @@ uint64_t gzipZlibDecompressionEngine(){
 
     std::thread chunkReader([]{
         CommandQueuePointer chunkReaderQueue(Application::getContext(), Application::getDevice(), CL_QUEUE_PROFILING_ENABLE);
-        KernelPointer chunkReaderKernel(Application::getProgram<Lib::GZIP_ZLIB>(), "xilS2MM:{xilS2MM_1}");
+        KernelPointer chunkReaderKernel(Application::getProgram<Lib::GZIP_ZLIB_DECOMPRESSION>(), "xilS2MM:{xilS2MM_1}");
 
         std::vector<uint8_t, aligned_allocator<uint8_t>> outputBufferHost(CHUNK_SIZE_IN_BYTE);
         std::vector<uint32_t, aligned_allocator<uint32_t>> outputSizeBufferHost(1);

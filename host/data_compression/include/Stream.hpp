@@ -12,7 +12,7 @@
 #define DEFAULT_MAX_SIZE (128)
 
 template<typename T>
-class ThreadSafeQueue {
+class Stream {
 protected:
     mutable std::mutex mut;
     std::queue<T> queue;
@@ -21,26 +21,26 @@ protected:
 	uint64_t maxSize;
 
 public:
-    ThreadSafeQueue(std::string name);
-    ThreadSafeQueue(std::string name, uint64_t maxSize);
-    ~ThreadSafeQueue();
+    Stream(std::string name);
+    Stream(std::string name, uint64_t maxSize);
+    ~Stream();
     virtual void push(T val);
     virtual T pop();
 };
 
 template<typename T>
-ThreadSafeQueue<T>::ThreadSafeQueue(std::string name, uint64_t maxSize) : name(name), maxSize(maxSize){}
+Stream<T>::Stream(std::string name, uint64_t maxSize) : name(name), maxSize(maxSize){}
 
 template<typename T>
-ThreadSafeQueue<T>::ThreadSafeQueue(std::string name) : ThreadSafeQueue(name, DEFAULT_MAX_SIZE){}
+Stream<T>::Stream(std::string name) : Stream(name, DEFAULT_MAX_SIZE){}
 
 template<typename T>
-ThreadSafeQueue<T>::~ThreadSafeQueue(){
-    if(!queue.empty()) std::cout<<"Warning: FIFO "<<name<<" is not empty!"<<std::endl;
+Stream<T>::~Stream(){
+    if(!queue.empty()) std::cout<<"Warning: Stream "<<name<<" is not empty!"<<std::endl;
 }
 
 template<typename T>
-void ThreadSafeQueue<T>::push(T val) {
+void Stream<T>::push(T val) {
     std::unique_lock<std::mutex> lk(mut);
     cv.wait(lk, [this] { return queue.size()<maxSize; });
     queue.push(val);
@@ -48,7 +48,7 @@ void ThreadSafeQueue<T>::push(T val) {
 }
 
 template<typename T>
-T ThreadSafeQueue<T>::pop() {
+T Stream<T>::pop() {
     std::unique_lock<std::mutex> lk(mut);
     cv.wait(lk, [this] { return queue.size()>0; });
     T val=queue.front();
@@ -57,22 +57,22 @@ T ThreadSafeQueue<T>::pop() {
     return val;
 }
 
-struct GeneralItem{
+struct ByteItem{
 	uint32_t size;
 	uint32_t used;
 	uint8_t *payload;
 	bool last;
 
-	GeneralItem(uint32_t size, uint8_t *payload, bool last);
+	ByteItem(uint32_t size, uint8_t *payload, bool last);
 	uint32_t available();
 	void use(uint8_t *dest, uint32_t size);
 	bool empty();
 };
 
-class GeneralQueue : ThreadSafeQueue<GeneralItem>{
+class ByteStream : Stream<ByteItem>{
 public:
-	GeneralQueue(std::string name);
-	GeneralQueue(std::string name, uint64_t maxSize);
+	ByteStream(std::string name);
+	ByteStream(std::string name, uint64_t maxSize);
 	void push(void *src, uint32_t size, bool last);
 	uint32_t pop(void *dest, uint32_t size, bool &last);
 };

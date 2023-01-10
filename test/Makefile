@@ -19,13 +19,20 @@ HOST_INC+=-I$(COMP)/data_compression/include
 HOST_INC+=-I$(HOST)/data_compression/include 
 HOST_INC+=-I$(HOST)/third_party/xxhash 
 HOST_INC+=-I$(HOST)/security/include
+HOST_INC+=-I$(APP)/data_compression/include
 
-HOST_SRC+=$(HOST)/data_compression/src/ThreadSafeQueue.cpp
+HOST_SRC+=$(HOST)/data_compression/src/Stream.cpp
+
 HOST_SRC+=$(HOST)/data_compression/src/GzipZlib.cpp
 HOST_SRC+=$(HOST)/data_compression/src/GzipZlibCompression.cpp
 HOST_SRC+=$(HOST)/data_compression/src/GzipZlibDecompression.cpp
+HOST_SRC+=$(APP)/data_compression/src/LibGzip.cpp
 
 HOST_SRC+=$(HOST)/data_compression/src/Lz4.cpp
+HOST_SRC+=$(HOST)/data_compression/src/Lz4Compression.cpp
+HOST_SRC+=$(HOST)/data_compression/src/Lz4Decompression.cpp
+# HOST_SRC+=$(APP)/data_compression/src/LibLz4.cpp
+
 HOST_SRC+=$(HOST)/third_party/xxhash/xxhash.c
 
 # database
@@ -48,8 +55,8 @@ HOST_SRC+=$(HOST)/third_party/xxhash/xxhash.c
 # test
 # HOST_SRC+=$(TEST)/database/testJoin.cpp
 # HOST_SRC+=$(TEST)/database/testAggr.cpp
-HOST_SRC+=$(TEST)/data_compression/testGzip.cpp
-# HOST_SRC+=$(TEST)/data_compression/testLz4.cpp
+# HOST_SRC+=$(TEST)/data_compression/testGzip.cpp
+HOST_SRC+=$(TEST)/data_compression/testLz4.cpp
 
 package: $(HOST_OUTPUT)
 	v++ -p $(PAKG_FLG) $(FILE) --package.out_dir package --package.rootfs $(ROOTFS)/rootfs.ext4 $(PAKG_SDFILE) --package.sd_file $(ROOTFS)/Image --package.sd_file xrt.ini --package.sd_file $(HOST_OUTPUT) $(patsubst %, --package.sd_file %, $(FILE)) --package.sd_file run_on_zcu.sh --package.sd_file sample.txt --package.sd_file test

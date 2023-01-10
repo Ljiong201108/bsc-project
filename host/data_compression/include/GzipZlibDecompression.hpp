@@ -21,8 +21,8 @@ public:
 
 	GzipZlibDecompressionKernelExecutor(
 		int idx,
-		ThreadSafeQueue<GzipZlibDecompressionItem> &inputQueue, 
-		GeneralQueue &outputQueue, 
+		Stream<GzipZlibDecompressionItem> &inputStream, 
+		ByteStream &outputStream, 
 		GzipZlibDecompressionWorkshop &workshop);
 
 	void process() override;
@@ -31,8 +31,8 @@ public:
 class GzipZlibDecompressionStructureAnalyzer : StructureAnalyzer<GzipZlibDecompressionItem>{
 public:
 	GzipZlibDecompressionStructureAnalyzer(
-		GeneralQueue &inputQueue,
-		ThreadSafeQueue<GzipZlibDecompressionItem> &outputQueue);
+		ByteStream &inputStream,
+		Stream<GzipZlibDecompressionItem> &outputStream);
 	
 	void process() override;
 };
@@ -53,6 +53,6 @@ protected:
 public:
 	GzipZlibDecompressionWorkshop();
 	void wait();
-	GeneralQueue& getInputQueue() override;
-	GeneralQueue& getOutputQueue() override;
+	ByteStream& getInputStream() override;
+	ByteStream& getOutputStream() override;
 };

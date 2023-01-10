@@ -21,6 +21,6 @@ void GzipZlibCompressionStructureAnalyzer::process(){
 }
 
 GzipZlibCompressionStructureAnalyzer::GzipZlibCompressionStructureAnalyzer(
-		GeneralQueue &inputQueue,
-		ThreadSafeQueue<GzipZlibCompressionItem> &outputQueue) : 
+		ByteQueue &inputQueue,
+		Stream<GzipZlibCompressionItem> &outputQueue) : 
 		StructureAnalyzer<GzipZlibCompressionItem>(inputQueue, outputQueue){}

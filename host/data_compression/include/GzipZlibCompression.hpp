@@ -18,13 +18,13 @@ protected:
     bool isZlib;
 
 public:
-    uint64_t checksum;
+    uint32_t checksum;
 
     GzipZlibCompressionKernelExecutor(
         int idx,
         bool isZlib,
-        ThreadSafeQueue<GzipZlibCompressionItem> &inputQueue, 
-        GeneralQueue &outputQueue, GzipZlibCompressionWorkshop &workshop);
+        Stream<GzipZlibCompressionItem> &inputStream, 
+        ByteStream &outputStream, GzipZlibCompressionWorkshop &workshop);
 
     void process() override;
 };
@@ -32,8 +32,8 @@ public:
 class GzipZlibCompressionStructureAnalyzer : StructureAnalyzer<GzipZlibCompressionItem>{
 public:
     GzipZlibCompressionStructureAnalyzer(
-        GeneralQueue &inputQueue,
-        ThreadSafeQueue<GzipZlibCompressionItem> &outputQueue);
+        ByteStream &inputStream,
+        Stream<GzipZlibCompressionItem> &outputStream);
     
     void process() override;
 };
@@ -55,6 +55,7 @@ protected:
 public:
     GzipZlibCompressionWorkshop(bool isZlib);
     void wait();
-    GeneralQueue& getInputQueue() override;
-    GeneralQueue& getOutputQueue() override;
+	uint32_t checksum();
+    ByteStream& getInputStream() override;
+    ByteStream& getOutputStream() override;
 };

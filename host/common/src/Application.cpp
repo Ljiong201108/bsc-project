@@ -1,5 +1,7 @@
 #include "Application.hpp"
 
+std::mutex Application::mtx;
+
 void Application::getXilinxDevices(){
     std::vector<cl::Platform> platforms;
     OCL_CHECK(m_err, m_err = cl::Platform::get(&platforms))

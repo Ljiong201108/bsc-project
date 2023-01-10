@@ -29,7 +29,7 @@ void GzipZlibCompressionKernelExecutor::process(){
 
 	std::stringstream kernelNameStream;
 	kernelNameStream<<"xilGzipZlibCompressMM:{xilGzipZlibCompressMM_"<<idx<<"}";
-	KernelPointer compressKernelMM(Application::getProgram<Lib::GZIP_ZLIB>(), kernelNameStream.str());
+	KernelPointer compressKernelMM(Application::getProgram<Lib::GZIP_ZLIB_COMPRESSION>(), kernelNameStream.str());
 	compressKernelMM->setArg(0, *inputBuffer);
 	compressKernelMM->setArg(1, *outputBuffer);
 	compressKernelMM->setArg(2, *compressedSizeBuffer);
@@ -56,7 +56,7 @@ void GzipZlibCompressionKernelExecutor::process(){
 
 	while(true){
 		if(curItem>0) migrationH2DEvents[curItem-1].wait();
-		GzipZlibCompressionItem item=inputQueue.pop();
+		GzipZlibCompressionItem item=inputStream.pop();
 		uint64_t itemIdx=item.idx;
 		uint32_t itemPayloadSize=item.size;
 		uint8_t *itemPayload=item.payload;
@@ -106,7 +106,8 @@ void GzipZlibCompressionKernelExecutor::process(){
 			std::unique_lock<std::mutex> lck(workshop.mtx);
 			workshop.cv.wait(lck, [this, itemIdx] {return workshop.outputIdx==itemIdx;});
 
-			outputQueue.push(outputBufferHost.data(), compressedSizeBufferHost[0], false);
+			outputStream.push(outputBufferHost.data(), compressedSizeBufferHost[0], false);
+			
 			OCL_CHECK(err, cl_int err=outputEvents[curItem].setStatus(CL_COMPLETE))
 			workshop.outputIdx++;
 			workshop.cv.notify_all();
@@ -132,9 +133,9 @@ void GzipZlibCompressionKernelExecutor::process(){
 GzipZlibCompressionKernelExecutor::GzipZlibCompressionKernelExecutor(
 	int idx,
 	bool isZlib,
-	ThreadSafeQueue<GzipZlibCompressionItem> &inputQueue, 
-	GeneralQueue &outputQueue,  GzipZlibCompressionWorkshop &workshop) 
-	: KernelExecutor<GzipZlibCompressionItem>(idx, inputQueue, outputQueue), workshop(workshop), isZlib(isZlib){
+	Stream<GzipZlibCompressionItem> &inputStream, 
+	ByteStream &outputStream,  GzipZlibCompressionWorkshop &workshop) 
+	: KernelExecutor<GzipZlibCompressionItem>(idx, inputStream, outputStream), workshop(workshop), isZlib(isZlib){
 
 }
 
@@ -145,28 +146,28 @@ void GzipZlibCompressionStructureAnalyzer::process(){
 	// compress the input block by block
 	do{
 		uint8_t *payload=new uint8_t[GzipZlibCompressionWorkshop::CHUNK_SIZE_IN_BYTE];
-		uint32_t chunkSize=inputQueue.pop(payload, GzipZlibCompressionWorkshop::CHUNK_SIZE_IN_BYTE, last);
+		uint32_t chunkSize=inputStream.pop(payload, GzipZlibCompressionWorkshop::CHUNK_SIZE_IN_BYTE, last);
 		std::cout<<"inner reads a "<<chunkSize<<" Bytes block"<<std::endl;
 
 		GzipZlibCompressionItem item;
 		item.idx=idx++;
 		item.size=chunkSize;
 		item.payload=payload;
-		outputQueue.push(item);
+		outputStream.push(item);
 	}while(!last);
 
 	std::cout<<"End of structure analyzer"<<std::endl;
 }
 
 GzipZlibCompressionStructureAnalyzer::GzipZlibCompressionStructureAnalyzer(
-		GeneralQueue &inputQueue,
-		ThreadSafeQueue<GzipZlibCompressionItem> &outputQueue) : 
-		StructureAnalyzer<GzipZlibCompressionItem>(inputQueue, outputQueue){}
+		ByteStream &inputStream,
+		Stream<GzipZlibCompressionItem> &outputStream) : 
+		StructureAnalyzer<GzipZlibCompressionItem>(inputStream, outputStream){}
 
 GzipZlibCompressionWorkshop::GzipZlibCompressionWorkshop(bool isZlib) : 
-	Workshop<GzipZlibCompressionItem>("GzipZlibInputQueue", 4, "GzipZlibBridgeQueue", 2, "GzipZlibOutputQueue", 4), 
-	kernelExecutor(1, isZlib, bridgeQueue, outputQueue, *this),
-	structureAnalyzer(inputQueue, bridgeQueue),
+	Workshop<GzipZlibCompressionItem>("GzipZlibInputStream", 4, "GzipZlibBridgeStream", 2, "GzipZlibOutputStream", 4), 
+	kernelExecutor(1, isZlib, bridgeStream, outputStream, *this),
+	structureAnalyzer(inputStream, bridgeStream),
 	structureAnalyzerThread(&GzipZlibCompressionStructureAnalyzer::process, &structureAnalyzer),
 	kernelExecutorThread(&GzipZlibCompressionKernelExecutor::process, &kernelExecutor){
 }
@@ -180,7 +181,7 @@ void GzipZlibCompressionWorkshop::wait(){
 	item.idx=(uint64_t)-1;
 	item.size=0;
 	item.payload=nullptr;
-	bridgeQueue.push(item);
+	bridgeStream.push(item);
 
 	kernelExecutorThread.join();
 
@@ -188,15 +189,19 @@ void GzipZlibCompressionWorkshop::wait(){
 
 	// Add last block header
 	long int last_block = 0xffff000001;
-	outputQueue.push(&last_block, 5, true);
+	outputStream.push(&last_block, 5, true);
 
 	std::cout<<"End of workshop wait"<<std::endl;
 }
 
-GeneralQueue& GzipZlibCompressionWorkshop::getInputQueue(){
-	return inputQueue;
+uint32_t GzipZlibCompressionWorkshop::checksum(){
+	return kernelExecutor.checksum;
 }
 
-GeneralQueue& GzipZlibCompressionWorkshop::getOutputQueue(){
-	return outputQueue;
+ByteStream& GzipZlibCompressionWorkshop::getInputStream(){
+	return inputStream;
+}
+
+ByteStream& GzipZlibCompressionWorkshop::getOutputStream(){
+	return outputStream;
 }

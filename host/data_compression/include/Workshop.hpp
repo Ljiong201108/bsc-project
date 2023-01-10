@@ -3,7 +3,7 @@
 #include <vector>
 
 #include "KernelExecutor.hpp"
-#include "ThreadSafeQueue.hpp"
+#include "Stream.hpp"
 
 template<typename T>
 class Workshop{
@@ -12,36 +12,36 @@ protected:
     std::mutex mtx;
     std::condition_variable cv;
     
-    ThreadSafeQueue<T> bridgeQueue;
-    GeneralQueue inputQueue, outputQueue;
+    Stream<T> bridgeStream;
+    ByteStream inputStream, outputStream;
 
 public:
     Workshop(
-		std::string nameInputQueue, uint64_t depthInputQueue, 
-		std::string nameBridgeQueue, uint64_t depthBridgeQueue, 
-		std::string nameOutputQueue, uint64_t depthOutputQueue);
+		std::string nameInputStream, uint64_t depthInputStream, 
+		std::string nameBridgeStream, uint64_t depthBridgeStream, 
+		std::string nameOutputStream, uint64_t depthOutputStream);
 
     virtual ~Workshop()=default;
-    virtual GeneralQueue& getInputQueue();
-    virtual GeneralQueue& getOutputQueue();
+    virtual ByteStream& getInputStream();
+    virtual ByteStream& getOutputStream();
 };
 
 template<typename T>
 Workshop<T>::Workshop(
-		std::string nameInputQueue, uint64_t depthInputQueue, 
-		std::string nameBridgeQueue, uint64_t depthBridgeQueue, 
-		std::string nameOutputQueue, uint64_t depthOutputQueue) : 
+		std::string nameInputStream, uint64_t depthInputStream, 
+		std::string nameBridgeStream, uint64_t depthBridgeStream, 
+		std::string nameOutputStream, uint64_t depthOutputStream) : 
 	outputIdx(0), 
-	bridgeQueue(nameInputQueue, depthBridgeQueue), 
-	inputQueue(nameBridgeQueue, depthInputQueue), 
-	outputQueue(nameOutputQueue, depthOutputQueue){}
+	bridgeStream(nameInputStream, depthBridgeStream), 
+	inputStream(nameBridgeStream, depthInputStream), 
+	outputStream(nameOutputStream, depthOutputStream){}
 
 template<typename T>
-GeneralQueue& Workshop<T>::getInputQueue(){
-    return inputQueue;
+ByteStream& Workshop<T>::getInputStream(){
+    return inputStream;
 }
 
 template<typename T>
-GeneralQueue& Workshop<T>::getOutputQueue(){
-    return outputQueue;
+ByteStream& Workshop<T>::getOutputStream(){
+    return outputStream;
 }

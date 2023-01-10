@@ -33,10 +33,10 @@ void GzipZlibCompressionWorkshop::wait(){
 	std::cout<<"End of workshop wait"<<std::endl;
 }
 
-GeneralQueue& GzipZlibCompressionWorkshop::getInputQueue(){
+ByteQueue& GzipZlibCompressionWorkshop::getInputQueue(){
 	return inputQueue;
 }
 
-GeneralQueue& GzipZlibCompressionWorkshop::getOutputQueue(){
+ByteQueue& GzipZlibCompressionWorkshop::getOutputQueue(){
 	return outputQueue;
 }

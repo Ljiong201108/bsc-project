@@ -7,6 +7,7 @@ TARGET?=hw_emu
 COMP=$(WORKSPACE)/components
 KNRL=$(WORKSPACE)/kernels
 HOST=$(WORKSPACE)/host
+APP=$(WORKSPACE)/application
 TEST=$(HOST)/test
 
 HOST_INC= # -I$(HOST)/common/include -I$(HOST)/security/include -I$(HOST)/test -I$(HOST)/data_compression/include -I/opt/xilinx/xrt/include -I$(COMP)/data_compression/include -I$(HOST)/third_party/xxhash # /home/$(USER)/bsc-project/backup/data_compression/common/libs/compress /home/$(USER)/bsc-project/backup/data_compression/common/libs/cmdparser /home/$(USER)/bsc-project/backup/data_compression/common/libs/logger /home/$(USER)/bsc-project/backup/data_compression/common/libs/xcl2 
