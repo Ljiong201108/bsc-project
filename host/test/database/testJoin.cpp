@@ -75,17 +75,6 @@ int64_t get_golden_sum(int l_row,
 }
 
 int main(int argc, const char* argv[]) {
-    // cl_context context;
-    // cl_device_id device_id;
-    // cl_command_queue cmd_queue;
-    // cl_program program;
-    // xf::database::gqe::init_hardware(&context, &device_id, &cmd_queue, CL_QUEUE_PROFILING_ENABLE);
-    // xf::database::gqe::load_binary(&program, context, device_id, "/home/jiong/bsc-project/xclbin/gqePart.xclbin");
-
-    // clReleaseProgram(program);
-    // xf::database::gqe::load_binary(&program, context, device_id, "/home/jiong/bsc-project/xclbin/gqeJoin.xclbin");
-
-    // return 0;
 
     std::cout << "--------------- Query 5 simplified, join --------------- " << std::endl;
 

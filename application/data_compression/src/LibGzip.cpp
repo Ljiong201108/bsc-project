@@ -2,8 +2,8 @@
 
 namespace data_compression{
 namespace gzip{
-GzipZlibCompressionWorkshop *compressionWorkShop=nullptr;
-GzipZlibDecompressionWorkshop *decompressionWorkshop=nullptr;
+GzipZlibCompressWorkshop *compressionWorkShop=nullptr;
+GzipZlibDecompressWorkshop *decompressionWorkshop=nullptr;
 std::thread *processingThread=nullptr;
 
 uint32_t writeGzipHeader(uint8_t *out){
@@ -24,10 +24,10 @@ uint32_t writeGzipFooter(uint8_t *out, uint32_t fileSize) {
 
 	assert(compressionWorkShop!=nullptr && "compression should be executed!");
 
-	out[outIdx++] = compressionWorkShop->checksum();
-	out[outIdx++] = compressionWorkShop->checksum() >> 8;
-	out[outIdx++] = compressionWorkShop->checksum() >> 16;
-	out[outIdx++] = compressionWorkShop->checksum() >> 24;
+	out[outIdx++] = compressionWorkShop->getChecksum();
+	out[outIdx++] = compressionWorkShop->getChecksum() >> 8;
+	out[outIdx++] = compressionWorkShop->getChecksum() >> 16;
+	out[outIdx++] = compressionWorkShop->getChecksum() >> 24;
 
 	out[outIdx++] = fileSize;
 	out[outIdx++] = fileSize >> 8;
@@ -112,7 +112,7 @@ bool checkGzipHeader(uint8_t* in){
 void pushGzipCompression(void* src, uint32_t size, bool first, bool last){
 	if(first){
 		processingThread=new std::thread([]{
-			compressionWorkShop=new GzipZlibCompressionWorkshop(false);
+			compressionWorkShop=new GzipZlibCompressWorkshop(false);
 			compressionWorkShop->wait();
 		});
 	}
@@ -130,7 +130,7 @@ uint32_t popGzipCompression(void *dest, uint32_t size, bool &last){
 void pushGzipDecompression(void* src, uint32_t size, bool first, bool last){
 	if(first){
 		processingThread=new std::thread([]{
-			decompressionWorkshop=new GzipZlibDecompressionWorkshop;
+			decompressionWorkshop=new GzipZlibDecompressWorkshop;
 			decompressionWorkshop->wait();
 		});
 	}

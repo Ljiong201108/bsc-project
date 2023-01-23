@@ -296,7 +296,7 @@ static void desCbcEncrypt(
 
 encryption_cbc_loop:
     while (!e) {
-#pragma HLS PIPELINE
+#pragma HLS PIPELINE II = 1
         // read a block of plaintext, 64 bits
         plaintext_r = plaintextStrm.read();
 #if !defined(__SYNTHESIS__) && _XF_SECURITY_CBC_DEBUG_ == 1

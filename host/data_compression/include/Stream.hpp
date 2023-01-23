@@ -75,4 +75,5 @@ public:
 	ByteStream(std::string name, uint64_t maxSize);
 	void push(void *src, uint32_t size, bool last);
 	uint32_t pop(void *dest, uint32_t size, bool &last);
+	uint8_t pop(bool &last);
 };

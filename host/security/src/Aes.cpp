@@ -1,6 +1,6 @@
 #include "Aes.hpp"
 
-namespace aes{
+namespace aesHost{
 std::string methodToString(Method m){
     switch(m){
         case Method::Cbc: return "Cbc";
@@ -33,12 +33,12 @@ std::string keyLengthToString(KeyLength k){
     return 0;
 }
 
-constexpr Lib keyLengthToLib(KeyLength k){
-    switch(k){
-        case KeyLength::U128: return Lib::AES128;
-        case KeyLength::U192: return Lib::AES192;
-        case KeyLength::U256: return Lib::AES256;
-    }
-    return Lib::AES128;
-}
+// constexpr Lib keyLengthToLib(KeyLength k){
+//     switch(k){
+//         case KeyLength::U128: return Lib::AES128;
+//         case KeyLength::U192: return Lib::AES192;
+//         case KeyLength::U256: return Lib::AES256;
+//     }
+//     return Lib::AES128;
+// }
 }

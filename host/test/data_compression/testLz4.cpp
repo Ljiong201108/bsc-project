@@ -7,8 +7,9 @@
 #endif
 
 #include "Helper.hpp"
-#include "Lz4Compression.hpp"
-#include "Lz4Decompression.hpp"
+#include "Lz4Compress.hpp"
+#include "Lz4Decompress.hpp"
+#include "LibLz4.hpp"
 
 namespace testLz4{
 void testLz4Simple(int argc, char** argv){
@@ -144,7 +145,7 @@ void testLz4Compress2(){
 	ofile.write(bufout.data(), idx);
 	std::cout<<"write a "<<idx<<" Bytes header"<<std::endl;
 
-	Lz4CompressionWorkshop workshop;
+	Lz4CompressWorkshop workshop;
 	ByteStream &inputStream=workshop.getInputStream();
 	ByteStream &outputStream=workshop.getOutputStream();
 
@@ -163,8 +164,7 @@ void testLz4Compress2(){
 		do{
 			uint32_t outputSize=outputStream.pop(bufout.data(), bufSize, last);
 			std::cout<<"host read a "<<outputSize<<" Bytes block from FIFO, last="<<last<<std::endl;
-			if(last) ofile.write(bufout.data(), outputSize-1);
-			else ofile.write(bufout.data(), outputSize);
+			ofile.write(bufout.data(), outputSize);
 		}while(!last);
 	});
 
@@ -183,7 +183,60 @@ void testLz4Compress2(){
     ofile.close();
 }
 
-inline void testLz4Decompress(){
+void testLz4Compress3(){
+    freopen("output/lz4_output_compress_2.txt", "w", stdout);
+
+    const uint64_t bufSize=64*1024*1024;
+	std::vector<char> buf(bufSize), bufout(bufSize);
+	std::ofstream ofile;
+    std::ifstream ifile;
+
+	ifile.open("/share/xilinx/dt_1G.txt", std::ios::binary);
+	ofile.open("sample/dt_1G_3.txt.lz4", std::ios::binary);
+	// ifile.open("sample/sample.txt", std::ios::binary);
+	// ofile.open("sample/sample_2.txt.lz4", std::ios::binary);
+
+	ifile.seekg(0, std::ios_base::end);
+	uint64_t fileSize=ifile.tellg();
+	ifile.seekg(0, std::ios_base::beg);
+
+	uint32_t idx=dataCompression::writeLz4Header((uint8_t*)bufout.data(), fileSize);
+	ofile.write(bufout.data(), idx);
+	std::cout<<"write a "<<idx<<" Bytes header"<<std::endl;
+
+	std::thread input([&]{
+		for(uint64_t i=0;i<fileSize;i+=bufSize){
+			uint32_t curSize=(fileSize-i>bufSize?bufSize:fileSize-i);
+			bool last=fileSize-i-curSize==0;
+			ifile.read(buf.data(), curSize);
+			data_compression::lz4::pushLz4Compression(buf.data(), curSize, i==0, last);
+			std::cout<<"host write a "<<curSize<<" Bytes block into FIFO"<<std::endl;
+		}
+	});
+
+	std::thread output([&]{
+		bool last;
+		do{
+			uint32_t outputSize=data_compression::lz4::popLz4Compression(bufout.data(), bufSize, last);
+			std::cout<<"host read a "<<outputSize<<" Bytes block from FIFO, last="<<last<<std::endl;
+			ofile.write(bufout.data(), outputSize);
+		}while(!last);
+	});
+
+	input.join();
+	output.join();
+
+    idx=data_compression::lz4::writeLz4Footer((uint8_t*)bufout.data());
+	ofile.write(bufout.data(), idx);
+	std::cout<<"write a "<<idx<<" Bytes footer"<<std::endl;
+
+	std::cout<<"lz4 compress successfully"<<std::endl;
+
+    ifile.close();
+    ofile.close();
+}
+
+void testLz4Decompress(){
     freopen("output/lz4_output_decompress.txt", "w", stdout);
 
 	const uint64_t bufSize=64*1024*1024;
@@ -191,10 +244,10 @@ inline void testLz4Decompress(){
 	std::ofstream ofile;
     std::ifstream ifile;
 
-	ifile.open("sample/dt_1G.txt.lz4", std::ios::binary);
-	ofile.open("sample/dt_1G.txt.lz4.ori", std::ios::binary);
-	// ifile.open("sample/sample.txt.lz4", std::ios::binary);
-	// ofile.open("sample/sample.txt.lz4.ori", std::ios::binary);
+	// ifile.open("sample/dt_1G.txt.lz4", std::ios::binary);
+	// ofile.open("sample/dt_1G.txt.lz4.ori", std::ios::binary);
+	ifile.open("sample/sample.txt.lz4", std::ios::binary);
+	ofile.open("sample/sample.txt.lz4.ori", std::ios::binary);
 
 	ifile.seekg(0, std::ios_base::end);
 	uint64_t fileSize=ifile.tellg();
@@ -205,10 +258,6 @@ inline void testLz4Decompress(){
 			uint32_t curSize=(fileSize-i>bufSize?bufSize:fileSize-i);
 			bool last=fileSize-i-curSize==0;
 			ifile.read(buf.data(), curSize);
-
-            if(i==0){
-                hexdump(buf.data(), 20*1024);
-            }
 
 			dataCompression::lz4DecompressionInput((uint8_t*)buf.data(), curSize, last);
 			std::cout<<"host write a "<<curSize<<" Bytes block into FIFO"<<std::endl;
@@ -227,13 +276,13 @@ inline void testLz4Decompress(){
 	input.join();
 	output.join();
 
-	std::cout<<"snappy decompress successfully"<<std::endl;
+	std::cout<<"lz4 decompress successfully"<<std::endl;
 
     ifile.close();
     ofile.close();
 }
 
-inline void testLz4Decompress2(){
+void testLz4Decompress2(){
     freopen("output/lz4_output_decompress_2.txt", "w", stdout);
 
 	const uint64_t bufSize=64*1024*1024;
@@ -241,7 +290,7 @@ inline void testLz4Decompress2(){
 	std::ofstream ofile;
     std::ifstream ifile;
 
-	ifile.open("sample/dt_1G_2.txt.lz4", std::ios::binary);
+	ifile.open("sample/dt_1G.txt.lz4", std::ios::binary);
 	ofile.open("sample/dt_1G_2.txt.lz4.ori", std::ios::binary);
 	// ifile.open("sample/sample.txt.lz4", std::ios::binary);
 	// ofile.open("sample/sample_2.txt.lz4.ori", std::ios::binary);
@@ -250,7 +299,7 @@ inline void testLz4Decompress2(){
 	uint64_t fileSize=ifile.tellg();
 	ifile.seekg(0, std::ios_base::beg);
 
-	Lz4DecompressionWorkshop workshop;
+	Lz4DecompressWorkshop workshop;
 	ByteStream &inputStream=workshop.getInputStream();
 	ByteStream &outputStream=workshop.getOutputStream();
 
@@ -282,14 +331,60 @@ inline void testLz4Decompress2(){
 	input.join();
 	output.join();
 
-	std::cout<<"snappy decompress successfully"<<std::endl;
+	std::cout<<"lz4 decompress successfully"<<std::endl;
 
     ifile.close();
     ofile.close();
 }
-} //testSnappy
+
+void testLz4Decompress3(){
+    freopen("output/lz4_output_decompress_2.txt", "w", stdout);
+
+	const uint64_t bufSize=64*1024*1024;
+	std::vector<char> buf(bufSize), bufout(bufSize);
+	std::ofstream ofile;
+    std::ifstream ifile;
+
+	ifile.open("sample/dt_1G_3.txt.lz4", std::ios::binary);
+	ofile.open("sample/dt_1G_3.txt.lz4.ori", std::ios::binary);
+	// ifile.open("sample/sample.txt.lz4", std::ios::binary);
+	// ofile.open("sample/sample_2.txt.lz4.ori", std::ios::binary);
+
+	ifile.seekg(0, std::ios_base::end);
+	uint64_t fileSize=ifile.tellg();
+	ifile.seekg(0, std::ios_base::beg);
+
+	std::thread input([&]{
+		for(uint64_t i=0;i<fileSize;i+=bufSize){
+			uint32_t curSize=(fileSize-i>bufSize?bufSize:fileSize-i);
+			bool last=fileSize-i-curSize==0;
+			ifile.read(buf.data(), curSize);
+
+			data_compression::lz4::pushLz4Decompression(buf.data(), curSize, i==0, last);
+			std::cout<<"host write a "<<curSize<<" Bytes block into FIFO, last="<<last<<std::endl;
+		}
+	});
+
+	std::thread output([&]{
+		bool last;
+		do{
+			uint32_t outputSize=data_compression::lz4::popLz4Decompression(bufout.data(), bufSize, last);
+			std::cout<<"host read a "<<outputSize<<" Bytes block from FIFO, last="<<last<<std::endl;
+			ofile.write(bufout.data(), outputSize);
+		}while(!last);
+	});
+
+	input.join();
+	output.join();
+
+	std::cout<<"lz4 decompress successfully"<<std::endl;
+
+    ifile.close();
+    ofile.close();
+}
+} //testLz4
 
 int main(){
-	// testLz4::testLz4Compress2();
-	testLz4::testLz4Decompress();
+	testLz4::testLz4Compress3();
+	testLz4::testLz4Decompress3();
 }

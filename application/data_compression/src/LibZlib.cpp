@@ -3,8 +3,8 @@
 namespace data_compression{
 namespace zlib{
 
-GzipZlibCompressionWorkshop *compressionWorkShop=nullptr;
-GzipZlibDecompressionWorkshop *decompressionWorkshop=nullptr;
+GzipZlibCompressWorkshop *compressionWorkShop=nullptr;
+GzipZlibDecompressWorkshop *decompressionWorkshop=nullptr;
 std::thread *processingThread=nullptr;
 
 uint32_t writeZlibHeader(uint8_t *out){
@@ -51,10 +51,10 @@ uint32_t writeZlibHeader(uint8_t *out){
 uint32_t writeZlibFooter(uint8_t *out){
 	uint32_t outIdx = 0;
 
-	out[outIdx++] = compressionWorkShop->checksum() >> 24;
-	out[outIdx++] = compressionWorkShop->checksum() >> 16;
-	out[outIdx++] = compressionWorkShop->checksum() >> 8;
-	out[outIdx++] = compressionWorkShop->checksum();
+	out[outIdx++] = compressionWorkShop->getChecksum() >> 24;
+	out[outIdx++] = compressionWorkShop->getChecksum() >> 16;
+	out[outIdx++] = compressionWorkShop->getChecksum() >> 8;
+	out[outIdx++] = compressionWorkShop->getChecksum();
 
 	return outIdx;
 }
@@ -62,7 +62,7 @@ uint32_t writeZlibFooter(uint8_t *out){
 void pushZlibCompression(void* src, uint32_t size, bool first, bool last){
 	if(first){
 		processingThread=new std::thread([]{
-			compressionWorkShop=new GzipZlibCompressionWorkshop(true);
+			compressionWorkShop=new GzipZlibCompressWorkshop(true);
 			compressionWorkShop->wait();
 		});
 	}
@@ -80,7 +80,7 @@ uint32_t popZlibCompression(void *dest, uint32_t size, bool &last){
 void pushZlibDecompression(void* src, uint32_t size, bool first, bool last){
 	if(first){
 		processingThread=new std::thread([]{
-			decompressionWorkshop=new GzipZlibDecompressionWorkshop;
+			decompressionWorkshop=new GzipZlibDecompressWorkshop;
 			decompressionWorkshop->wait();
 		});
 	}

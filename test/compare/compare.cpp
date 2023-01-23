@@ -38,6 +38,7 @@ int main(int argc, char** argv){
 
 	if(fileSize1!=fileSize2){
 		std::cout<<"file sizes are different!"<<std::endl;
+		std::cout<<fileSize1<<" "<<fileSize2<<std::endl;
 		return 0;
 	}
 

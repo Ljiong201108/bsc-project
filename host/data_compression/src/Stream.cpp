@@ -59,3 +59,9 @@ uint32_t ByteStream::pop(void *DEST, uint32_t size, bool &last){
 	last=false;
 	return popped;
 }
+
+uint8_t ByteStream::pop(bool &last){
+	uint8_t ret;
+	pop(&ret, 1, last);
+	return ret;
+}

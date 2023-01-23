@@ -1,10 +1,12 @@
 #include <ctype.h>
 #include <stdio.h>
-#include "GzipZlib.hpp"
-#include "ThreadSafeFIFO.hpp"
+// #include "GzipZlib.hpp"
+// #include "ThreadSafeFIFO.hpp"
 #include "Stream.hpp"
-#include "GzipZlibCompression.hpp"
-#include "GzipZlibDecompression.hpp"
+// #include "GzipZlibCompression.hpp"
+// #include "GzipZlibDecompression.hpp"
+#include "GzipZlibCompress.hpp"
+#include "GzipZlibDecompress.hpp"
 #include "LibGzip.hpp"
 
 // #include "gzipApp.hpp"
@@ -16,154 +18,154 @@
 
 namespace testGzip{
 
-inline void testGzipSimple(){
-	std::vector<uint8_t> in, out;
-	readFile("sample/sample.txt", in, out);
-	std::vector<uint8_t> out2(20*out.size());
+// void testGzipSimple(){
+// 	std::vector<uint8_t> in, out;
+// 	readFile("sample/sample.txt", in, out);
+// 	std::vector<uint8_t> out2(20*out.size());
 
-    uint64_t inputSize=in.size(), outputSize=0, outputSize2=0;
-	bool last=0;
+//     uint64_t inputSize=in.size(), outputSize=0, outputSize2=0;
+// 	bool last=0;
 
-	freopen("output/output_gz", "w", stdout);
+// 	freopen("output/output_gz", "w", stdout);
 
-    std::cout<<"Start test Gzip"<<std::endl;
-	std::cout<<"inputSize: "<<inputSize<<std::endl;
-	std::cout<<"in.size(): "<<in.size()<<std::endl;
-	std::cout<<"out.size(): "<<out.size()<<std::endl;
-    // outputSize=dataCompression::gzipZlibCompression(in.data(), out.data(), in.size(), "", false);
-	dataCompression::gzipZlibCompressionInput(in.data(), 1000, false);
-	dataCompression::gzipZlibCompressionInput(in.data()+1000, 500, false);
-	dataCompression::gzipZlibCompressionInput(in.data()+1500, inputSize-1500, true);
-	uint32_t index=dataCompression::writeGzipHeader(out.data());
-	while(!last){
-		outputSize=dataCompression::gzipZlibCompressionOutput(out.data()+index, 500, last);
-		index+=outputSize;
-	}
-	// index=dataCompression::writeGzipFooter(out.data()+index, index, in.size());
-	std::cout<<"last = "<<last<<std::endl;
-	std::cout<<"index = "<<index<<std::endl;
-	std::cout<<"------------------------"<<std::endl;
-	// outputSize2=dataCompression::gzipZlibDecompression(out.data(), out2.data(), index);
-	dataCompression::gzipZlibDecompressionInput(out.data(), 500, false);
-	dataCompression::gzipZlibDecompressionInput(out.data()+500, 300, false);
-	dataCompression::gzipZlibDecompressionInput(out.data()+800, index-800, true);
-	last=0;
-	while(!last) outputSize2+=dataCompression::gzipZlibDecompressionOutput(out2.data()+outputSize2, 800, last);
-	std::cout<<"last = "<<last<<std::endl;
-	hexdump(out2.data(), outputSize2);
-    std::cout<<"End test Gzip"<<std::endl;
-}
+//     std::cout<<"Start test Gzip"<<std::endl;
+// 	std::cout<<"inputSize: "<<inputSize<<std::endl;
+// 	std::cout<<"in.size(): "<<in.size()<<std::endl;
+// 	std::cout<<"out.size(): "<<out.size()<<std::endl;
+//     // outputSize=dataCompression::gzipZlibCompression(in.data(), out.data(), in.size(), "", false);
+// 	dataCompression::gzipZlibCompressionInput(in.data(), 1000, false);
+// 	dataCompression::gzipZlibCompressionInput(in.data()+1000, 500, false);
+// 	dataCompression::gzipZlibCompressionInput(in.data()+1500, inputSize-1500, true);
+// 	uint32_t index=dataCompression::writeGzipHeader(out.data());
+// 	while(!last){
+// 		outputSize=dataCompression::gzipZlibCompressionOutput(out.data()+index, 500, last);
+// 		index+=outputSize;
+// 	}
+// 	// index=dataCompression::writeGzipFooter(out.data()+index, index, in.size());
+// 	std::cout<<"last = "<<last<<std::endl;
+// 	std::cout<<"index = "<<index<<std::endl;
+// 	std::cout<<"------------------------"<<std::endl;
+// 	// outputSize2=dataCompression::gzipZlibDecompression(out.data(), out2.data(), index);
+// 	dataCompression::gzipZlibDecompressionInput(out.data(), 500, false);
+// 	dataCompression::gzipZlibDecompressionInput(out.data()+500, 300, false);
+// 	dataCompression::gzipZlibDecompressionInput(out.data()+800, index-800, true);
+// 	last=0;
+// 	while(!last) outputSize2+=dataCompression::gzipZlibDecompressionOutput(out2.data()+outputSize2, 800, last);
+// 	std::cout<<"last = "<<last<<std::endl;
+// 	hexdump(out2.data(), outputSize2);
+//     std::cout<<"End test Gzip"<<std::endl;
+// }
 
-inline void testGzipCompress(){
-	const uint64_t bufSize=64*1024*1024;
-	std::vector<char> buf(bufSize), bufout(bufSize);
-	std::ofstream ofile;
-    std::ifstream ifile;
+// void testGzipCompress(){
+// 	const uint64_t bufSize=64*1024*1024;
+// 	std::vector<char> buf(bufSize), bufout(bufSize);
+// 	std::ofstream ofile;
+//     std::ifstream ifile;
 
-	ifile.open("/share/xilinx/dt_1G.txt", std::ios::binary);
-	ofile.open("sample/dt_1G.txt.gz", std::ios::binary);
-	// ifile.open("sample/sample.txt", std::ios::binary);
-	// ofile.open("sample/sample.txt.gz", std::ios::binary);
+// 	ifile.open("/share/xilinx/dt_1G.txt", std::ios::binary);
+// 	ofile.open("sample/dt_1G.txt.gz", std::ios::binary);
+// 	// ifile.open("sample/sample.txt", std::ios::binary);
+// 	// ofile.open("sample/sample.txt.gz", std::ios::binary);
 
-	ifile.seekg(0, std::ios_base::end);
-	uint64_t fileSize=ifile.tellg();
-	ifile.seekg(0, std::ios_base::beg);
+// 	ifile.seekg(0, std::ios_base::end);
+// 	uint64_t fileSize=ifile.tellg();
+// 	ifile.seekg(0, std::ios_base::beg);
 
-	uint32_t idx=dataCompression::writeGzipHeader((uint8_t*)bufout.data());
-	ofile.write(bufout.data(), idx);
-	std::cout<<"write a "<<idx<<" Bytes header"<<std::endl;
+// 	uint32_t idx=dataCompression::writeGzipHeader((uint8_t*)bufout.data());
+// 	ofile.write(bufout.data(), idx);
+// 	std::cout<<"write a "<<idx<<" Bytes header"<<std::endl;
 
-	std::thread input([&]{
-		for(uint64_t i=0;i<fileSize;i+=bufSize){
-			uint32_t curSize=(fileSize-i>bufSize?bufSize:fileSize-i);
-			bool last=fileSize-i-curSize==0;
-			ifile.read(buf.data(), curSize);
-			dataCompression::gzipZlibCompressionInput((uint8_t*)buf.data(), curSize, last);
-			std::cout<<"host write a "<<curSize<<" Bytes block into FIFO"<<std::endl;
-		}
-	});
+// 	std::thread input([&]{
+// 		for(uint64_t i=0;i<fileSize;i+=bufSize){
+// 			uint32_t curSize=(fileSize-i>bufSize?bufSize:fileSize-i);
+// 			bool last=fileSize-i-curSize==0;
+// 			ifile.read(buf.data(), curSize);
+// 			dataCompression::gzipZlibCompressionInput((uint8_t*)buf.data(), curSize, last);
+// 			std::cout<<"host write a "<<curSize<<" Bytes block into FIFO"<<std::endl;
+// 		}
+// 	});
 
-	std::thread output([&]{
-		bool last;
-		do{
-			uint32_t outputSize=dataCompression::gzipZlibCompressionOutput((uint8_t*)bufout.data(), bufSize, last);
-			std::cout<<"host read a "<<outputSize<<" Bytes block from FIFO"<<std::endl;
-			// hexdump(bufout.data(), outputSize);
-			ofile.write(bufout.data(), outputSize);
-		}while(!last);
-	});
+// 	std::thread output([&]{
+// 		bool last;
+// 		do{
+// 			uint32_t outputSize=dataCompression::gzipZlibCompressionOutput((uint8_t*)bufout.data(), bufSize, last);
+// 			std::cout<<"host read a "<<outputSize<<" Bytes block from FIFO"<<std::endl;
+// 			// hexdump(bufout.data(), outputSize);
+// 			ofile.write(bufout.data(), outputSize);
+// 		}while(!last);
+// 	});
 
-	input.join();
-	output.join();
+// 	input.join();
+// 	output.join();
 
-	idx=dataCompression::writeGzipFooter((uint8_t*)bufout.data(), fileSize);
-	ofile.write(bufout.data(), idx);
-	std::cout<<"write a "<<idx<<" Bytes footer"<<std::endl;
+// 	idx=dataCompression::writeGzipFooter((uint8_t*)bufout.data(), fileSize);
+// 	ofile.write(bufout.data(), idx);
+// 	std::cout<<"write a "<<idx<<" Bytes footer"<<std::endl;
 
-	std::cout<<"test successfully"<<std::endl;
-}
+// 	std::cout<<"test successfully"<<std::endl;
+// }
 
-inline void testGzipCompress2(){
-	const uint64_t bufSize=64*1024*1024;
-	std::vector<char> buf(bufSize), bufout(bufSize);
-	std::ofstream ofile;
-    std::ifstream ifile;
+// void testGzipCompress2(){
+// 	const uint64_t bufSize=64*1024*1024;
+// 	std::vector<char> buf(bufSize), bufout(bufSize);
+// 	std::ofstream ofile;
+//     std::ifstream ifile;
 
-	ifile.open("/share/xilinx/dt_1G.txt", std::ios::binary);
-	ofile.open("sample/dt_1G_1.txt.gz", std::ios::binary);
-	// ifile.open("sample/sample.txt", std::ios::binary);
-	// ofile.open("sample/sample_1.txt.gz", std::ios::binary);
+// 	ifile.open("/share/xilinx/dt_1G.txt", std::ios::binary);
+// 	ofile.open("sample/dt_1G_1.txt.gz", std::ios::binary);
+// 	// ifile.open("sample/sample.txt", std::ios::binary);
+// 	// ofile.open("sample/sample_1.txt.gz", std::ios::binary);
 
-	ifile.seekg(0, std::ios_base::end);
-	uint64_t fileSize=ifile.tellg();
-	ifile.seekg(0, std::ios_base::beg);
+// 	ifile.seekg(0, std::ios_base::end);
+// 	uint64_t fileSize=ifile.tellg();
+// 	ifile.seekg(0, std::ios_base::beg);
 
-	GzipZlibCompressionWorkshop workshop(false);
-	ByteStream &inputFIFO=workshop.getInputStream();
-	ByteStream &outputFIFO=workshop.getOutputStream();
+// 	GzipZlibCompressWorkshop workshop(false);
+// 	ByteStream &inputFIFO=workshop.getInputStream();
+// 	ByteStream &outputFIFO=workshop.getOutputStream();
 
-	uint32_t idx=dataCompression::writeGzipHeader((uint8_t*)bufout.data());
-	ofile.write(bufout.data(), idx);
-	std::cout<<"write a "<<idx<<" Bytes header"<<std::endl;
+// 	uint32_t idx=dataCompression::writeGzipHeader((uint8_t*)bufout.data());
+// 	ofile.write(bufout.data(), idx);
+// 	std::cout<<"write a "<<idx<<" Bytes header"<<std::endl;
 
-	std::thread input([&]{
-		for(uint64_t i=0;i<fileSize;i+=bufSize){
-			uint32_t curSize=(fileSize-i>bufSize?bufSize:fileSize-i);
-			bool last=fileSize-i-curSize==0;
-			ifile.read(buf.data(), curSize);
-			// dataCompression::gzipZlibCompressionInput((uint8_t*)buf.data(), curSize, last);
-			inputFIFO.push(buf.data(), curSize, last);
-			std::cout<<"host write a "<<curSize<<" Bytes block into FIFO"<<std::endl;
-		}
-	});
+// 	std::thread input([&]{
+// 		for(uint64_t i=0;i<fileSize;i+=bufSize){
+// 			uint32_t curSize=(fileSize-i>bufSize?bufSize:fileSize-i);
+// 			bool last=fileSize-i-curSize==0;
+// 			ifile.read(buf.data(), curSize);
+// 			// dataCompression::gzipZlibCompressionInput((uint8_t*)buf.data(), curSize, last);
+// 			inputFIFO.push(buf.data(), curSize, last);
+// 			std::cout<<"host write a "<<curSize<<" Bytes block into FIFO"<<std::endl;
+// 		}
+// 	});
 
-	std::thread output([&]{
-		bool last;
-		do{
-			// uint32_t outputSize=dataCompression::gzipZlibCompressionOutput((uint8_t*)bufout.data(), bufSize, last);
-			uint32_t outputSize=outputFIFO.pop(bufout.data(), bufSize, last);
-			std::cout<<"host read a "<<outputSize<<" Bytes block from FIFO"<<std::endl;
-			// hexdump(bufout.data(), outputSize);
-			ofile.write(bufout.data(), outputSize);
-		}while(!last);
-	});
+// 	std::thread output([&]{
+// 		bool last;
+// 		do{
+// 			// uint32_t outputSize=dataCompression::gzipZlibCompressionOutput((uint8_t*)bufout.data(), bufSize, last);
+// 			uint32_t outputSize=outputFIFO.pop(bufout.data(), bufSize, last);
+// 			std::cout<<"host read a "<<outputSize<<" Bytes block from FIFO"<<std::endl;
+// 			// hexdump(bufout.data(), outputSize);
+// 			ofile.write(bufout.data(), outputSize);
+// 		}while(!last);
+// 	});
 
-	workshop.wait();
-	std::cout<<"End of workshop.wait();"<<std::endl;
+// 	workshop.wait();
+// 	std::cout<<"End of workshop.wait();"<<std::endl;
 
-	input.join();
-	std::cout<<"End of input thread"<<std::endl;
-	output.join();
-	std::cout<<"End of output thread"<<std::endl;
+// 	input.join();
+// 	std::cout<<"End of input thread"<<std::endl;
+// 	output.join();
+// 	std::cout<<"End of output thread"<<std::endl;
 
-	idx=dataCompression::writeGzipFooter((uint8_t*)bufout.data(), fileSize);
-	ofile.write(bufout.data(), idx);
-	std::cout<<"write a "<<idx<<" Bytes footer"<<std::endl;
+// 	idx=dataCompression::writeGzipFooter((uint8_t*)bufout.data(), fileSize);
+// 	ofile.write(bufout.data(), idx);
+// 	std::cout<<"write a "<<idx<<" Bytes footer"<<std::endl;
 
-	std::cout<<"test successfully"<<std::endl;
-}
+// 	std::cout<<"test successfully"<<std::endl;
+// }
 
-inline void testGzipCompress3(){
+void testGzipCompress3(int argc, char** argv){
 	const uint64_t bufSize=64*1024*1024;
 	std::vector<char> buf(bufSize), bufout(bufSize);
 	std::ofstream ofile;
@@ -172,7 +174,9 @@ inline void testGzipCompress3(){
 	ifile.open("/share/xilinx/dt_1G.txt", std::ios::binary);
 	ofile.open("sample/dt_1G_3.txt.gz", std::ios::binary);
 	// ifile.open("sample/sample.txt", std::ios::binary);
-	// ofile.open("sample/sample_1.txt.gz", std::ios::binary);
+	// ofile.open("sample/sample_3.txt.gz", std::ios::binary);
+	// ifile.open(argv[1], std::ios::binary);
+	// ofile.open(argv[2], std::ios::binary);
 
 	ifile.seekg(0, std::ios_base::end);
 	uint64_t fileSize=ifile.tellg();
@@ -214,95 +218,95 @@ inline void testGzipCompress3(){
 	std::cout<<"test successfully"<<std::endl;
 }
 
-inline void testGzipDecompress(){
-	const uint64_t bufSize=64*1024*1024;
-	std::vector<char> buf(bufSize), bufout(bufSize);
-	std::ofstream ofile;
-    std::ifstream ifile;
+// void testGzipDecompress(){
+// 	const uint64_t bufSize=64*1024*1024;
+// 	std::vector<char> buf(bufSize), bufout(bufSize);
+// 	std::ofstream ofile;
+//     std::ifstream ifile;
 
-	ifile.open("sample/dt_1G_1.txt.gz", std::ios::binary);
-	ofile.open("sample/dt_1G_1.txt.gz.ori", std::ios::binary);
-	// ifile.open("sample/sample_1.txt.gz", std::ios::binary);
-	// ofile.open("sample/sample_1.txt.gz.ori", std::ios::binary);
+// 	ifile.open("sample/dt_1G_1.txt.gz", std::ios::binary);
+// 	ofile.open("sample/dt_1G_1.txt.gz.ori", std::ios::binary);
+// 	// ifile.open("sample/sample_1.txt.gz", std::ios::binary);
+// 	// ofile.open("sample/sample_1.txt.gz.ori", std::ios::binary);
 
-	ifile.seekg(0, std::ios_base::end);
-	uint64_t fileSize=ifile.tellg();
-	ifile.seekg(0, std::ios_base::beg);
+// 	ifile.seekg(0, std::ios_base::end);
+// 	uint64_t fileSize=ifile.tellg();
+// 	ifile.seekg(0, std::ios_base::beg);
 
-	std::thread input([&]{
-		for(uint64_t i=0;i<fileSize;i+=bufSize){
-			uint32_t curSize=(fileSize-i>bufSize?bufSize:fileSize-i);
-			bool last=fileSize-i-curSize==0;
-			ifile.read(buf.data(), curSize);
-			dataCompression::gzipZlibDecompressionInput((uint8_t*)buf.data(), curSize, last);
-			std::cout<<"host write a "<<curSize<<" Bytes block into FIFO"<<std::endl;
-		}
-	});
+// 	std::thread input([&]{
+// 		for(uint64_t i=0;i<fileSize;i+=bufSize){
+// 			uint32_t curSize=(fileSize-i>bufSize?bufSize:fileSize-i);
+// 			bool last=fileSize-i-curSize==0;
+// 			ifile.read(buf.data(), curSize);
+// 			dataCompression::gzipZlibDecompressionInput((uint8_t*)buf.data(), curSize, last);
+// 			std::cout<<"host write a "<<curSize<<" Bytes block into FIFO"<<std::endl;
+// 		}
+// 	});
 
-	std::thread output([&]{
-		bool last;
-		do{
-			uint32_t outputSize=dataCompression::gzipZlibDecompressionOutput((uint8_t*)bufout.data(), bufSize, last);
-			std::cout<<"host read a "<<outputSize<<" Bytes block from FIFO"<<std::endl;
-			ofile.write(bufout.data(), outputSize);
-		}while(!last);
-	});
+// 	std::thread output([&]{
+// 		bool last;
+// 		do{
+// 			uint32_t outputSize=dataCompression::gzipZlibDecompressionOutput((uint8_t*)bufout.data(), bufSize, last);
+// 			std::cout<<"host read a "<<outputSize<<" Bytes block from FIFO"<<std::endl;
+// 			ofile.write(bufout.data(), outputSize);
+// 		}while(!last);
+// 	});
 
-	input.join();
-	output.join();
+// 	input.join();
+// 	output.join();
 
-	std::cout<<"test successfully"<<std::endl;
-}
+// 	std::cout<<"test successfully"<<std::endl;
+// }
 
-inline void testGzipDecompress2(){
-	const uint64_t bufSize=64*1024*1024;
-	std::vector<char> buf(bufSize), bufout(bufSize);
-	std::ofstream ofile;
-    std::ifstream ifile;
+// void testGzipDecompress2(){
+// 	const uint64_t bufSize=64*1024*1024;
+// 	std::vector<char> buf(bufSize), bufout(bufSize);
+// 	std::ofstream ofile;
+//     std::ifstream ifile;
 
-	ifile.open("sample/dt_1G_1.txt.gz", std::ios::binary);
-	ofile.open("sample/dt_1G_1.txt.gz.ori", std::ios::binary);
-	// ifile.open("sample/sample_1.txt.gz", std::ios::binary);
-	// ofile.open("sample/sample_1.txt.gz.ori", std::ios::binary);
+// 	ifile.open("sample/dt_1G_1.txt.gz", std::ios::binary);
+// 	ofile.open("sample/dt_1G_1.txt.gz.ori", std::ios::binary);
+// 	// ifile.open("sample/sample_1.txt.gz", std::ios::binary);
+// 	// ofile.open("sample/sample_1.txt.gz.ori", std::ios::binary);
 
-	ifile.seekg(0, std::ios_base::end);
-	uint64_t fileSize=ifile.tellg();
-	ifile.seekg(0, std::ios_base::beg);
+// 	ifile.seekg(0, std::ios_base::end);
+// 	uint64_t fileSize=ifile.tellg();
+// 	ifile.seekg(0, std::ios_base::beg);
 
-	GzipZlibDecompressionWorkshop workshop;
-	ByteStream &inputFIFO=workshop.getInputStream();
-	ByteStream &outputFIFO=workshop.getOutputStream();
+// 	GzipZlibDecompressWorkshop workshop;
+// 	ByteStream &inputFIFO=workshop.getInputStream();
+// 	ByteStream &outputFIFO=workshop.getOutputStream();
 
-	std::thread input([&]{
-		for(uint64_t i=0;i<fileSize;i+=bufSize){
-			uint32_t curSize=(fileSize-i>bufSize?bufSize:fileSize-i);
-			bool last=fileSize-i-curSize==0;
-			ifile.read(buf.data(), curSize);
-			// dataCompression::gzipZlibDecompressionInput((uint8_t*)buf.data(), curSize, last);
-			inputFIFO.push(buf.data(), curSize, last);
-			std::cout<<"host write a "<<curSize<<" Bytes block into FIFO"<<std::endl;
-		}
-	});
+// 	std::thread input([&]{
+// 		for(uint64_t i=0;i<fileSize;i+=bufSize){
+// 			uint32_t curSize=(fileSize-i>bufSize?bufSize:fileSize-i);
+// 			bool last=fileSize-i-curSize==0;
+// 			ifile.read(buf.data(), curSize);
+// 			// dataCompression::gzipZlibDecompressionInput((uint8_t*)buf.data(), curSize, last);
+// 			inputFIFO.push(buf.data(), curSize, last);
+// 			std::cout<<"host write a "<<curSize<<" Bytes block into FIFO"<<std::endl;
+// 		}
+// 	});
 
-	std::thread output([&]{
-		bool last;
-		do{
-			// uint32_t outputSize=dataCompression::gzipZlibDecompressionOutput((uint8_t*)bufout.data(), bufSize, last);
-			uint32_t outputSize=outputFIFO.pop(bufout.data(), bufSize, last);
-			std::cout<<"host read a "<<outputSize<<" Bytes block from FIFO"<<std::endl;
-			ofile.write(bufout.data(), outputSize);
-		}while(!last);
-	});
+// 	std::thread output([&]{
+// 		bool last;
+// 		do{
+// 			// uint32_t outputSize=dataCompression::gzipZlibDecompressionOutput((uint8_t*)bufout.data(), bufSize, last);
+// 			uint32_t outputSize=outputFIFO.pop(bufout.data(), bufSize, last);
+// 			std::cout<<"host read a "<<outputSize<<" Bytes block from FIFO"<<std::endl;
+// 			ofile.write(bufout.data(), outputSize);
+// 		}while(!last);
+// 	});
 
-	workshop.wait();
+// 	workshop.wait();
 
-	input.join();
-	output.join();
+// 	input.join();
+// 	output.join();
 
-	std::cout<<"test successfully"<<std::endl;
-}
+// 	std::cout<<"test successfully"<<std::endl;
+// }
 
-inline void testGzipDecompress3(){
+void testGzipDecompress3(int argc, char** argv){
 	const uint64_t bufSize=64*1024*1024;
 	std::vector<char> buf(bufSize), bufout(bufSize);
 	std::ofstream ofile;
@@ -312,6 +316,8 @@ inline void testGzipDecompress3(){
 	ofile.open("sample/dt_1G_3.txt.gz.ori", std::ios::binary);
 	// ifile.open("sample/sample_1.txt.gz", std::ios::binary);
 	// ofile.open("sample/sample_1.txt.gz.ori", std::ios::binary);
+	// ifile.open(argv[1], std::ios::binary);
+	// ofile.open(argv[2], std::ios::binary);
 
 	ifile.seekg(0, std::ios_base::end);
 	uint64_t fileSize=ifile.tellg();
@@ -342,7 +348,7 @@ inline void testGzipDecompress3(){
 	std::cout<<"test successfully"<<std::endl;
 }
 
-// inline void testZlib(){
+// void testZlib(){
 // 	std::vector<uint8_t> in, out;
 // 	readFile("sample.txt", in, out);
 // 	std::vector<uint8_t> out2(20*out.size());
@@ -356,7 +362,7 @@ inline void testGzipDecompress3(){
 //     std::cout<<"End test Zlib"<<std::endl;
 // }
 
-// inline void testXilinxGzipZlib(int argc, char** argv){
+// void testXilinxGzipZlib(int argc, char** argv){
 //     bool enable_profile = true;
 //     compressBase::State flow = compressBase::BOTH;
 //     gzipBase::d_type decKernelType = gzipBase::FULL;
@@ -374,7 +380,7 @@ inline void testGzipDecompress3(){
 // }
 }
 
-int main(){
-	// testGzip::testGzipCompress3();
-	testGzip::testGzipDecompress3();
+int main(int argc, char** argv){
+	testGzip::testGzipCompress3(argc, argv);
+	testGzip::testGzipDecompress3(argc, argv);
 }

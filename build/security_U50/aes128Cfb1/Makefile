@@ -20,7 +20,6 @@ LING_FLG+=--report_dir $(REPORT_DIR)
 
 $(OUTPUT).xclbin: $(patsubst %, %.xo, $(KERNELS))
 	v++ -l $^ -o $@ $(LINK_FLG)
-	rm -rf _x .Xil log report *.log
 
 %.xo: $(KNRL)/security/src/%.cpp
 	v++ -c -k $(patsubst %.xo, %, $@) $(KNRL_INC) $^ -o $@ $(KNRL_FLG)

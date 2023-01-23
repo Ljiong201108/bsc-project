@@ -1,7 +1,7 @@
 #pragma once
 
-#include "GzipZlibCompression.hpp"
-#include "GzipZlibDecompression.hpp"
+#include "GzipZlibCompress.hpp"
+#include "GzipZlibDecompress.hpp"
 
 namespace data_compression{
 namespace gzip{
