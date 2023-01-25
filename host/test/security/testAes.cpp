@@ -82,10 +82,6 @@ inline void testAes(char** argv){
 	summary.open("output/summary.txt", std::ios::binary);
 
 	{
-		Timer::reset();
-		std::cout<<"Starting testing enc!"<<std::endl;
-		Timer::startTotalTimer();
-
 		const uint64_t bufSize=64*1024*1024;
 		std::vector<char> buf(bufSize), bufout(bufSize);
 		std::ofstream ofile;
@@ -104,32 +100,42 @@ inline void testAes(char** argv){
 
 		std::cout<<fileSize<<std::endl;
 
+		Timer::reset();
+		std::cout<<"Starting testing enc!"<<std::endl;
+		Timer::startTotalTimer();
+
 		for(uint64_t i=0;i<fileSize;i+=bufSize){
 			uint32_t curSize=(fileSize-i>bufSize?bufSize:fileSize-i);
+			uint32_t enc_size=16*(curSize/16+(curSize%16!=0));
 			blockSizes.push_back(curSize);
+
+			Timer::startHostIOTimer();
 			ifile.read(buf.data(), curSize);
-			if(curSize<bufSize) memset(buf.data()+curSize, 0, bufSize-curSize);
-			if(i==0) security::aes::aesEcbEncrypt(buf.data(), bufout.data(), bufSize, key, 16);
-			else security::aes::aesEcbEncrypt(buf.data(), bufout.data(), bufSize, key, 16);
-			ofile.write(bufout.data(), bufSize);
-			std::cout<<i/bufSize<<": host processed a "<<curSize<<" Bytes block"<<std::endl;
+			Timer::endHostIOTimer();
+
+			if(curSize<bufSize) memset(buf.data()+curSize, 0, enc_size-curSize);
+			if(i==0) security::aes::aesCtrEncrypt(buf.data(), bufout.data(), enc_size, key, 16, iv);
+			else security::aes::aesCtrEncrypt(buf.data(), bufout.data(), enc_size, key, 16);
+
+			Timer::startHostIOTimer();
+			ofile.write(bufout.data(), enc_size);
+			Timer::endHostIOTimer();
+
+			// std::cout<<i/bufSize<<": host processed a "<<enc_size<<" Bytes block"<<std::endl;
 		}
+
+		Timer::endTotalTimer();
+		summary<<"The Encryption used "<<Timer::totalTime.count()/1e9<<" s in total"<<std::endl;
+		summary<<"The time for compute is "<<Timer::computeTime.count()/1e9<<" s"<<std::endl;
+		summary<<"The FPGA IO time is "<<Timer::fpgaIOTime.count()/1e9<<" s"<<std::endl;
+		summary<<"The Host IO time is "<<Timer::hostIOTime.count()/1e9<<" s"<<std::endl;
+		std::cout<<"Finished testing successfully!"<<std::endl;
 
 		ifile.close();
 		ofile.close();
-
-		Timer::endTotalTimer();
-		summary<<"The Encryption used "<<Timer::totalTime.count()<<" ns in total"<<std::endl;
-		summary<<"The time for compute is "<<Timer::computeTime.count()<<" ns"<<std::endl;
-		summary<<"The IO time is "<<Timer::totalTime.count()-Timer::computeTime.count()<<" ns"<<std::endl;
-		std::cout<<"Finished testing successfully!"<<std::endl;
 	}
 
 	{
-		Timer::reset();
-		std::cout<<"Starting testing dec!"<<std::endl;
-		Timer::startTotalTimer();
-
 		const uint64_t bufSize=64*1024*1024;
 		std::vector<char> buf(bufSize), bufout(bufSize);
 		std::ofstream ofile;
@@ -148,25 +154,38 @@ inline void testAes(char** argv){
 
 		std::cout<<fileSize<<std::endl;
 
+		Timer::reset();
+		std::cout<<"Starting testing dec!"<<std::endl;
+		Timer::startTotalTimer();
+
 		for(uint64_t i=0;i<fileSize;i+=bufSize){
 			uint32_t curSize=(fileSize-i>bufSize?bufSize:fileSize-i);
 			blockSizes.push_back(curSize);
+
+			Timer::startHostIOTimer();
 			ifile.read(buf.data(), curSize);
+			Timer::endHostIOTimer();
+
 			// if(curSize<bufSize) memset(buf.data()+curSize, 0, bufSize-curSize);
-			if(i==0) security::aes::aesEcbDecrypt(buf.data(), bufout.data(), bufSize, key, 16);
-			else security::aes::aesEcbDecrypt(buf.data(), bufout.data(), bufSize, key, 16);
+			if(i==0) security::aes::aesCtrDecrypt(buf.data(), bufout.data(), curSize, key, 16, iv);
+			else security::aes::aesCtrDecrypt(buf.data(), bufout.data(), curSize, key, 16);
+
+			Timer::startHostIOTimer();
 			ofile.write(bufout.data(), blockSizes[i/bufSize]);
-			std::cout<<i/bufSize<<": host processed a "<<curSize<<" Bytes block"<<std::endl;
+			Timer::endHostIOTimer();
+
+			// std::cout<<i/bufSize<<": host processed a "<<curSize<<" Bytes block"<<std::endl;
 		}
+
+		Timer::endTotalTimer();
+		summary<<"The Decryption used "<<Timer::totalTime.count()/1e9<<" s in total"<<std::endl;
+		summary<<"The time for compute is "<<Timer::computeTime.count()/1e9<<" s"<<std::endl;
+		summary<<"The FPGA IO time is "<<Timer::fpgaIOTime.count()/1e9<<" s"<<std::endl;
+		summary<<"The Host IO time is "<<Timer::hostIOTime.count()/1e9<<" s"<<std::endl;
+		std::cout<<"Finished testing successfully!"<<std::endl;
 
 		ifile.close();
 		ofile.close();
-
-		Timer::endTotalTimer();
-		summary<<"The Decryption used "<<Timer::totalTime.count()<<" ns in total"<<std::endl;
-		summary<<"The time for compute is "<<Timer::computeTime.count()<<" ns"<<std::endl;
-		summary<<"The IO time is "<<Timer::totalTime.count()-Timer::computeTime.count()<<" ns"<<std::endl;
-		std::cout<<"Finished testing successfully!"<<std::endl;
 	}
 
 	summary.close();

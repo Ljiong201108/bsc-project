@@ -336,8 +336,14 @@ void aesCtr(uint64_t *in, uint64_t *key, uint64_t *iv, uint64_t *out, uint32_t s
 	for(size_t i=0;i<numULL;i++) keyMapped[i]=key[i];
 	for(size_t i=0;i<numULL;i++) ivMapped[i]=iv[i];
 
+// #ifdef PERF_MEASURE
+	Timer::startFPGAIOTimer();
+// #endif
 	cqPointer->enqueueMigrateMemObjects({*inPointer, *keyPointer, *ivPointer}, 0);
 	cqPointer->finish();
+// #ifdef PERF_MEASURE
+	Timer::endFPGAIOTimer();
+// #endif
 
 // #ifdef PERF_MEASURE
 	Timer::startComputeTimer();
@@ -348,9 +354,15 @@ void aesCtr(uint64_t *in, uint64_t *key, uint64_t *iv, uint64_t *out, uint32_t s
 	Timer::endComputeTimer();
 // #endif
 
+// #ifdef PERF_MEASURE
+	Timer::startFPGAIOTimer();
+// #endif
 	cqPointer->enqueueMigrateMemObjects({*outPointer, *ivPointer}, CL_MIGRATE_MEM_OBJECT_HOST);
 	cqPointer->finish();
-	
+// #ifdef PERF_MEASURE
+	Timer::endFPGAIOTimer();
+// #endif
+
 	for(size_t i=0;i<size*numULL;i++) out[i]=outMapped[i];
 }
 

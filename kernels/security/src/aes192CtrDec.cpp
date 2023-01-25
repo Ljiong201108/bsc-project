@@ -1,34 +1,87 @@
 #include "aes192CtrDec.hpp"
 
 extern "C"{
-    void aes192CtrDec(
-        ap_uint<128> *cipherTextBuffer, 
-        ap_uint<192> *cipherKey, 
-        ap_uint<128> *initVec, 
-        ap_uint<128> *plainTextBuffer, 
-        int size){
+void aes192CtrDec(
+	ap_uint<128> *cipherTextBuffer, 
+	ap_uint<192> *cipherKey, 
+	ap_uint<128> *initVec, 
+	ap_uint<128> *plainTextBuffer, 
+	int size){
 
-        hls::stream<ap_uint<128>> inStream;
-        hls::stream<bool> inEndStream;
-        hls::stream<ap_uint<128>> outStream;
-        hls::stream<bool> outEndStream;
-        hls::stream<ap_uint<192>> cipherKeyStream;
-        hls::stream<ap_uint<128>> initVecStream;
+#pragma HLS interface m_axi offset = slave bundle = gmem0 port = plainTextBuffer 
+#pragma HLS interface m_axi offset = slave bundle = gmem1 port = cipherTextBuffer
 
-#pragma HLS STREAM variable = inStream depth = 16
-#pragma HLS STREAM variable = inEndStream depth = 16
-#pragma HLS STREAM variable = outStream depth = 16
-#pragma HLS STREAM variable = outEndStream depth = 16
-#pragma HLS STREAM variable = cipherKeyStream depth = 24
-#pragma HLS STREAM variable = initVecStream depth = 16
+	ap_uint<192> key_r=cipherKey[0];
+	ap_uint<128> iv=initVec[0];
 
-        scale2s<192>(*cipherKey, cipherKeyStream);
-        scale2s<128>(*initVec, initVecStream);
+	// intermediate registers to perform the decryption chain
+	ap_uint<128> ciphertext_r = 0;
+	ap_uint<128> input_block = 0;
+	ap_uint<128> input_block_r = 0;
+	ap_uint<128> output_block = 0;
+	ap_uint<128> plaintext_r = 0;
 
-        mm2s<128, 256>(cipherTextBuffer, size, inStream, inEndStream);
+	// set the initialization for ture
+	bool initialization = true;
 
-        xf::security::aes192CtrDecrypt(inStream, inEndStream, cipherKeyStream, initVecStream, outStream, outEndStream);
+decryption_ctr_loop:
+	for(int i=0;i<size;i++){
+#pragma HLS PIPELINE II = 1
 
-        s2mm<128, 256>(plainTextBuffer, outStream, outEndStream);
-    }
+		xf::security::aesEnc<192> cipher;
+		cipher.updateKey(key_r);
+
+		// read a block of ciphertext, 128 bits
+		ciphertext_r = cipherTextBuffer[i];
+
+		// calculate input_block
+		if (initialization) {
+			input_block = iv;
+			initialization = false;
+		} else {
+			input_block_r.range(127, 120) = input_block(7, 0);
+			input_block_r.range(119, 112) = input_block(15, 8);
+			input_block_r.range(111, 104) = input_block(23, 16);
+			input_block_r.range(103, 96) = input_block(31, 24);
+			input_block_r.range(95, 88) = input_block(39, 32);
+			input_block_r.range(87, 80) = input_block(47, 40);
+			input_block_r.range(79, 72) = input_block(55, 48);
+			input_block_r.range(71, 64) = input_block(63, 56);
+			input_block_r.range(63, 56) = input_block(71, 64);
+			input_block_r.range(55, 48) = input_block(79, 72);
+			input_block_r.range(47, 40) = input_block(87, 80);
+			input_block_r.range(39, 32) = input_block(95, 88);
+			input_block_r.range(31, 24) = input_block(103, 96);
+			input_block_r.range(23, 16) = input_block(111, 104);
+			input_block_r.range(15, 8) = input_block(119, 112);
+			input_block_r.range(7, 0) = input_block(127, 120);
+			++input_block_r;
+			input_block.range(127, 120) = input_block_r(7, 0);
+			input_block.range(119, 112) = input_block_r(15, 8);
+			input_block.range(111, 104) = input_block_r(23, 16);
+			input_block.range(103, 96) = input_block_r(31, 24);
+			input_block.range(95, 88) = input_block_r(39, 32);
+			input_block.range(87, 80) = input_block_r(47, 40);
+			input_block.range(79, 72) = input_block_r(55, 48);
+			input_block.range(71, 64) = input_block_r(63, 56);
+			input_block.range(63, 56) = input_block_r(71, 64);
+			input_block.range(55, 48) = input_block_r(79, 72);
+			input_block.range(47, 40) = input_block_r(87, 80);
+			input_block.range(39, 32) = input_block_r(95, 88);
+			input_block.range(31, 24) = input_block_r(103, 96);
+			input_block.range(23, 16) = input_block_r(111, 104);
+			input_block.range(15, 8) = input_block_r(119, 112);
+			input_block.range(7, 0) = input_block_r(127, 120);
+		}
+
+		// CIPH_k
+		cipher.process(input_block, key_r, output_block);
+
+		// get the plaintext for current interation by output_block and ciphertext
+		plaintext_r = ciphertext_r ^ output_block;
+
+		// write out plaintext
+		plainTextBuffer[i] = plaintext_r;
+	}
+}
 }
