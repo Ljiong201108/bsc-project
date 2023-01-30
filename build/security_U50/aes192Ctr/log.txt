@@ -425,3 +425,4 @@ INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the re
     vitis_analyzer /home/jiong/bsc-project/build/security_U50/aes192Ctr/aes192Ctr.xclbin.link_summary 
 INFO: [v++ 60-791] Total elapsed time: 2h 47m 42s
 INFO: [v++ 60-1653] Closing dispatch client.
+make: 'aes192Ctr.xclbin' is up to date.

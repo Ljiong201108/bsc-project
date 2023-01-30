@@ -31,17 +31,21 @@ constexpr Lib keyLengthToLib(KeyLength k);
 
 template<Type T, KeyLength K>
 void aesCbc(uint64_t *in, uint64_t *key, uint64_t *iv, uint64_t *out, uint32_t size){
+	Timer::startFPGAInitTimer();
 	CommandQueuePointer cqPointer;
 	KernelPointer kPointer;
 	Pool<BufferPointer, 4> bufferPool;
 	const size_t numULL=keyLengthToNumBits(K)/64;
+	const size_t blockULL=2;
 
 	cqPointer.create(Application::getContext(), Application::getDevice(), CL_QUEUE_PROFILING_ENABLE);
-	kPointer.create(Application::getProgram<Lib::AES128_CBC>(), "aes"+keyLengthToString(K)+"Cbc"+typeToString(T));
-	BufferPointer &inPointer=bufferPool.get<0>().create(Application::getContext(), CL_MEM_READ_WRITE, size*sizeof(uint64_t)*numULL, NULL);
-	BufferPointer &outPointer=bufferPool.get<1>().create(Application::getContext(), CL_MEM_READ_WRITE, size*sizeof(uint64_t)*numULL, NULL);
+	if(K==KeyLength::U128)kPointer.create(Application::getProgram<Lib::AES128_CBC>(), "aes"+keyLengthToString(K)+"Cbc"+typeToString(T));
+	if(K==KeyLength::U192)kPointer.create(Application::getProgram<Lib::AES192_CBC>(), "aes"+keyLengthToString(K)+"Cbc"+typeToString(T));
+	if(K==KeyLength::U256)kPointer.create(Application::getProgram<Lib::AES256_CBC>(), "aes"+keyLengthToString(K)+"Cbc"+typeToString(T));
+	BufferPointer &inPointer=bufferPool.get<0>().create(Application::getContext(), CL_MEM_READ_WRITE, size*sizeof(uint64_t)*blockULL, NULL);
+	BufferPointer &outPointer=bufferPool.get<1>().create(Application::getContext(), CL_MEM_READ_WRITE, size*sizeof(uint64_t)*blockULL, NULL);
 	BufferPointer &keyPointer=bufferPool.get<2>().create(Application::getContext(), CL_MEM_READ_WRITE, sizeof(uint64_t)*numULL, NULL);
-	BufferPointer &ivPointer=bufferPool.get<3>().create(Application::getContext(), CL_MEM_READ_WRITE, sizeof(uint64_t)*numULL, NULL);
+	BufferPointer &ivPointer=bufferPool.get<3>().create(Application::getContext(), CL_MEM_READ_WRITE, sizeof(uint64_t)*blockULL, NULL);
 
 	kPointer->setArg(0, *inPointer);
 	kPointer->setArg(1, *keyPointer);
@@ -49,17 +53,26 @@ void aesCbc(uint64_t *in, uint64_t *key, uint64_t *iv, uint64_t *out, uint32_t s
 	kPointer->setArg(3, *outPointer);
 	kPointer->setArg(4, size);
 
-	uint64_t *inMapped = (uint64_t *)cqPointer->enqueueMapBuffer(*inPointer, CL_TRUE, CL_MAP_WRITE | CL_MAP_READ, 0, size*sizeof(uint64_t)*numULL);
-	uint64_t *outMapped = (uint64_t *)cqPointer->enqueueMapBuffer(*outPointer, CL_TRUE, CL_MAP_WRITE | CL_MAP_READ, 0, size*sizeof(uint64_t)*numULL);
+	uint64_t *inMapped = (uint64_t *)cqPointer->enqueueMapBuffer(*inPointer, CL_TRUE, CL_MAP_WRITE | CL_MAP_READ, 0, size*sizeof(uint64_t)*blockULL);
+	uint64_t *outMapped = (uint64_t *)cqPointer->enqueueMapBuffer(*outPointer, CL_TRUE, CL_MAP_WRITE | CL_MAP_READ, 0, size*sizeof(uint64_t)*blockULL);
 	uint64_t *keyMapped = (uint64_t *)cqPointer->enqueueMapBuffer(*keyPointer, CL_TRUE, CL_MAP_WRITE | CL_MAP_READ, 0, sizeof(uint64_t)*numULL);
-	uint64_t *ivMapped = (uint64_t *)cqPointer->enqueueMapBuffer(*ivPointer, CL_TRUE, CL_MAP_WRITE | CL_MAP_READ, 0, sizeof(uint64_t)*numULL);
+	uint64_t *ivMapped = (uint64_t *)cqPointer->enqueueMapBuffer(*ivPointer, CL_TRUE, CL_MAP_WRITE | CL_MAP_READ, 0, sizeof(uint64_t)*blockULL);
+	Timer::endFPGAInitTimer();
 
-	for(size_t i=0;i<size*numULL;i++) inMapped[i]=in[i];
-	for(size_t i=0;i<numULL;i++) keyMapped[i]=key[i];
-	for(size_t i=0;i<numULL;i++) ivMapped[i]=iv[i];
+	Timer::startHostIOTimer();
+	std::memcpy(inMapped, in, size*sizeof(uint64_t)*blockULL);
+	std::memcpy(keyMapped, key, sizeof(uint64_t)*numULL);
+	std::memcpy(ivMapped, iv, sizeof(uint64_t)*blockULL);
+	Timer::endHostIOTimer();
 
+// #ifdef PERF_MEASURE
+	Timer::startFPGAIOTimer();
+// #endif
 	cqPointer->enqueueMigrateMemObjects({*inPointer, *keyPointer, *ivPointer}, 0);
 	cqPointer->finish();
+// #ifdef PERF_MEASURE
+	Timer::endFPGAIOTimer();
+// #endif
 
 // #ifdef PERF_MEASURE
 	Timer::startComputeTimer();
@@ -70,25 +83,37 @@ void aesCbc(uint64_t *in, uint64_t *key, uint64_t *iv, uint64_t *out, uint32_t s
 	Timer::endComputeTimer();
 // #endif
 
-	cqPointer->enqueueMigrateMemObjects({*outPointer, *ivPointer}, CL_MIGRATE_MEM_OBJECT_HOST);
+// #ifdef PERF_MEASURE
+	Timer::startFPGAIOTimer();
+// #endif
+	cqPointer->enqueueMigrateMemObjects({*outPointer}, CL_MIGRATE_MEM_OBJECT_HOST);
 	cqPointer->finish();
-	
-	for(size_t i=0;i<size*numULL;i++) out[i]=outMapped[i];
+// #ifdef PERF_MEASURE
+	Timer::endFPGAIOTimer();
+// #endif
+
+	Timer::startHostIOTimer();
+	std::memcpy(out, outMapped, size*sizeof(uint64_t)*blockULL);
+	Timer::endHostIOTimer();
 }
 
 template<Type T, KeyLength K>
 void aesCfb1(uint64_t *in, uint64_t *key, uint64_t *iv, uint64_t *out, uint32_t size){
+	Timer::startFPGAInitTimer();
 	CommandQueuePointer cqPointer;
 	KernelPointer kPointer;
 	Pool<BufferPointer, 4> bufferPool;
 	const size_t numULL=keyLengthToNumBits(K)/64;
+	const size_t blockULL=2;
 
 	cqPointer.create(Application::getContext(), Application::getDevice(), CL_QUEUE_PROFILING_ENABLE);
-	kPointer.create(Application::getProgram<Lib::AES128_CFB1>(), "aes"+keyLengthToString(K)+"Cfb1"+typeToString(T));
-	BufferPointer &inPointer=bufferPool.get<0>().create(Application::getContext(), CL_MEM_READ_WRITE, size*sizeof(uint64_t)*numULL, NULL);
-	BufferPointer &outPointer=bufferPool.get<1>().create(Application::getContext(), CL_MEM_READ_WRITE, size*sizeof(uint64_t)*numULL, NULL);
+	if(K==KeyLength::U128)kPointer.create(Application::getProgram<Lib::AES128_CFB1>(), "aes"+keyLengthToString(K)+"Cfb1"+typeToString(T));
+	if(K==KeyLength::U192)kPointer.create(Application::getProgram<Lib::AES192_CFB1>(), "aes"+keyLengthToString(K)+"Cfb1"+typeToString(T));
+	if(K==KeyLength::U256)kPointer.create(Application::getProgram<Lib::AES256_CFB1>(), "aes"+keyLengthToString(K)+"Cfb1"+typeToString(T));
+	BufferPointer &inPointer=bufferPool.get<0>().create(Application::getContext(), CL_MEM_READ_WRITE, size*sizeof(uint64_t)*blockULL, NULL);
+	BufferPointer &outPointer=bufferPool.get<1>().create(Application::getContext(), CL_MEM_READ_WRITE, size*sizeof(uint64_t)*blockULL, NULL);
 	BufferPointer &keyPointer=bufferPool.get<2>().create(Application::getContext(), CL_MEM_READ_WRITE, sizeof(uint64_t)*numULL, NULL);
-	BufferPointer &ivPointer=bufferPool.get<3>().create(Application::getContext(), CL_MEM_READ_WRITE, sizeof(uint64_t)*numULL, NULL);
+	BufferPointer &ivPointer=bufferPool.get<3>().create(Application::getContext(), CL_MEM_READ_WRITE, sizeof(uint64_t)*blockULL, NULL);
 
 	kPointer->setArg(0, *inPointer);
 	kPointer->setArg(1, *keyPointer);
@@ -96,17 +121,26 @@ void aesCfb1(uint64_t *in, uint64_t *key, uint64_t *iv, uint64_t *out, uint32_t 
 	kPointer->setArg(3, *outPointer);
 	kPointer->setArg(4, size);
 
-	uint64_t *inMapped = (uint64_t *)cqPointer->enqueueMapBuffer(*inPointer, CL_TRUE, CL_MAP_WRITE | CL_MAP_READ, 0, size*sizeof(uint64_t)*numULL);
-	uint64_t *outMapped = (uint64_t *)cqPointer->enqueueMapBuffer(*outPointer, CL_TRUE, CL_MAP_WRITE | CL_MAP_READ, 0, size*sizeof(uint64_t)*numULL);
+	uint64_t *inMapped = (uint64_t *)cqPointer->enqueueMapBuffer(*inPointer, CL_TRUE, CL_MAP_WRITE | CL_MAP_READ, 0, size*sizeof(uint64_t)*blockULL);
+	uint64_t *outMapped = (uint64_t *)cqPointer->enqueueMapBuffer(*outPointer, CL_TRUE, CL_MAP_WRITE | CL_MAP_READ, 0, size*sizeof(uint64_t)*blockULL);
 	uint64_t *keyMapped = (uint64_t *)cqPointer->enqueueMapBuffer(*keyPointer, CL_TRUE, CL_MAP_WRITE | CL_MAP_READ, 0, sizeof(uint64_t)*numULL);
-	uint64_t *ivMapped = (uint64_t *)cqPointer->enqueueMapBuffer(*ivPointer, CL_TRUE, CL_MAP_WRITE | CL_MAP_READ, 0, sizeof(uint64_t)*numULL);
+	uint64_t *ivMapped = (uint64_t *)cqPointer->enqueueMapBuffer(*ivPointer, CL_TRUE, CL_MAP_WRITE | CL_MAP_READ, 0, sizeof(uint64_t)*blockULL);
+	Timer::endFPGAInitTimer();
 
-	for(size_t i=0;i<size*numULL;i++) inMapped[i]=in[i];
-	for(size_t i=0;i<numULL;i++) keyMapped[i]=key[i];
-	for(size_t i=0;i<numULL;i++) ivMapped[i]=iv[i];
+	Timer::startHostIOTimer();
+	std::memcpy(inMapped, in, size*sizeof(uint64_t)*blockULL);
+	std::memcpy(keyMapped, key, sizeof(uint64_t)*numULL);
+	std::memcpy(ivMapped, iv, sizeof(uint64_t)*blockULL);
+	Timer::endHostIOTimer();
 
+// #ifdef PERF_MEASURE
+	Timer::startFPGAIOTimer();
+// #endif
 	cqPointer->enqueueMigrateMemObjects({*inPointer, *keyPointer, *ivPointer}, 0);
 	cqPointer->finish();
+// #ifdef PERF_MEASURE
+	Timer::endFPGAIOTimer();
+// #endif
 
 // #ifdef PERF_MEASURE
 	Timer::startComputeTimer();
@@ -117,25 +151,37 @@ void aesCfb1(uint64_t *in, uint64_t *key, uint64_t *iv, uint64_t *out, uint32_t 
 	Timer::endComputeTimer();
 // #endif
 
-	cqPointer->enqueueMigrateMemObjects({*outPointer, *ivPointer}, CL_MIGRATE_MEM_OBJECT_HOST);
+// #ifdef PERF_MEASURE
+	Timer::startFPGAIOTimer();
+// #endif
+	cqPointer->enqueueMigrateMemObjects({*outPointer}, CL_MIGRATE_MEM_OBJECT_HOST);
 	cqPointer->finish();
-	
-	for(size_t i=0;i<size*numULL;i++) out[i]=outMapped[i];
+// #ifdef PERF_MEASURE
+	Timer::endFPGAIOTimer();
+// #endif
+
+	Timer::startHostIOTimer();
+	std::memcpy(out, outMapped, size*sizeof(uint64_t)*blockULL);
+	Timer::endHostIOTimer();
 }
 
 template<Type T, KeyLength K>
 void aesCfb8(uint64_t *in, uint64_t *key, uint64_t *iv, uint64_t *out, uint32_t size){
+	Timer::startFPGAInitTimer();
 	CommandQueuePointer cqPointer;
 	KernelPointer kPointer;
 	Pool<BufferPointer, 4> bufferPool;
 	const size_t numULL=keyLengthToNumBits(K)/64;
+	const size_t blockULL=2;
 
 	cqPointer.create(Application::getContext(), Application::getDevice(), CL_QUEUE_PROFILING_ENABLE);
-	kPointer.create(Application::getProgram<Lib::AES128_CFB8>(), "aes"+keyLengthToString(K)+"Cfb8"+typeToString(T));
-	BufferPointer &inPointer=bufferPool.get<0>().create(Application::getContext(), CL_MEM_READ_WRITE, size*sizeof(uint64_t)*numULL, NULL);
-	BufferPointer &outPointer=bufferPool.get<1>().create(Application::getContext(), CL_MEM_READ_WRITE, size*sizeof(uint64_t)*numULL, NULL);
+	if(K==KeyLength::U128)kPointer.create(Application::getProgram<Lib::AES128_CFB8>(), "aes"+keyLengthToString(K)+"Cfb8"+typeToString(T));
+	if(K==KeyLength::U192)kPointer.create(Application::getProgram<Lib::AES192_CFB8>(), "aes"+keyLengthToString(K)+"Cfb8"+typeToString(T));
+	if(K==KeyLength::U256)kPointer.create(Application::getProgram<Lib::AES256_CFB8>(), "aes"+keyLengthToString(K)+"Cfb8"+typeToString(T));
+	BufferPointer &inPointer=bufferPool.get<0>().create(Application::getContext(), CL_MEM_READ_WRITE, size*sizeof(uint64_t)*blockULL, NULL);
+	BufferPointer &outPointer=bufferPool.get<1>().create(Application::getContext(), CL_MEM_READ_WRITE, size*sizeof(uint64_t)*blockULL, NULL);
 	BufferPointer &keyPointer=bufferPool.get<2>().create(Application::getContext(), CL_MEM_READ_WRITE, sizeof(uint64_t)*numULL, NULL);
-	BufferPointer &ivPointer=bufferPool.get<3>().create(Application::getContext(), CL_MEM_READ_WRITE, sizeof(uint64_t)*numULL, NULL);
+	BufferPointer &ivPointer=bufferPool.get<3>().create(Application::getContext(), CL_MEM_READ_WRITE, sizeof(uint64_t)*blockULL, NULL);
 
 	kPointer->setArg(0, *inPointer);
 	kPointer->setArg(1, *keyPointer);
@@ -143,17 +189,26 @@ void aesCfb8(uint64_t *in, uint64_t *key, uint64_t *iv, uint64_t *out, uint32_t 
 	kPointer->setArg(3, *outPointer);
 	kPointer->setArg(4, size);
 
-	uint64_t *inMapped = (uint64_t *)cqPointer->enqueueMapBuffer(*inPointer, CL_TRUE, CL_MAP_WRITE | CL_MAP_READ, 0, size*sizeof(uint64_t)*numULL);
-	uint64_t *outMapped = (uint64_t *)cqPointer->enqueueMapBuffer(*outPointer, CL_TRUE, CL_MAP_WRITE | CL_MAP_READ, 0, size*sizeof(uint64_t)*numULL);
+	uint64_t *inMapped = (uint64_t *)cqPointer->enqueueMapBuffer(*inPointer, CL_TRUE, CL_MAP_WRITE | CL_MAP_READ, 0, size*sizeof(uint64_t)*blockULL);
+	uint64_t *outMapped = (uint64_t *)cqPointer->enqueueMapBuffer(*outPointer, CL_TRUE, CL_MAP_WRITE | CL_MAP_READ, 0, size*sizeof(uint64_t)*blockULL);
 	uint64_t *keyMapped = (uint64_t *)cqPointer->enqueueMapBuffer(*keyPointer, CL_TRUE, CL_MAP_WRITE | CL_MAP_READ, 0, sizeof(uint64_t)*numULL);
-	uint64_t *ivMapped = (uint64_t *)cqPointer->enqueueMapBuffer(*ivPointer, CL_TRUE, CL_MAP_WRITE | CL_MAP_READ, 0, sizeof(uint64_t)*numULL);
+	uint64_t *ivMapped = (uint64_t *)cqPointer->enqueueMapBuffer(*ivPointer, CL_TRUE, CL_MAP_WRITE | CL_MAP_READ, 0, sizeof(uint64_t)*blockULL);
+	Timer::endFPGAInitTimer();
 
-	for(size_t i=0;i<size*numULL;i++) inMapped[i]=in[i];
-	for(size_t i=0;i<numULL;i++) keyMapped[i]=key[i];
-	for(size_t i=0;i<numULL;i++) ivMapped[i]=iv[i];
+	Timer::startHostIOTimer();
+	std::memcpy(inMapped, in, size*sizeof(uint64_t)*blockULL);
+	std::memcpy(keyMapped, key, sizeof(uint64_t)*numULL);
+	std::memcpy(ivMapped, iv, sizeof(uint64_t)*blockULL);
+	Timer::endHostIOTimer();
 
+// #ifdef PERF_MEASURE
+	Timer::startFPGAIOTimer();
+// #endif
 	cqPointer->enqueueMigrateMemObjects({*inPointer, *keyPointer, *ivPointer}, 0);
 	cqPointer->finish();
+// #ifdef PERF_MEASURE
+	Timer::endFPGAIOTimer();
+// #endif
 
 // #ifdef PERF_MEASURE
 	Timer::startComputeTimer();
@@ -164,25 +219,37 @@ void aesCfb8(uint64_t *in, uint64_t *key, uint64_t *iv, uint64_t *out, uint32_t 
 	Timer::endComputeTimer();
 // #endif
 
-	cqPointer->enqueueMigrateMemObjects({*outPointer, *ivPointer}, CL_MIGRATE_MEM_OBJECT_HOST);
+// #ifdef PERF_MEASURE
+	Timer::startFPGAIOTimer();
+// #endif
+	cqPointer->enqueueMigrateMemObjects({*outPointer}, CL_MIGRATE_MEM_OBJECT_HOST);
 	cqPointer->finish();
-	
-	for(size_t i=0;i<size*numULL;i++) out[i]=outMapped[i];
+// #ifdef PERF_MEASURE
+	Timer::endFPGAIOTimer();
+// #endif
+
+	Timer::startHostIOTimer();
+	std::memcpy(out, outMapped, size*sizeof(uint64_t)*blockULL);
+	Timer::endHostIOTimer();
 }
 
 template<Type T, KeyLength K>
 void aesCfb128(uint64_t *in, uint64_t *key, uint64_t *iv, uint64_t *out, uint32_t size){
+	Timer::startFPGAInitTimer();
 	CommandQueuePointer cqPointer;
 	KernelPointer kPointer;
 	Pool<BufferPointer, 4> bufferPool;
 	const size_t numULL=keyLengthToNumBits(K)/64;
+	const size_t blockULL=2;
 
 	cqPointer.create(Application::getContext(), Application::getDevice(), CL_QUEUE_PROFILING_ENABLE);
-	kPointer.create(Application::getProgram<Lib::AES128_CFB128>(), "aes"+keyLengthToString(K)+"Cfb128"+typeToString(T));
-	BufferPointer &inPointer=bufferPool.get<0>().create(Application::getContext(), CL_MEM_READ_WRITE, size*sizeof(uint64_t)*numULL, NULL);
-	BufferPointer &outPointer=bufferPool.get<1>().create(Application::getContext(), CL_MEM_READ_WRITE, size*sizeof(uint64_t)*numULL, NULL);
+	if(K==KeyLength::U128)kPointer.create(Application::getProgram<Lib::AES128_CFB128>(), "aes"+keyLengthToString(K)+"Cfb128"+typeToString(T));
+	if(K==KeyLength::U192)kPointer.create(Application::getProgram<Lib::AES192_CFB128>(), "aes"+keyLengthToString(K)+"Cfb128"+typeToString(T));
+	if(K==KeyLength::U256)kPointer.create(Application::getProgram<Lib::AES256_CFB128>(), "aes"+keyLengthToString(K)+"Cfb128"+typeToString(T));
+	BufferPointer &inPointer=bufferPool.get<0>().create(Application::getContext(), CL_MEM_READ_WRITE, size*sizeof(uint64_t)*blockULL, NULL);
+	BufferPointer &outPointer=bufferPool.get<1>().create(Application::getContext(), CL_MEM_READ_WRITE, size*sizeof(uint64_t)*blockULL, NULL);
 	BufferPointer &keyPointer=bufferPool.get<2>().create(Application::getContext(), CL_MEM_READ_WRITE, sizeof(uint64_t)*numULL, NULL);
-	BufferPointer &ivPointer=bufferPool.get<3>().create(Application::getContext(), CL_MEM_READ_WRITE, sizeof(uint64_t)*numULL, NULL);
+	BufferPointer &ivPointer=bufferPool.get<3>().create(Application::getContext(), CL_MEM_READ_WRITE, sizeof(uint64_t)*blockULL, NULL);
 
 	kPointer->setArg(0, *inPointer);
 	kPointer->setArg(1, *keyPointer);
@@ -190,17 +257,26 @@ void aesCfb128(uint64_t *in, uint64_t *key, uint64_t *iv, uint64_t *out, uint32_
 	kPointer->setArg(3, *outPointer);
 	kPointer->setArg(4, size);
 
-	uint64_t *inMapped = (uint64_t *)cqPointer->enqueueMapBuffer(*inPointer, CL_TRUE, CL_MAP_WRITE | CL_MAP_READ, 0, size*sizeof(uint64_t)*numULL);
-	uint64_t *outMapped = (uint64_t *)cqPointer->enqueueMapBuffer(*outPointer, CL_TRUE, CL_MAP_WRITE | CL_MAP_READ, 0, size*sizeof(uint64_t)*numULL);
+	uint64_t *inMapped = (uint64_t *)cqPointer->enqueueMapBuffer(*inPointer, CL_TRUE, CL_MAP_WRITE | CL_MAP_READ, 0, size*sizeof(uint64_t)*blockULL);
+	uint64_t *outMapped = (uint64_t *)cqPointer->enqueueMapBuffer(*outPointer, CL_TRUE, CL_MAP_WRITE | CL_MAP_READ, 0, size*sizeof(uint64_t)*blockULL);
 	uint64_t *keyMapped = (uint64_t *)cqPointer->enqueueMapBuffer(*keyPointer, CL_TRUE, CL_MAP_WRITE | CL_MAP_READ, 0, sizeof(uint64_t)*numULL);
-	uint64_t *ivMapped = (uint64_t *)cqPointer->enqueueMapBuffer(*ivPointer, CL_TRUE, CL_MAP_WRITE | CL_MAP_READ, 0, sizeof(uint64_t)*numULL);
+	uint64_t *ivMapped = (uint64_t *)cqPointer->enqueueMapBuffer(*ivPointer, CL_TRUE, CL_MAP_WRITE | CL_MAP_READ, 0, sizeof(uint64_t)*blockULL);
+	Timer::endFPGAInitTimer();
 
-	for(size_t i=0;i<size*numULL;i++) inMapped[i]=in[i];
-	for(size_t i=0;i<numULL;i++) keyMapped[i]=key[i];
-	for(size_t i=0;i<numULL;i++) ivMapped[i]=iv[i];
+	Timer::startHostIOTimer();
+	std::memcpy(inMapped, in, size*sizeof(uint64_t)*blockULL);
+	std::memcpy(keyMapped, key, sizeof(uint64_t)*numULL);
+	std::memcpy(ivMapped, iv, sizeof(uint64_t)*blockULL);
+	Timer::endHostIOTimer();
 
+// #ifdef PERF_MEASURE
+	Timer::startFPGAIOTimer();
+// #endif
 	cqPointer->enqueueMigrateMemObjects({*inPointer, *keyPointer, *ivPointer}, 0);
 	cqPointer->finish();
+// #ifdef PERF_MEASURE
+	Timer::endFPGAIOTimer();
+// #endif
 
 // #ifdef PERF_MEASURE
 	Timer::startComputeTimer();
@@ -211,23 +287,35 @@ void aesCfb128(uint64_t *in, uint64_t *key, uint64_t *iv, uint64_t *out, uint32_
 	Timer::endComputeTimer();
 // #endif
 
-	cqPointer->enqueueMigrateMemObjects({*outPointer, *ivPointer}, CL_MIGRATE_MEM_OBJECT_HOST);
+// #ifdef PERF_MEASURE
+	Timer::startFPGAIOTimer();
+// #endif
+	cqPointer->enqueueMigrateMemObjects({*outPointer}, CL_MIGRATE_MEM_OBJECT_HOST);
 	cqPointer->finish();
-	
-	for(size_t i=0;i<size*numULL;i++) out[i]=outMapped[i];
+// #ifdef PERF_MEASURE
+	Timer::endFPGAIOTimer();
+// #endif
+
+	Timer::startHostIOTimer();
+	std::memcpy(out, outMapped, size*sizeof(uint64_t)*blockULL);
+	Timer::endHostIOTimer();
 }
 
 template<Type T, KeyLength K>
 void aesEcb(uint64_t *in, uint64_t *key, uint64_t *out, uint32_t size){
+	Timer::startFPGAInitTimer();
 	CommandQueuePointer cqPointer;
 	KernelPointer kPointer;
 	Pool<BufferPointer, 3> bufferPool;
 	const size_t numULL=keyLengthToNumBits(K)/64;
+	const size_t blockULL=2;
 
 	cqPointer.create(Application::getContext(), Application::getDevice(), CL_QUEUE_PROFILING_ENABLE);
-	kPointer.create(Application::getProgram<Lib::AES128_ECB>(), "aes"+keyLengthToString(K)+"Ecb"+typeToString(T));
-	BufferPointer &inPointer=bufferPool.get<0>().create(Application::getContext(), CL_MEM_READ_WRITE, size*sizeof(uint64_t)*numULL, NULL);
-	BufferPointer &outPointer=bufferPool.get<1>().create(Application::getContext(), CL_MEM_READ_WRITE, size*sizeof(uint64_t)*numULL, NULL);
+	if(K==KeyLength::U128)kPointer.create(Application::getProgram<Lib::AES128_ECB>(), "aes"+keyLengthToString(K)+"Ecb"+typeToString(T));
+	if(K==KeyLength::U192)kPointer.create(Application::getProgram<Lib::AES192_ECB>(), "aes"+keyLengthToString(K)+"Ecb"+typeToString(T));
+	if(K==KeyLength::U256)kPointer.create(Application::getProgram<Lib::AES256_ECB>(), "aes"+keyLengthToString(K)+"Ecb"+typeToString(T));
+	BufferPointer &inPointer=bufferPool.get<0>().create(Application::getContext(), CL_MEM_READ_WRITE, size*sizeof(uint64_t)*blockULL, NULL);
+	BufferPointer &outPointer=bufferPool.get<1>().create(Application::getContext(), CL_MEM_READ_WRITE, size*sizeof(uint64_t)*blockULL, NULL);
 	BufferPointer &keyPointer=bufferPool.get<2>().create(Application::getContext(), CL_MEM_READ_WRITE, sizeof(uint64_t)*numULL, NULL);
 
 	kPointer->setArg(0, *inPointer);
@@ -235,15 +323,24 @@ void aesEcb(uint64_t *in, uint64_t *key, uint64_t *out, uint32_t size){
 	kPointer->setArg(2, *outPointer);
 	kPointer->setArg(3, size);
 
-	uint64_t *inMapped = (uint64_t *)cqPointer->enqueueMapBuffer(*inPointer, CL_TRUE, CL_MAP_WRITE | CL_MAP_READ, 0, size*sizeof(uint64_t)*numULL);
-	uint64_t *outMapped = (uint64_t *)cqPointer->enqueueMapBuffer(*outPointer, CL_TRUE, CL_MAP_WRITE | CL_MAP_READ, 0, size*sizeof(uint64_t)*numULL);
+	uint64_t *inMapped = (uint64_t *)cqPointer->enqueueMapBuffer(*inPointer, CL_TRUE, CL_MAP_WRITE | CL_MAP_READ, 0, size*sizeof(uint64_t)*blockULL);
+	uint64_t *outMapped = (uint64_t *)cqPointer->enqueueMapBuffer(*outPointer, CL_TRUE, CL_MAP_WRITE | CL_MAP_READ, 0, size*sizeof(uint64_t)*blockULL);
 	uint64_t *keyMapped = (uint64_t *)cqPointer->enqueueMapBuffer(*keyPointer, CL_TRUE, CL_MAP_WRITE | CL_MAP_READ, 0, sizeof(uint64_t)*numULL);
+	Timer::endFPGAInitTimer();
 
-	for(size_t i=0;i<size*numULL;i++) inMapped[i]=in[i];
-	for(size_t i=0;i<numULL;i++) keyMapped[i]=key[i];
+	Timer::startHostIOTimer();
+	std::memcpy(inMapped, in, size*sizeof(uint64_t)*blockULL);
+	std::memcpy(keyMapped, key, sizeof(uint64_t)*numULL);
+	Timer::endHostIOTimer();
 
+// #ifdef PERF_MEASURE
+	Timer::startFPGAIOTimer();
+// #endif
 	cqPointer->enqueueMigrateMemObjects({*inPointer, *keyPointer}, 0);
 	cqPointer->finish();
+// #ifdef PERF_MEASURE
+	Timer::endFPGAIOTimer();
+// #endif
 
 // #ifdef PERF_MEASURE
 	Timer::startComputeTimer();
@@ -254,25 +351,37 @@ void aesEcb(uint64_t *in, uint64_t *key, uint64_t *out, uint32_t size){
 	Timer::endComputeTimer();
 // #endif
 
+// #ifdef PERF_MEASURE
+	Timer::startFPGAIOTimer();
+// #endif
 	cqPointer->enqueueMigrateMemObjects({*outPointer}, CL_MIGRATE_MEM_OBJECT_HOST);
 	cqPointer->finish();
-	
-	for(size_t i=0;i<size*numULL;i++) out[i]=outMapped[i];
+// #ifdef PERF_MEASURE
+	Timer::endFPGAIOTimer();
+// #endif
+
+	Timer::startHostIOTimer();
+	std::memcpy(out, outMapped, size*sizeof(uint64_t)*blockULL);
+	Timer::endHostIOTimer();
 }
 
 template<Type T, KeyLength K>
 void aesOfb(uint64_t *in, uint64_t *key, uint64_t *iv, uint64_t *out, uint32_t size){
+	Timer::startFPGAInitTimer();
 	CommandQueuePointer cqPointer;
 	KernelPointer kPointer;
 	Pool<BufferPointer, 4> bufferPool;
 	const size_t numULL=keyLengthToNumBits(K)/64;
+	const size_t blockULL=2;
 
 	cqPointer.create(Application::getContext(), Application::getDevice(), CL_QUEUE_PROFILING_ENABLE);
-	kPointer.create(Application::getProgram<Lib::AES128_OFB>(), "aes"+keyLengthToString(K)+"Ofb"+typeToString(T));
-	BufferPointer &inPointer=bufferPool.get<0>().create(Application::getContext(), CL_MEM_READ_WRITE, size*sizeof(uint64_t)*numULL, NULL);
-	BufferPointer &outPointer=bufferPool.get<1>().create(Application::getContext(), CL_MEM_READ_WRITE, size*sizeof(uint64_t)*numULL, NULL);
+	if(K==KeyLength::U128)kPointer.create(Application::getProgram<Lib::AES128_OFB>(), "aes"+keyLengthToString(K)+"Ofb"+typeToString(T));
+	if(K==KeyLength::U192)kPointer.create(Application::getProgram<Lib::AES192_OFB>(), "aes"+keyLengthToString(K)+"Ofb"+typeToString(T));
+	if(K==KeyLength::U256)kPointer.create(Application::getProgram<Lib::AES256_OFB>(), "aes"+keyLengthToString(K)+"Ofb"+typeToString(T));
+	BufferPointer &inPointer=bufferPool.get<0>().create(Application::getContext(), CL_MEM_READ_WRITE, size*sizeof(uint64_t)*blockULL, NULL);
+	BufferPointer &outPointer=bufferPool.get<1>().create(Application::getContext(), CL_MEM_READ_WRITE, size*sizeof(uint64_t)*blockULL, NULL);
 	BufferPointer &keyPointer=bufferPool.get<2>().create(Application::getContext(), CL_MEM_READ_WRITE, sizeof(uint64_t)*numULL, NULL);
-	BufferPointer &ivPointer=bufferPool.get<3>().create(Application::getContext(), CL_MEM_READ_WRITE, sizeof(uint64_t)*numULL, NULL);
+	BufferPointer &ivPointer=bufferPool.get<3>().create(Application::getContext(), CL_MEM_READ_WRITE, sizeof(uint64_t)*blockULL, NULL);
 
 	kPointer->setArg(0, *inPointer);
 	kPointer->setArg(1, *keyPointer);
@@ -280,17 +389,26 @@ void aesOfb(uint64_t *in, uint64_t *key, uint64_t *iv, uint64_t *out, uint32_t s
 	kPointer->setArg(3, *outPointer);
 	kPointer->setArg(4, size);
 
-	uint64_t *inMapped = (uint64_t *)cqPointer->enqueueMapBuffer(*inPointer, CL_TRUE, CL_MAP_WRITE | CL_MAP_READ, 0, size*sizeof(uint64_t)*numULL);
-	uint64_t *outMapped = (uint64_t *)cqPointer->enqueueMapBuffer(*outPointer, CL_TRUE, CL_MAP_WRITE | CL_MAP_READ, 0, size*sizeof(uint64_t)*numULL);
+	uint64_t *inMapped = (uint64_t *)cqPointer->enqueueMapBuffer(*inPointer, CL_TRUE, CL_MAP_WRITE | CL_MAP_READ, 0, size*sizeof(uint64_t)*blockULL);
+	uint64_t *outMapped = (uint64_t *)cqPointer->enqueueMapBuffer(*outPointer, CL_TRUE, CL_MAP_WRITE | CL_MAP_READ, 0, size*sizeof(uint64_t)*blockULL);
 	uint64_t *keyMapped = (uint64_t *)cqPointer->enqueueMapBuffer(*keyPointer, CL_TRUE, CL_MAP_WRITE | CL_MAP_READ, 0, sizeof(uint64_t)*numULL);
-	uint64_t *ivMapped = (uint64_t *)cqPointer->enqueueMapBuffer(*ivPointer, CL_TRUE, CL_MAP_WRITE | CL_MAP_READ, 0, sizeof(uint64_t)*numULL);
+	uint64_t *ivMapped = (uint64_t *)cqPointer->enqueueMapBuffer(*ivPointer, CL_TRUE, CL_MAP_WRITE | CL_MAP_READ, 0, sizeof(uint64_t)*blockULL);
+	Timer::endFPGAInitTimer();
 
-	for(size_t i=0;i<size*numULL;i++) inMapped[i]=in[i];
-	for(size_t i=0;i<numULL;i++) keyMapped[i]=key[i];
-	for(size_t i=0;i<numULL;i++) ivMapped[i]=iv[i];
+	Timer::startHostIOTimer();
+	std::memcpy(inMapped, in, size*sizeof(uint64_t)*blockULL);
+	std::memcpy(keyMapped, key, sizeof(uint64_t)*numULL);
+	std::memcpy(ivMapped, iv, sizeof(uint64_t)*blockULL);
+	Timer::endHostIOTimer();
 
+// #ifdef PERF_MEASURE
+	Timer::startFPGAIOTimer();
+// #endif
 	cqPointer->enqueueMigrateMemObjects({*inPointer, *keyPointer, *ivPointer}, 0);
 	cqPointer->finish();
+// #ifdef PERF_MEASURE
+	Timer::endFPGAIOTimer();
+// #endif
 
 // #ifdef PERF_MEASURE
 	Timer::startComputeTimer();
@@ -301,25 +419,37 @@ void aesOfb(uint64_t *in, uint64_t *key, uint64_t *iv, uint64_t *out, uint32_t s
 	Timer::endComputeTimer();
 // #endif
 
-	cqPointer->enqueueMigrateMemObjects({*outPointer, *ivPointer}, CL_MIGRATE_MEM_OBJECT_HOST);
+// #ifdef PERF_MEASURE
+	Timer::startFPGAIOTimer();
+// #endif
+	cqPointer->enqueueMigrateMemObjects({*outPointer}, CL_MIGRATE_MEM_OBJECT_HOST);
 	cqPointer->finish();
-	
-	for(size_t i=0;i<size*numULL;i++) out[i]=outMapped[i];
+// #ifdef PERF_MEASURE
+	Timer::endFPGAIOTimer();
+// #endif
+
+	Timer::startHostIOTimer();
+	std::memcpy(out, outMapped, size*sizeof(uint64_t)*blockULL);
+	Timer::endHostIOTimer();
 }
 
 template<Type T, KeyLength K>
 void aesCtr(uint64_t *in, uint64_t *key, uint64_t *iv, uint64_t *out, uint32_t size){
+	Timer::startFPGAInitTimer();
 	CommandQueuePointer cqPointer;
 	KernelPointer kPointer;
 	Pool<BufferPointer, 4> bufferPool;
 	const size_t numULL=keyLengthToNumBits(K)/64;
+	const size_t blockULL=2;
 
 	cqPointer.create(Application::getContext(), Application::getDevice(), CL_QUEUE_PROFILING_ENABLE);
-	kPointer.create(Application::getProgram<Lib::AES128_CTR>(), "aes"+keyLengthToString(K)+"Ctr"+typeToString(T));
-	BufferPointer &inPointer=bufferPool.get<0>().create(Application::getContext(), CL_MEM_READ_WRITE, size*sizeof(uint64_t)*numULL, NULL);
-	BufferPointer &outPointer=bufferPool.get<1>().create(Application::getContext(), CL_MEM_READ_WRITE, size*sizeof(uint64_t)*numULL, NULL);
+	if(K==KeyLength::U128)kPointer.create(Application::getProgram<Lib::AES128_CTR>(), "aes"+keyLengthToString(K)+"Ctr"+typeToString(T));
+	if(K==KeyLength::U192)kPointer.create(Application::getProgram<Lib::AES192_CTR>(), "aes"+keyLengthToString(K)+"Ctr"+typeToString(T));
+	if(K==KeyLength::U256)kPointer.create(Application::getProgram<Lib::AES256_CTR>(), "aes"+keyLengthToString(K)+"Ctr"+typeToString(T));
+	BufferPointer &inPointer=bufferPool.get<0>().create(Application::getContext(), CL_MEM_READ_WRITE, size*sizeof(uint64_t)*blockULL, NULL);
+	BufferPointer &outPointer=bufferPool.get<1>().create(Application::getContext(), CL_MEM_READ_WRITE, size*sizeof(uint64_t)*blockULL, NULL);
 	BufferPointer &keyPointer=bufferPool.get<2>().create(Application::getContext(), CL_MEM_READ_WRITE, sizeof(uint64_t)*numULL, NULL);
-	BufferPointer &ivPointer=bufferPool.get<3>().create(Application::getContext(), CL_MEM_READ_WRITE, sizeof(uint64_t)*numULL, NULL);
+	BufferPointer &ivPointer=bufferPool.get<3>().create(Application::getContext(), CL_MEM_READ_WRITE, sizeof(uint64_t)*blockULL, NULL);
 
 	kPointer->setArg(0, *inPointer);
 	kPointer->setArg(1, *keyPointer);
@@ -327,14 +457,17 @@ void aesCtr(uint64_t *in, uint64_t *key, uint64_t *iv, uint64_t *out, uint32_t s
 	kPointer->setArg(3, *outPointer);
 	kPointer->setArg(4, size);
 
-	uint64_t *inMapped = (uint64_t *)cqPointer->enqueueMapBuffer(*inPointer, CL_TRUE, CL_MAP_WRITE | CL_MAP_READ, 0, size*sizeof(uint64_t)*numULL);
-	uint64_t *outMapped = (uint64_t *)cqPointer->enqueueMapBuffer(*outPointer, CL_TRUE, CL_MAP_WRITE | CL_MAP_READ, 0, size*sizeof(uint64_t)*numULL);
+	uint64_t *inMapped = (uint64_t *)cqPointer->enqueueMapBuffer(*inPointer, CL_TRUE, CL_MAP_WRITE | CL_MAP_READ, 0, size*sizeof(uint64_t)*blockULL);
+	uint64_t *outMapped = (uint64_t *)cqPointer->enqueueMapBuffer(*outPointer, CL_TRUE, CL_MAP_WRITE | CL_MAP_READ, 0, size*sizeof(uint64_t)*blockULL);
 	uint64_t *keyMapped = (uint64_t *)cqPointer->enqueueMapBuffer(*keyPointer, CL_TRUE, CL_MAP_WRITE | CL_MAP_READ, 0, sizeof(uint64_t)*numULL);
-	uint64_t *ivMapped = (uint64_t *)cqPointer->enqueueMapBuffer(*ivPointer, CL_TRUE, CL_MAP_WRITE | CL_MAP_READ, 0, sizeof(uint64_t)*numULL);
+	uint64_t *ivMapped = (uint64_t *)cqPointer->enqueueMapBuffer(*ivPointer, CL_TRUE, CL_MAP_WRITE | CL_MAP_READ, 0, sizeof(uint64_t)*blockULL);
+	Timer::endFPGAInitTimer();
 
-	for(size_t i=0;i<size*numULL;i++) inMapped[i]=in[i];
-	for(size_t i=0;i<numULL;i++) keyMapped[i]=key[i];
-	for(size_t i=0;i<numULL;i++) ivMapped[i]=iv[i];
+	Timer::startHostIOTimer();
+	std::memcpy(inMapped, in, size*sizeof(uint64_t)*blockULL);
+	std::memcpy(keyMapped, key, sizeof(uint64_t)*numULL);
+	std::memcpy(ivMapped, iv, sizeof(uint64_t)*blockULL);
+	Timer::endHostIOTimer();
 
 // #ifdef PERF_MEASURE
 	Timer::startFPGAIOTimer();
@@ -357,13 +490,15 @@ void aesCtr(uint64_t *in, uint64_t *key, uint64_t *iv, uint64_t *out, uint32_t s
 // #ifdef PERF_MEASURE
 	Timer::startFPGAIOTimer();
 // #endif
-	cqPointer->enqueueMigrateMemObjects({*outPointer, *ivPointer}, CL_MIGRATE_MEM_OBJECT_HOST);
+	cqPointer->enqueueMigrateMemObjects({*outPointer}, CL_MIGRATE_MEM_OBJECT_HOST);
 	cqPointer->finish();
 // #ifdef PERF_MEASURE
 	Timer::endFPGAIOTimer();
 // #endif
 
-	for(size_t i=0;i<size*numULL;i++) out[i]=outMapped[i];
+	Timer::startHostIOTimer();
+	std::memcpy(out, outMapped, size*sizeof(uint64_t)*blockULL);
+	Timer::endHostIOTimer();
 }
 
 namespace internal{

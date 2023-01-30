@@ -13,7 +13,7 @@ void ZstdCompressWorkshop::process(){
     BufferPointer outSizeBuffer(Application::getContext(), CL_MEM_USE_HOST_PTR | CL_MEM_WRITE_ONLY, sizeof(uint32_t), outSizeBufferHost.data());
 
     // set consistent kernel arguments
-    KernelPointer cmp_dm_kernel(Application::getProgram<Lib::ZSTD>(), "xilZstdCompressDataMover:{xilZstdCompressDataMover_1}");
+    KernelPointer cmp_dm_kernel(Application::getProgram<Lib::ZSTD_COMPRESS>(), "xilZstdCompressDataMover:{xilZstdCompressDataMover_1}");
     cmp_dm_kernel->setArg(0, *inBuffer);
     cmp_dm_kernel->setArg(1, *outBuffer);
     cmp_dm_kernel->setArg(3, *outSizeBuffer);

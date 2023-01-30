@@ -6,7 +6,7 @@
 
 class GzipZlibDecompressWorkshop : Workshop{
 protected:
-	const static uint64_t CHUNK_SIZE_IN_KB=64*1024;
+	const static uint64_t CHUNK_SIZE_IN_KB=8*1024;
 	const static uint64_t CHUNK_SIZE_IN_BYTE=CHUNK_SIZE_IN_KB*1024;
 	const static uint64_t MCR=2;
 
@@ -15,6 +15,7 @@ protected:
 public:
 	GzipZlibDecompressWorkshop();
 	void process();
+	void run();
 	void wait();
 	ByteStream& getInputStream() override;
 	ByteStream& getOutputStream() override;

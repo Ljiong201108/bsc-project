@@ -5,4 +5,5 @@
 #include "CommandQueuePointer.hpp"
 #include "KernelPointer.hpp"
 #include "Pool.hpp"
+#include "Timer.hpp"
 // #include "ThreadSafeFIFO.hpp"

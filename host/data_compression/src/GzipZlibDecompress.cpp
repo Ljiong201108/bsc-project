@@ -1,6 +1,7 @@
 #include "GzipZlibDecompress.hpp"
 
 void GzipZlibDecompressWorkshop::process(){
+	Timer::startComputeTimer();
 	std::thread chunkWriter([this]{
 		CommandQueuePointer chunkWriterQueue(Application::getContext(), Application::getDevice(), CL_QUEUE_PROFILING_ENABLE);
 		KernelPointer chunkWriterKernel(Application::getProgram<Lib::GZIP_ZLIB_DECOMPRESSION>(), "xilMM2S:{xilMM2S_1}");
@@ -65,11 +66,18 @@ void GzipZlibDecompressWorkshop::process(){
 
 	chunkWriter.join();
 	chunkReader.join();
+
+	Timer::endComputeTimer();
 }
 
 GzipZlibDecompressWorkshop::GzipZlibDecompressWorkshop() : 
-	Workshop("GzipZlibInputStream", 8, "GzipZlibOutputStream", 8),
-	processThread(&GzipZlibDecompressWorkshop::process, this){}
+	Workshop("GzipZlibInputStream", 1<<30, "GzipZlibOutputStream", 1<<30)
+	// , processThread(&GzipZlibDecompressWorkshop::process, this)
+	{}
+
+void GzipZlibDecompressWorkshop::run(){
+	processThread=std::thread(&GzipZlibDecompressWorkshop::process, this);
+}
 
 void GzipZlibDecompressWorkshop::wait(){
 	processThread.join();

@@ -5,7 +5,7 @@
 
 namespace testAes{
 
-uint64_t key[]={0x66666666, 0x77777777}, iv[]={0x11111111, 0x22222222};
+uint64_t key[]={0x66666666, 0x77777777, 0x88888888, 0x99999999}, iv[]={0x11111111, 0x22222222};
 
 inline void testAes128CbcEnc(){
     std::cout<<"Starting testing aes128CbcEnc!"<<std::endl;
@@ -74,119 +74,127 @@ inline void testAes128CbcDec3(){
     std::cout<<"Finished testing successfully!"<<std::endl;
 }
 
-inline void testAes(char** argv){
-	std::vector<uint32_t> blockSizes;
-	Application::getProgram<Lib::AES128_CTR>();
+void testAesEnc(char** argv, std::vector<uint32_t> &blockSizes, std::string filename){
+	Application::getProgram<Lib::AES256_CTR>();
+
+	const uint64_t bufSize=64*1024*1024;
+	std::vector<char> buf(bufSize), bufout(bufSize);
 
 	std::ofstream summary;
-	summary.open("output/summary.txt", std::ios::binary);
+	summary.open("output/summary.txt", std::ios::binary | std::ios::app);
 
-	{
-		const uint64_t bufSize=64*1024*1024;
-		std::vector<char> buf(bufSize), bufout(bufSize);
-		std::ofstream ofile;
-		std::ifstream ifile;
+	std::ofstream ofile;
+	std::ifstream ifile;
 
-		ifile.open("sample/dataset_1G.txt", std::ios::binary);
-		ofile.open("sample/dt_1G.txt.enc", std::ios::binary);
-		// ifile.open("sample/sample.txt", std::ios::binary);
-		// ofile.open("sample/sample.txt.enc", std::ios::binary);
-		// ifile.open(argv[1], std::ios::binary);
-		// ofile.open(argv[2], std::ios::binary);
+	ifile.open(filename, std::ios::binary);
+	ofile.open("sample/dt_1G.txt.enc", std::ios::binary);
+	// ifile.open("sample/sample.txt", std::ios::binary);
+	// ofile.open("sample/sample.txt.enc", std::ios::binary);
+	// ifile.open(argv[1], std::ios::binary);
+	// ofile.open(argv[2], std::ios::binary);
 
-		ifile.seekg(0, std::ios_base::end);
-		uint64_t fileSize=ifile.tellg();
-		ifile.seekg(0, std::ios_base::beg);
+	ifile.seekg(0, std::ios_base::end);
+	uint64_t fileSize=ifile.tellg();
+	ifile.seekg(0, std::ios_base::beg);
 
-		std::cout<<fileSize<<std::endl;
+	std::cout<<fileSize<<std::endl;
 
-		Timer::reset();
-		std::cout<<"Starting testing enc!"<<std::endl;
-		Timer::startTotalTimer();
+	Timer::reset();
+	std::cout<<"Starting testing enc!"<<std::endl;
+	Timer::startTotalTimer();
 
-		for(uint64_t i=0;i<fileSize;i+=bufSize){
-			uint32_t curSize=(fileSize-i>bufSize?bufSize:fileSize-i);
-			uint32_t enc_size=16*(curSize/16+(curSize%16!=0));
-			blockSizes.push_back(curSize);
+	for(uint64_t i=0;i<fileSize;i+=bufSize){
+		uint32_t curSize=(fileSize-i>bufSize?bufSize:fileSize-i);
+		uint32_t enc_size=16*(curSize/16+(curSize%16!=0));
+		blockSizes.push_back(curSize);
 
-			Timer::startHostIOTimer();
-			ifile.read(buf.data(), curSize);
-			Timer::endHostIOTimer();
+		Timer::startHostIOTimer();
+		ifile.read(buf.data(), curSize);
+		Timer::endHostIOTimer();
 
-			if(curSize<bufSize) memset(buf.data()+curSize, 0, enc_size-curSize);
-			if(i==0) security::aes::aesCtrEncrypt(buf.data(), bufout.data(), enc_size, key, 16, iv);
-			else security::aes::aesCtrEncrypt(buf.data(), bufout.data(), enc_size, key, 16);
+		if(curSize<bufSize) memset(buf.data()+curSize, 0, enc_size-curSize);
+		if(i==0) security::aes::aesCtrEncrypt(buf.data(), bufout.data(), enc_size, key, 32, iv);
+		else security::aes::aesCtrEncrypt(buf.data(), bufout.data(), enc_size, key, 32);
 
-			Timer::startHostIOTimer();
-			ofile.write(bufout.data(), enc_size);
-			Timer::endHostIOTimer();
+		Timer::startHostIOTimer();
+		ofile.write(bufout.data(), enc_size);
+		Timer::endHostIOTimer();
 
-			// std::cout<<i/bufSize<<": host processed a "<<enc_size<<" Bytes block"<<std::endl;
-		}
-
-		Timer::endTotalTimer();
-		summary<<"The Encryption used "<<Timer::totalTime.count()/1e9<<" s in total"<<std::endl;
-		summary<<"The time for compute is "<<Timer::computeTime.count()/1e9<<" s"<<std::endl;
-		summary<<"The FPGA IO time is "<<Timer::fpgaIOTime.count()/1e9<<" s"<<std::endl;
-		summary<<"The Host IO time is "<<Timer::hostIOTime.count()/1e9<<" s"<<std::endl;
-		std::cout<<"Finished testing successfully!"<<std::endl;
-
-		ifile.close();
-		ofile.close();
+		std::cout<<i/bufSize<<": host processed a "<<enc_size<<" Bytes block"<<std::endl;
 	}
 
-	{
-		const uint64_t bufSize=64*1024*1024;
-		std::vector<char> buf(bufSize), bufout(bufSize);
-		std::ofstream ofile;
-		std::ifstream ifile;
+	Timer::endTotalTimer();
+	summary<<"filename = "<<filename<<std::endl;
+	summary<<"The Encryption used "<<Timer::totalTime.count()<<" ns in total"<<std::endl;
+	summary<<"The time for compute is "<<Timer::computeTime.count()<<" ns"<<std::endl;
+	summary<<"The Host IO time is "<<Timer::hostIOTime.count()<<" ns"<<std::endl;
+	summary<<"The FPGA time is "<<(Timer::fpgaInitTime.count()+Timer::fpgaIOTime.count())<<" ns"<<std::endl;
+	std::cout<<"Finished testing successfully!"<<std::endl;
 
-		ifile.open("sample/dt_1G.txt.enc", std::ios::binary);
-		ofile.open("sample/dt_1G.txt.enc.dec", std::ios::binary);
-		// ifile.open("sample/sample.txt.enc", std::ios::binary);
-		// ofile.open("sample/sample.txt.enc.dec", std::ios::binary);
-		// ifile.open(argv[2], std::ios::binary);
-		// ofile.open(argv[3], std::ios::binary);
+	ifile.close();
+	ofile.close();
 
-		ifile.seekg(0, std::ios_base::end);
-		uint64_t fileSize=ifile.tellg();
-		ifile.seekg(0, std::ios_base::beg);
+	summary.close();
+}
 
-		std::cout<<fileSize<<std::endl;
+void testAesDec(char** argv, std::vector<uint32_t> &blockSizes){
+	Application::getProgram<Lib::AES256_CFB128>();
 
-		Timer::reset();
-		std::cout<<"Starting testing dec!"<<std::endl;
-		Timer::startTotalTimer();
+	const uint64_t bufSize=64*1024*1024;
+	std::vector<char> buf(bufSize), bufout(bufSize);
 
-		for(uint64_t i=0;i<fileSize;i+=bufSize){
-			uint32_t curSize=(fileSize-i>bufSize?bufSize:fileSize-i);
-			blockSizes.push_back(curSize);
+	std::ofstream summary;
+	summary.open("output/summary.txt", std::ios::binary | std::ios::app);
 
-			Timer::startHostIOTimer();
-			ifile.read(buf.data(), curSize);
-			Timer::endHostIOTimer();
+	std::ofstream ofile;
+	std::ifstream ifile;
 
-			// if(curSize<bufSize) memset(buf.data()+curSize, 0, bufSize-curSize);
-			if(i==0) security::aes::aesCtrDecrypt(buf.data(), bufout.data(), curSize, key, 16, iv);
-			else security::aes::aesCtrDecrypt(buf.data(), bufout.data(), curSize, key, 16);
+	ifile.open("sample/dt_1G.txt.enc", std::ios::binary);
+	ofile.open("sample/dt_1G.txt.enc.dec", std::ios::binary);
+	// ifile.open("sample/sample.txt.enc", std::ios::binary);
+	// ofile.open("sample/sample.txt.enc.dec", std::ios::binary);
+	// ifile.open(argv[2], std::ios::binary);
+	// ofile.open(argv[3], std::ios::binary);
 
-			Timer::startHostIOTimer();
-			ofile.write(bufout.data(), blockSizes[i/bufSize]);
-			Timer::endHostIOTimer();
+	ifile.seekg(0, std::ios_base::end);
+	uint64_t fileSize=ifile.tellg();
+	ifile.seekg(0, std::ios_base::beg);
 
-			// std::cout<<i/bufSize<<": host processed a "<<curSize<<" Bytes block"<<std::endl;
-		}
+	std::cout<<fileSize<<std::endl;
 
-		Timer::endTotalTimer();
-		summary<<"The Decryption used "<<Timer::totalTime.count()/1e9<<" s in total"<<std::endl;
-		summary<<"The time for compute is "<<Timer::computeTime.count()/1e9<<" s"<<std::endl;
-		summary<<"The FPGA IO time is "<<Timer::fpgaIOTime.count()/1e9<<" s"<<std::endl;
-		summary<<"The Host IO time is "<<Timer::hostIOTime.count()/1e9<<" s"<<std::endl;
-		std::cout<<"Finished testing successfully!"<<std::endl;
+	Timer::reset();
+	std::cout<<"Starting testing dec!"<<std::endl;
+	Timer::startTotalTimer();
 
-		ifile.close();
-		ofile.close();
+	for(uint64_t i=0;i<fileSize;i+=bufSize){
+		uint32_t curSize=(fileSize-i>bufSize?bufSize:fileSize-i);
+		blockSizes.push_back(curSize);
+
+		Timer::startHostIOTimer();
+		ifile.read(buf.data(), curSize);
+		Timer::endHostIOTimer();
+
+		// if(curSize<bufSize) memset(buf.data()+curSize, 0, bufSize-curSize);
+		if(i==0) security::aes::aesCtrDecrypt(buf.data(), bufout.data(), curSize, key, 32, iv);
+		else security::aes::aesCtrDecrypt(buf.data(), bufout.data(), curSize, key, 32);
+
+		Timer::startHostIOTimer();
+		ofile.write(bufout.data(), blockSizes[i/bufSize]);
+		Timer::endHostIOTimer();
+
+		std::cout<<i/bufSize<<": host processed a "<<curSize<<" Bytes block"<<std::endl;
 	}
+
+	Timer::endTotalTimer();
+	summary<<"The Decryption used "<<Timer::totalTime.count()<<" ns in total"<<std::endl;
+	summary<<"The time for compute is "<<Timer::computeTime.count()<<" ns"<<std::endl;
+	summary<<"The Host IO time is "<<Timer::hostIOTime.count()<<" ns"<<std::endl;
+	summary<<"The FPGA time is "<<(Timer::fpgaInitTime.count()+Timer::fpgaIOTime.count())<<" ns"<<std::endl;
+	summary<<std::endl;
+	std::cout<<"Finished testing successfully!"<<std::endl;
+
+	ifile.close();
+	ofile.close();
 
 	summary.close();
 }
@@ -299,6 +307,17 @@ inline void testAes(char** argv){
 int main(int argc, char** argv){
 	// testAes::testAes128CbcEnc3();
 	// testAes::testAes128CbcDec3();
-	testAes::testAes(argv);
+	//"sample/dataset_32G.txt"
+	for(int i=1;i<=5;i++){
+		std::vector<uint32_t> blockSizes;
+		testAes::testAesEnc(argv, blockSizes, "sample/dataset_4G.txt");
+		testAes::testAesDec(argv, blockSizes);
+	}
+
+	for(int i=1;i<=5;i++){
+		std::vector<uint32_t> blockSizes;
+		testAes::testAesEnc(argv, blockSizes, "sample/dataset_32G.txt");
+		testAes::testAesDec(argv, blockSizes);
+	}
 	return 0;
 }

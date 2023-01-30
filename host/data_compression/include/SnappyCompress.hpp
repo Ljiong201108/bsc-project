@@ -7,7 +7,7 @@
 class SnappyCompressWorkshop : Workshop{
 protected:
 	// Maximum host buffer used to operate per kernel invocation
-	const static uint32_t HOST_BUFFER_SIZE=8*1024*1024;
+	const static uint32_t HOST_BUFFER_SIZE=4*1024*1024;
 
 	std::thread processThread;
 

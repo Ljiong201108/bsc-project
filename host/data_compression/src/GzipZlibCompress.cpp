@@ -2,6 +2,7 @@
 #include <sstream>
 
 void GzipZlibCompressWorkshop::processContinuous(){
+	Timer::startFPGAInitTimer();
 	cl_int err;
 
 	std::vector<uint32_t, aligned_allocator<uint32_t>> checksumDataBufferHost(1);
@@ -35,11 +36,13 @@ void GzipZlibCompressWorkshop::processContinuous(){
 	compressKernelMM->setArg(5, checksum_type);
 
 	CommandQueuePointer queue(Application::getContext(), Application::getDevice(), CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE);
+	Timer::endFPGAInitTimer();
 
 	bool last;
 
 	// compress the input block by block
 	do{
+		Timer::startComputeTimer();
 		uint32_t chunkSize=inputStream.pop(inputBufferHost.data(), CHUNK_SIZE_IN_BYTE, last);
 		std::cout<<"inner reads a "<<chunkSize<<" Bytes block"<<std::endl;
 
@@ -62,15 +65,19 @@ void GzipZlibCompressWorkshop::processContinuous(){
 		OCL_CHECK(err, err=queue->enqueueMigrateMemObjects({*outputBuffer, *checksumDataBuffer}, CL_MIGRATE_MEM_OBJECT_HOST));
 		queue->finish();
 
+		Timer::startHostIOTimer();
 		std::cout<<"inner writes a "<<compressedSizeBufferHost[0]<<" Bytes block"<<std::endl;
 		outputStream.push(outputBufferHost.data(), compressedSizeBufferHost[0], false);
+		Timer::endHostIOTimer();
 
 		if(checksum_type) checksumDataBufferHost.data()[0] = ~checksumDataBufferHost.data()[0];
 	}while(!last);
 
 	// Add last block header
+	Timer::startHostIOTimer();
 	long int last_block=0xffff000001;
 	outputStream.push(&last_block, 5, true);
+	Timer::endHostIOTimer();
 
 	checksum=checksumDataBufferHost.data()[0];
 }
@@ -182,9 +189,14 @@ void GzipZlibCompressWorkshop::processOverlapped(){
 }
 
 GzipZlibCompressWorkshop::GzipZlibCompressWorkshop(bool isZlib, bool overlapped) : 
-	Workshop("GzipZlibInputStream", 4, "GzipZlibOutputStream", 4),
-	isZlib(isZlib),
-	processThread(overlapped ? &GzipZlibCompressWorkshop::processOverlapped : &GzipZlibCompressWorkshop::processContinuous, this){}
+	Workshop("GzipZlibInputStream", 1<<30, "GzipZlibOutputStream", 1<<30),
+	isZlib(isZlib)
+	// , processThread(overlapped ? &GzipZlibCompressWorkshop::processOverlapped : &GzipZlibCompressWorkshop::processContinuous, this)
+	{}
+
+void GzipZlibCompressWorkshop::run(){
+	processThread=std::thread(&GzipZlibCompressWorkshop::processContinuous, this);
+}
 
 void GzipZlibCompressWorkshop::wait(){
 	processThread.join();

@@ -5,10 +5,14 @@ std::chrono::nanoseconds Timer::totalTime;
 std::chrono::nanoseconds Timer::computeTime;
 std::chrono::nanoseconds Timer::fpgaIOTime;
 std::chrono::nanoseconds Timer::hostIOTime;
+std::chrono::nanoseconds Timer::fpgaInitTime;
+std::chrono::nanoseconds Timer::anaTime;
 std::chrono::_V2::steady_clock::time_point Timer::totalStart;
 std::chrono::_V2::steady_clock::time_point Timer::computeStart;
 std::chrono::_V2::steady_clock::time_point Timer::fpgaIOStart;
 std::chrono::_V2::steady_clock::time_point Timer::hostIOStart;
+std::chrono::_V2::steady_clock::time_point Timer::fpgaInitStart;
+std::chrono::_V2::steady_clock::time_point Timer::anaStart;
 
 void Timer::startTotalTimer(){
 	totalStart=std::chrono::steady_clock::now();
@@ -24,6 +28,14 @@ void Timer::startFPGAIOTimer(){
 
 void Timer::startHostIOTimer(){
 	hostIOStart=std::chrono::steady_clock::now();
+}
+
+void Timer::startFPGAInitTimer(){
+	fpgaInitStart=std::chrono::steady_clock::now();
+}
+
+void Timer::startAnaTimer(){
+	anaStart=std::chrono::steady_clock::now();
 }
 
 void Timer::endTotalTimer(){
@@ -50,9 +62,22 @@ void Timer::endHostIOTimer(){
 	// std::cout<<"host io time += "<<(now-hostIOStart).count()<<std::endl;
 }
 
+void Timer::endFPGAInitTimer(){
+	auto now=std::chrono::steady_clock::now();
+	fpgaInitTime+=std::chrono::nanoseconds{now-fpgaInitStart};
+	// std::cout<<"fpga io time += "<<(now-fpgaIOStart).count()<<std::endl;
+}
+
+void Timer::endAnaTimer(){
+	auto now=std::chrono::steady_clock::now();
+	anaTime+=std::chrono::nanoseconds{now-anaStart};
+	// std::cout<<"host io time += "<<(now-hostIOStart).count()<<std::endl;
+}
+
 void Timer::reset(){
 	totalTime=std::chrono::nanoseconds{0};
 	computeTime=std::chrono::nanoseconds{0};
 	fpgaIOTime=std::chrono::nanoseconds{0};
 	hostIOTime=std::chrono::nanoseconds{0};
+	fpgaInitTime=std::chrono::nanoseconds{0};
 }

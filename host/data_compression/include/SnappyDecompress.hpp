@@ -7,7 +7,7 @@
 class SnappyDecompressWorkshop : Workshop{
 protected:
 	// Maximum host buffer used to operate per kernel invocation
-	const uint32_t HOST_BUFFER_SIZE = (8 * 1024 * 1024);
+	const uint32_t HOST_BUFFER_SIZE = (4 * 1024 * 1024);
 
 	// Default block size
 	const uint32_t BLOCK_SIZE_IN_KB = 64;

@@ -438,3 +438,826 @@ INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the re
     vitis_analyzer /home/jiong/bsc-project/build/security_U50/aes192Ecb/aes192Ecb.xclbin.link_summary 
 INFO: [v++ 60-791] Total elapsed time: 3h 37m 21s
 INFO: [v++ 60-1653] Closing dispatch client.
+v++ -c -k  aes192EcbDec -I/home/jiong/bsc-project/components/common/include -I/home/jiong/bsc-project/components/security/include -I/home/jiong/bsc-project/kernels/security/include /home/jiong/bsc-project/kernels/security/src/aes192EcbDec.cpp -o aes192EcbDec.xo -t hw -g --platform /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm --log_dir log --report_dir report
+v++ -c -k  aes192EcbEnc -I/home/jiong/bsc-project/components/common/include -I/home/jiong/bsc-project/components/security/include -I/home/jiong/bsc-project/kernels/security/include /home/jiong/bsc-project/kernels/security/src/aes192EcbEnc.cpp -o aes192EcbEnc.xo -t hw -g --platform /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm --log_dir log --report_dir report
+Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
+Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ compile can be found at:
+	Reports: /home/jiong/bsc-project/build/security_U50/aes192Ecb/report/aes192EcbDec
+	Log files: /home/jiong/bsc-project/build/security_U50/aes192Ecb/log/aes192EcbDec
+
+****** v++ v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ compile can be found at:
+	Reports: /home/jiong/bsc-project/build/security_U50/aes192Ecb/report/aes192EcbEnc
+	Log files: /home/jiong/bsc-project/build/security_U50/aes192Ecb/log/aes192EcbEnc
+Running Dispatch Server on port:41649
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/build/security_U50/aes192Ecb/aes192EcbEnc.xo.compile_summary, at Wed Jan 25 19:09:26 2023
+Running Dispatch Server on port:36469
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/build/security_U50/aes192Ecb/aes192EcbDec.xo.compile_summary, at Wed Jan 25 19:09:26 2023
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Wed Jan 25 19:09:26 2023
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Wed Jan 25 19:09:26 2023
+Running Rule Check Server on port:38939
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/build/security_U50/aes192Ecb/report/aes192EcbDec/v++_compile_aes192EcbDec_guidance.html', at Wed Jan 25 19:09:28 2023
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
+INFO: [v++ 74-74] Compiler Version string: 2020.2
+Running Rule Check Server on port:42839
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/build/security_U50/aes192Ecb/report/aes192EcbEnc/v++_compile_aes192EcbEnc_guidance.html', at Wed Jan 25 19:09:30 2023
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
+INFO: [v++ 74-74] Compiler Version string: 2020.2
+INFO: [v++ 60-585] Compiling for hardware target
+INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [v++ 60-242] Creating kernel: 'aes192EcbDec'
+WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
+INFO: [v++ 60-585] Compiling for hardware target
+INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [v++ 60-242] Creating kernel: 'aes192EcbEnc'
+WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
+
+===>The following messages were generated while  performing high-level synthesis for kernel: aes192EcbEnc Log file: /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/aes192EcbEnc/aes192EcbEnc/vitis_hls.log :
+ERROR: [v++ 214-157] Top function not found: there is no function named 'aes192EcbEnc'
+ERROR: [v++ 60-300] Failed to build kernel(ip) aes192EcbEnc, see log for details: /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/aes192EcbEnc/aes192EcbEnc/vitis_hls.log
+ERROR: [v++ 60-773] In '/home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/aes192EcbEnc/aes192EcbEnc/vitis_hls.log', caught Tcl error: ERROR: [HLS 214-157] Top function not found: there is no function named 'aes192EcbEnc'
+ERROR: [v++ 60-599] Kernel compilation failed to complete
+ERROR: [v++ 60-592] Failed to finish compilation
+INFO: [v++ 60-1653] Closing dispatch client.
+v++ -c -k  aes192EcbDec -I/home/jiong/bsc-project/components/common/include -I/home/jiong/bsc-project/components/security/include -I/home/jiong/bsc-project/kernels/security/include /home/jiong/bsc-project/kernels/security/src/aes192EcbDec.cpp -o aes192EcbDec.xo -t hw -g --platform /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm --log_dir log --report_dir report
+v++ -c -k  aes192EcbEnc -I/home/jiong/bsc-project/components/common/include -I/home/jiong/bsc-project/components/security/include -I/home/jiong/bsc-project/kernels/security/include /home/jiong/bsc-project/kernels/security/src/aes192EcbEnc.cpp -o aes192EcbEnc.xo -t hw -g --platform /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm --log_dir log --report_dir report
+Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ compile can be found at:
+	Reports: /home/jiong/bsc-project/build/security_U50/aes192Ecb/report/aes192EcbEnc
+	Log files: /home/jiong/bsc-project/build/security_U50/aes192Ecb/log/aes192EcbEnc
+Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ compile can be found at:
+	Reports: /home/jiong/bsc-project/build/security_U50/aes192Ecb/report/aes192EcbDec
+	Log files: /home/jiong/bsc-project/build/security_U50/aes192Ecb/log/aes192EcbDec
+Running Dispatch Server on port:39829
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/build/security_U50/aes192Ecb/aes192EcbEnc.xo.compile_summary, at Wed Jan 25 19:11:57 2023
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Wed Jan 25 19:11:57 2023
+Running Dispatch Server on port:43511
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/build/security_U50/aes192Ecb/aes192EcbDec.xo.compile_summary, at Wed Jan 25 19:11:58 2023
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Wed Jan 25 19:11:59 2023
+Running Rule Check Server on port:45351
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/build/security_U50/aes192Ecb/report/aes192EcbDec/v++_compile_aes192EcbDec_guidance.html', at Wed Jan 25 19:11:59 2023
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
+Running Rule Check Server on port:34327
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/build/security_U50/aes192Ecb/report/aes192EcbEnc/v++_compile_aes192EcbEnc_guidance.html', at Wed Jan 25 19:12:00 2023
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
+INFO: [v++ 74-74] Compiler Version string: 2020.2
+INFO: [v++ 74-74] Compiler Version string: 2020.2
+INFO: [v++ 60-585] Compiling for hardware target
+INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [v++ 60-242] Creating kernel: 'aes192EcbEnc'
+WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
+INFO: [v++ 60-585] Compiling for hardware target
+INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [v++ 60-242] Creating kernel: 'aes192EcbDec'
+WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
+
+===>The following messages were generated while  performing high-level synthesis for kernel: aes192EcbEnc Log file: /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/aes192EcbEnc/aes192EcbEnc/vitis_hls.log :
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_333_1'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 3, loop 'VITIS_LOOP_333_1'
+INFO: [v++ 204-61] Pipelining function 'process'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 24, function 'process'
+INFO: [v++ 204-61] Pipelining loop 'encryption_ecb_loop'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 27, loop 'encryption_ecb_loop'
+INFO: [v++ 200-790] **** Loop Constraint Status: All loop constraints were satisfied.
+INFO: [v++ 200-789] **** Estimated Fmax: 388.95 MHz
+INFO: [v++ 60-594] Finished kernel compilation
+INFO: [v++ 60-244] Generating system estimate report...
+INFO: [v++ 60-1092] Generated system estimate report: /home/jiong/bsc-project/build/security_U50/aes192Ecb/report/aes192EcbEnc/system_estimate_aes192EcbEnc.xtxt
+INFO: [v++ 60-586] Created aes192EcbEnc.xo
+INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
+    vitis_analyzer /home/jiong/bsc-project/build/security_U50/aes192Ecb/aes192EcbEnc.xo.compile_summary 
+INFO: [v++ 60-791] Total elapsed time: 0h 4m 18s
+INFO: [v++ 60-1653] Closing dispatch client.
+
+===>The following messages were generated while  performing high-level synthesis for kernel: aes192EcbDec Log file: /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/aes192EcbDec/aes192EcbDec/vitis_hls.log :
+INFO: [v++ 204-61] Pipelining function 'updateKey'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 10, function 'updateKey'
+INFO: [v++ 204-61] Pipelining function 'process'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 24, function 'process'
+INFO: [v++ 204-61] Pipelining loop 'decryption_ecb_loop'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 9, Depth = 35, loop 'decryption_ecb_loop'
+INFO: [v++ 200-790] **** Loop Constraint Status: All loop constraints were NOT satisfied.
+INFO: [v++ 200-789] **** Estimated Fmax: 411.00 MHz
+INFO: [v++ 60-594] Finished kernel compilation
+INFO: [v++ 60-244] Generating system estimate report...
+INFO: [v++ 60-1092] Generated system estimate report: /home/jiong/bsc-project/build/security_U50/aes192Ecb/report/aes192EcbDec/system_estimate_aes192EcbDec.xtxt
+INFO: [v++ 60-586] Created aes192EcbDec.xo
+INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
+    vitis_analyzer /home/jiong/bsc-project/build/security_U50/aes192Ecb/aes192EcbDec.xo.compile_summary 
+INFO: [v++ 60-791] Total elapsed time: 0h 5m 35s
+INFO: [v++ 60-1653] Closing dispatch client.
+v++ -l aes192EcbDec.xo aes192EcbEnc.xo -o aes192Ecb.xclbin -t hw -g --platform /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm --config config_link.cfg --optimize 2
+Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ link can be found at:
+	Reports: /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/reports/link
+	Log files: /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/logs/link
+Running Dispatch Server on port:39829
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/build/security_U50/aes192Ecb/aes192Ecb.xclbin.link_summary, at Wed Jan 25 19:17:37 2023
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Wed Jan 25 19:17:37 2023
+Running Rule Check Server on port:46169
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/reports/link/v++_link_aes192Ecb_guidance.html', at Wed Jan 25 19:17:39 2023
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
+INFO: [v++ 74-74] Compiler Version string: 2020.2
+INFO: [v++ 60-629] Linking for hardware target
+INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [v++ 60-1332] Run 'run_link' status: Not started
+INFO: [v++ 60-1443] [19:17:49] Run run_link: Step system_link: Started
+INFO: [v++ 60-1453] Command Line: system_link --xo /home/jiong/bsc-project/build/security_U50/aes192Ecb/aes192EcbDec.xo --xo /home/jiong/bsc-project/build/security_U50/aes192Ecb/aes192EcbEnc.xo --config /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/int/syslinkConfig.ini --xpfm /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm --target hw --output_dir /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/int --temp_dir /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/sys_link
+INFO: [v++ 60-1454] Run Directory: /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/run_link
+INFO: [SYSTEM_LINK 60-1316] Initiating connection to rulecheck server, at Wed Jan 25 19:17:54 2023
+INFO: [SYSTEM_LINK 82-70] Extracting xo v3 file /home/jiong/bsc-project/build/security_U50/aes192Ecb/aes192EcbDec.xo
+INFO: [SYSTEM_LINK 82-70] Extracting xo v3 file /home/jiong/bsc-project/build/security_U50/aes192Ecb/aes192EcbEnc.xo
+INFO: [SYSTEM_LINK 82-53] Creating IP database /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/sys_link/_sysl/.cdb/xd_ip_db.xml
+INFO: [SYSTEM_LINK 82-38] [19:17:55] build_xd_ip_db started: /share/xilinx/Vitis/2020.2/bin/build_xd_ip_db -ip_search 0  -sds-pf /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/sys_link/hw.hpfm -clkid 0 -ip /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/sys_link/iprepo/xilinx_com_hls_aes192EcbDec_1_0,aes192EcbDec -ip /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/sys_link/iprepo/xilinx_com_hls_aes192EcbEnc_1_0,aes192EcbEnc -o /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/sys_link/_sysl/.cdb/xd_ip_db.xml
+INFO: [SYSTEM_LINK 82-37] [19:18:10] build_xd_ip_db finished successfully
+Time (s): cpu = 00:00:19 ; elapsed = 00:00:15 . Memory (MB): peak = 1684.055 ; gain = 0.000 ; free physical = 116213 ; free virtual = 213309
+INFO: [SYSTEM_LINK 82-51] Create system connectivity graph
+INFO: [SYSTEM_LINK 82-102] Applying explicit connections to the system connectivity graph: /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/sys_link/cfgraph/cfgen_cfgraph.xml
+INFO: [SYSTEM_LINK 82-38] [19:18:10] cfgen started: /share/xilinx/Vitis/2020.2/bin/cfgen  -nk aes192EcbDec:1:aes192EcbDec_1 -nk aes192EcbEnc:1:aes192EcbEnc_1 -dmclkid 0 -r /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/sys_link/_sysl/.cdb/xd_ip_db.xml -o /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/sys_link/cfgraph/cfgen_cfgraph.xml
+INFO: [CFGEN 83-0] Kernel Specs: 
+INFO: [CFGEN 83-0]   kernel: aes192EcbDec, num: 1  {aes192EcbDec_1}
+INFO: [CFGEN 83-0]   kernel: aes192EcbEnc, num: 1  {aes192EcbEnc_1}
+INFO: [CFGEN 83-2226] Inferring mapping for argument aes192EcbDec_1.cipherTextBuffer to HBM[0]
+INFO: [CFGEN 83-2226] Inferring mapping for argument aes192EcbDec_1.cipherKey to HBM[0]
+INFO: [CFGEN 83-2226] Inferring mapping for argument aes192EcbDec_1.plainTextBuffer to HBM[0]
+INFO: [CFGEN 83-2226] Inferring mapping for argument aes192EcbEnc_1.plainTextBuffer to HBM[0]
+INFO: [CFGEN 83-2226] Inferring mapping for argument aes192EcbEnc_1.cipherKey to HBM[0]
+INFO: [CFGEN 83-2226] Inferring mapping for argument aes192EcbEnc_1.cipherTextBuffer to HBM[0]
+INFO: [SYSTEM_LINK 82-37] [19:18:17] cfgen finished successfully
+Time (s): cpu = 00:00:07 ; elapsed = 00:00:07 . Memory (MB): peak = 1684.055 ; gain = 0.000 ; free physical = 115903 ; free virtual = 213000
+INFO: [SYSTEM_LINK 82-52] Create top-level block diagram
+INFO: [SYSTEM_LINK 82-38] [19:18:17] cf2bd started: /share/xilinx/Vitis/2020.2/bin/cf2bd  --linux --trace_buffer 1024 --input_file /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/sys_link/cfgraph/cfgen_cfgraph.xml --ip_db /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/sys_link/_sysl/.cdb/xd_ip_db.xml --cf_name dr --working_dir /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/sys_link/_sysl/.xsd --temp_dir /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/sys_link --output_dir /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/int --target_bd ulp.bd
+INFO: [CF2BD 82-31] Launching cf2xd: cf2xd -linux -trace-buffer 1024 -i /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/sys_link/cfgraph/cfgen_cfgraph.xml -r /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/sys_link/_sysl/.cdb/xd_ip_db.xml -o dr.xml
+INFO: [CF2BD 82-28] cf2xd finished successfully
+INFO: [CF2BD 82-31] Launching cf_xsd: cf_xsd -disable-address-gen -bd ulp.bd -dn dr -dp /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/sys_link/_sysl/.xsd
+INFO: [CF2BD 82-28] cf_xsd finished successfully
+INFO: [SYSTEM_LINK 82-37] [19:18:24] cf2bd finished successfully
+Time (s): cpu = 00:00:06 ; elapsed = 00:00:07 . Memory (MB): peak = 1684.055 ; gain = 0.000 ; free physical = 115608 ; free virtual = 212710
+INFO: [v++ 60-1441] [19:18:24] Run run_link: Step system_link: Completed
+Time (s): cpu = 00:00:39 ; elapsed = 00:00:35 . Memory (MB): peak = 1577.793 ; gain = 0.000 ; free physical = 115650 ; free virtual = 212747
+INFO: [v++ 60-1443] [19:18:24] Run run_link: Step cf2sw: Started
+INFO: [v++ 60-1453] Command Line: cf2sw -sdsl /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/int/sdsl.dat -rtd /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/int/cf2sw.rtd -nofilter /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/int/cf2sw_full.rtd -xclbin /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/int/xclbin_orig.xml -o /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/int/xclbin_orig.1.xml
+INFO: [v++ 60-1454] Run Directory: /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/run_link
+INFO: [v++ 60-1441] [19:18:30] Run run_link: Step cf2sw: Completed
+Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 1577.793 ; gain = 0.000 ; free physical = 115562 ; free virtual = 212658
+INFO: [v++ 60-1443] [19:18:30] Run run_link: Step rtd2_system_diagram: Started
+INFO: [v++ 60-1453] Command Line: rtd2SystemDiagram
+INFO: [v++ 60-1454] Run Directory: /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/run_link
+INFO: [v++ 60-1441] [19:18:33] Run run_link: Step rtd2_system_diagram: Completed
+Time (s): cpu = 00:00:00.01 ; elapsed = 00:00:04 . Memory (MB): peak = 1577.793 ; gain = 0.000 ; free physical = 114846 ; free virtual = 211953
+INFO: [v++ 60-1443] [19:18:33] Run run_link: Step vpl: Started
+INFO: [v++ 60-1453] Command Line: vpl -t hw -f /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm -g --remote_ip_cache /home/jiong/bsc-project/build/security_U50/aes192Ecb/.ipcache --output_dir /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/int --log_dir /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/logs/link --report_dir /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/reports/link --config /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/int/vplConfig.ini -k /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/int/kernel_info.dat --webtalk_flag Vitis --temp_dir /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link --no-info --iprepo /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/int/xo/ip_repo/xilinx_com_hls_aes192EcbEnc_1_0 --iprepo /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/int/xo/ip_repo/xilinx_com_hls_aes192EcbDec_1_0 --messageDb /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/run_link/vpl.pb /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/int/dr.bd.tcl
+INFO: [v++ 60-1454] Run Directory: /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/run_link
+
+****** vpl v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [VPL 60-839] Read in kernel information from file '/home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/int/kernel_info.dat'.
+INFO: [VPL 74-74] Compiler Version string: 2020.2
+INFO: [VPL 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [VPL 60-1032] Extracting hardware platform to /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/vivado/vpl/.local/hw_platform
+WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
+[19:19:07] Run vpl: Step create_project: Started
+Creating Vivado project.
+[19:19:11] Run vpl: Step create_project: Completed
+[19:19:11] Run vpl: Step create_bd: Started
+[19:20:28] Run vpl: Step create_bd: RUNNING...
+[19:21:28] Run vpl: Step create_bd: Completed
+[19:21:28] Run vpl: Step update_bd: Started
+[19:21:29] Run vpl: Step update_bd: Completed
+[19:21:29] Run vpl: Step generate_target: Started
+[19:22:45] Run vpl: Step generate_target: RUNNING...
+[19:24:01] Run vpl: Step generate_target: RUNNING...
+[19:24:06] Run vpl: Step generate_target: Completed
+[19:24:06] Run vpl: Step config_hw_runs: Started
+[19:24:16] Run vpl: Step config_hw_runs: Completed
+[19:24:16] Run vpl: Step synth: Started
+[19:25:17] Block-level synthesis in progress, 0 of 16 jobs complete, 8 jobs running.
+[19:25:48] Block-level synthesis in progress, 0 of 16 jobs complete, 8 jobs running.
+[19:26:19] Block-level synthesis in progress, 0 of 16 jobs complete, 8 jobs running.
+[19:26:50] Block-level synthesis in progress, 0 of 16 jobs complete, 8 jobs running.
+[19:27:20] Block-level synthesis in progress, 0 of 16 jobs complete, 8 jobs running.
+[19:27:50] Block-level synthesis in progress, 0 of 16 jobs complete, 8 jobs running.
+[19:28:21] Block-level synthesis in progress, 0 of 16 jobs complete, 8 jobs running.
+[19:28:51] Block-level synthesis in progress, 0 of 16 jobs complete, 8 jobs running.
+[19:29:22] Block-level synthesis in progress, 0 of 16 jobs complete, 8 jobs running.
+[19:29:52] Block-level synthesis in progress, 1 of 16 jobs complete, 7 jobs running.
+[19:30:23] Block-level synthesis in progress, 1 of 16 jobs complete, 8 jobs running.
+[19:30:53] Block-level synthesis in progress, 3 of 16 jobs complete, 6 jobs running.
+[19:31:23] Block-level synthesis in progress, 3 of 16 jobs complete, 8 jobs running.
+[19:31:54] Block-level synthesis in progress, 5 of 16 jobs complete, 6 jobs running.
+[19:32:24] Block-level synthesis in progress, 6 of 16 jobs complete, 6 jobs running.
+[19:32:54] Block-level synthesis in progress, 8 of 16 jobs complete, 5 jobs running.
+[19:33:25] Block-level synthesis in progress, 8 of 16 jobs complete, 6 jobs running.
+[19:33:56] Block-level synthesis in progress, 9 of 16 jobs complete, 5 jobs running.
+[19:34:26] Block-level synthesis in progress, 9 of 16 jobs complete, 5 jobs running.
+[19:34:57] Block-level synthesis in progress, 11 of 16 jobs complete, 3 jobs running.
+[19:35:27] Block-level synthesis in progress, 12 of 16 jobs complete, 4 jobs running.
+[19:35:58] Block-level synthesis in progress, 13 of 16 jobs complete, 3 jobs running.
+[19:36:28] Block-level synthesis in progress, 13 of 16 jobs complete, 3 jobs running.
+[19:36:59] Block-level synthesis in progress, 13 of 16 jobs complete, 3 jobs running.
+[19:37:29] Block-level synthesis in progress, 14 of 16 jobs complete, 2 jobs running.
+[19:38:00] Block-level synthesis in progress, 14 of 16 jobs complete, 2 jobs running.
+[19:38:30] Block-level synthesis in progress, 14 of 16 jobs complete, 2 jobs running.
+[19:39:01] Block-level synthesis in progress, 14 of 16 jobs complete, 2 jobs running.
+[19:39:31] Block-level synthesis in progress, 14 of 16 jobs complete, 2 jobs running.
+[19:40:01] Block-level synthesis in progress, 14 of 16 jobs complete, 2 jobs running.
+[19:40:32] Block-level synthesis in progress, 14 of 16 jobs complete, 2 jobs running.
+[19:41:02] Block-level synthesis in progress, 14 of 16 jobs complete, 2 jobs running.
+[19:41:33] Block-level synthesis in progress, 14 of 16 jobs complete, 2 jobs running.
+[19:42:03] Block-level synthesis in progress, 14 of 16 jobs complete, 2 jobs running.
+[19:42:34] Block-level synthesis in progress, 14 of 16 jobs complete, 2 jobs running.
+[19:43:04] Block-level synthesis in progress, 14 of 16 jobs complete, 2 jobs running.
+[19:43:34] Block-level synthesis in progress, 14 of 16 jobs complete, 2 jobs running.
+[19:44:05] Block-level synthesis in progress, 14 of 16 jobs complete, 2 jobs running.
+[19:44:35] Block-level synthesis in progress, 14 of 16 jobs complete, 2 jobs running.
+[19:45:05] Block-level synthesis in progress, 14 of 16 jobs complete, 2 jobs running.
+[19:45:35] Block-level synthesis in progress, 14 of 16 jobs complete, 2 jobs running.
+[19:46:06] Block-level synthesis in progress, 14 of 16 jobs complete, 2 jobs running.
+[19:46:36] Block-level synthesis in progress, 14 of 16 jobs complete, 2 jobs running.
+[19:47:07] Block-level synthesis in progress, 14 of 16 jobs complete, 2 jobs running.
+[19:47:37] Block-level synthesis in progress, 14 of 16 jobs complete, 2 jobs running.
+[19:48:08] Block-level synthesis in progress, 14 of 16 jobs complete, 2 jobs running.
+[19:48:38] Block-level synthesis in progress, 14 of 16 jobs complete, 2 jobs running.
+[19:49:09] Block-level synthesis in progress, 14 of 16 jobs complete, 2 jobs running.
+[19:49:39] Block-level synthesis in progress, 15 of 16 jobs complete, 1 job running.
+[19:50:09] Block-level synthesis in progress, 16 of 16 jobs complete, 0 jobs running.
+[19:50:40] Top-level synthesis in progress.
+[19:51:10] Top-level synthesis in progress.
+[19:51:40] Top-level synthesis in progress.
+[19:52:11] Top-level synthesis in progress.
+[19:52:41] Top-level synthesis in progress.
+[19:53:12] Top-level synthesis in progress.
+[19:53:42] Top-level synthesis in progress.
+[19:53:49] Run vpl: Step synth: Completed
+[19:53:49] Run vpl: Step impl: Started
+[20:08:34] Finished 2nd of 6 tasks (FPGA linking synthesized kernels to platform). Elapsed time: 00h 49m 55s 
+
+[20:08:34] Starting logic optimization..
+[20:10:36] Phase 1 Retarget
+[20:11:07] Phase 2 Constant propagation
+[20:11:37] Phase 3 Sweep
+[20:13:09] Phase 4 BUFG optimization
+[20:13:39] Phase 5 Shift Register Optimization
+[20:14:09] Phase 6 Post Processing Netlist
+[20:17:41] Finished 3rd of 6 tasks (FPGA logic optimization). Elapsed time: 00h 09m 06s 
+
+[20:17:41] Starting logic placement..
+[20:19:12] Phase 1 Placer Initialization
+[20:19:12] Phase 1.1 Placer Initialization Netlist Sorting
+[20:24:46] Phase 1.2 IO Placement/ Clock Placement/ Build Placer Device
+[20:26:17] Phase 1.3 Build Placer Netlist Model
+[20:29:19] Phase 1.4 Constrain Clocks/Macros
+[20:29:50] Phase 2 Global Placement
+[20:29:50] Phase 2.1 Floorplanning
+[20:30:51] Phase 2.1.1 Partition Driven Placement
+[20:30:51] Phase 2.1.1.1 PBP: Partition Driven Placement
+[20:31:52] Phase 2.1.1.2 PBP: Clock Region Placement
+[20:35:56] Phase 2.1.1.3 PBP: Compute Congestion
+[20:35:56] Phase 2.1.1.4 PBP: UpdateTiming
+[20:36:26] Phase 2.1.1.5 PBP: Add part constraints
+[20:36:26] Phase 2.2 Update Timing before SLR Path Opt
+[20:36:26] Phase 2.3 Global Placement Core
+[20:46:38] Phase 2.3.1 Physical Synthesis In Placer
+[20:49:10] Phase 3 Detail Placement
+[20:49:10] Phase 3.1 Commit Multi Column Macros
+[20:49:40] Phase 3.2 Commit Most Macros & LUTRAMs
+[20:51:12] Phase 3.3 Small Shape DP
+[20:51:12] Phase 3.3.1 Small Shape Clustering
+[20:52:13] Phase 3.3.2 Flow Legalize Slice Clusters
+[20:52:13] Phase 3.3.3 Slice Area Swap
+[20:54:16] Phase 3.4 Place Remaining
+[20:54:46] Phase 3.5 Re-assign LUT pins
+[20:55:16] Phase 3.6 Pipeline Register Optimization
+[20:55:16] Phase 3.7 Fast Optimization
+[20:56:17] Phase 4 Post Placement Optimization and Clean-Up
+[20:56:17] Phase 4.1 Post Commit Optimization
+[20:57:50] Phase 4.1.1 Post Placement Optimization
+[20:58:20] Phase 4.1.1.1 BUFG Insertion
+[20:58:20] Phase 1 Physical Synthesis Initialization
+[20:59:22] Phase 4.1.1.2 BUFG Replication
+[21:00:23] Phase 4.1.1.3 Replication
+[21:01:55] Phase 4.2 Post Placement Cleanup
+[21:01:55] Phase 4.3 Placer Reporting
+[21:01:55] Phase 4.3.1 Print Estimated Congestion
+[21:02:25] Phase 4.4 Final Placement Cleanup
+[21:06:29] Finished 4th of 6 tasks (FPGA logic placement). Elapsed time: 00h 48m 48s 
+
+[21:06:29] Starting logic routing..
+[21:08:31] Phase 1 Build RT Design
+[21:10:03] Phase 2 Router Initialization
+[21:10:03] Phase 2.1 Fix Topology Constraints
+[21:14:38] Phase 2.2 Pre Route Cleanup
+[21:15:09] Phase 2.3 Global Clock Net Routing
+[21:16:10] Phase 2.4 Update Timing
+[21:18:43] Phase 2.5 Update Timing for Bus Skew
+[21:18:43] Phase 2.5.1 Update Timing
+[21:20:15] Phase 3 Initial Routing
+[21:20:15] Phase 3.1 Global Routing
+[21:21:16] Phase 4 Rip-up And Reroute
+[21:21:16] Phase 4.1 Global Iteration 0
+[21:27:23] Phase 4.2 Global Iteration 1
+[21:28:55] Phase 4.3 Global Iteration 2
+[21:29:56] Phase 5 Delay and Skew Optimization
+[21:29:56] Phase 5.1 Delay CleanUp
+[21:29:56] Phase 5.1.1 Update Timing
+[21:31:28] Phase 5.2 Clock Skew Optimization
+[21:31:28] Phase 6 Post Hold Fix
+[21:31:28] Phase 6.1 Hold Fix Iter
+[21:31:28] Phase 6.1.1 Update Timing
+[21:32:59] Phase 7 Leaf Clock Prog Delay Opt
+[21:34:00] Phase 8 Route finalize
+[21:34:31] Phase 9 Verifying routed nets
+[21:34:31] Phase 10 Depositing Routes
+[21:35:31] Phase 11 Post Router Timing
+[21:36:02] Finished 5th of 6 tasks (FPGA routing). Elapsed time: 00h 29m 32s 
+
+[21:36:02] Starting bitstream generation..
+[21:55:23] Creating bitmap...
+[22:06:35] Writing bitstream ./level0_i_ulp_my_rm_partial.bit...
+[22:06:35] Finished 6th of 6 tasks (FPGA bitstream generation). Elapsed time: 00h 30m 33s 
+[22:09:03] Run vpl: Step impl: Completed
+[22:09:04] Run vpl: FINISHED. Run Status: impl Complete!
+INFO: [v++ 60-1441] [22:09:05] Run run_link: Step vpl: Completed
+Time (s): cpu = 00:02:36 ; elapsed = 02:50:32 . Memory (MB): peak = 1577.793 ; gain = 0.000 ; free physical = 80434 ; free virtual = 178948
+INFO: [v++ 60-1443] [22:09:05] Run run_link: Step rtdgen: Started
+INFO: [v++ 60-1453] Command Line: rtdgen
+INFO: [v++ 60-1454] Run Directory: /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/run_link
+INFO: [v++ 60-991] clock name 'clk_kernel2_in' (clock ID '1') is being mapped to clock name 'KERNEL_CLK' in the xclbin
+INFO: [v++ 60-991] clock name 'clk_kernel_in' (clock ID '0') is being mapped to clock name 'DATA_CLK' in the xclbin
+INFO: [v++ 60-991] clock name 'hbm_aclk' (clock ID '') is being mapped to clock name 'hbm_aclk' in the xclbin
+INFO: [v++ 60-1230] The compiler selected the following frequencies for the runtime controllable kernel clock(s) and scalable system clock(s): System (SYSTEM) clock: hbm_aclk = 450, Kernel (KERNEL) clock: clk_kernel2_in = 500, Kernel (DATA) clock: clk_kernel_in = 300
+INFO: [v++ 60-1453] Command Line: cf2sw -a /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/int/address_map.xml -sdsl /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/int/sdsl.dat -xclbin /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/int/xclbin_orig.xml -rtd /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/int/aes192Ecb.rtd -o /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/int/aes192Ecb.xml
+INFO: [v++ 60-1652] Cf2sw returned exit code: 0
+INFO: [v++ 60-2311] HPISystemDiagram::writeSystemDiagramAfterRunningVivado, rtdInputFilePath: /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/int/aes192Ecb.rtd
+INFO: [v++ 60-2312] HPISystemDiagram::writeSystemDiagramAfterRunningVivado, systemDiagramOutputFilePath: /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/int/systemDiagramModelSlrBaseAddress.json
+INFO: [v++ 60-1618] Launching 
+INFO: [v++ 60-1441] [22:09:11] Run run_link: Step rtdgen: Completed
+Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 1577.793 ; gain = 0.000 ; free physical = 83513 ; free virtual = 181004
+INFO: [v++ 60-1443] [22:09:11] Run run_link: Step xclbinutil: Started
+INFO: [v++ 60-1453] Command Line: xclbinutil --add-section BITSTREAM:RAW:/home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/int/partial.bit --force --target hw --key-value SYS:dfx_enable:true --add-section :JSON:/home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/int/aes192Ecb.rtd --append-section :JSON:/home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/int/appendSection.rtd --add-section CLOCK_FREQ_TOPOLOGY:JSON:/home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/int/aes192Ecb_xml.rtd --add-section BUILD_METADATA:JSON:/home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/int/aes192Ecb_build.rtd --add-section EMBEDDED_METADATA:RAW:/home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/int/aes192Ecb.xml --add-section SYSTEM_METADATA:RAW:/home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/int/systemDiagramModelSlrBaseAddress.json --key-value SYS:PlatformVBNV:xilinx_u50_gen3x16_xdma_201920_3 --output /home/jiong/bsc-project/build/security_U50/aes192Ecb/aes192Ecb.xclbin
+INFO: [v++ 60-1454] Run Directory: /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/run_link
+XRT Build Version: 2.12.427 (2021.2)
+       Build Date: 2021-10-08 22:06:50
+          Hash ID: 2719b6027e185000fc49783171631db03fc0ef79
+Creating a default 'in-memory' xclbin image.
+
+Section: 'BITSTREAM'(0) was successfully added.
+Size   : 32308992 bytes
+Format : RAW
+File   : '/home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/int/partial.bit'
+
+Section: 'MEM_TOPOLOGY'(6) was successfully added.
+Format : JSON
+File   : 'mem_topology'
+
+Section: 'IP_LAYOUT'(8) was successfully added.
+Format : JSON
+File   : 'ip_layout'
+
+Section: 'CONNECTIVITY'(7) was successfully added.
+Format : JSON
+File   : 'connectivity'
+
+Section: 'CLOCK_FREQ_TOPOLOGY'(11) was successfully added.
+Size   : 410 bytes
+Format : JSON
+File   : '/home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/int/aes192Ecb_xml.rtd'
+
+Section: 'BUILD_METADATA'(14) was successfully added.
+Size   : 3702 bytes
+Format : JSON
+File   : '/home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/int/aes192Ecb_build.rtd'
+
+Section: 'EMBEDDED_METADATA'(2) was successfully added.
+Size   : 8695 bytes
+Format : RAW
+File   : '/home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/int/aes192Ecb.xml'
+
+Section: 'SYSTEM_METADATA'(22) was successfully added.
+Size   : 17318 bytes
+Format : RAW
+File   : '/home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/int/systemDiagramModelSlrBaseAddress.json'
+
+Section: 'PARTITION_METADATA'(20) was successfully appended to.
+Format : JSON
+File   : 'partition_metadata'
+
+Section: 'IP_LAYOUT'(8) was successfully appended to.
+Format : JSON
+File   : 'ip_layout'
+Successfully wrote (32367635 bytes) to the output file: /home/jiong/bsc-project/build/security_U50/aes192Ecb/aes192Ecb.xclbin
+Leaving xclbinutil.
+INFO: [v++ 60-1441] [22:09:12] Run run_link: Step xclbinutil: Completed
+Time (s): cpu = 00:00:00.21 ; elapsed = 00:00:00.32 . Memory (MB): peak = 1577.793 ; gain = 0.000 ; free physical = 83413 ; free virtual = 180999
+INFO: [v++ 60-1443] [22:09:12] Run run_link: Step xclbinutilinfo: Started
+INFO: [v++ 60-1453] Command Line: xclbinutil --quiet --force --info /home/jiong/bsc-project/build/security_U50/aes192Ecb/aes192Ecb.xclbin.info --input /home/jiong/bsc-project/build/security_U50/aes192Ecb/aes192Ecb.xclbin
+INFO: [v++ 60-1454] Run Directory: /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/run_link
+INFO: [v++ 60-1441] [22:09:13] Run run_link: Step xclbinutilinfo: Completed
+Time (s): cpu = 00:00:01 ; elapsed = 00:00:01 . Memory (MB): peak = 1577.793 ; gain = 0.000 ; free physical = 82809 ; free virtual = 181037
+INFO: [v++ 60-1443] [22:09:13] Run run_link: Step generate_sc_driver: Started
+INFO: [v++ 60-1453] Command Line: 
+INFO: [v++ 60-1454] Run Directory: /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/run_link
+INFO: [v++ 60-1441] [22:09:13] Run run_link: Step generate_sc_driver: Completed
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1577.793 ; gain = 0.000 ; free physical = 82807 ; free virtual = 181035
+INFO: [v++ 60-244] Generating system estimate report...
+INFO: [v++ 60-1092] Generated system estimate report: /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/reports/link/system_estimate_aes192Ecb.xtxt
+INFO: [v++ 60-586] Created /home/jiong/bsc-project/build/security_U50/aes192Ecb/aes192Ecb.ltx
+INFO: [v++ 60-586] Created aes192Ecb.xclbin
+INFO: [v++ 60-1307] Run completed. Additional information can be found in:
+	Guidance: /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/reports/link/v++_link_aes192Ecb_guidance.html
+	Timing Report: /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/reports/link/imp/impl_1_hw_bb_locked_timing_summary_routed.rpt
+	Vivado Log: /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/logs/link/vivado.log
+	Steps Log File: /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/logs/link/link.steps.log
+
+INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
+    vitis_analyzer /home/jiong/bsc-project/build/security_U50/aes192Ecb/aes192Ecb.xclbin.link_summary 
+INFO: [v++ 60-791] Total elapsed time: 2h 51m 46s
+INFO: [v++ 60-1653] Closing dispatch client.
+v++ -c -k  aes192EcbEnc -I/home/jiong/bsc-project/components/common/include -I/home/jiong/bsc-project/components/security/include -I/home/jiong/bsc-project/kernels/security/include /home/jiong/bsc-project/kernels/security/src/aes192EcbEnc.cpp -o aes192EcbEnc.xo -t hw -g --platform /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm --log_dir log --report_dir report
+Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ compile can be found at:
+	Reports: /home/jiong/bsc-project/build/security_U50/aes192Ecb/report/aes192EcbEnc
+	Log files: /home/jiong/bsc-project/build/security_U50/aes192Ecb/log/aes192EcbEnc
+Running Dispatch Server on port:32929
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/build/security_U50/aes192Ecb/aes192EcbEnc.xo.compile_summary, at Thu Jan 26 00:41:15 2023
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Thu Jan 26 00:41:15 2023
+Running Rule Check Server on port:40007
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/build/security_U50/aes192Ecb/report/aes192EcbEnc/v++_compile_aes192EcbEnc_guidance.html', at Thu Jan 26 00:41:19 2023
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
+INFO: [v++ 74-74] Compiler Version string: 2020.2
+INFO: [v++ 60-585] Compiling for hardware target
+INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [v++ 60-242] Creating kernel: 'aes192EcbEnc'
+WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
+
+===>The following messages were generated while  performing high-level synthesis for kernel: aes192EcbEnc Log file: /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/aes192EcbEnc/aes192EcbEnc/vitis_hls.log :
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_333_1'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 3, loop 'VITIS_LOOP_333_1'
+INFO: [v++ 204-61] Pipelining function 'process'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 24, function 'process'
+INFO: [v++ 204-61] Pipelining loop 'encryption_ecb_loop'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 27, loop 'encryption_ecb_loop'
+INFO: [v++ 200-790] **** Loop Constraint Status: All loop constraints were satisfied.
+INFO: [v++ 200-789] **** Estimated Fmax: 388.95 MHz
+INFO: [v++ 60-594] Finished kernel compilation
+INFO: [v++ 60-244] Generating system estimate report...
+INFO: [v++ 60-1092] Generated system estimate report: /home/jiong/bsc-project/build/security_U50/aes192Ecb/report/aes192EcbEnc/system_estimate_aes192EcbEnc.xtxt
+WARNING: [v++-17-1525]  
+INFO: [v++ 60-586] Created aes192EcbEnc.xo
+INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
+    vitis_analyzer /home/jiong/bsc-project/build/security_U50/aes192Ecb/aes192EcbEnc.xo.compile_summary 
+INFO: [v++ 60-791] Total elapsed time: 0h 3m 40s
+INFO: [v++ 60-1653] Closing dispatch client.
+v++ -l aes192EcbDec.xo aes192EcbEnc.xo -o aes192Ecb.xclbin -t hw -g --platform /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm --config config_link.cfg --optimize 2
+Option Map File Used: '/share/xilinx/Vitis/2020.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ link can be found at:
+	Reports: /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/reports/link
+	Log files: /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/logs/link
+Running Dispatch Server on port:44085
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jiong/bsc-project/build/security_U50/aes192Ecb/aes192Ecb.xclbin.link_summary, at Thu Jan 26 00:45:00 2023
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Thu Jan 26 00:45:00 2023
+Running Rule Check Server on port:36247
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/reports/link/v++_link_aes192Ecb_guidance.html', at Thu Jan 26 00:45:03 2023
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/hw/hw.xsa'
+INFO: [v++ 74-74] Compiler Version string: 2020.2
+INFO: [v++ 60-629] Linking for hardware target
+INFO: [v++ 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [v++ 60-1332] Run 'run_link' status: Not started
+INFO: [v++ 60-1443] [00:45:06] Run run_link: Step system_link: Started
+INFO: [v++ 60-1453] Command Line: system_link --xo /home/jiong/bsc-project/build/security_U50/aes192Ecb/aes192EcbDec.xo --xo /home/jiong/bsc-project/build/security_U50/aes192Ecb/aes192EcbEnc.xo --config /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/int/syslinkConfig.ini --xpfm /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm --target hw --output_dir /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/int --temp_dir /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/sys_link
+INFO: [v++ 60-1454] Run Directory: /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/run_link
+INFO: [SYSTEM_LINK 60-1316] Initiating connection to rulecheck server, at Thu Jan 26 00:45:11 2023
+INFO: [SYSTEM_LINK 82-70] Extracting xo v3 file /home/jiong/bsc-project/build/security_U50/aes192Ecb/aes192EcbDec.xo
+INFO: [SYSTEM_LINK 82-70] Extracting xo v3 file /home/jiong/bsc-project/build/security_U50/aes192Ecb/aes192EcbEnc.xo
+INFO: [SYSTEM_LINK 82-53] Creating IP database /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/sys_link/_sysl/.cdb/xd_ip_db.xml
+INFO: [SYSTEM_LINK 82-38] [00:45:12] build_xd_ip_db started: /share/xilinx/Vitis/2020.2/bin/build_xd_ip_db -ip_search 0  -sds-pf /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/sys_link/hw.hpfm -clkid 0 -ip /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/sys_link/iprepo/xilinx_com_hls_aes192EcbDec_1_0,aes192EcbDec -ip /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/sys_link/iprepo/xilinx_com_hls_aes192EcbEnc_1_0,aes192EcbEnc -o /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/sys_link/_sysl/.cdb/xd_ip_db.xml
+INFO: [SYSTEM_LINK 82-37] [00:45:27] build_xd_ip_db finished successfully
+Time (s): cpu = 00:00:17 ; elapsed = 00:00:15 . Memory (MB): peak = 1684.055 ; gain = 0.000 ; free physical = 39797 ; free virtual = 197021
+INFO: [SYSTEM_LINK 82-51] Create system connectivity graph
+INFO: [SYSTEM_LINK 82-102] Applying explicit connections to the system connectivity graph: /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/sys_link/cfgraph/cfgen_cfgraph.xml
+INFO: [SYSTEM_LINK 82-38] [00:45:27] cfgen started: /share/xilinx/Vitis/2020.2/bin/cfgen  -nk aes192EcbDec:1:aes192EcbDec_1 -nk aes192EcbEnc:1:aes192EcbEnc_1 -dmclkid 0 -r /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/sys_link/_sysl/.cdb/xd_ip_db.xml -o /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/sys_link/cfgraph/cfgen_cfgraph.xml
+INFO: [CFGEN 83-0] Kernel Specs: 
+INFO: [CFGEN 83-0]   kernel: aes192EcbDec, num: 1  {aes192EcbDec_1}
+INFO: [CFGEN 83-0]   kernel: aes192EcbEnc, num: 1  {aes192EcbEnc_1}
+INFO: [CFGEN 83-2226] Inferring mapping for argument aes192EcbDec_1.cipherTextBuffer to HBM[0]
+INFO: [CFGEN 83-2226] Inferring mapping for argument aes192EcbDec_1.cipherKey to HBM[0]
+INFO: [CFGEN 83-2226] Inferring mapping for argument aes192EcbDec_1.plainTextBuffer to HBM[0]
+INFO: [CFGEN 83-2226] Inferring mapping for argument aes192EcbEnc_1.plainTextBuffer to HBM[0]
+INFO: [CFGEN 83-2226] Inferring mapping for argument aes192EcbEnc_1.cipherKey to HBM[0]
+INFO: [CFGEN 83-2226] Inferring mapping for argument aes192EcbEnc_1.cipherTextBuffer to HBM[0]
+INFO: [SYSTEM_LINK 82-37] [00:45:37] cfgen finished successfully
+Time (s): cpu = 00:00:10 ; elapsed = 00:00:10 . Memory (MB): peak = 1684.055 ; gain = 0.000 ; free physical = 39438 ; free virtual = 196745
+INFO: [SYSTEM_LINK 82-52] Create top-level block diagram
+INFO: [SYSTEM_LINK 82-38] [00:45:37] cf2bd started: /share/xilinx/Vitis/2020.2/bin/cf2bd  --linux --trace_buffer 1024 --input_file /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/sys_link/cfgraph/cfgen_cfgraph.xml --ip_db /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/sys_link/_sysl/.cdb/xd_ip_db.xml --cf_name dr --working_dir /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/sys_link/_sysl/.xsd --temp_dir /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/sys_link --output_dir /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/int --target_bd ulp.bd
+INFO: [CF2BD 82-31] Launching cf2xd: cf2xd -linux -trace-buffer 1024 -i /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/sys_link/cfgraph/cfgen_cfgraph.xml -r /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/sys_link/_sysl/.cdb/xd_ip_db.xml -o dr.xml
+INFO: [CF2BD 82-28] cf2xd finished successfully
+INFO: [CF2BD 82-31] Launching cf_xsd: cf_xsd -disable-address-gen -bd ulp.bd -dn dr -dp /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/sys_link/_sysl/.xsd
+INFO: [CF2BD 82-28] cf_xsd finished successfully
+INFO: [SYSTEM_LINK 82-37] [00:45:42] cf2bd finished successfully
+Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 1684.055 ; gain = 0.000 ; free physical = 39892 ; free virtual = 197442
+INFO: [v++ 60-1441] [00:45:42] Run run_link: Step system_link: Completed
+Time (s): cpu = 00:00:38 ; elapsed = 00:00:36 . Memory (MB): peak = 1555.070 ; gain = 0.000 ; free physical = 39927 ; free virtual = 197480
+INFO: [v++ 60-1443] [00:45:42] Run run_link: Step cf2sw: Started
+INFO: [v++ 60-1453] Command Line: cf2sw -sdsl /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/int/sdsl.dat -rtd /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/int/cf2sw.rtd -nofilter /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/int/cf2sw_full.rtd -xclbin /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/int/xclbin_orig.xml -o /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/int/xclbin_orig.1.xml
+INFO: [v++ 60-1454] Run Directory: /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/run_link
+INFO: [v++ 60-1441] [00:45:50] Run run_link: Step cf2sw: Completed
+Time (s): cpu = 00:00:08 ; elapsed = 00:00:08 . Memory (MB): peak = 1555.070 ; gain = 0.000 ; free physical = 38113 ; free virtual = 196572
+INFO: [v++ 60-1443] [00:45:50] Run run_link: Step rtd2_system_diagram: Started
+INFO: [v++ 60-1453] Command Line: rtd2SystemDiagram
+INFO: [v++ 60-1454] Run Directory: /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/run_link
+INFO: [v++ 60-1441] [00:45:54] Run run_link: Step rtd2_system_diagram: Completed
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:04 . Memory (MB): peak = 1555.070 ; gain = 0.000 ; free physical = 37205 ; free virtual = 195667
+INFO: [v++ 60-1443] [00:45:54] Run run_link: Step vpl: Started
+INFO: [v++ 60-1453] Command Line: vpl -t hw -f /opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_201920_3/xilinx_u50_gen3x16_xdma_201920_3.xpfm -g --remote_ip_cache /home/jiong/bsc-project/build/security_U50/aes192Ecb/.ipcache --output_dir /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/int --log_dir /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/logs/link --report_dir /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/reports/link --config /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/int/vplConfig.ini -k /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/int/kernel_info.dat --webtalk_flag Vitis --temp_dir /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link --no-info --iprepo /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/int/xo/ip_repo/xilinx_com_hls_aes192EcbEnc_1_0 --iprepo /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/int/xo/ip_repo/xilinx_com_hls_aes192EcbDec_1_0 --messageDb /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/run_link/vpl.pb /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/int/dr.bd.tcl
+INFO: [v++ 60-1454] Run Directory: /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/run_link
+
+****** vpl v2020.2 (64-bit)
+  **** SW Build (by xbuild) on 2020-11-18-05:13:29
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: [VPL 60-839] Read in kernel information from file '/home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/int/kernel_info.dat'.
+INFO: [VPL 74-74] Compiler Version string: 2020.2
+INFO: [VPL 60-423]   Target device: xilinx_u50_gen3x16_xdma_201920_3
+INFO: [VPL 60-1032] Extracting hardware platform to /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/vivado/vpl/.local/hw_platform
+WARNING: /share/xilinx/Vitis/2020.2/tps/lnx64/jre9.0.4 does not exist.
+[00:46:43] Run vpl: Step create_project: Started
+Creating Vivado project.
+[00:46:50] Run vpl: Step create_project: Completed
+[00:46:50] Run vpl: Step create_bd: Started
+[00:48:07] Run vpl: Step create_bd: RUNNING...
+[00:49:23] Run vpl: Step create_bd: RUNNING...
+[00:50:06] Run vpl: Step create_bd: Completed
+[00:50:06] Run vpl: Step update_bd: Started
+[00:50:08] Run vpl: Step update_bd: Completed
+[00:50:08] Run vpl: Step generate_target: Started
+[00:51:25] Run vpl: Step generate_target: RUNNING...
+[00:52:40] Run vpl: Step generate_target: RUNNING...
+[00:53:56] Run vpl: Step generate_target: RUNNING...
+[00:54:37] Run vpl: Step generate_target: Completed
+[00:54:37] Run vpl: Step config_hw_runs: Started
+[00:54:47] Run vpl: Step config_hw_runs: Completed
+[00:54:47] Run vpl: Step synth: Started
+[00:55:49] Block-level synthesis in progress, 0 of 8 jobs complete, 2 jobs running.
+[00:56:19] Block-level synthesis in progress, 0 of 8 jobs complete, 5 jobs running.
+[00:56:50] Block-level synthesis in progress, 0 of 8 jobs complete, 5 jobs running.
+[00:57:20] Block-level synthesis in progress, 0 of 8 jobs complete, 5 jobs running.
+[00:57:53] Block-level synthesis in progress, 0 of 8 jobs complete, 5 jobs running.
+[00:58:23] Block-level synthesis in progress, 0 of 8 jobs complete, 5 jobs running.
+[00:58:54] Block-level synthesis in progress, 0 of 8 jobs complete, 5 jobs running.
+[00:59:25] Block-level synthesis in progress, 0 of 8 jobs complete, 5 jobs running.
+[00:59:56] Block-level synthesis in progress, 0 of 8 jobs complete, 5 jobs running.
+[01:00:26] Block-level synthesis in progress, 0 of 8 jobs complete, 5 jobs running.
+[01:00:57] Block-level synthesis in progress, 0 of 8 jobs complete, 5 jobs running.
+[01:01:27] Block-level synthesis in progress, 0 of 8 jobs complete, 5 jobs running.
+[01:01:58] Block-level synthesis in progress, 0 of 8 jobs complete, 5 jobs running.
+[01:02:29] Block-level synthesis in progress, 0 of 8 jobs complete, 5 jobs running.
+[01:02:59] Block-level synthesis in progress, 0 of 8 jobs complete, 5 jobs running.
+[01:03:30] Block-level synthesis in progress, 0 of 8 jobs complete, 5 jobs running.
+[01:04:00] Block-level synthesis in progress, 5 of 8 jobs complete, 0 jobs running.
+[01:04:31] Block-level synthesis in progress, 5 of 8 jobs complete, 0 jobs running.
+[01:05:01] Block-level synthesis in progress, 5 of 8 jobs complete, 1 job running.
+[01:05:32] Block-level synthesis in progress, 5 of 8 jobs complete, 1 job running.
+[01:06:02] Block-level synthesis in progress, 5 of 8 jobs complete, 1 job running.
+[01:06:32] Block-level synthesis in progress, 5 of 8 jobs complete, 1 job running.
+[01:07:03] Block-level synthesis in progress, 5 of 8 jobs complete, 1 job running.
+[01:07:33] Block-level synthesis in progress, 5 of 8 jobs complete, 1 job running.
+[01:08:04] Block-level synthesis in progress, 5 of 8 jobs complete, 1 job running.
+[01:08:34] Block-level synthesis in progress, 5 of 8 jobs complete, 1 job running.
+[01:09:05] Block-level synthesis in progress, 6 of 8 jobs complete, 0 jobs running.
+[01:09:35] Block-level synthesis in progress, 6 of 8 jobs complete, 1 job running.
+[01:10:06] Block-level synthesis in progress, 6 of 8 jobs complete, 1 job running.
+[01:10:36] Block-level synthesis in progress, 6 of 8 jobs complete, 1 job running.
+[01:11:07] Block-level synthesis in progress, 6 of 8 jobs complete, 1 job running.
+[01:11:37] Block-level synthesis in progress, 6 of 8 jobs complete, 1 job running.
+[01:12:08] Block-level synthesis in progress, 6 of 8 jobs complete, 1 job running.
+[01:12:38] Block-level synthesis in progress, 6 of 8 jobs complete, 1 job running.
+[01:13:09] Block-level synthesis in progress, 6 of 8 jobs complete, 1 job running.
+[01:13:36] Run vpl: Step synth: Completed
+[01:13:36] Run vpl: Step impl: Started
+[01:27:17] Finished 2nd of 6 tasks (FPGA linking synthesized kernels to platform). Elapsed time: 00h 41m 18s 
+
+[01:27:17] Starting logic optimization..
+[01:28:48] Phase 1 Retarget
+[01:29:49] Phase 2 Constant propagation
+[01:30:19] Phase 3 Sweep
+[01:31:50] Phase 4 BUFG optimization
+[01:32:20] Phase 5 Shift Register Optimization
+[01:32:20] Phase 6 Post Processing Netlist
+[01:34:52] Finished 3rd of 6 tasks (FPGA logic optimization). Elapsed time: 00h 07m 35s 
+
+[01:34:52] Starting logic placement..
+[01:35:53] Phase 1 Placer Initialization
+[01:35:53] Phase 1.1 Placer Initialization Netlist Sorting
+[01:40:57] Phase 1.2 IO Placement/ Clock Placement/ Build Placer Device
+[01:42:28] Phase 1.3 Build Placer Netlist Model
+[01:44:29] Phase 1.4 Constrain Clocks/Macros
+[01:44:59] Phase 2 Global Placement
+[01:44:59] Phase 2.1 Floorplanning
+[01:45:59] Phase 2.1.1 Partition Driven Placement
+[01:45:59] Phase 2.1.1.1 PBP: Partition Driven Placement
+[01:47:00] Phase 2.1.1.2 PBP: Clock Region Placement
+[01:50:33] Phase 2.1.1.3 PBP: Compute Congestion
+[01:50:33] Phase 2.1.1.4 PBP: UpdateTiming
+[01:51:04] Phase 2.1.1.5 PBP: Add part constraints
+[01:51:04] Phase 2.2 Update Timing before SLR Path Opt
+[01:51:04] Phase 2.3 Global Placement Core
+[02:01:43] Phase 2.3.1 Physical Synthesis In Placer
+[02:05:17] Phase 3 Detail Placement
+[02:05:17] Phase 3.1 Commit Multi Column Macros
+[02:05:17] Phase 3.2 Commit Most Macros & LUTRAMs
+[02:07:19] Phase 3.3 Small Shape DP
+[02:07:19] Phase 3.3.1 Small Shape Clustering
+[02:08:20] Phase 3.3.2 Flow Legalize Slice Clusters
+[02:08:20] Phase 3.3.3 Slice Area Swap
+[02:10:22] Phase 3.4 Place Remaining
+[02:10:22] Phase 3.5 Re-assign LUT pins
+[02:10:53] Phase 3.6 Pipeline Register Optimization
+[02:10:53] Phase 3.7 Fast Optimization
+[02:11:54] Phase 4 Post Placement Optimization and Clean-Up
+[02:11:54] Phase 4.1 Post Commit Optimization
+[02:13:57] Phase 4.1.1 Post Placement Optimization
+[02:13:57] Phase 4.1.1.1 BUFG Insertion
+[02:13:57] Phase 1 Physical Synthesis Initialization
+[02:14:58] Phase 4.1.1.2 BUFG Replication
+[02:16:29] Phase 4.1.1.3 Replication
+[02:18:01] Phase 4.2 Post Placement Cleanup
+[02:18:01] Phase 4.3 Placer Reporting
+[02:18:01] Phase 4.3.1 Print Estimated Congestion
+[02:18:31] Phase 4.4 Final Placement Cleanup
+[02:23:06] Finished 4th of 6 tasks (FPGA logic placement). Elapsed time: 00h 48m 13s 
+
+[02:23:06] Starting logic routing..
+[02:25:08] Phase 1 Build RT Design
+[02:27:41] Phase 2 Router Initialization
+[02:27:41] Phase 2.1 Fix Topology Constraints
+[02:32:15] Phase 2.2 Pre Route Cleanup
+[02:32:15] Phase 2.3 Global Clock Net Routing
+[02:33:16] Phase 2.4 Update Timing
+[02:35:49] Phase 2.5 Update Timing for Bus Skew
+[02:35:49] Phase 2.5.1 Update Timing
+[02:36:50] Phase 3 Initial Routing
+[02:36:50] Phase 3.1 Global Routing
+[02:38:22] Phase 4 Rip-up And Reroute
+[02:38:22] Phase 4.1 Global Iteration 0
+[02:46:00] Phase 4.2 Global Iteration 1
+[02:48:02] Phase 4.3 Global Iteration 2
+[02:48:02] Phase 5 Delay and Skew Optimization
+[02:48:02] Phase 5.1 Delay CleanUp
+[02:48:02] Phase 5.1.1 Update Timing
+[02:49:34] Phase 5.2 Clock Skew Optimization
+[02:49:34] Phase 6 Post Hold Fix
+[02:49:34] Phase 6.1 Hold Fix Iter
+[02:49:34] Phase 6.1.1 Update Timing
+[02:50:35] Phase 7 Leaf Clock Prog Delay Opt
+[02:52:06] Phase 8 Route finalize
+[02:52:06] Phase 9 Verifying routed nets
+[02:52:37] Phase 10 Depositing Routes
+[02:53:37] Phase 11 Post Router Timing
+[02:53:37] Finished 5th of 6 tasks (FPGA routing). Elapsed time: 00h 30m 31s 
+
+[02:53:37] Starting bitstream generation..
+[03:13:29] Creating bitmap...
+[03:25:13] Writing bitstream ./level0_i_ulp_my_rm_partial.bit...
+[03:25:13] Finished 6th of 6 tasks (FPGA bitstream generation). Elapsed time: 00h 31m 35s 
+[03:26:22] Run vpl: Step impl: Completed
+[03:26:23] Run vpl: FINISHED. Run Status: impl Complete!
+INFO: [v++ 60-1441] [03:26:24] Run run_link: Step vpl: Completed
+Time (s): cpu = 00:02:20 ; elapsed = 02:40:31 . Memory (MB): peak = 1555.070 ; gain = 0.000 ; free physical = 53931 ; free virtual = 103337
+INFO: [v++ 60-1443] [03:26:24] Run run_link: Step rtdgen: Started
+INFO: [v++ 60-1453] Command Line: rtdgen
+INFO: [v++ 60-1454] Run Directory: /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/run_link
+INFO: [v++ 60-991] clock name 'clk_kernel2_in' (clock ID '1') is being mapped to clock name 'KERNEL_CLK' in the xclbin
+INFO: [v++ 60-991] clock name 'clk_kernel_in' (clock ID '0') is being mapped to clock name 'DATA_CLK' in the xclbin
+INFO: [v++ 60-991] clock name 'hbm_aclk' (clock ID '') is being mapped to clock name 'hbm_aclk' in the xclbin
+INFO: [v++ 60-1230] The compiler selected the following frequencies for the runtime controllable kernel clock(s) and scalable system clock(s): System (SYSTEM) clock: hbm_aclk = 450, Kernel (KERNEL) clock: clk_kernel2_in = 500, Kernel (DATA) clock: clk_kernel_in = 300
+INFO: [v++ 60-1453] Command Line: cf2sw -a /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/int/address_map.xml -sdsl /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/int/sdsl.dat -xclbin /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/int/xclbin_orig.xml -rtd /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/int/aes192Ecb.rtd -o /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/int/aes192Ecb.xml
+INFO: [v++ 60-1652] Cf2sw returned exit code: 0
+INFO: [v++ 60-2311] HPISystemDiagram::writeSystemDiagramAfterRunningVivado, rtdInputFilePath: /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/int/aes192Ecb.rtd
+INFO: [v++ 60-2312] HPISystemDiagram::writeSystemDiagramAfterRunningVivado, systemDiagramOutputFilePath: /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/int/systemDiagramModelSlrBaseAddress.json
+INFO: [v++ 60-1618] Launching 
+INFO: [v++ 60-1441] [03:26:33] Run run_link: Step rtdgen: Completed
+Time (s): cpu = 00:00:09 ; elapsed = 00:00:09 . Memory (MB): peak = 1555.070 ; gain = 0.000 ; free physical = 56343 ; free virtual = 105754
+INFO: [v++ 60-1443] [03:26:33] Run run_link: Step xclbinutil: Started
+INFO: [v++ 60-1453] Command Line: xclbinutil --add-section BITSTREAM:RAW:/home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/int/partial.bit --force --target hw --key-value SYS:dfx_enable:true --add-section :JSON:/home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/int/aes192Ecb.rtd --append-section :JSON:/home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/int/appendSection.rtd --add-section CLOCK_FREQ_TOPOLOGY:JSON:/home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/int/aes192Ecb_xml.rtd --add-section BUILD_METADATA:JSON:/home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/int/aes192Ecb_build.rtd --add-section EMBEDDED_METADATA:RAW:/home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/int/aes192Ecb.xml --add-section SYSTEM_METADATA:RAW:/home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/int/systemDiagramModelSlrBaseAddress.json --key-value SYS:PlatformVBNV:xilinx_u50_gen3x16_xdma_201920_3 --output /home/jiong/bsc-project/build/security_U50/aes192Ecb/aes192Ecb.xclbin
+INFO: [v++ 60-1454] Run Directory: /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/run_link
+XRT Build Version: 2.12.427 (2021.2)
+       Build Date: 2021-10-08 22:06:50
+          Hash ID: 2719b6027e185000fc49783171631db03fc0ef79
+Creating a default 'in-memory' xclbin image.
+
+Section: 'BITSTREAM'(0) was successfully added.
+Size   : 32310188 bytes
+Format : RAW
+File   : '/home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/int/partial.bit'
+
+Section: 'MEM_TOPOLOGY'(6) was successfully added.
+Format : JSON
+File   : 'mem_topology'
+
+Section: 'IP_LAYOUT'(8) was successfully added.
+Format : JSON
+File   : 'ip_layout'
+
+Section: 'CONNECTIVITY'(7) was successfully added.
+Format : JSON
+File   : 'connectivity'
+
+Section: 'CLOCK_FREQ_TOPOLOGY'(11) was successfully added.
+Size   : 410 bytes
+Format : JSON
+File   : '/home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/int/aes192Ecb_xml.rtd'
+
+Section: 'BUILD_METADATA'(14) was successfully added.
+Size   : 3702 bytes
+Format : JSON
+File   : '/home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/int/aes192Ecb_build.rtd'
+
+Section: 'EMBEDDED_METADATA'(2) was successfully added.
+Size   : 8695 bytes
+Format : RAW
+File   : '/home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/int/aes192Ecb.xml'
+
+Section: 'SYSTEM_METADATA'(22) was successfully added.
+Size   : 17318 bytes
+Format : RAW
+File   : '/home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/int/systemDiagramModelSlrBaseAddress.json'
+
+Section: 'PARTITION_METADATA'(20) was successfully appended to.
+Format : JSON
+File   : 'partition_metadata'
+
+Section: 'IP_LAYOUT'(8) was successfully appended to.
+Format : JSON
+File   : 'ip_layout'
+Successfully wrote (32368835 bytes) to the output file: /home/jiong/bsc-project/build/security_U50/aes192Ecb/aes192Ecb.xclbin
+Leaving xclbinutil.
+INFO: [v++ 60-1441] [03:26:34] Run run_link: Step xclbinutil: Completed
+Time (s): cpu = 00:00:00.28 ; elapsed = 00:00:00.48 . Memory (MB): peak = 1555.070 ; gain = 0.000 ; free physical = 56259 ; free virtual = 105704
+INFO: [v++ 60-1443] [03:26:34] Run run_link: Step xclbinutilinfo: Started
+INFO: [v++ 60-1453] Command Line: xclbinutil --quiet --force --info /home/jiong/bsc-project/build/security_U50/aes192Ecb/aes192Ecb.xclbin.info --input /home/jiong/bsc-project/build/security_U50/aes192Ecb/aes192Ecb.xclbin
+INFO: [v++ 60-1454] Run Directory: /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/run_link
+INFO: [v++ 60-1441] [03:26:36] Run run_link: Step xclbinutilinfo: Completed
+Time (s): cpu = 00:00:02 ; elapsed = 00:00:02 . Memory (MB): peak = 1555.070 ; gain = 0.000 ; free physical = 56081 ; free virtual = 105570
+INFO: [v++ 60-1443] [03:26:36] Run run_link: Step generate_sc_driver: Started
+INFO: [v++ 60-1453] Command Line: 
+INFO: [v++ 60-1454] Run Directory: /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/link/run_link
+INFO: [v++ 60-1441] [03:26:36] Run run_link: Step generate_sc_driver: Completed
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.01 . Memory (MB): peak = 1555.070 ; gain = 0.000 ; free physical = 56081 ; free virtual = 105570
+INFO: [v++ 60-244] Generating system estimate report...
+INFO: [v++ 60-1092] Generated system estimate report: /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/reports/link/system_estimate_aes192Ecb.xtxt
+INFO: [v++ 60-586] Created /home/jiong/bsc-project/build/security_U50/aes192Ecb/aes192Ecb.ltx
+INFO: [v++ 60-586] Created aes192Ecb.xclbin
+INFO: [v++ 60-1307] Run completed. Additional information can be found in:
+	Guidance: /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/reports/link/v++_link_aes192Ecb_guidance.html
+	Timing Report: /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/reports/link/imp/impl_1_hw_bb_locked_timing_summary_routed.rpt
+	Vivado Log: /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/logs/link/vivado.log
+	Steps Log File: /home/jiong/bsc-project/build/security_U50/aes192Ecb/_x/logs/link/link.steps.log
+
+INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
+    vitis_analyzer /home/jiong/bsc-project/build/security_U50/aes192Ecb/aes192Ecb.xclbin.link_summary 
+INFO: [v++ 60-791] Total elapsed time: 2h 41m 46s
+INFO: [v++ 60-1653] Closing dispatch client.

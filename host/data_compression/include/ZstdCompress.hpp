@@ -6,7 +6,7 @@
 
 class ZstdCompressWorkshop : Workshop{
 protected:
-	const uint64_t CHUNK_SIZE_IN_KB=16;
+	const uint64_t CHUNK_SIZE_IN_KB=8*1024;
 	const uint64_t CHUNK_SIZE_IN_BYTE=CHUNK_SIZE_IN_KB*1024;
 
 	std::thread processThread;

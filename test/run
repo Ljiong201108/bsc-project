@@ -1,0 +1,26 @@
+#!/bin/bash
+
+echo 1G
+./u50 ./sample/dataset_1G.txt
+./u50 ./sample/dataset_1G.txt
+./u50 ./sample/dataset_1G.txt
+
+echo 4G
+./u50 ./sample/dataset_4G.txt
+./u50 ./sample/dataset_4G.txt
+./u50 ./sample/dataset_4G.txt
+
+echo 8G
+./u50 ./sample/dataset_8G.txt
+./u50 ./sample/dataset_8G.txt
+./u50 ./sample/dataset_8G.txt
+
+echo 16G
+./u50 ./sample/dataset_16G.txt
+./u50 ./sample/dataset_16G.txt
+./u50 ./sample/dataset_16G.txt
+
+echo 32G
+./u50 ./sample/dataset_32G.txt
+./u50 ./sample/dataset_32G.txt
+./u50 ./sample/dataset_32G.txt

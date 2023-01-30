@@ -22,22 +22,27 @@ uint32_t writeGzipHeader(uint8_t *out){
 uint32_t writeGzipFooter(uint8_t *out, uint32_t fileSize) {
 	uint32_t outIdx = 0;
 
-	assert(compressionWorkShop!=nullptr && "compression should be executed!");
+	// assert(compressionWorkShop!=nullptr && "compression should be executed!");
 
-	out[outIdx++] = compressionWorkShop->getChecksum();
-	out[outIdx++] = compressionWorkShop->getChecksum() >> 8;
-	out[outIdx++] = compressionWorkShop->getChecksum() >> 16;
-	out[outIdx++] = compressionWorkShop->getChecksum() >> 24;
+	// out[outIdx++] = compressionWorkShop->getChecksum();
+	// out[outIdx++] = compressionWorkShop->getChecksum() >> 8;
+	// out[outIdx++] = compressionWorkShop->getChecksum() >> 16;
+	// out[outIdx++] = compressionWorkShop->getChecksum() >> 24;
+
+	out[outIdx++] = 0;
+	out[outIdx++] = 0;
+	out[outIdx++] = 0;
+	out[outIdx++] = 0;
 
 	out[outIdx++] = fileSize;
 	out[outIdx++] = fileSize >> 8;
 	out[outIdx++] = fileSize >> 16;
 	out[outIdx++] = fileSize >> 24;
 
-	delete compressionWorkShop;
-	compressionWorkShop=nullptr;
-	delete processingThread;
-	processingThread=nullptr;
+	// delete compressionWorkShop;
+	// compressionWorkShop=nullptr;
+	// delete processingThread;
+	// processingThread=nullptr;
 
 	return outIdx;
 }
