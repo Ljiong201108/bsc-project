@@ -233,81 +233,81 @@ void testGzipCompress3(int argc, char** argv){
 	// summary<<"FPGA Init Time: "<<Timer::fpgaInitTime.count()/1e9<<std::endl;
 }
 
-void testGzipCompressDecomposed(int argc, char** argv){
-	Timer::reset();
-	const uint64_t bufSize=64*1024*1024;
-	std::vector<char> buf(bufSize), bufout(bufSize);
-	std::ofstream ofile;
-    std::ifstream ifile;
+// void testGzipCompressDecomposed(int argc, char** argv){
+// 	Timer::reset();
+// 	const uint64_t bufSize=64*1024*1024;
+// 	std::vector<char> buf(bufSize), bufout(bufSize);
+// 	std::ofstream ofile;
+//     std::ifstream ifile;
 
-	// ifile.open("sample/dataset_16G.txt", std::ios::binary);
-	ofile.open("sample/compress", std::ios::binary);
-	// ifile.open("sample/sample.txt", std::ios::binary);
-	// ofile.open("sample/sample_3.txt.gz", std::ios::binary);
-	ifile.open(argv[1], std::ios::binary);
-	// ofile.open(argv[2], std::ios::binary);
+// 	// ifile.open("sample/dataset_16G.txt", std::ios::binary);
+// 	ofile.open("sample/compress", std::ios::binary);
+// 	// ifile.open("sample/sample.txt", std::ios::binary);
+// 	// ofile.open("sample/sample_3.txt.gz", std::ios::binary);
+// 	ifile.open(argv[1], std::ios::binary);
+// 	// ofile.open(argv[2], std::ios::binary);
 
-	std::ofstream summary;
-	summary.open("output/summary.txt", std::ios::binary | std::ios::app);
+// 	std::ofstream summary;
+// 	summary.open("output/summary.txt", std::ios::binary | std::ios::app);
 
-	ifile.seekg(0, std::ios_base::end);
-	uint64_t fileSize=ifile.tellg();
-	ifile.seekg(0, std::ios_base::beg);
+// 	ifile.seekg(0, std::ios_base::end);
+// 	uint64_t fileSize=ifile.tellg();
+// 	ifile.seekg(0, std::ios_base::beg);
 
-	Application::getProgram<Lib::GZIP_ZLIB_COMPRESSION>();
+// 	Application::getProgram<Lib::GZIP_ZLIB_COMPRESSION>();
 
-	GzipZlibCompressWorkshop workshop(false);
-	ByteStream &inputFIFO=workshop.getInputStream();
-	ByteStream &outputFIFO=workshop.getOutputStream();
+// 	GzipZlibCompressWorkshop workshop(false);
+// 	ByteStream &inputFIFO=workshop.getInputStream();
+// 	ByteStream &outputFIFO=workshop.getOutputStream();
 
-	Timer::startTotalTimer();
+// 	Timer::startTotalTimer();
 
-	Timer::startHostIOTimer();
-	uint32_t idx=data_compression::gzip::writeGzipHeader((uint8_t*)bufout.data());
-	ofile.write(bufout.data(), idx);
-	Timer::endHostIOTimer();
-	std::cout<<"write a "<<idx<<" Bytes header"<<std::endl;
+// 	Timer::startHostIOTimer();
+// 	uint32_t idx=data_compression::gzip::writeGzipHeader((uint8_t*)bufout.data());
+// 	ofile.write(bufout.data(), idx);
+// 	Timer::endHostIOTimer();
+// 	std::cout<<"write a "<<idx<<" Bytes header"<<std::endl;
 
-	Timer::startHostIOTimer();
-	for(uint64_t i=0;i<fileSize;i+=bufSize){
-		uint32_t curSize=(fileSize-i>bufSize?bufSize:fileSize-i);
-		bool last=fileSize-i-curSize==0;
-		ifile.read(buf.data(), curSize);
-		inputFIFO.push(buf.data(), curSize, last);
-		std::cout<<"host push a "<<curSize<<" Bytes block from FIFO"<<std::endl;
-	}
-	Timer::endHostIOTimer();
+// 	Timer::startHostIOTimer();
+// 	for(uint64_t i=0;i<fileSize;i+=bufSize){
+// 		uint32_t curSize=(fileSize-i>bufSize?bufSize:fileSize-i);
+// 		bool last=fileSize-i-curSize==0;
+// 		ifile.read(buf.data(), curSize);
+// 		inputFIFO.push(buf.data(), curSize, last);
+// 		std::cout<<"host push a "<<curSize<<" Bytes block from FIFO"<<std::endl;
+// 	}
+// 	Timer::endHostIOTimer();
 
-	Timer::startComputeTimer();
-	workshop.run();
-	workshop.wait();
-	Timer::endComputeTimer();
+// 	Timer::startComputeTimer();
+// 	workshop.run();
+// 	workshop.wait();
+// 	Timer::endComputeTimer();
 
-	Timer::startHostIOTimer();
-	bool last;
-	do{
-		uint32_t outputSize=outputFIFO.pop(bufout.data(), bufSize, last);
-		std::cout<<"host read a "<<outputSize<<" Bytes block from FIFO"<<std::endl;
-		// hexdump(bufout.data(), outputSize);
-		ofile.write(bufout.data(), outputSize);
-	}while(!last);
+// 	Timer::startHostIOTimer();
+// 	bool last;
+// 	do{
+// 		uint32_t outputSize=outputFIFO.pop(bufout.data(), bufSize, last);
+// 		std::cout<<"host read a "<<outputSize<<" Bytes block from FIFO"<<std::endl;
+// 		// hexdump(bufout.data(), outputSize);
+// 		ofile.write(bufout.data(), outputSize);
+// 	}while(!last);
 
-	idx=data_compression::gzip::writeGzipFooter((uint8_t*)bufout.data(), fileSize);
-	ofile.write(bufout.data(), idx);
-	Timer::endHostIOTimer();
-	std::cout<<"write a "<<idx<<" Bytes footer"<<std::endl;
+// 	idx=data_compression::gzip::writeGzipFooter((uint8_t*)bufout.data(), fileSize);
+// 	ofile.write(bufout.data(), idx);
+// 	Timer::endHostIOTimer();
+// 	std::cout<<"write a "<<idx<<" Bytes footer"<<std::endl;
 
-	Timer::endTotalTimer();
-	std::cout<<"test successfully"<<std::endl;
+// 	Timer::endTotalTimer();
+// 	std::cout<<"test successfully"<<std::endl;
 
-	summary<<"Total Time Compress["<<argv[1]<<"]: "<<Timer::totalTime.count()<<std::endl;
-	summary<<"Compute Time: "<<Timer::computeTime.count()<<std::endl;
-	summary<<"I/O Time: "<<Timer::hostIOTime.count()<<std::endl;
-	// summary<<"Compute Time: "<<Timer::computeTime.count()/1e9<<std::endl;
-	// summary<<"Host IO Time: "<<Timer::hostIOTime.count()/1e9<<std::endl;
-	// summary<<"FPGA IO Time: "<<Timer::fpgaIOTime.count()/1e9<<std::endl;
-	// summary<<"FPGA Init Time: "<<Timer::fpgaInitTime.count()/1e9<<std::endl;
-}
+// 	summary<<"Total Time Compress["<<argv[1]<<"]: "<<Timer::totalTime.count()<<std::endl;
+// 	summary<<"Compute Time: "<<Timer::computeTime.count()<<std::endl;
+// 	summary<<"I/O Time: "<<Timer::hostIOTime.count()<<std::endl;
+// 	// summary<<"Compute Time: "<<Timer::computeTime.count()/1e9<<std::endl;
+// 	// summary<<"Host IO Time: "<<Timer::hostIOTime.count()/1e9<<std::endl;
+// 	// summary<<"FPGA IO Time: "<<Timer::fpgaIOTime.count()/1e9<<std::endl;
+// 	// summary<<"FPGA Init Time: "<<Timer::fpgaInitTime.count()/1e9<<std::endl;
+// }
 
 // void testGzipDecompress(){
 // 	const uint64_t bufSize=64*1024*1024;
@@ -397,74 +397,74 @@ void testGzipCompressDecomposed(int argc, char** argv){
 // 	std::cout<<"test successfully"<<std::endl;
 // }
 
-void testGzipDecompressDecomposed(int argc, char** argv){
-	Timer::reset();
+// void testGzipDecompressDecomposed(int argc, char** argv){
+// 	Timer::reset();
 
-	const uint64_t bufSize=64*1024*1024;
-	std::vector<char> buf(bufSize), bufout(bufSize);
-	std::ofstream ofile;
-    std::ifstream ifile;
+// 	const uint64_t bufSize=64*1024*1024;
+// 	std::vector<char> buf(bufSize), bufout(bufSize);
+// 	std::ofstream ofile;
+//     std::ifstream ifile;
 
-	ifile.open("sample/compress", std::ios::binary);
-	ofile.open("sample/decompress", std::ios::binary);
-	// ifile.open("sample/sample_1.txt.gz", std::ios::binary);
-	// ofile.open("sample/sample_1.txt.gz.ori", std::ios::binary);
-	// ifile.open(argv[1], std::ios::binary);
-	// ofile.open(argv[2], std::ios::binary);
+// 	ifile.open("sample/compress", std::ios::binary);
+// 	ofile.open("sample/decompress", std::ios::binary);
+// 	// ifile.open("sample/sample_1.txt.gz", std::ios::binary);
+// 	// ofile.open("sample/sample_1.txt.gz.ori", std::ios::binary);
+// 	// ifile.open(argv[1], std::ios::binary);
+// 	// ofile.open(argv[2], std::ios::binary);
 
-	std::ofstream summary;
-	summary.open("output/summary.txt", std::ios::binary | std::ios::app);
+// 	std::ofstream summary;
+// 	summary.open("output/summary.txt", std::ios::binary | std::ios::app);
 
-	ifile.seekg(0, std::ios_base::end);
-	uint64_t fileSize=ifile.tellg();
-	ifile.seekg(0, std::ios_base::beg);
+// 	ifile.seekg(0, std::ios_base::end);
+// 	uint64_t fileSize=ifile.tellg();
+// 	ifile.seekg(0, std::ios_base::beg);
 
-	GzipZlibDecompressWorkshop workshop;
-	ByteStream &inputFIFO=workshop.getInputStream();
-	ByteStream &outputFIFO=workshop.getOutputStream();
+// 	GzipZlibDecompressWorkshop workshop;
+// 	ByteStream &inputFIFO=workshop.getInputStream();
+// 	ByteStream &outputFIFO=workshop.getOutputStream();
 
-	Application::getProgram<Lib::GZIP_ZLIB_DECOMPRESSION>();
+// 	Application::getProgram<Lib::GZIP_ZLIB_DECOMPRESSION>();
 
-	Timer::startTotalTimer();
+// 	Timer::startTotalTimer();
 
-	Timer::startHostIOTimer();
-	for(uint64_t i=0;i<fileSize;i+=bufSize){
-		uint32_t curSize=(fileSize-i>bufSize?bufSize:fileSize-i);
-		bool last=fileSize-i-curSize==0;
-		ifile.read(buf.data(), curSize);
-		inputFIFO.push(buf.data(), curSize, last);
-		std::cout<<"host write a "<<curSize<<" Bytes block into FIFO"<<std::endl;
-	}
-	//
-	Timer::endHostIOTimer();
+// 	Timer::startHostIOTimer();
+// 	for(uint64_t i=0;i<fileSize;i+=bufSize){
+// 		uint32_t curSize=(fileSize-i>bufSize?bufSize:fileSize-i);
+// 		bool last=fileSize-i-curSize==0;
+// 		ifile.read(buf.data(), curSize);
+// 		inputFIFO.push(buf.data(), curSize, last);
+// 		std::cout<<"host write a "<<curSize<<" Bytes block into FIFO"<<std::endl;
+// 	}
+// 	//
+// 	Timer::endHostIOTimer();
 
-	Timer::startComputeTimer();
-	workshop.run();
-	workshop.wait();
-	Timer::endComputeTimer();
+// 	Timer::startComputeTimer();
+// 	workshop.run();
+// 	workshop.wait();
+// 	Timer::endComputeTimer();
 
-	Timer::startHostIOTimer();
-	bool last;
-	do{
-		uint32_t outputSize=outputFIFO.pop(bufout.data(), bufSize, last);
-		std::cout<<"host read a "<<outputSize<<" Bytes block from FIFO"<<std::endl;
-		ofile.write(bufout.data(), outputSize);
-	}while(!last);
-	ofile.flush();
-	Timer::endHostIOTimer();
+// 	Timer::startHostIOTimer();
+// 	bool last;
+// 	do{
+// 		uint32_t outputSize=outputFIFO.pop(bufout.data(), bufSize, last);
+// 		std::cout<<"host read a "<<outputSize<<" Bytes block from FIFO"<<std::endl;
+// 		ofile.write(bufout.data(), outputSize);
+// 	}while(!last);
+// 	ofile.flush();
+// 	Timer::endHostIOTimer();
 
-	Timer::endTotalTimer();
-	std::cout<<"test successfully"<<std::endl;
+// 	Timer::endTotalTimer();
+// 	std::cout<<"test successfully"<<std::endl;
 
-	summary<<"Total Time Decompress: "<<Timer::totalTime.count()<<std::endl;
-	summary<<"Compute Time: "<<Timer::computeTime.count()<<std::endl;
-	summary<<"I/O Time: "<<Timer::hostIOTime.count()<<std::endl;
-	summary<<std::endl;
-	// summary<<"Compute Time: "<<Timer::computeTime.count()/1e9<<std::endl;
-	// summary<<"Host IO Time: "<<Timer::hostIOTime.count()/1e9<<std::endl;
-	// summary<<"FPGA IO Time: "<<Timer::fpgaIOTime.count()/1e9<<std::endl;
-	// summary<<"FPGA Init Time: "<<Timer::fpgaInitTime.count()/1e9<<std::endl;
-}
+// 	summary<<"Total Time Decompress: "<<Timer::totalTime.count()<<std::endl;
+// 	summary<<"Compute Time: "<<Timer::computeTime.count()<<std::endl;
+// 	summary<<"I/O Time: "<<Timer::hostIOTime.count()<<std::endl;
+// 	summary<<std::endl;
+// 	// summary<<"Compute Time: "<<Timer::computeTime.count()/1e9<<std::endl;
+// 	// summary<<"Host IO Time: "<<Timer::hostIOTime.count()/1e9<<std::endl;
+// 	// summary<<"FPGA IO Time: "<<Timer::fpgaIOTime.count()/1e9<<std::endl;
+// 	// summary<<"FPGA Init Time: "<<Timer::fpgaInitTime.count()/1e9<<std::endl;
+// }
 
 void testGzipDecompress3(int argc, char** argv){
 	Timer::reset();
@@ -559,7 +559,9 @@ void testGzipDecompress3(int argc, char** argv){
 
 int main(int argc, char** argv){
 	// for(int i=1;i<=3;i++){
-		testGzip::testGzipCompressDecomposed(argc, argv);
-		testGzip::testGzipDecompressDecomposed(argc, argv);
+		// testGzip::testGzipCompressDecomposed(argc, argv);
+		// testGzip::testGzipDecompressDecomposed(argc, argv);
+		testGzip::testGzipCompress3(argc, argv);
+		testGzip::testGzipDecompress3(argc, argv);
 	// }
 }

@@ -200,22 +200,28 @@
 // }
 
 void ZstdDecompressWorkshop::process(){
+	Timer::startAnaTimer();
+
 	Timer::startFPGAInitTimer();
 	CommandQueuePointer chunkWriterQueue(Application::getContext(), Application::getDevice(), CL_QUEUE_PROFILING_ENABLE);
     CommandQueuePointer chunkReaderQueue(Application::getContext(), Application::getDevice(), CL_QUEUE_PROFILING_ENABLE);
 
     KernelPointer chunkWriterKernel(Application::getProgram<Lib::ZSTD>(), "xilMM2S:{xilMM2S_1}");
     KernelPointer chunkReaderKernel(Application::getProgram<Lib::ZSTD>(), "xilS2MM:{xilS2MM_1}");
+	Timer::endFPGAInitTimer();
 
     //memory for compression
     std::vector<uint8_t, aligned_allocator<uint8_t>> inputBufferHost(CHUNK_SIZE_IN_BYTE);
+	Timer::startFPGAInitTimer();
     BufferPointer inputBuffer(Application::getContext(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, inputBufferHost.size(), inputBufferHost.data());
+	Timer::endFPGAInitTimer();
 
     //memory for decompression
     std::vector<uint8_t, aligned_allocator<uint8_t>> outputBufferHost(CHUNK_SIZE_IN_BYTE);
     std::vector<uint32_t, aligned_allocator<uint32_t>> outputSizeBufferHost(1);
     std::vector<uint32_t, aligned_allocator<uint32_t>> statusBufferHost(1);
 
+	Timer::startFPGAInitTimer();
     BufferPointer outputBuffer(Application::getContext(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, sizeof(uint8_t)*outputBufferHost.size(), outputBufferHost.data());
     BufferPointer outputSizeBuffer(Application::getContext(), CL_MEM_USE_HOST_PTR | CL_MEM_WRITE_ONLY, sizeof(uint32_t), outputSizeBufferHost.data());
     BufferPointer statusBuffer(Application::getContext(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, sizeof(uint32_t), statusBufferHost.data());
@@ -227,17 +233,14 @@ void ZstdDecompressWorkshop::process(){
     chunkReaderKernel->setArg(1, *outputSizeBuffer);
     chunkReaderKernel->setArg(2, *statusBuffer);
     chunkReaderKernel->setArg(3, (uint32_t)outputBufferHost.size());
+	Timer::endFPGAInitTimer();
 
     bool last;
     uint32_t endBufferHost;
 
-	Timer::endFPGAInitTimer();
-
     do{ //per frame
-		Timer::startComputeTimer();
         endBufferHost=0;
 
-		Timer::startAnaTimer();
 		const uint32_t magicZstandardNumber=0xFD2FB528;
 		const uint32_t magicSkippableNumberMin=0x184D2A50;
 		const uint32_t magicSkippableNumberMax=0x184D2A5F;
@@ -245,9 +248,7 @@ void ZstdDecompressWorkshop::process(){
 		inputStream.pop(inputBufferHost.data(), 4, last);
 		// std::cout<<"magic number: "<<std::hex<<*(uint32_t*)inputBufferHost.data()<<std::dec<<std::endl;
 		endBufferHost+=4;
-		Timer::endAnaTimer();
 		if(*(uint32_t*)inputBufferHost.data()==magicZstandardNumber){
-			Timer::startAnaTimer();
 			// Frame Header Descriptor 
 			inputStream.pop(inputBufferHost.data()+endBufferHost, 1, last);
 			uint8_t FHD=*(inputBufferHost.data()+endBufferHost);
@@ -290,10 +291,8 @@ void ZstdDecompressWorkshop::process(){
 				endBufferHost+=FCSFieldSize;
 			}
 
-			Timer::endAnaTimer();
 			bool lastBlock;
 			do{
-				Timer::startAnaTimer();
 				uint32_t b1=inputStream.pop(last);
 				uint32_t b2=inputStream.pop(last);
 				uint32_t b3=inputStream.pop(last);
@@ -310,13 +309,10 @@ void ZstdDecompressWorkshop::process(){
 				inputBufferHost[endBufferHost++]=b1;
 				inputBufferHost[endBufferHost++]=b2;
 				inputBufferHost[endBufferHost++]=b3;
-				Timer::endAnaTimer();
 
 				// for(uint32_t i=0;i<blockSize-1;i++) safePushBack(inputStream.pop(last), false);
-				Timer::startHostIOTimer();
 				inputStream.pop(inputBufferHost.data()+endBufferHost, blockSize, last);
 				endBufferHost+=blockSize;
-				Timer::endHostIOTimer();
 				
 				// for the last byte of the block
 				if(lastBlock && !contentChecksumFlag){
@@ -345,6 +341,7 @@ void ZstdDecompressWorkshop::process(){
 		// std::cout<<"start writing a block of "<<size<<", last: "<<last<<std::endl;
 		// hexdump(inputBufferHost.data(), size);
 
+		Timer::startFPGAInitTimer();
 		statusBufferHost[0]=0;
 		// std::cout<<"start to read a chunk["<<std::dec<<outputBufferHost.size()<<" Bytes]"<<std::endl;
 		chunkReaderQueue->enqueueMigrateMemObjects({*statusBuffer}, 0);
@@ -369,8 +366,9 @@ void ZstdDecompressWorkshop::process(){
 		// std::cout<<"read a chunk["<<outputSizeBufferHost[0]<<" Bytes]"<<std::endl;
 		// std::cout<<"finished read"<<std::endl;
 
-		Timer::endComputeTimer();
+		Timer::endFPGAInitTimer();
     }while(!last);
+	Timer::endAnaTimer();
 }
 
 // void ZstdDecompressWorkshop::process(){

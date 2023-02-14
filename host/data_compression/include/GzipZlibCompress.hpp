@@ -18,7 +18,6 @@ public:
 	GzipZlibCompressWorkshop(bool isZlib, bool overlapped=false);
 	void processContinuous();
 	void processOverlapped();
-	void run();
 	void wait();
 	uint32_t getChecksum();
 	ByteStream& getInputStream() override;

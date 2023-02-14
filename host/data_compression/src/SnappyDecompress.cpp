@@ -2,8 +2,12 @@
 #include <bitset>
 
 void SnappyDecompressWorkshop::process(){
+	Timer::startAnaTimer();
+
+	Timer::startFPGAInitTimer();
 	KernelPointer decompress_kernel_snappy(Application::getProgram<Lib::SNAPPY>(), "xilSnappyDecompressMM:{xilSnappyDecompressMM_1}");
     CommandQueuePointer queue(Application::getContext(), Application::getDevice(), CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE | CL_QUEUE_PROFILING_ENABLE);
+	Timer::endFPGAInitTimer();
 
     std::vector<uint8_t, aligned_allocator<uint8_t>> inputBufferHost(HOST_BUFFER_SIZE);
     std::vector<uint8_t, aligned_allocator<uint8_t>> outputBufferHost(HOST_BUFFER_SIZE);
@@ -18,6 +22,7 @@ void SnappyDecompressWorkshop::process(){
     uint32_t blockNum=0, compressedBlockNum=0, notCompressedBlockNum=0;
     bool last;
 
+	Timer::startFPGAInitTimer();
     BufferPointer inputBuffer(Application::getContext(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, HOST_BUFFER_SIZE, inputBufferHost.data());
     BufferPointer outputBuffer(Application::getContext(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, HOST_BUFFER_SIZE, outputBufferHost.data());
     BufferPointer decompressSizeBuffer(Application::getContext(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, sizeof(uint32_t)*maxNumBlocks, decompressedSizeBufferHost.data());
@@ -28,6 +33,7 @@ void SnappyDecompressWorkshop::process(){
     decompress_kernel_snappy->setArg(2, *decompressSizeBuffer);
     decompress_kernel_snappy->setArg(3, *compressedSizeBuffer);
     decompress_kernel_snappy->setArg(4, (uint32_t)BLOCK_SIZE_IN_KB);
+	Timer::endFPGAInitTimer();
 
     inputStream.pop(inputBufferHost.data(), 10, last);
     uint8_t streamIdentifier[]={0xff, 0x06, 0x00, 0x00, 0x73, 0x4e, 0x61, 0x50, 0x70, 0x59};
@@ -47,7 +53,7 @@ void SnappyDecompressWorkshop::process(){
             inputStream.pop(&b3, 1, last);
 
             uint32_t blockSize=b1+(b2<<8)+(b3<<16);
-            std::cout<<"0x00 block with size: "<<blockSize<<std::endl;
+            // std::cout<<"0x00 block with size: "<<blockSize<<std::endl;
 
             uint32_t checksum;
             inputStream.pop(&checksum, 4, last);
@@ -86,7 +92,7 @@ void SnappyDecompressWorkshop::process(){
             }
             //end
             decompressedSizeBufferHost[compressedBlockNum]=final_size;
-            std::cout<<"final_size: "<<final_size<<std::endl;
+            // std::cout<<"final_size: "<<final_size<<std::endl;
 
             isCompressed[blockNum]=1;
             compressedBlockNum++;
@@ -98,7 +104,7 @@ void SnappyDecompressWorkshop::process(){
             inputStream.pop(&b3, 1, last);
 
             uint32_t blockSize=b1+(b2<<8)+(b3<<16);
-            std::cout<<"0x01 block with size: "<<blockSize<<std::endl;
+            // std::cout<<"0x01 block with size: "<<blockSize<<std::endl;
 
             uint32_t checksum;
             inputStream.pop(&checksum, 4, last);
@@ -118,10 +124,11 @@ void SnappyDecompressWorkshop::process(){
 
         assert(compressedBlockNum+notCompressedBlockNum==blockNum && "should be equal");
         if(compressedBlockNum+notCompressedBlockNum==maxNumBlocks-1 || last){
-            std::cout<<"going to execute the kernel"<<std::endl;
-            std::cout<<"compressedBlockNum: "<<compressedBlockNum<<std::endl;
-            std::cout<<"notCompressedBlockNum: "<<notCompressedBlockNum<<std::endl;
-            std::cout<<"blockNum: "<<blockNum<<std::endl;
+            // std::cout<<"going to execute the kernel"<<std::endl;
+            // std::cout<<"compressedBlockNum: "<<compressedBlockNum<<std::endl;
+            // std::cout<<"notCompressedBlockNum: "<<notCompressedBlockNum<<std::endl;
+            // std::cout<<"blockNum: "<<blockNum<<std::endl;
+			Timer::startFPGAInitTimer();
             decompress_kernel_snappy->setArg(5, compressedBlockNum);
 
             queue->enqueueMigrateMemObjects({*inputBuffer, *compressedSizeBuffer}, 0);
@@ -132,22 +139,23 @@ void SnappyDecompressWorkshop::process(){
 
             queue->enqueueMigrateMemObjects({*outputBuffer}, CL_MIGRATE_MEM_OBJECT_HOST);
             queue->finish();
+			Timer::endFPGAInitTimer();
 
-            for(uint32_t i=0;i<compressedBlockNum;i++){
-                std::cout<<i<<" "<<decompressedSizeBufferHost[i]<<std::endl;
-            }
-            std::cout<<std::endl;
+            // for(uint32_t i=0;i<compressedBlockNum;i++){
+            //     std::cout<<i<<" "<<decompressedSizeBufferHost[i]<<std::endl;
+            // }
+            // std::cout<<std::endl;
 
             uint32_t compressedIdx=0, notCompressedIdx=0;
             for(uint32_t blockIdx=0;blockIdx<blockNum;blockIdx++){
                 if(isCompressed[blockIdx]){
                     uint32_t blockSize=decompressedSizeBufferHost[compressedIdx];
-                    std::cout<<"compressed block: "<<compressedIdx<<", block size is "<<blockSize<<std::endl;
+                    // std::cout<<"compressed block: "<<compressedIdx<<", block size is "<<blockSize<<std::endl;
                     outputStream.push(outputBufferHost.data()+compressedIdx*block_size_in_byte, blockSize, blockIdx==blockNum-1 ? last : false);
                     compressedIdx++;
                 }else{
                     uint32_t blockSize=notCompressedSizeBufferHost[notCompressedIdx];
-                    std::cout<<"not compressed block: "<<compressedIdx<<", block size is "<<blockSize<<std::endl;
+                    // std::cout<<"not compressed block: "<<compressedIdx<<", block size is "<<blockSize<<std::endl;
                     outputStream.push(notCompressedBufferHost.data()+notCompressedIdx*block_size_in_byte, blockSize, blockIdx==blockNum-1 ? last : false);
                     notCompressedIdx++;
                 }
@@ -159,10 +167,11 @@ void SnappyDecompressWorkshop::process(){
             notCompressedBlockNum=0;
         }
     }
+	Timer::endAnaTimer();
 }
 
 SnappyDecompressWorkshop::SnappyDecompressWorkshop() : 
-	Workshop("SnappyInputStream", 16, "SnappyOutputStream", 16),
+	Workshop("SnappyInputStream", 1<<30, "SnappyOutputStream", 1<<30),
 	processThread(&SnappyDecompressWorkshop::process, this){}
 
 void SnappyDecompressWorkshop::wait(){

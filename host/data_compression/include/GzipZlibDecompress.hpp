@@ -15,7 +15,6 @@ protected:
 public:
 	GzipZlibDecompressWorkshop();
 	void process();
-	void run();
 	void wait();
 	ByteStream& getInputStream() override;
 	ByteStream& getOutputStream() override;

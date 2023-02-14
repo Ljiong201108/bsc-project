@@ -205,7 +205,7 @@ void testLz4Compress3(int argc, char** argv){
 	uint64_t fileSize=ifile.tellg();
 	ifile.seekg(0, std::ios_base::beg);
 
-	Application::getProgram<Lib::LZ4_COMPRESSION>();
+	Application::getProgram<Lib::LZ4>();
 
 	Timer::startTotalTimer();
 
@@ -243,6 +243,8 @@ void testLz4Compress3(int argc, char** argv){
 	std::cout<<"test successfully"<<std::endl;
 
 	summary<<"Total Time Compress["<<argv[1]<<"]: "<<Timer::totalTime.count()<<std::endl;
+	summary<<"Total process time: "<<Timer::anaTime.count()<<std::endl;
+	summary<<"FPGA time: "<<Timer::fpgaInitTime.count()<<std::endl;
 
     ifile.close();
     ofile.close();
@@ -372,7 +374,7 @@ void testLz4Decompress3(int argc, char** argv){
 	uint64_t fileSize=ifile.tellg();
 	ifile.seekg(0, std::ios_base::beg);
 
-	Application::getProgram<Lib::LZ4_DECOMPRESSION>();
+	Application::getProgram<Lib::LZ4>();
 
 	Timer::startTotalTimer();
 
@@ -403,6 +405,8 @@ void testLz4Decompress3(int argc, char** argv){
 	std::cout<<"lz4 decompress successfully"<<std::endl;
 
 	summary<<"Total Time Decompress: "<<Timer::totalTime.count()<<std::endl;
+	summary<<"Total process time: "<<Timer::anaTime.count()<<std::endl;
+	summary<<"FPGA time: "<<Timer::fpgaInitTime.count()<<std::endl;
 	summary<<std::endl;
 
     ifile.close();

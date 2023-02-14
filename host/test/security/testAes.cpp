@@ -138,7 +138,7 @@ void testAesEnc(char** argv, std::vector<uint32_t> &blockSizes, std::string file
 }
 
 void testAesDec(char** argv, std::vector<uint32_t> &blockSizes){
-	Application::getProgram<Lib::AES256_CFB128>();
+	Application::getProgram<Lib::AES256_CTR>();
 
 	const uint64_t bufSize=64*1024*1024;
 	std::vector<char> buf(bufSize), bufout(bufSize);

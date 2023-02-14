@@ -80,4 +80,5 @@ void Timer::reset(){
 	fpgaIOTime=std::chrono::nanoseconds{0};
 	hostIOTime=std::chrono::nanoseconds{0};
 	fpgaInitTime=std::chrono::nanoseconds{0};
+	anaTime=std::chrono::nanoseconds{0};
 }

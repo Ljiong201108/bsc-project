@@ -211,6 +211,8 @@ void testSnappyCompress3(int argc, char** argv){
 	std::cout<<"test successfully"<<std::endl;
 
 	summary<<"Total Time Compress["<<argv[1]<<"]: "<<Timer::totalTime.count()<<std::endl;
+	summary<<"Total process time: "<<Timer::anaTime.count()<<std::endl;
+	summary<<"FPGA time: "<<Timer::fpgaInitTime.count()<<std::endl;
 
     ifile.close();
     ofile.close();
@@ -371,6 +373,8 @@ void testSnappyDecompress3(int argc, char** argv){
 	std::cout<<"snappy decompress successfully"<<std::endl;
 
 	summary<<"Total Time Decompress: "<<Timer::totalTime.count()<<std::endl;
+	summary<<"Total process time: "<<Timer::anaTime.count()<<std::endl;
+	summary<<"FPGA time: "<<Timer::fpgaInitTime.count()<<std::endl;
 	summary<<std::endl;
 
     ifile.close();

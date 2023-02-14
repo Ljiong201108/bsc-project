@@ -1,8 +1,11 @@
 #include "SnappyCompress.hpp"
 
 void SnappyCompressWorkshop::process(){
+	Timer::startAnaTimer();
+	Timer::startFPGAInitTimer();
 	KernelPointer compressKernel(Application::getProgram<Lib::SNAPPY>(), "xilSnappyCompressMM:{xilSnappyCompressMM_1}");
     CommandQueuePointer queue(Application::getContext(), Application::getDevice(), CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE | CL_QUEUE_PROFILING_ENABLE);
+	Timer::endFPGAInitTimer();
 
     std::vector<uint8_t, aligned_allocator<uint8_t>> inputBufferHost(HOST_BUFFER_SIZE);
     std::vector<uint8_t, aligned_allocator<uint8_t>> outputBufferHost(HOST_BUFFER_SIZE);
@@ -15,7 +18,7 @@ void SnappyCompressWorkshop::process(){
 
     do{
         uint32_t chunkSize=inputStream.pop(inputBufferHost.data(), HOST_BUFFER_SIZE, last);
-        std::cout<<"inner reads a "<<chunkSize<<" Bytes block"<<std::endl;
+        // std::cout<<"inner reads a "<<chunkSize<<" Bytes block"<<std::endl;
         
         uint32_t numBlocks=(chunkSize-1)/block_size_in_bytes+1;
         
@@ -29,6 +32,7 @@ void SnappyCompressWorkshop::process(){
         // Calculate chunks size in bytes for device buffer creation
         uint32_t bufferSize=((chunkSize-1)/BLOCK_SIZE_IN_KB+1)*BLOCK_SIZE_IN_KB;
 
+		Timer::startFPGAInitTimer();
         BufferPointer inputBuffer(Application::getContext(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, bufferSize, inputBufferHost.data());
         BufferPointer outputBuffer(Application::getContext(), CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, bufferSize, outputBufferHost.data());
         BufferPointer compressedSizeBuffer(Application::getContext(), CL_MEM_USE_HOST_PTR | CL_MEM_WRITE_ONLY, sizeof(uint32_t)*numBlocks, compressedSizeBufferHost.data());
@@ -49,6 +53,7 @@ void SnappyCompressWorkshop::process(){
 
         queue->enqueueMigrateMemObjects({*(outputBuffer), *(compressedSizeBuffer)}, CL_MIGRATE_MEM_OBJECT_HOST);
         queue->finish();
+		Timer::endFPGAInitTimer();
 
         uint32_t idx = 0;
         for (uint32_t bIdx=0;bIdx<numBlocks;bIdx++, idx+=block_size_in_bytes) {
@@ -95,10 +100,11 @@ void SnappyCompressWorkshop::process(){
             }
         }
     }while(!last);
+	Timer::endAnaTimer();
 }
 
 SnappyCompressWorkshop::SnappyCompressWorkshop() : 
-	Workshop("SnappyInputStream", 4, "SnappyOutputStream", 16),
+	Workshop("SnappyInputStream", 1<<30, "SnappyOutputStream", 1<<30),
 	processThread(&SnappyCompressWorkshop::process, this){}
 
 void SnappyCompressWorkshop::wait(){

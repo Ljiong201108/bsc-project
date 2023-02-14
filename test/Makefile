@@ -16,29 +16,29 @@ HOST_SRC+=$(HOST)/common/src/KernelPointer.cpp
 HOST_SRC+=$(HOST)/common/src/Timer.cpp
 
 # security
-# HOST_INC+=-I$(HOST)/security/include
-# HOST_INC+=-I$(APP)/security/include
+HOST_INC+=-I$(HOST)/security/include
+HOST_INC+=-I$(APP)/security/include
 
-# HOST_SRC+=$(HOST)/security/src/security.cpp
-# HOST_SRC+=$(HOST)/security/src/Aes.cpp
-# HOST_SRC+=$(APP)/security/src/LibAes.cpp
+HOST_SRC+=$(HOST)/security/src/security.cpp
+HOST_SRC+=$(HOST)/security/src/Aes.cpp
+HOST_SRC+=$(APP)/security/src/LibAes.cpp
 
-# HOST_SRC+=$(HOST)/test/security/testAes.cpp
+HOST_SRC+=$(HOST)/test/security/testAes.cpp
 
 # data_compression
-HOST_INC+=-I$(COMP)/data_compression/include 
-HOST_INC+=-I$(HOST)/data_compression/include 
-HOST_INC+=-I$(HOST)/third_party/xxhash 
-HOST_INC+=-I$(HOST)/security/include
-HOST_INC+=-I$(APP)/data_compression/include
+# HOST_INC+=-I$(COMP)/data_compression/include 
+# HOST_INC+=-I$(HOST)/data_compression/include 
+# HOST_INC+=-I$(HOST)/third_party/xxhash 
+# HOST_INC+=-I$(HOST)/security/include
+# HOST_INC+=-I$(APP)/data_compression/include
 
-HOST_SRC+=$(HOST)/data_compression/src/Stream.cpp
-HOST_SRC+=$(HOST)/data_compression/src/Workshop.cpp
+# HOST_SRC+=$(HOST)/data_compression/src/Stream.cpp
+# HOST_SRC+=$(HOST)/data_compression/src/Workshop.cpp
 
 # HOST_SRC+=$(HOST)/data_compression/src/GzipZlib.cpp
-HOST_SRC+=$(HOST)/data_compression/src/GzipZlibCompress.cpp
-HOST_SRC+=$(HOST)/data_compression/src/GzipZlibDecompress.cpp
-HOST_SRC+=$(APP)/data_compression/src/LibGzip.cpp
+# HOST_SRC+=$(HOST)/data_compression/src/GzipZlibCompress.cpp
+# HOST_SRC+=$(HOST)/data_compression/src/GzipZlibDecompress.cpp
+# HOST_SRC+=$(APP)/data_compression/src/LibGzip.cpp
 
 # HOST_SRC+=$(HOST)/third_party/xxhash/xxhash.c
 # HOST_SRC+=$(HOST)/data_compression/src/Lz4.cpp
@@ -52,14 +52,14 @@ HOST_SRC+=$(APP)/data_compression/src/LibGzip.cpp
 # HOST_SRC+=$(APP)/data_compression/src/LibSnappy.cpp
 
 # HOST_SRC+=$(HOST)/data_compression/src/Zstd.cpp
-HOST_SRC+=$(HOST)/data_compression/src/ZstdCompress.cpp
-HOST_SRC+=$(HOST)/data_compression/src/ZstdDecompress.cpp
-HOST_SRC+=$(APP)/data_compression/src/LibZstd.cpp
+# HOST_SRC+=$(HOST)/data_compression/src/ZstdCompress.cpp
+# HOST_SRC+=$(HOST)/data_compression/src/ZstdDecompress.cpp
+# HOST_SRC+=$(APP)/data_compression/src/LibZstd.cpp
 
 # HOST_SRC+=$(TEST)/data_compression/testGzip.cpp
 # HOST_SRC+=$(TEST)/data_compression/testLz4.cpp
 # HOST_SRC+=$(TEST)/data_compression/testSnappy.cpp
-HOST_SRC+=$(TEST)/data_compression/testZstd.cpp
+# HOST_SRC+=$(TEST)/data_compression/testZstd.cpp
 
 # database
 # HOST_INC+=-I$(XILINX_VIVADO)/include

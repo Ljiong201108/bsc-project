@@ -191,12 +191,8 @@ void GzipZlibCompressWorkshop::processOverlapped(){
 GzipZlibCompressWorkshop::GzipZlibCompressWorkshop(bool isZlib, bool overlapped) : 
 	Workshop("GzipZlibInputStream", 1<<30, "GzipZlibOutputStream", 1<<30),
 	isZlib(isZlib)
-	// , processThread(overlapped ? &GzipZlibCompressWorkshop::processOverlapped : &GzipZlibCompressWorkshop::processContinuous, this)
+	, processThread(overlapped ? &GzipZlibCompressWorkshop::processOverlapped : &GzipZlibCompressWorkshop::processContinuous, this)
 	{}
-
-void GzipZlibCompressWorkshop::run(){
-	processThread=std::thread(&GzipZlibCompressWorkshop::processContinuous, this);
-}
 
 void GzipZlibCompressWorkshop::wait(){
 	processThread.join();

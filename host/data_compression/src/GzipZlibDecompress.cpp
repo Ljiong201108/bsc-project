@@ -72,12 +72,8 @@ void GzipZlibDecompressWorkshop::process(){
 
 GzipZlibDecompressWorkshop::GzipZlibDecompressWorkshop() : 
 	Workshop("GzipZlibInputStream", 1<<30, "GzipZlibOutputStream", 1<<30)
-	// , processThread(&GzipZlibDecompressWorkshop::process, this)
+	, processThread(&GzipZlibDecompressWorkshop::process, this)
 	{}
-
-void GzipZlibDecompressWorkshop::run(){
-	processThread=std::thread(&GzipZlibDecompressWorkshop::process, this);
-}
 
 void GzipZlibDecompressWorkshop::wait(){
 	processThread.join();
